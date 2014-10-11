@@ -17,9 +17,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Map;
 
 import de.uni_hannover.spaceusagerules.LocationUpdateListener;
 import de.uni_hannover.spaceusagerules.R;
+import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.KML;
 import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Way;
@@ -29,7 +31,6 @@ import de.uni_hannover.spaceusagerules.core.Way;
  */
 public class MapHandler extends SupportMapFragment {
     public final static String ARG_POSITION = "position";
-    int mCurrentPosition = -1;
     double latmin =10000, latmax = -10000, lonmin = 10000, lonmax = -10000;
     GoogleMap mMap;
 
@@ -43,10 +44,10 @@ public class MapHandler extends SupportMapFragment {
         if (args != null) {
             // Set article based on argument passed in
             updateMapView(args.getInt(ARG_POSITION));
-        } else if (mCurrentPosition != -1) {
-            // Set article based on saved instance state defined during onCreateView
-            updateMapView(mCurrentPosition);
         }
+    }
+    private static LatLng toLatLon(Coordinate c) {
+        return new LatLng(c.latitude,c.longitude);
     }
 
     private void updateMapPart(Way w) {
@@ -56,19 +57,19 @@ public class MapHandler extends SupportMapFragment {
             PolygonOptions po = new PolygonOptions();
             po.strokeWidth(2);
             po.strokeColor(w.getStrokeColor()).fillColor(w.getFillColor());
-            for (LatLng c : w.getCoordinates())
-                po.add(c);
+            for (Coordinate c : w.getCoordinates())
+                po.add(toLatLon(c));
             mMap.addPolygon(po);
         }
         else {
             PolylineOptions po = new PolylineOptions();
             po.color(w.getStrokeColor());
             po.width(5);
-            for (LatLng c : w.getCoordinates())
-                po.add(c);
+            for (Coordinate c : w.getCoordinates())
+                po.add(toLatLon(c));
             mMap.addPolyline(po);
         }
-        for (LatLng c : w.getCoordinates()) {
+        for (Coordinate c : w.getCoordinates()) {
             if(c.latitude<latmin)
                 latmin = c.latitude;
             if(c.longitude<lonmin)
@@ -128,7 +129,7 @@ public class MapHandler extends SupportMapFragment {
         }catch(IOException e) {
             e.printStackTrace();
         }
-        List<LatLng> coords = KML.loadKML(total.toString());
+        List<Coordinate> coords = KML.loadKML(total.toString());
         Way w = new Way("truth");
         w.addAllCoordinates(coords);
         w.addTag("InformatiCup", "truth");
@@ -158,17 +159,69 @@ public class MapHandler extends SupportMapFragment {
         }catch(IOException e) {
             e.printStackTrace();
         }
+
+        try {
+            InputStream ins = assetManager.open("MyData.txt");
+
+            BufferedReader r = new BufferedReader(new InputStreamReader(ins));
+            String line;
+            MarkerOptions mo = null;
+            while ((line = r.readLine()) != null) {
+                String[] data = line.split(" ");
+                if(data.length==1)
+                    continue;
+                if(Integer.parseInt(data[0]) == (position+1)) {
+                    if(mo==null) {
+                        mo = new MarkerOptions();
+                        LatLng my = new LatLng(Double.parseDouble(data[1]),Double.parseDouble(data[2]));
+                        mo.position(my);
+                        mo.title("exact Location");
+                        break;
+                    }
+                }
+            }
+            mMap.addMarker(mo);
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
         LatLngBounds blub = new LatLngBounds(new LatLng(latmin, lonmin), new LatLng(latmax,lonmax));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(blub.getCenter(), 18));
     }
 
+    public void addOSMData() {
+        for(Way w : OSM.getWays()) {
+            if(w.isArea()) {
+                PolygonOptions po = new PolygonOptions();
+                po.strokeWidth(2);
+                po.strokeColor(w.getStrokeColor()).fillColor(w.getFillColor());
+                for (Coordinate c : w.getCoordinates())
+                    po.add(toLatLon(c));
+                mMap.addPolygon(po);
+            }
+            else {
+                PolylineOptions po = new PolylineOptions();
+                po.color(w.getStrokeColor());
+                po.width(5);
+                for (Coordinate c : w.getCoordinates())
+                    po.add(toLatLon(c));
+                mMap.addPolyline(po);
+            }
+
+            MarkerOptions mo = new MarkerOptions();
+            mo.title("");
+            for(Map.Entry<String, String> e : w.getTags().entrySet())
+                mo.title(mo.getTitle() + "\n" + e.getKey() + " -> " + e.getValue());
+            mo.position(toLatLon(w.getCoordinates().get(0)));
+            mMap.addMarker(mo);
+        }
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         // Save the current article selection in case we need to recreate the fragment
-        outState.putInt(ARG_POSITION, mCurrentPosition);
+//        outState.putInt(ARG_POSITION, mCurrentPosition);
     }
 
 }

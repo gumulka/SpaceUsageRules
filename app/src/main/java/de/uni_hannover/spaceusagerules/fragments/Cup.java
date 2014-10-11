@@ -19,26 +19,24 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.LinkedList;
-import java.util.List;
 
 import de.uni_hannover.spaceusagerules.R;
-import de.uni_hannover.spaceusagerules.core.OSM;
-import de.uni_hannover.spaceusagerules.core.Way;
 
 public class Cup extends ListFragment {
-    OnCupSelectedListener mCallback;
+    OnListItemSelected mCallback;
 
-    // The container Activity must implement this interface so the frag can deliver messages
-    public interface OnCupSelectedListener {
-        /**
-         * Called by HeadlinesFragment when a list item is selected
-         */
-        public void onCupSelected(int position);
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.list_view, container, false);
     }
 
     @Override
@@ -75,7 +73,7 @@ public class Cup extends ListFragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception.
         try {
-            mCallback = (OnCupSelectedListener) activity;
+            mCallback = (OnListItemSelected) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnCupSelectedListener");
@@ -84,10 +82,11 @@ public class Cup extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        // Notify the parent activity of selected item
-        mCallback.onCupSelected(position);
 
         // Set the item as checked to be highlighted when in two-pane layout
         getListView().setItemChecked(position, true);
+
+        // Notify the parent activity of selected item
+        mCallback.onItemSelected(position);
     }
 }
