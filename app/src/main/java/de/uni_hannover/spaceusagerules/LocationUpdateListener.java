@@ -1,4 +1,4 @@
-package de.uni_hannover.spaceusagerules.core;
+package de.uni_hannover.spaceusagerules;
 
 import android.app.Activity;
 import android.app.ListFragment;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import de.uni_hannover.spaceusagerules.R;
 import de.uni_hannover.spaceusagerules.Start;
+import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.fragments.Results;
 
 /**

@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import de.uni_hannover.spaceusagerules.R;
-import de.uni_hannover.spaceusagerules.Start;
 
 /**
  * Created by gumulka on 10/10/14.
@@ -35,8 +33,8 @@ public class OSM {
 
     public static void createObjectList(Location c, float radius){
         List<Way> newObjects = new LinkedList<Way>();
-        newObjects.add(new Way(Start.context().getResources().getString(R.string.all)));
         Map<Long,LatLng> coords = new TreeMap<Long,LatLng>();
+        Map<Long,Way> ways = new TreeMap<Long,Way>();
         String connection = "http://openstreetmap.org/api/0.6/map?bbox="
                 + (c.getLongitude()-radius) + "," + (c.getLatitude()-radius) + ','
                 + (c.getLongitude()+radius) + "," + (c.getLatitude()+radius);

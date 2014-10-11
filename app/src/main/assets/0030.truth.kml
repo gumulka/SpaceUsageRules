@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.1">
+<Document>
+<Style id="Poly1">
+<LineStyle>
+<color>7f00ff00</color>
+<width>2</width>
+</LineStyle>
+<PolyStyle>
+<color>7f00ff00</color>
+</PolyStyle>
+</Style>
+<Placemark>
+<name>0030</name>
+<description><img src='0030.jpg' width = '400' /></description>
+<styleUrl>#Poly1</styleUrl>
+<Polygon>
+<altitudeMode>clampToGround</altitudeMode>
+<extrude>1</extrude>
+<tessellate>1</tessellate>
+<outerBoundaryIs>
+<LinearRing>
+<coordinates>
+5.33885940,50.92799930
+5.33884360,50.92806260
+5.33886170,50.92813120
+5.33894200,50.92842340
+5.33903190,50.92856610
+5.33910510,50.92873700
+5.33923700,50.92903020
+5.33927970,50.92920900
+5.33929920,50.92924730
+5.33942610,50.92932240
+5.33947920,50.92933790
+5.33953740,50.92933790
+5.34019270,50.92929790
+5.34048400,50.92931530
+5.34049680,50.92919870
+5.34075130,50.92921830
+5.34107920,50.92905780
+5.34092530,50.92885240
+5.34060670,50.92841720
+5.34050230,50.92836290
+5.33892540,50.92795310
+5.33889610,50.92795080
+5.33885940,50.92799930
+</coordinates>
+</LinearRing>
+</outerBoundaryIs>
+</Polygon>
+</Placemark>
+</Document>
+</kml>

@@ -1,37 +1,24 @@
 package de.uni_hannover.spaceusagerules;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.PolygonOptions;
-
-import java.io.IOException;
-
-import de.uni_hannover.spaceusagerules.core.LocationUpdateListener;
 import de.uni_hannover.spaceusagerules.core.OSM;
-import de.uni_hannover.spaceusagerules.core.Way;
+import de.uni_hannover.spaceusagerules.fragments.Cup;
 import de.uni_hannover.spaceusagerules.fragments.MapHandler;
 import de.uni_hannover.spaceusagerules.fragments.Results;
 
 
-public class Start extends FragmentActivity implements Results.OnHeadlineSelectedListener {
+public class Start extends FragmentActivity implements Results.OnHeadlineSelectedListener , Cup.OnCupSelectedListener{
     private TextView textView;
     private static Start mApp = null;
     @Override
@@ -39,14 +26,6 @@ public class Start extends FragmentActivity implements Results.OnHeadlineSelecte
         super.onCreate(savedInstanceState);
         mApp = this;
         setContentView(R.layout.activity_start);
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-        LocationListener locationListener = new LocationUpdateListener(this);
-
-// Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
     }
 
     @Override
@@ -56,16 +35,65 @@ public class Start extends FragmentActivity implements Results.OnHeadlineSelecte
         return true;
     }
 
+    private void showCup() {
+
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.results_fragment);
+        if(f instanceof Cup) {
+            Toast.makeText(getApplicationContext(), "Wird bereits angezeigt.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Create fragment and give it an argument for the selected article
+        Cup newFragment = new Cup();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.results_fragment, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    private void showPos() {
+
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.results_fragment);
+        if(f instanceof Results) {
+            Toast.makeText(getApplicationContext(), "Wird bereits angezeigt.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Create fragment and give it an argument for the selected article
+        Results newFragment = new Results();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.results_fragment, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_cup:
+                showCup();
+                return true;
+            case R.id.menu_position:
+                showPos();
+                return true;
+            case R.id.menu_help:
+//                showHelp();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+
     }
 
 
@@ -81,6 +109,43 @@ public class Start extends FragmentActivity implements Results.OnHeadlineSelecte
 
             // Call a method in the ArticleFragment to update its content
             mapFrag.updateMapView(position);
+
+        } else {
+            // If the frag is not available, we're in the one-pane layout and must swap frags...
+
+            // Create fragment and give it an argument for the selected article
+            MapHandler newFragment = new MapHandler();
+            Bundle args = new Bundle();
+            args.putInt(MapHandler.ARG_POSITION, position);
+            newFragment.setArguments(args);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+            // Replace whatever is in the fragment_container view with this fragment,
+            // and add the transaction to the back stack so the user can navigate back
+            transaction.replace(R.id.results_fragment, newFragment);
+            transaction.addToBackStack(null);
+
+            // Commit the transaction
+            transaction.commit();
+
+            TextView status = (TextView) findViewById(R.id.status);
+            status.setText(OSM.getWays().get(position).toString());
+        }
+    }
+
+
+    public void onCupSelected(int position) {
+        // The user selected the headline of an article from the HeadlinesFragment
+
+        // Capture the article fragment from the activity layout
+        MapHandler mapFrag = (MapHandler)
+                getSupportFragmentManager().findFragmentById(R.id.map_fragment);
+
+        if (mapFrag != null) {
+            // If article frag is available, we're in two-pane layout...
+
+            // Call a method in the ArticleFragment to update its content
+            mapFrag.updateCupView(position);
 
         } else {
             // If the frag is not available, we're in the one-pane layout and must swap frags...

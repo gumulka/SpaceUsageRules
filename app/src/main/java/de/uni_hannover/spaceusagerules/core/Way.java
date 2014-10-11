@@ -2,6 +2,7 @@ package de.uni_hannover.spaceusagerules.core;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,10 @@ public class Way {
     private String name;
 
     public int getFillColor() {
+        if(tags.get("InformatiCup").equalsIgnoreCase("truth"))
+            return 0x7F00AA00;
+        if(tags.get("InformatiCup").equalsIgnoreCase("guess"))
+            return 0x7FAA0000;
         return 0x7F999999;
     }
 
@@ -25,7 +30,7 @@ public class Way {
     }
 
     public boolean isValid() {
-        return coordinates!= null && tags != null;
+        return coordinates.size()>1;
     }
 
     public Way(String name) {
@@ -42,6 +47,10 @@ public class Way {
 
     public void addCoordinate(LatLng c) {
         coordinates.add(c);
+    }
+
+    public void addAllCoordinates(Collection<LatLng> coords) {
+        coordinates.addAll(coords);
     }
 
     public void addTag(String key, String value) {

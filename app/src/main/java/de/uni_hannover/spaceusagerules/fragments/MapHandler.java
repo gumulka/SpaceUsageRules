@@ -1,24 +1,26 @@
 package de.uni_hannover.spaceusagerules.fragments;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
+import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
+import de.uni_hannover.spaceusagerules.LocationUpdateListener;
 import de.uni_hannover.spaceusagerules.R;
-import de.uni_hannover.spaceusagerules.core.LocationUpdateListener;
+import de.uni_hannover.spaceusagerules.core.KML;
 import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Way;
 
@@ -46,22 +48,6 @@ public class MapHandler extends SupportMapFragment {
             updateMapView(mCurrentPosition);
         }
     }
-
-    private static LatLng centroid(List<LatLng> points) {
-        double[] centroid = { 0.0, 0.0 };
-
-        for (LatLng l : points) {
-            centroid[0] += l.latitude;
-            centroid[1] += l.longitude;
-        }
-
-        int totalPoints = points.size();
-        centroid[0] = centroid[0] / totalPoints;
-        centroid[1] = centroid[1] / totalPoints;
-
-        return new LatLng(centroid[0], centroid[1]);
-    }
-
 
     private void updateMapPart(Way w) {
         if(!w.isValid())
@@ -115,6 +101,63 @@ public class MapHandler extends SupportMapFragment {
         else
             updateMapPart(OSM.getWays().get(position));
 
+        LatLngBounds blub = new LatLngBounds(new LatLng(latmin, lonmin), new LatLng(latmax,lonmax));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(blub.getCenter(), 18));
+    }
+
+
+    public void updateCupView(int position) {
+        mMap.clear();
+
+        latmin =  10000;
+        latmax = -10000;
+        lonmin =  10000;
+        lonmax = -10000;
+
+        String filename = String.format("%04d.truth.kml",position+1);
+        AssetManager assetManager = getActivity().getAssets();
+        StringBuilder total = new StringBuilder();
+        try {
+            InputStream ins = assetManager.open(filename);
+
+            BufferedReader r = new BufferedReader(new InputStreamReader(ins));
+            String line;
+            while ((line = r.readLine()) != null) {
+                total.append(line + "\n");
+            }
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+        List<LatLng> coords = KML.loadKML(total.toString());
+        Way w = new Way("truth");
+        w.addAllCoordinates(coords);
+        w.addTag("InformatiCup", "truth");
+        updateMapPart(w);
+
+        try {
+            InputStream ins = assetManager.open("Data.txt");
+
+            BufferedReader r = new BufferedReader(new InputStreamReader(ins));
+            String line;
+            MarkerOptions mo = null;
+            while ((line = r.readLine()) != null) {
+                String[] data = line.split(",");
+                if(data.length==1)
+                    continue;
+                if(Integer.parseInt(data[0]) == (position+1)) {
+                    if(mo==null) {
+                        mo = new MarkerOptions();
+                        LatLng my = new LatLng(Double.parseDouble(data[1]),Double.parseDouble(data[2]));
+                        mo.position(my);
+                        mo.title("");
+                    }
+                    mo.title(mo.getTitle() + data[3]);
+                }
+            }
+            mMap.addMarker(mo);
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
         LatLngBounds blub = new LatLngBounds(new LatLng(latmin, lonmin), new LatLng(latmax,lonmax));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(blub.getCenter(), 18));
     }

@@ -16,58 +16,46 @@
 package de.uni_hannover.spaceusagerules.fragments;
 
 import android.app.Activity;
-import android.content.Context;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import de.uni_hannover.spaceusagerules.LocationUpdateListener;
 import de.uni_hannover.spaceusagerules.R;
-import de.uni_hannover.spaceusagerules.Start;
 import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Way;
 
-public class Results extends ListFragment {
-    OnHeadlineSelectedListener mCallback;
+public class Cup extends ListFragment {
+    OnCupSelectedListener mCallback;
 
     // The container Activity must implement this interface so the frag can deliver messages
-    public interface OnHeadlineSelectedListener {
-        /** Called by HeadlinesFragment when a list item is selected */
-        public void onArticleSelected(int position);
-    }
-
-    public void onOsmUpdate() {
-        // We need to use a different list item layout for devices older than Honeycomb
-        int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
-                android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
-        List<Way> newObjects = new LinkedList<Way>();
-        newObjects.add(new Way(getString(R.string.show_all)));
-        newObjects.addAll(OSM.getWays());
-       setListAdapter(new ArrayAdapter<Way>(getActivity(), layout, newObjects));
+    public interface OnCupSelectedListener {
+        /**
+         * Called by HeadlinesFragment when a list item is selected
+         */
+        public void onCupSelected(int position);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Toast.makeText(getActivity().getApplicationContext(), "Suche nach Ort.", Toast.LENGTH_SHORT).show();
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-        LocationListener locationListener = new LocationUpdateListener((Start) getActivity());
-
-// Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        String[] numbers = new String[96];
+        for (int i = 0; i < 96; i++) {
+            numbers[i] = getString(R.string.show_number) + (i + 1);
         }
+        // We need to use a different list item layout for devices older than Honeycomb
+        int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
+                android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
+
+        setListAdapter(new ArrayAdapter<String>(getActivity(), layout, numbers));
+    }
+
+
 
     @Override
     public void onStart() {
@@ -76,7 +64,6 @@ public class Results extends ListFragment {
         // When in two-pane layout, set the listview to highlight the selected list item
         // (We do this during onStart because at the point the listview is available.)
         if (getFragmentManager().findFragmentById(R.id.map_fragment) != null) {
-            if(getListView()!=null)
                 getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         }
     }
@@ -88,17 +75,17 @@ public class Results extends ListFragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception.
         try {
-            mCallback = (OnHeadlineSelectedListener) activity;
+            mCallback = (OnCupSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnHeadlineSelectedListener");
+                    + " must implement OnCupSelectedListener");
         }
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         // Notify the parent activity of selected item
-        mCallback.onArticleSelected(position);
+        mCallback.onCupSelected(position);
 
         // Set the item as checked to be highlighted when in two-pane layout
         getListView().setItemChecked(position, true);
