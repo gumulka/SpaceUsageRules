@@ -19,8 +19,17 @@
     <fragment
         android:name = "de.uni_hannover.spaceusagerules.fragments.Results"
         android:id = "@+id/results_fragment"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         />
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/map_fragment"
+        android:name="de.uni_hannover.spaceusagerules.fragments.MapHandler"/>
+
 </LinearLayout>

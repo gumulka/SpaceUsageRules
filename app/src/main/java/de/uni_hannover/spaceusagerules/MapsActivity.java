@@ -4,9 +4,11 @@ import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
@@ -53,7 +55,7 @@ public class MapsActivity extends FragmentActivity {
                     .getMap();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
-                setUpMap();
+               // setUpMap();
             }
         }
     }
@@ -65,14 +67,25 @@ public class MapsActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
+        double latmin =10000, latmax = -10000, lonmin = 10000, lonmax = -10000;
         for(Way w : OSM.getWays()) {
             PolygonOptions po = new PolygonOptions();
             po.strokeColor(Color.RED).fillColor(Color.BLUE);
             for (LatLng c : w.getCoordinates()) {
+                if(c.latitude<latmin)
+                    latmin = c.latitude;
+                if(c.longitude<lonmin)
+                    lonmin = c.longitude;
+                if(c.latitude>latmax)
+                    latmax = c.latitude;
+                if(c.longitude>lonmax)
+                    lonmax = c.longitude;
                 po.add(c);
             }
             mMap.addPolygon(po);
         }
+        LatLngBounds blub = new LatLngBounds(new LatLng(latmin, lonmin), new LatLng(latmax,lonmax));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(blub.getCenter(),18));
 //        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 }
