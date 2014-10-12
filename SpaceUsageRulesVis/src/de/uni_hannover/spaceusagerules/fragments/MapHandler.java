@@ -1,8 +1,17 @@
 package de.uni_hannover.spaceusagerules.fragments;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 import android.content.res.AssetManager;
 import android.os.Bundle;
 
+import com.drew.imaging.ImageProcessingException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -12,16 +21,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
-import java.util.Map;
-
 import de.uni_hannover.spaceusagerules.LocationUpdateListener;
 import de.uni_hannover.spaceusagerules.R;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
+import de.uni_hannover.spaceusagerules.core.Image;
 import de.uni_hannover.spaceusagerules.core.KML;
 import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Way;
@@ -115,7 +118,7 @@ public class MapHandler extends SupportMapFragment {
         lonmin =  10000;
         lonmax = -10000;
 
-        String filename = String.format("%04d.truth.kml",position+1);
+        String filename = String.format(Locale.GERMAN,"%04d.truth.kml",position+1);
         AssetManager assetManager = getActivity().getAssets();
         StringBuilder total = new StringBuilder();
         try {
@@ -161,29 +164,20 @@ public class MapHandler extends SupportMapFragment {
         }
 
         try {
-            InputStream ins = assetManager.open("MyData.txt");
-
-            BufferedReader r = new BufferedReader(new InputStreamReader(ins));
-            String line;
-            MarkerOptions mo = null;
-            while ((line = r.readLine()) != null) {
-                String[] data = line.split(" ");
-                if(data.length==1)
-                    continue;
-                if(Integer.parseInt(data[0]) == (position+1)) {
-                    if(mo==null) {
-                        mo = new MarkerOptions();
-                        LatLng my = new LatLng(Double.parseDouble(data[1]),Double.parseDouble(data[2]));
-                        mo.position(my);
-                        mo.title("exact Location");
-                        break;
-                    }
-                }
-            }
+            filename = String.format(Locale.GERMAN, "%04d.jpg",position+1);
+            InputStream ins = assetManager.open(filename);
+            Coordinate real = Image.readCoordinates(ins);
+            MarkerOptions mo = new MarkerOptions();
+            LatLng my = toLatLon(real);
+            mo.position(my);
+            mo.title("exact Location");
             mMap.addMarker(mo);
         }catch(IOException e) {
             e.printStackTrace();
-        }
+        } catch (ImageProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         LatLngBounds blub = new LatLngBounds(new LatLng(latmin, lonmin), new LatLng(latmax,lonmax));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(blub.getCenter(), 18));
     }
@@ -200,7 +194,7 @@ public class MapHandler extends SupportMapFragment {
             }
             else {
                 PolylineOptions po = new PolylineOptions();
-                po.color(w.getStrokeColor());
+                po.color(0x880000FF);
                 po.width(5);
                 for (Coordinate c : w.getCoordinates())
                     po.add(toLatLon(c));
@@ -212,7 +206,8 @@ public class MapHandler extends SupportMapFragment {
             for(Map.Entry<String, String> e : w.getTags().entrySet())
                 mo.title(mo.getTitle() + "\n" + e.getKey() + " -> " + e.getValue());
             mo.position(toLatLon(w.getCoordinates().get(0)));
-            mMap.addMarker(mo);
+            if(w.isArea())
+            	mMap.addMarker(mo);
         }
     }
 

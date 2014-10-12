@@ -21,6 +21,8 @@ public class Way {
             return 0x7F00AA00;
         if("guess".equalsIgnoreCase(tags.get("InformatiCup")))
             return 0x7FAA0000;
+    	if(tags.containsKey("building"))
+    		return 0x4FAAAA00;
         return 0x7F999999;
     }
 
