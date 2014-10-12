@@ -41,4 +41,8 @@ public class Coordinate {
 		}
 		return false;
 	}
+	
+	public String toString() {
+		return String.format("%3.6f - %3.6f", latitude, longitude);
+	}
 }

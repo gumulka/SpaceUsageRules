@@ -13,11 +13,10 @@ Autoren
 Installation
 ------------
 
+Zur laufen wird ein Google-Maps Key benötigt, welcher entweder als String-Ressource mit dem Namen "google_maps_key" vorliegen sollte, oder dieser ist direkt in der AndroidManifest.xml Datei einzubinden.
 
-
-###Buildbot
-![Build Status](https://api.travis-ci.com/gumulka/SpaceUsageRules.svg?token=Bcd4MJriQXx6pfxfy5yb)
 
 Lizenz
 ------
 Dieses Projekt ist under der MIT-Lizenz veröffentlicht. Für Details bitte in der LICENSE Datei nachgucken.
+Es werden andere Projekte benötigt um das System zum laufen zu bringen, diese haben eigene, andere Lizenzen. Nur die Dateien (ohne die *.jar), welche in in den SpaceUsageRules Ordnern liegen gehören zu uns und sind unter dieser Lizenz veröffentlicht.
