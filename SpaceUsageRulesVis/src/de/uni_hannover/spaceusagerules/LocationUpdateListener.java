@@ -1,5 +1,7 @@
 package de.uni_hannover.spaceusagerules;
 
+import java.util.List;
+
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.OSM;
+import de.uni_hannover.spaceusagerules.core.Way;
 import de.uni_hannover.spaceusagerules.fragments.Results;
 
 /**
@@ -47,25 +50,24 @@ public class LocationUpdateListener implements LocationListener {
         return l;
     }
 
-    private class DownloadWebpageTask extends AsyncTask<Location, Void, Void> {
+    private class DownloadWebpageTask extends AsyncTask<Location, Void, List<Way>> {
         private Start a;
 
         public DownloadWebpageTask(Start activity) {
             this.a = activity;
         }
         @Override
-        protected Void doInBackground(Location... urls) {
+        protected List<Way> doInBackground(Location... urls) {
             Coordinate l = new Coordinate(urls[0].getLatitude(),urls[0].getLongitude());
-            OSM.createObjectList(l);
-            return null;
+            return OSM.getObjectList(l);
         }
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(Void v) {
+        protected void onPostExecute(List<Way> ways) {
             Fragment res = a.getSupportFragmentManager().findFragmentById(R.id.results_fragment);
             if(res instanceof Results)
-                ((Results) res).onOsmUpdate();
+                ((Results) res).onOsmUpdate(ways);
         } // */
     }
 }

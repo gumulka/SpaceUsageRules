@@ -2,7 +2,6 @@ package de.uni_hannover.spaceusagerules.core;
 
 
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -12,7 +11,7 @@ import java.util.TreeMap;
  */
 public class Way {
 
-    private List<Coordinate> coordinates;
+    Polyline coordinates;
     private Map<String,String> tags;
     private String name;
 
@@ -31,17 +30,17 @@ public class Way {
     }
 
     public boolean isValid() {
-        return coordinates.size()>1;
+        return coordinates.getPoints().size()>1;
     }
 
     public Way(String name) {
         this.name = name;
-        coordinates = new LinkedList<Coordinate>();
+        coordinates = new Polyline();
         tags = new TreeMap<String, String>();
     }
 
     public Way() {
-        coordinates = new LinkedList<Coordinate>();
+        coordinates = new Polyline();
         tags = new TreeMap<String, String>();
         this.name = "";
     }
@@ -60,7 +59,7 @@ public class Way {
     }
 
     public List<Coordinate> getCoordinates() {
-        return coordinates;
+        return coordinates.getPoints();
     }
 
     public Map<String,String> getTags() {
@@ -72,10 +71,14 @@ public class Way {
     }
 
     public boolean isArea() {
-        return isValid() && coordinates.get(0).equals(coordinates.get(coordinates.size()-1)) && coordinates.size()>2;
+        return coordinates.isArea();
     }
 
     public String toString() {
         return name;
+    }
+    
+    public Polyline getPolyline() {
+    	return coordinates;
     }
 }

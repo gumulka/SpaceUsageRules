@@ -26,7 +26,7 @@ import de.uni_hannover.spaceusagerules.R;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Image;
 import de.uni_hannover.spaceusagerules.core.KML;
-import de.uni_hannover.spaceusagerules.core.OSM;
+import de.uni_hannover.spaceusagerules.core.Polyline;
 import de.uni_hannover.spaceusagerules.core.Way;
 
 /**
@@ -34,6 +34,7 @@ import de.uni_hannover.spaceusagerules.core.Way;
  */
 public class MapHandler extends SupportMapFragment {
     public final static String ARG_POSITION = "position";
+    public final static String ARG_WAYS = "ways";
     double latmin =10000, latmax = -10000, lonmin = 10000, lonmax = -10000;
     GoogleMap mMap;
 
@@ -46,7 +47,9 @@ public class MapHandler extends SupportMapFragment {
         Bundle args = getArguments();
         if (args != null) {
             // Set article based on argument passed in
-            updateMapView(args.getInt(ARG_POSITION));
+            Object ways = args.get(ARG_WAYS);
+            if(ways instanceof List)
+            	updateMapView(args.getInt(ARG_POSITION),(List<Way>) ways);
         }
     }
     private static LatLng toLatLon(Coordinate c) {
@@ -84,7 +87,7 @@ public class MapHandler extends SupportMapFragment {
         }
     }
 
-    public void updateMapView(int position) {
+    public void updateMapView(int position, List<Way> ways) {
         mMap.clear();
 
         MarkerOptions mo = new MarkerOptions();
@@ -99,11 +102,11 @@ public class MapHandler extends SupportMapFragment {
         lonmax = -10000;
 
         if(position==0) {
-            for(Way w : OSM.getWays())
+            for(Way w : ways)
                 updateMapPart(w);
         }
         else
-            updateMapPart(OSM.getWays().get(position));
+            updateMapPart(ways.get(position));
 
         LatLngBounds blub = new LatLngBounds(new LatLng(latmin, lonmin), new LatLng(latmax,lonmax));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(blub.getCenter(), 18));
@@ -132,9 +135,9 @@ public class MapHandler extends SupportMapFragment {
         }catch(IOException e) {
             e.printStackTrace();
         }
-        List<Coordinate> coords = KML.loadKML(total.toString());
+        Polyline coords = KML.loadKML(total.toString());
         Way w = new Way("truth");
-        w.addAllCoordinates(coords);
+        w.addAllCoordinates(coords.getPoints());
         w.addTag("InformatiCup", "truth");
         updateMapPart(w);
 
@@ -181,9 +184,9 @@ public class MapHandler extends SupportMapFragment {
         LatLngBounds blub = new LatLngBounds(new LatLng(latmin, lonmin), new LatLng(latmax,lonmax));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(blub.getCenter(), 18));
     }
-
-    public void addOSMData() {
-        for(Way w : OSM.getWays()) {
+    
+    public void addOSMData(List<Way> ways) {
+        for(Way w : ways) {
             if(w.isArea()) {
                 PolygonOptions po = new PolygonOptions();
                 po.strokeWidth(2);

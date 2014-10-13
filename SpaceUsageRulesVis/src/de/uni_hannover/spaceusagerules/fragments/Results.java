@@ -15,6 +15,9 @@
  */
 package de.uni_hannover.spaceusagerules.fragments;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.location.LocationListener;
@@ -28,19 +31,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.util.LinkedList;
-import java.util.List;
-
 import de.uni_hannover.spaceusagerules.LocationUpdateListener;
 import de.uni_hannover.spaceusagerules.R;
 import de.uni_hannover.spaceusagerules.Start;
-import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Way;
 
 public class Results extends ListFragment {
     private OnListItemSelected mCallback;
-
+    private List<Way> ways;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,14 +48,14 @@ public class Results extends ListFragment {
         return inflater.inflate(R.layout.list_view, container, false);
     }
 
-    public void onOsmUpdate() {
+    public void onOsmUpdate(List<Way> w) {
         // We need to use a different list item layout for devices older than Honeycomb
         int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
                 android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
-        List<Way> newObjects = new LinkedList<Way>();
-        newObjects.add(new Way(getString(R.string.show_all)));
-        newObjects.addAll(OSM.getWays());
-       setListAdapter(new ArrayAdapter<Way>(getActivity(), layout, newObjects));
+        ways = new LinkedList<Way>();
+        ways.add(new Way(getString(R.string.show_all)));
+        ways.addAll(w);
+       setListAdapter(new ArrayAdapter<Way>(getActivity(), layout, ways));
     }
 
     @Override
@@ -98,6 +96,9 @@ public class Results extends ListFragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnHeadlineSelectedListener");
         }
+    }
+    public List<Way> getWays() {
+    	return ways;
     }
 
     @Override

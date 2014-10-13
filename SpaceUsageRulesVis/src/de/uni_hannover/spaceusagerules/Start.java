@@ -73,7 +73,7 @@ public class Start extends FragmentActivity implements OnListItemSelected {
 
             // Call a method in the ArticleFragment to update its content
             if(listFragment instanceof Results)
-                mapFrag.updateMapView(position);
+                mapFrag.updateMapView(position, ((Results) listFragment).getWays());
             else if(listFragment instanceof Cup) {
                 mapFrag.updateCupView(position);
                 if(cul != null)

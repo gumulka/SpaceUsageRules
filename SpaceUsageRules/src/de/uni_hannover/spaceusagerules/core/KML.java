@@ -1,11 +1,12 @@
 package de.uni_hannover.spaceusagerules.core;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by gumulka on 10/11/14.
@@ -63,9 +64,9 @@ public class KML {
     } */
 
 
-    public static List<Coordinate> loadKML(String kml) {
+    public static Polyline loadKML(String kml) {
         Document doc = null;
-        List<Coordinate> coordinates = new LinkedList<Coordinate>();
+        Polyline coordinates = new Polyline();
         doc = Jsoup.parse(kml, "UTF-8");
         Element e = doc.select("coordinates").first();
         for(String c : e.text().split(" ")) {
@@ -74,6 +75,25 @@ public class KML {
             double lat = Double.parseDouble(bla[1]);
             coordinates.add(new Coordinate(lat,lon));
         }
+        return coordinates;
+    }
+
+
+    public static Polyline loadKML(File kml) {
+        Document doc = null;
+        Polyline coordinates = new Polyline();
+        try {
+			doc = Jsoup.parse(kml, "UTF-8");
+	        Element e = doc.select("coordinates").first();
+	        for(String c : e.text().split(" ")) {
+	            String[] bla = c.split(",");
+	            double lon = Double.parseDouble(bla[0]);
+	            double lat = Double.parseDouble(bla[1]);
+	            coordinates.add(new Coordinate(lat,lon));
+	        }
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
         return coordinates;
     }
 

@@ -1,0 +1,877 @@
+3dshapes:ggmodelk
+3dshapes:ggmodelk - 10
+AND_nosr_r
+AND_nosr_r - 15703160
+OnroerendErfgoed:criteria
+OnroerendErfgoed:criteria - M
+access
+access - no
+access - permissive
+access - private
+access - yes
+addr:city
+addr:city - Antwerpen
+addr:city - Diepenbeek
+addr:city - Hasselt
+addr:country
+addr:country - BE
+addr:housename
+addr:housename - 't Sweert
+addr:housename - De Drij Dragonders
+addr:housename - De Forteyne
+addr:housename - De Molensteen
+addr:housename - De Nieuwen Bauw
+addr:housename - De Roos
+addr:housename - De Voetboge Camer
+addr:housename - Den Crans
+addr:housename - Het Hemelrijk
+addr:housename - Huis De Gulden Borsse;Gulden Beurse
+addr:housenumber
+addr:housenumber - 1
+addr:housenumber - 10
+addr:housenumber - 10-12
+addr:housenumber - 11
+addr:housenumber - 12
+addr:housenumber - 121
+addr:housenumber - 13
+addr:housenumber - 14
+addr:housenumber - 15
+addr:housenumber - 15.
+addr:housenumber - 16
+addr:housenumber - 17
+addr:housenumber - 18
+addr:housenumber - 18-22
+addr:housenumber - 18-26
+addr:housenumber - 19
+addr:housenumber - 2
+addr:housenumber - 20
+addr:housenumber - 20-24
+addr:housenumber - 21
+addr:housenumber - 22
+addr:housenumber - 23
+addr:housenumber - 24
+addr:housenumber - 25
+addr:housenumber - 26
+addr:housenumber - 26-26B
+addr:housenumber - 26-28
+addr:housenumber - 27
+addr:housenumber - 28
+addr:housenumber - 3
+addr:housenumber - 30
+addr:housenumber - 32
+addr:housenumber - 33
+addr:housenumber - 34
+addr:housenumber - 38
+addr:housenumber - 4
+addr:housenumber - 4-6
+addr:housenumber - 40
+addr:housenumber - 42
+addr:housenumber - 44
+addr:housenumber - 45
+addr:housenumber - 48
+addr:housenumber - 5
+addr:housenumber - 50
+addr:housenumber - 58
+addr:housenumber - 59
+addr:housenumber - 6
+addr:housenumber - 6-8
+addr:housenumber - 6A
+addr:housenumber - 6B
+addr:housenumber - 7
+addr:housenumber - 75
+addr:housenumber - 8
+addr:housenumber - 9
+addr:interpolation
+addr:interpolation - even
+addr:postcode
+addr:postcode - 2018
+addr:postcode - 3500
+addr:postcode - 3590
+addr:street
+addr:street - Agoralaan
+addr:street - Aldestraat
+addr:street - Botermarkt
+addr:street - Copernicuslaan
+addr:street - Demerstraat
+addr:street - Fruitmarkt
+addr:street - Gasthuisstraat
+addr:street - Ginderoverstraat
+addr:street - Groenplein
+addr:street - Grote Markt
+addr:street - Havermarkt
+addr:street - Hemelrijk
+addr:street - Hoogstraat
+addr:street - Kapelstraat
+addr:street - Kolonel Dusartplein
+addr:street - Koningin Astridplein
+addr:street - Lombaardstraat
+addr:street - Lombardstraat
+addr:street - Maastrichterstraat
+addr:street - Martelarenlaan
+addr:street - Minderbroedersstraat
+addr:street - Stadsomvaart
+addr:street - Thonissenlaan
+addr:street - Via Media
+addr:street - Vismarkt
+addr:street - Walputstraat
+addr:street - Wetenschapspark
+addr:street - Zuivelmarkt
+addr:street - Zwanestraat
+addr:street - zuivelmarkt
+alt_name
+alt_name - PXL Tech
+alt_name - Universitaire Campus - gebouw B
+alt_name - Universitaire Campus - gebouw D
+alt_name - Universitaire Campus - gebouw E
+alt_name - Universitaire Campus - gebouw G
+amenity
+amenity - bank
+amenity - bar
+amenity - bicycle_parking
+amenity - cafe
+amenity - cinema
+amenity - college
+amenity - fast_food
+amenity - grave_yard
+amenity - hospital
+amenity - ice_cream
+amenity - kot
+amenity - library
+amenity - parking
+amenity - pharmacy
+amenity - place_of_worship
+amenity - pub
+amenity - restaurant
+amenity - school
+amenity - shelter
+amenity - swimming_pool
+amenity - townhall
+amenity - university
+area
+area - yes
+atm
+atm - yes
+barrier
+barrier - fence
+barrier - hedge
+barrier - kerb
+barrier - wall
+barrier - wire_fence
+bicycle
+bicycle - designated
+bicycle - no
+bicycle - use_sidepath
+bicycle - yes
+boat
+boat - no
+building
+building - apartments
+building - chapel
+building - dormitory
+building - house
+building - office
+building - roof
+building - terrace
+building - train_station
+building - university
+building - yes
+building:colour
+building:colour - #27231E
+building:colour - #6C5B50
+building:colour - #828282
+building:colour - #96C69C
+building:colour - #DEDEA6
+building:colour - #EDEACE
+building:colour - #FFFFFF
+building:levels
+building:levels - 2
+building:levels - 3
+building:part
+building:part - yes
+cables
+cables - 6
+capacity
+capacity - 3
+clothes
+clothes - shoes
+clothes - underwear
+colour
+colour - #005711
+covered
+covered - yes
+created_by
+created_by - Potlatch 0.10a
+created_by - Potlatch 0.10b
+cuisine
+cuisine - coffee_shop
+cuisine - indian
+cuisine - pizza
+cuisine - thai
+cycleway
+cycleway - lane
+cycleway - opposite
+cycleway - track
+cycleway:left
+cycleway:left - lane
+cycleway:right
+cycleway:right - lane
+cycleway:right - track
+denomination
+denomination - catholic
+description
+description - Arbeidershuizen
+description - Breedhuis
+description - Burgerhuis in classicistische stijl
+description - Dekenij, neoclassicistisch getint herenhuis
+description - Herenhuis
+description - Hoekhuis
+description - Huizen De Draeck en De Sleutel
+description - Lyceum in classicistische stijl
+description - Overdekte fietsenstalling.
+description - Provinciale Bibliotheek, voormalig begijnhof
+description - Voormalig hotel, nu gemeentehuis
+description - Zoo - Gebouw watutsi, runderen, bisons
+description - Zoo - Runderengebouw
+description - Zoo - Varkensgebouw
+description - Zoo-Koninklijke Maatschappij voor Dierkunde van Antwerpen (KMDA)
+description:en
+description:en - Covered bicycle parking.
+dispensing
+dispensing - yes
+electrified
+electrified - contact_line
+emergency
+emergency - yes
+fax
+fax - +32 3 240 99 99
+fence_type
+fence_type - chain_link
+foot
+foot - designated
+foot - yes
+frequency
+frequency - 0
+gauge
+gauge - 1435
+height
+height - 10
+height - 11
+height - 12
+height - 13
+height - 14
+height - 15
+height - 17
+height - 18
+height - 2
+height - 2.5
+height - 20
+height - 22
+height - 25
+height - 3
+height - 4
+height - 40
+height - 5
+height - 6
+height - 62
+height - 7.5
+height - 79
+height - 8
+height - 8.5
+height - 9
+heritage
+heritage - 4
+heritage:operator
+heritage:operator - OnroerendErfgoed
+heritage:website
+heritage:website - http://para.ms/relict/21863
+heritage:website - http://para.ms/relict/21900
+heritage:website - http://para.ms/relict/21901
+heritage:website - http://para.ms/relict/21903
+heritage:website - http://para.ms/relict/21904
+heritage:website - http://para.ms/relict/21905
+heritage:website - http://para.ms/relict/21936
+heritage:website - http://para.ms/relict/21938
+heritage:website - http://para.ms/relict/21949
+heritage:website - http://para.ms/relict/21953
+heritage:website - http://para.ms/relict/21955
+heritage:website - http://para.ms/relict/21956
+heritage:website - http://para.ms/relict/21995
+heritage:website - http://para.ms/relict/22038
+heritage:website - http://para.ms/relict/22040
+heritage:website - http://para.ms/relict/22113
+heritage:website - http://para.ms/relict/22117
+heritage:website - http://para.ms/relict/22118
+heritage:website - http://para.ms/relict/43662
+heritage:website - http://para.ms/relict/7041
+heritage:website - http://para.ms/relict/7042
+heritage:website - http://para.ms/relict/7043
+highway
+highway - cycleway
+highway - footway
+highway - path
+highway - pedestrian
+highway - primary
+highway - residential
+highway - secondary
+highway - service
+highway - steps
+highway - tertiary
+highway - track
+highway - unclassified
+historic
+historic - monastery
+horse
+horse - no
+image
+image - File:Begijnhof_1.JPG
+image - File:Hasselt_-_Beluik_Minderbroedersstraat_18-20.JPG
+image - File:Hasselt_-_Huis_De_Drij_Dragonders.jpg
+image - File:Hasselt_-_Huis_De_Dry_Potten.jpg
+image - File:Hasselt_-_Huis_De_Gulden_Borsse.jpg
+image - File:Hasselt_-_Huis_De_Molensteen.jpg
+image - File:Hasselt_-_Huis_De_Roos.jpg
+image - File:Hasselt_-_Huis_De_Voetboge_Camer.jpg
+image - File:Hasselt_-_Huis_Den_Crans.jpg
+image - File:Hasselt_-_Huis_Den_Turck.jpg
+image - File:Hasselt_-_Huis_Het_Hemelrijk.jpg
+image - File:Hasselt_-_Huis_Het_Sweert.jpg
+image - File:Hasselt_-_Huizen_De_Draeck_en_De_Sleutel.jpg
+image - File:Hasselt_-_Oud-Gasthuis.jpg
+image - File:Hasselt_-_Voormalig_lyceum.jpg
+image - File:Hasselt_-_Voormalige_dekenij.jpg
+image - File:Hasselt_-_Woning_Minderbroedersstraat_11.jpg
+image - File:Stadhuis_Hasselt.jpg
+incline
+incline - up
+internet_access
+internet_access - wlan
+internet_access - yes
+kerb
+kerb - lowered
+landuse
+landuse - cemetery
+landuse - commercial
+landuse - farm
+landuse - farmland
+landuse - farmyard
+landuse - forest
+landuse - grass
+landuse - industrial
+landuse - meadow
+landuse - recreation_ground
+landuse - reservoir
+landuse - residential
+landuse - retail
+landuse - village_green
+lanes
+lanes - 1
+lanes - 2
+layer
+layer - -1
+layer - -2
+layer - 1
+layer - 2
+leaf_type
+leaf_type - broadleaved
+leisure
+leisure - golf_course
+leisure - park
+leisure - pitch
+leisure - playground
+leisure - sports_centre
+leisure - swimming_pool
+lit
+lit - yes
+maxspeed
+maxspeed - 30
+maxspeed - 50
+maxspeed - 70
+motor_vehicle
+motor_vehicle - no
+motor_vehicle - permissive
+motorcar
+motorcar - permissive
+name
+name - 't Hemelhuys
+name - 't Stadhuis
+name - 100.000 hemden
+name - 40 Weeks
+name - Abeek
+name - Agoralaan
+name - Alcatel-Lucent
+name - Aldestraat
+name - Amon
+name - Androme NV
+name - Anne Vanheers
+name - Arbeidershuizen
+name - Argenta
+name - Avance
+name - BAR tre
+name - BNP Paribas
+name - Badderijstraat
+name - Basic-Fit
+name - Begijnhoftuin Hasselt
+name - Bellagio
+name - Bershka
+name - Bewel
+name - Bleumerstraat
+name - Blue Olive
+name - Bonnefantenstraat
+name - Botermarkt
+name - Bubbels
+name - Bunderstraat
+name - Bushbazar
+name - CKS
+name - CM
+name - Café Latino
+name - Camel Active
+name - Capucienenplein
+name - Capucienenstraat
+name - Cassis
+name - Cellebroederstraat
+name - Centraal laboratorium
+name - Centrum voor medische analyse
+name - Coca-Cola
+name - Cools
+name - Copernicuslaan
+name - Crea
+name - Cristiani
+name - Daniele Tucci
+name - David Mayer Naman
+name - Davman juwelen
+name - De Belder
+name - De Geletterde Mens
+name - De Gerlachestraat
+name - De Goei Goesting
+name - De Karakol
+name - De Markt
+name - De Wijzen
+name - Demer
+name - Demerstraat
+name - Depooter
+name - Desigual
+name - Devernois
+name - Dolcis
+name - Drugstore
+name - EDM
+name - Elfde-Liniestraat
+name - Etam
+name - Export
+name - Fitlink
+name - Florian
+name - Fotokado
+name - Fred & Ginger
+name - Frituur 13
+name - Fritz en co
+name - Fruitmarkt
+name - Gant
+name - Gasthuis Sint-Barbaradal en grauwzusterklooster
+name - Gasthuisstraat
+name - Gildenhuis
+name - Ginderoverstraat
+name - Groenplein
+name - Grote Markt
+name - Grutman home decor
+name - Guffenslaan
+name - Gusto
+name - H&M
+name - Havermarkt
+name - Helsen
+name - Hemelrijk
+name - Hepperstraat
+name - Het Hemelrijk
+name - Hogeschool PXL Campus Diepenbeek
+name - Hooghuis
+name - Hoogstraat
+name - Hunkemöller
+name - IJssalon valvekens
+name - Ici Paris XL
+name - In de kleine hal
+name - In den olifant
+name - Inge Maessen
+name - Instituut voor Materiaal Onderzoek
+name - Instituut voor Mobiliteit
+name - Isabellastraat
+name - Jaspers
+name - Jessa ziekenhuis, campus Virga Jesse
+name - Jeurissen
+name - KHLim
+name - KHLim Stuvoor
+name - KHLim blok R
+name - KHLim blok S
+name - Kadetjessteeg
+name - Kapelstraat
+name - Kapermolen
+name - Kapsalon Urbain
+name - Katholieke Hogeschool Limburg
+name - Kempische Steenweg
+name - Kinepolis
+name - King George
+name - KingKongCoffee
+name - Kleine Ridderstraat
+name - Koestal
+name - Kolfstraat
+name - Kolonel Dusartplein
+name - Koning Albertstraat
+name - Koning Boudewijnlaan
+name - Kot het Witte Huis
+name - L&L
+name - Leonardus
+name - Leopoldplein
+name - Letterveld
+name - Leyssens
+name - Liu-Jo
+name - Lombaardsteeg
+name - Lombardstraat
+name - Louvre
+name - Lutex
+name - Maastrichtersteenweg
+name - Maastrichterstraat
+name - Macchiato
+name - Maldoy
+name - Mano
+name - Marcus
+name - Markt
+name - Marktstraat
+name - Marlboro Classics
+name - Martelarenlaan
+name - Massimo Dutti
+name - Mc Gregor
+name - Mephisto
+name - Mer Du Nord
+name - Mexx
+name - Mimosa
+name - Minderbroedersstraat
+name - Miserikbeek
+name - Molenpoort
+name - Munnikenstraat
+name - Nesselaerstraat
+name - Neuhaus
+name - Nuance
+name - Orangerie
+name - Orye
+name - Oude Stiemer
+name - Outlet Hasselt
+name - Paardsdemerstraat
+name - Panos
+name - Parking uHasselt
+name - Patisserie Verboven
+name - Percy
+name - Persoonstraat
+name - Pimkie
+name - Pitje-Patje
+name - Plazza
+name - Ploegstraat
+name - Ploesje
+name - Plopsa
+name - Poeskaffee
+name - Policarpo
+name - PooPooStyle
+name - Provinciale Bibliotheek Limburg
+name - Provinciale Hogeschool Limburg
+name - Queens
+name - Raamstraat
+name - Radisson Blu / TT18
+name - Ridderstraat
+name - Rituals
+name - River Woods
+name - Runderen
+name - Sac à Sac
+name - Sacristiesteeg
+name - Salento
+name - Scheepvaartkaai
+name - Schoenenreus
+name - Scotch & soda
+name - Sint-Jozefstraat
+name - Sirris
+name - Six
+name - Skatepark Kapermolen
+name - Slachthuiskaai
+name - Slagerij Brepoels
+name - Sodermans
+name - St.-Corneliusstraat
+name - St.-Quintinuskathedraal
+name - Stadsomvaart
+name - Station Genk
+name - Stedelijk Zwembad
+name - Steenpad
+name - Steps
+name - Studentenhome de Bokkerijder
+name - Studentenhuis Hubertus
+name - Super Atusa
+name - Swarovski
+name - Sweet Coffee
+name - T-interim
+name - Take Off
+name - Taste of India
+name - Tasty Bowl
+name - Telenet
+name - Testronic Laboratories NV
+name - The Irish Times Pub
+name - Thonissenlaan
+name - Universiteit Hasselt
+name - Uterquë
+name - Valiant
+name - Van Esser
+name - Van Eycklaan
+name - Van Gogh
+name - VanGrootloon
+name - Venlosesteenweg
+name - Via Media
+name - Virga-Jessebasiliek
+name - Vismarkt
+name - Vogels
+name - Vullerstraat
+name - WE
+name - Walputsteeg
+name - Walputstraat
+name - Week-end lutex
+name - Wetenschapspark
+name - Willekensmolenstraat
+name - Witbeek
+name - Witte Nonnenstraat
+name - Z33
+name - Zeilstraat
+name - Zoo Antwerpen
+name - Zuivelmarkt
+name - Zuppa
+name - Zwanestraat
+name - Zwitsers huis
+name - in het Zwaard
+name:de
+name:de - Rinder
+name:de - Vögel
+name:en
+name:en - EDM
+name:en - Hasselt University
+name:en - Institute for materials research
+name:nl
+name:nl - Expertisecentrum voor Digitale Media (EDM)
+name:nl - Instituut voor Materiaal Onderzoek
+name:nl - Universiteit Hasselt
+name_old
+name_old - Professional Multimedia Test Centre
+natural
+natural - water
+note
+note - Built in 2012
+note - From aerial photography, this stopped in the north
+old_name
+old_name - Den Turck
+old_name - Healthcity Diepenbeek
+old_name - Limburgs Universitair Centrum
+old_name - Xios Hogeschool Limburg
+oneway
+oneway - -1
+oneway - no
+oneway - yes
+oneway:bicycle
+oneway:bicycle - no
+oneway:moped_a
+oneway:moped_a - no
+operator
+operator - BNP Paribas Fortis
+parking
+parking - surface
+phone
+phone - +32 3 240 40 11
+phone - +3211 180 000
+phone - +3211 20 10 31
+phone - +3211 22 91 97
+phone - +3211 75 89 58
+placement
+placement - middle_of:2
+power
+power - line
+psv
+psv - yes
+public_transport
+public_transport - platform
+railway
+railway - rail
+ref
+ref - N702
+ref - N74
+ref - N768
+ref - N78
+ref - R70
+ref:OnroerendErfgoed
+ref:OnroerendErfgoed - 21863
+ref:OnroerendErfgoed - 21900
+ref:OnroerendErfgoed - 21901
+ref:OnroerendErfgoed - 21903
+ref:OnroerendErfgoed - 21904
+ref:OnroerendErfgoed - 21905
+ref:OnroerendErfgoed - 21936
+ref:OnroerendErfgoed - 21938
+ref:OnroerendErfgoed - 21949
+ref:OnroerendErfgoed - 21953
+ref:OnroerendErfgoed - 21955
+ref:OnroerendErfgoed - 21956
+ref:OnroerendErfgoed - 21995
+ref:OnroerendErfgoed - 22038
+ref:OnroerendErfgoed - 22040
+ref:OnroerendErfgoed - 22113
+ref:OnroerendErfgoed - 22117
+ref:OnroerendErfgoed - 22118
+ref:OnroerendErfgoed - 43662
+ref:OnroerendErfgoed - 7041
+ref:OnroerendErfgoed - 7042
+ref:OnroerendErfgoed - 7043
+religion
+religion - christian
+roof:colour
+roof:colour - #000000
+roof:colour - #27231E
+roof:colour - #333333
+roof:colour - #4A4A4A
+roof:colour - #696969
+roof:colour - #7A6451
+roof:colour - #96C69C
+roof:colour - #DC883D
+roof:colour - #FFFFFF
+roof:height
+roof:height - 15
+roof:height - 2
+roof:height - 31
+roof:height - 4
+roof:height - 5
+roof:height - 8
+roof:shape
+roof:shape - dome
+roof:shape - flat
+roof:shape - gabled
+roof:shape - hipped
+roof:shape - pyramidal
+roof:shape - round
+rooms
+rooms - 5
+seamark:type
+seamark:type - obstruction
+segregated
+segregated - no
+segregated - yes
+service
+service - driveway
+service - parking_aisle
+shelter_type
+shelter_type - public_transport
+shop
+shop - alcohol
+shop - bakery
+shop - boutique
+shop - butcher
+shop - clothes
+shop - florist
+shop - hairdresser
+shop - jewelry
+shop - shoes
+shop - toys
+shop - yes
+sidewalk
+sidewalk - both
+smoking
+smoking - no
+smoking - outside
+source
+source - 3dShapes
+source - AGIV
+source - Yahoo
+source - areal picture
+source - survey
+source:date
+source:date - 2012-12-19
+sport
+sport - basketball
+sport - skateboard
+sport - soccer
+sport - swimming
+sport - tennis
+start_date
+start_date - 1969
+surface
+surface - asphalt
+surface - paved
+surface - unpaved
+tourism
+tourism - bed_and_breakfast
+tourism - hotel
+tourism - zoo
+tunnel
+tunnel - yes
+turn:lanes
+turn:lanes - left|none
+usage
+usage - main
+vehicle
+vehicle - delivery
+vehicle - no
+visible
+visible - true
+voltage
+voltage - 3000
+voltage - 70000
+water
+water - pond
+waterway
+waterway - drain
+waterway - stream
+website
+website - http://cafelatino.be/
+website - http://eu.rituals.com/nl-be/store-detail?StoreID=38
+website - http://www.40weeks.be
+website - http://www.androme.com/
+website - http://www.basic-fit.be/clubs/diepenbeek-universiteit
+website - http://www.bewel.be/
+website - http://www.biesmans.be/diepenbeek/
+website - http://www.bubbelshasselt.be/
+website - http://www.cafe-export.be/
+website - http://www.coolshasselt.be/
+website - http://www.davman.be/
+website - http://www.debokkerijder.be/
+website - http://www.degeletterdemens.be/
+website - http://www.degoeigoesting.be/
+website - http://www.edm.uhasselt.be/
+website - http://www.fitlink.be/
+website - http://www.fredginger.be
+website - http://www.frituur13.be/
+website - http://www.fritzenco.com/
+website - http://www.grutmanhomedecor.be/
+website - http://www.hemelhuys.be
+website - http://www.hm.com/be/nl/store-locator#store=BE0619
+website - http://www.hooghuis-hasselt.be/
+website - http://www.imo.uhasselt.be/
+website - http://www.imob.uhasselt.be/
+website - http://www.ingemaessen.be/
+website - http://www.khlim.be/
+website - http://www.kinepolis.com/be-nl/
+website - http://www.kingkongcoffee.be
+website - http://www.koestal.be/
+website - http://www.orangerie-hasselt.be/
+website - http://www.orye-stevenart.be/
+website - http://www.outlethasselt.be
+website - http://www.phl.be/
+website - http://www.plazzahasselt.be/
+website - http://www.policarpo.be/
+website - http://www.pxl.be/
+website - http://www.sirris.be/
+website - http://www.studentenhuis-hubertus.be/
+website - http://www.sweet-coffee.be
+website - http://www.tastybowl.be
+website - http://www.testroniclabs.com/about-us/global-locations/belgium
+website - http://www.uhasselt.be/
+website - http://www.valiant.be/
+website - http://www.wefashion.com/nl_NL/home
+website - http://www.z33.be
+website - http://www.zuppasoupbar.be/
+website - www.limburg.be/pbl
+wheelchair
+wheelchair - yes
+wifi
+wifi - free
+wikipedia
+wikipedia - nl:Hogeschool PXL
+wikipedia - nl:Katholieke Hogeschool Limburg
+wikipedia - nl:Zoo van Antwerpen
+zone:traffic
+zone:traffic - BE:urban
