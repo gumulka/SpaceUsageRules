@@ -21,6 +21,7 @@ import de.uni_hannover.spaceusagerules.core.Image;
 import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Way;
 import de.uni_hannover.spaceusagerules.fragments.MapHandler;
+import de.uni_hannover.spaceusagerules.test.Population;
 
 /**
  * Created by gumulka on 10/10/14.
@@ -35,11 +36,11 @@ public class CupUpdateListener extends AsyncTask<Coordinate, Void, List<Way>> {
     	this.position = position;
         // Called when a new location is found by the network location provider.
         ConnectivityManager connMgr = (ConnectivityManager)
-                Start.context().getSystemService(Context.CONNECTIVITY_SERVICE);
+                MainActivity.context().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
         	try {
-        		AssetManager assetManager = Start.context().getAssets();
+        		AssetManager assetManager = MainActivity.context().getAssets();
         		String filename = String.format(Locale.GERMAN, "%04d.jpg",position+1);
         		InputStream ins = assetManager.open(filename);
         		location = Image.readCoordinates(ins);
@@ -50,25 +51,10 @@ public class CupUpdateListener extends AsyncTask<Coordinate, Void, List<Way>> {
         } // */
     }
 	
-	private double calcDist(Coordinate c, Way w, Map<String,Double> weights) {
-		double distance = c.distanceTo(w.getCoordinates());
-		String combine;
-		for(String s : w.getTags().keySet()) {
-			combine = s + " - " + w.getValue(s);
-			if(weights.keySet().contains(s)) {
-				distance += weights.get(s);
-			}
-			if(weights.keySet().contains(combine)) {
-				distance += weights.get(combine);
-			}
-		}
-		return distance;
-	}
-	
 	private Map<String,Double> readWeights(String attribute)  {
         String filename = "Rules.txt";
         Map<String,Double> blub = new TreeMap<String,Double>();
-        AssetManager assetManager = Start.context().getAssets();
+        AssetManager assetManager = MainActivity.context().getAssets();
         try {
             InputStream ins = assetManager.open(filename);
 
@@ -100,7 +86,7 @@ public class CupUpdateListener extends AsyncTask<Coordinate, Void, List<Way>> {
 	private List<String> readAttributes(int postion) {
 		List<String> attributes = new LinkedList<String>();
         String filename = "Data.txt";
-        AssetManager assetManager = Start.context().getAssets();
+        AssetManager assetManager = MainActivity.context().getAssets();
         try {
             InputStream ins = assetManager.open(filename);
 
@@ -136,10 +122,10 @@ public class CupUpdateListener extends AsyncTask<Coordinate, Void, List<Way>> {
 		for(Way w : ways) {
 			if(best==null) {
 				best = w;
-				distance = calcDist(l,w,weights);
+				distance = Population.calcDist(l,w,weights);
 				continue;
 			}
-			d = calcDist(l, w,weights);
+			d = Population.calcDist(l, w,weights);
 			if(d<distance) {
 				best = w;
 				distance = d;
@@ -158,7 +144,7 @@ public class CupUpdateListener extends AsyncTask<Coordinate, Void, List<Way>> {
     protected void onPostExecute(List<Way> ways) {
         if(obsolete)
             return;
-        MapHandler res = (MapHandler) ((Start) Start.context()).getSupportFragmentManager().findFragmentById(R.id.map_fragment);
+        MapHandler res = (MapHandler) ((MainActivity) MainActivity.context()).getSupportFragmentManager().findFragmentById(R.id.map_fragment);
         res.addOSMData(ways);
     } // */
 }

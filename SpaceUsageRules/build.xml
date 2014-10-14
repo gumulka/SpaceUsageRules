@@ -10,5 +10,12 @@
             </manifest>
             <fileset dir="bin"/>
         </jar>
+        <jar destfile="../HelferApp/libs/InMa_Core.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="de.uni_hannover.spaceusagerules.test.Main"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="bin"/>
+        </jar>
     </target>
 </project>

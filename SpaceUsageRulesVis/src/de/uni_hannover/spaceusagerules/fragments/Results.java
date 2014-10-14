@@ -33,7 +33,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import de.uni_hannover.spaceusagerules.LocationUpdateListener;
 import de.uni_hannover.spaceusagerules.R;
-import de.uni_hannover.spaceusagerules.Start;
+import de.uni_hannover.spaceusagerules.MainActivity;
 import de.uni_hannover.spaceusagerules.core.Way;
 
 public class Results extends ListFragment {
@@ -65,7 +65,7 @@ public class Results extends ListFragment {
         Toast.makeText(getActivity().getApplicationContext(), "Suche nach Ort.", Toast.LENGTH_SHORT).show();
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
-        LocationListener locationListener = new LocationUpdateListener((Start) getActivity());
+        LocationListener locationListener = new LocationUpdateListener((MainActivity) getActivity());
 
 // Register the listener with the Location Manager to receive location updates
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);

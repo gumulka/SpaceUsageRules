@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -22,6 +21,14 @@ import de.uni_hannover.spaceusagerules.core.Way;
 
 public class Genetic extends Thread{
 
+	private static final int popsize = 300;
+	private static final int maxRounds = 5000;
+	private static final int minRounds = 500;
+	private static final int copyBest = popsize*1/10;
+	private static final int merge = popsize*4/10;
+	private static final int mergeFrom = popsize/2;
+	private static final int targetMinFitness = Population.maxFitness*80/100;
+	
 	private List<Polyline> truths;
 	private List<Coordinate> starting;
 	private List<List<Way>> possebilities;
@@ -36,7 +43,7 @@ public class Genetic extends Thread{
 		pops = new ArrayList<Population>();
 		nextGen = new ArrayList<Population>();
 
-		for(int i = 0; i<200; i++) {
+		for(int i = 0; i<popsize; i++) {
 			pops.add(new Population());
 		}
 		
@@ -68,16 +75,16 @@ public class Genetic extends Thread{
 	
 	private void nextGen() throws IOException {
 		Collections.sort(pops);
-		for(int i = 0; i<50; i++) {
+		for(int i = 0; i<copyBest; i++) {
 			nextGen.add(pops.get(i));
 		}
 		Random r = new Random();
-		for(int i = 0; i<80; i++) {
-			int a = r.nextInt(80);
-			int b = r.nextInt(80);
+		for(int i = 0; i<merge; i++) {
+			int a = r.nextInt(mergeFrom);
+			int b = r.nextInt(mergeFrom);
 			nextGen.add(pops.get(a).recombine(pops.get(b)));
 		}
-		for(int i = 0; i<70; i++) {
+		for(int i = 0; i<(popsize-merge-copyBest); i++) {
 			nextGen.add(new Population());
 		}
 		pops = nextGen;
@@ -85,18 +92,29 @@ public class Genetic extends Thread{
 	}
 	
 	public void run() {
-		for(int i = 0; i<1000; i++) {
+		for(int i = 0; i<maxRounds; i++) {
 			calcFitness();
 			try {
 				nextGen();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			if(i>minRounds && pops.get(0).getFitness()>targetMinFitness)
+				break;
 		}
-		System.out.println(suche + " -> " + pops.get(0));
+		if(pops.size()!=popsize)
+			System.out.println(pops.size());
+		System.out.println(suche + "(" + truths.size() + ") -> " + pops.get(0));
 	//	System.out.println(new Date());
 	}
 
+	public Population getBest() {
+		return pops.get(0);
+	}
+	
+	public String getRule() {
+		return suche;
+	}
 	
 	
 }

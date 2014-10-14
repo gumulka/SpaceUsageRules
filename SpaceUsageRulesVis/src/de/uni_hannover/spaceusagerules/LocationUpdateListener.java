@@ -21,9 +21,9 @@ import de.uni_hannover.spaceusagerules.fragments.Results;
 public class LocationUpdateListener implements LocationListener {
 
         private static Location l;
-        private Start a;
+        private MainActivity a;
 
-        public LocationUpdateListener(Start activity){
+        public LocationUpdateListener(MainActivity activity){
             this.a = activity;
         }
 
@@ -51,9 +51,9 @@ public class LocationUpdateListener implements LocationListener {
     }
 
     private class DownloadWebpageTask extends AsyncTask<Location, Void, List<Way>> {
-        private Start a;
+        private MainActivity a;
 
-        public DownloadWebpageTask(Start activity) {
+        public DownloadWebpageTask(MainActivity activity) {
             this.a = activity;
         }
         @Override

@@ -16,8 +16,15 @@ import de.uni_hannover.spaceusagerules.core.Way;
 
 public class Population implements Comparable<Population>{
 
+	private static final int lengthInfluence = 300; // high -> low influence
+	public static final int maxFitness = 10000;
+	
 	private int fitness;
 	private Map<String,Double> weights;
+	
+	public int getFitness() {
+		return fitness;
+	}
 	
 	public Population() throws IOException {
 		weights = new TreeMap<String,Double>();
@@ -27,7 +34,9 @@ public class Population implements Comparable<Population>{
 		String line;
 		while((line = br.readLine()) != null) {
 			if(r.nextBoolean() && r.nextBoolean() && r.nextBoolean()) {
-				weights.put(line, r.nextDouble());
+				double d = r.nextDouble();
+				d *=2;
+				weights.put(line, d);
 			}
 		}
 		br.close();
@@ -37,16 +46,29 @@ public class Population implements Comparable<Population>{
 		weights = new TreeMap<String,Double>();
 	}
 	
+	public double getValue(String key) {
+		if(weights.containsKey(key))
+			return weights.get(key);
+		else
+			return 0;
+	}
+	
 	public Population recombine(Population p) {
 		Random r = new Random();
 		Population n = new Population(false);
 		for(Entry<String,Double> e : weights.entrySet()) {
-			if(r.nextBoolean() && r.nextBoolean())
+			if(r.nextBoolean())
 				n.addEntry(e);
 		}
+		double d;
 		for(Entry<String,Double> e : p.weights.entrySet()) {
-			if(r.nextBoolean() && r.nextBoolean())
+			if(r.nextBoolean()) {
+				d = n.getValue(e.getKey());
+				if(d!=0){
+					e.setValue((e.getValue()+d)/2);
+				}
 				n.addEntry(e);
+			}
 		}
 		return n;
 	}
@@ -55,16 +77,18 @@ public class Population implements Comparable<Population>{
 		weights.put(e.getKey(), e.getValue());
 	}
 	
-	private double calcDist(Coordinate c, Way w) {
+	public static double calcDist(Coordinate c, Way w, Map<String,Double> weights) {
 		double distance = c.distanceTo(w.getCoordinates());
+//		distance *= 1000;
+		distance += 1;
 		String combine;
 		for(String s : w.getTags().keySet()) {
 			combine = s + " - " + w.getValue(s);
 			if(weights.keySet().contains(s)) {
-				distance += weights.get(s);
+				distance *= weights.get(s);
 			}
 			if(weights.keySet().contains(combine)) {
-				distance += weights.get(combine);
+				distance *= weights.get(combine);
 			}
 		}
 		return distance;
@@ -80,10 +104,10 @@ public class Population implements Comparable<Population>{
 			for(Way w : possiblities.get(i)) {
 				if(best==null) {
 					best = w;
-					distance = calcDist(l,w);
+					distance = calcDist(l,w, weights);
 					continue;
 				}
-				d = calcDist(l, w);
+				d = calcDist(l, w, weights);
 				if(d<distance) {
 					best = w;
 					distance = d;
@@ -91,10 +115,12 @@ public class Population implements Comparable<Population>{
 			}
 			double overlapArea = best.getPolyline().boundingBoxOverlapArea(truths.get(i));
 			overlapArea = Math.min(overlapArea/best.getPolyline().boundingBoxArea(), overlapArea/truths.get(i).boundingBoxArea());
-			fitness += 10000000 * (overlapArea);
+			fitness += maxFitness * (overlapArea);
 		}
-		
-		fitness /= (weights.size()+1);
+		double bla = (weights.size()+ lengthInfluence);
+		bla = lengthInfluence/bla;
+		fitness = (int) (fitness * bla);
+		fitness /= truths.size();
 	}
 	
 	@Override
@@ -103,11 +129,13 @@ public class Population implements Comparable<Population>{
 	}
 
 	public String toString() {
-		String ret = "[" + fitness;
+		String ret = "[";
 		for(Entry<String,Double> e: weights.entrySet()) {
-			ret += ", " + e.getKey() + " -> " + e.getValue();
+			if(ret.length()!=1)
+				ret += ", ";
+			ret += e.getKey() + " -> " + e.getValue();
 		}
-		ret += "]";
+		ret += "] " + fitness;
 		return ret;
 	}
 }

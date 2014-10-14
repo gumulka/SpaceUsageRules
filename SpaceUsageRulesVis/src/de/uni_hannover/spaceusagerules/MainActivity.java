@@ -13,8 +13,8 @@ import de.uni_hannover.spaceusagerules.fragments.OnListItemSelected;
 import de.uni_hannover.spaceusagerules.fragments.Results;
 
 
-public class Start extends FragmentActivity implements OnListItemSelected {
-    private static Start mApp = null;
+public class MainActivity extends FragmentActivity implements OnListItemSelected {
+    private static MainActivity mApp = null;
 
     private CupUpdateListener cul = null;
 
