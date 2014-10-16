@@ -1,4 +1,4 @@
-package de.uni_hannover.spaceusagerules.test;
+package de.uni_hannover.spaceusagerules.gen_alg;
 
 import java.io.BufferedReader;
 import java.io.File;
