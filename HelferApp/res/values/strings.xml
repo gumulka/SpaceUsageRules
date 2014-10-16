@@ -15,6 +15,12 @@
     <string name="start_search">Beginne mit Suche</string>
     <string name="your_position">Deine Position</string>
     
+    <string name="right">Übernehmen</string>
+    <string name="paint">Bereich einzeichnen.</string>
+    <string name="cancel">Abbrechen</string>
+    
+    <string name="no_data_transmit">Daten konnten nicht übertragen werden.</string>
+    <string name="data_transmit">Daten übertragen.</string>
     <string name="start_text">Bitte warten sie, während Ihre Position bestimmt und Nutzungsregeln in der Nähe gesucht werden.</string>
     <string name="no_network">Netzwerk nicht verfügbar.</string>
     <string name="no_location">Position nicht verfügbar.</string>

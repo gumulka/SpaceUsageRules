@@ -28,6 +28,15 @@ public class InsideTest {
 		line.add(new Coordinate(52.38000,9.30500));
 		c = new Coordinate(52.38005,9.305052);
 		System.out.println(c.inside(line));
+		
+		line.add(new Coordinate(0.38000,0.30500));
+		line.add(new Coordinate(0.38010,0.30500));
+		line.add(new Coordinate(0.38010,0.30510));
+		line.add(new Coordinate(0.38000,0.30510));
+		line.add(new Coordinate(0.38000,0.30500));
+		c = new Coordinate(0.38005,0.305052);
+		System.out.println(c.inside(line));
+		
 		line = new LinkedList<Coordinate>();
 		line.add(new Coordinate(5,9));
 		line.add(new Coordinate(5,15));
@@ -36,6 +45,7 @@ public class InsideTest {
 		line.add(new Coordinate(5,9));
 		c = new Coordinate(25,10);
 		System.out.println(c.inside(line));
+
 	}
 
 }

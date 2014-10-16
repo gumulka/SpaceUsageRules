@@ -1,5 +1,6 @@
 package de.uni_hannover.spaceusagerules.core;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
@@ -17,6 +18,15 @@ public class Coordinate {
 		this.longitude = longitude;
 	}
 
+	/** 
+	 * substracts another coordinate from this.
+	 * @param c the other coordinate
+	 * @return the difference between the two coordinates.
+	 */
+	public Coordinate minus(Coordinate c) {
+		return new Coordinate(latitude - c.latitude, longitude-c.longitude);
+	}
+	
 	/**
 	 * Computes the quadratic distance from this point to another one.
 	 * Pulling the square root is thereby left out. That is useful for comparing distances. 
@@ -54,10 +64,17 @@ public class Coordinate {
 	 * @param polygon List of points that forms the polygon, first and last points have to be the same
 	 * @return <code>true</code> if this lies inside - <code>false</code> otherwise
 	 */
-	public boolean inside(List<Coordinate> polygon) {
+	public boolean inside(List<Coordinate> poly) {
+		
+		List<Coordinate> polygon = new LinkedList<Coordinate>();
+		for(Coordinate c : poly) {
+			polygon.add(this.minus(c));
+		} 
+		Coordinate c = new Coordinate(0,0);
+		
 
 		//create line parallel to the x-Axis through this
-		Line cast = new Line(this, new Coordinate(latitude, longitude+1.));
+		Line cast = new Line(c, new Coordinate(0, 1.));
 		//repeat until no point is on the line: rotate the line, by moving the end point a fraction along the normal vector
 		while(pointsOnLine(polygon, cast)){
 			Coordinate newEnd = cast.getEnd();
@@ -74,8 +91,8 @@ public class Coordinate {
 		Line testedLine;
 		for(int i=0;i<edges.size();i++){
 			testedLine = edges.get(i);
-			if(testedLine.getStart().longitude < longitude 
-				&& testedLine.getEnd().longitude < longitude)
+			if(testedLine.getStart().longitude < 0 
+				&& testedLine.getEnd().longitude < 0)
 			{
 				edges.remove(i);
 				i--;

@@ -15,7 +15,26 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="@android:color/white"
-        android:gravity="center" />
+        android:background="@android:color/background_dark"
+        android:textColor="@android:color/primary_text_dark"
+        android:gravity="center"
+        android:textSize="@dimen/map_big_font" />
+
+    <Button
+        android:id="@+id/right_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:onClick="addTagToOsm"
+        android:text="@string/right" />
+
+    <Button
+        android:id="@+id/paint_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/paint" />
 
 </RelativeLayout>
