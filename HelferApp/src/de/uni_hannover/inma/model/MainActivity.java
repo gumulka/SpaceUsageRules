@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.location.Location;
@@ -19,6 +20,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -42,6 +44,7 @@ public class MainActivity extends ActionBarActivity {
 
     private List<String> possibilities;
     private AddTagMap tagMap = null;
+    LocationListener locationListener;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +52,18 @@ public class MainActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_main);
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        LocationListener locationListener = new LocationUpdateListener((MainActivity) this);
+        locationListener = new LocationUpdateListener((MainActivity) this);
 
         // Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 10, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, locationListener);
         
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment(R.layout.main_fragment)).commit();
 		}
+		else
+			System.err.println(savedInstanceState);
 		
 		possibilities = new LinkedList<String>();
 		AssetManager assetManager = getAssets();
@@ -121,6 +125,11 @@ public class MainActivity extends ActionBarActivity {
 		else
 			getSupportFragmentManager().beginTransaction()
 			.add(R.id.container, new Umgebung(umgebung)).commit();
+/*
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // Register the listener with the Location Manager to receive location updates
+        locationManager.re.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);  // */
 	}
 	
 	public void showMap(Tag t) {
@@ -145,7 +154,14 @@ public class MainActivity extends ActionBarActivity {
 	
 	public void addTagToMap(String tagname) {
 		LatLng l = new LatLng(location.getLatitude(),location.getLongitude());
-		tagMap = new AddTagMap(tagname,l,ways);
+
+		tagMap = new AddTagMap();
+		tagMap.setName(tagname);
+		tagMap.setWays(ways);
+		tagMap.setLocation(l);
+		TextView textView = (TextView) findViewById(R.id.add_tag_name);
+		textView.setText(tagname);
+
 		getSupportFragmentManager().beginTransaction()
 		.add(R.id.container, tagMap).addToBackStack(null).commit();
 	}

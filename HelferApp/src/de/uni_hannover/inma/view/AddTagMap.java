@@ -36,15 +36,26 @@ public class AddTagMap extends Fragment implements OnMapClickListener, OnClickLi
 	public Way getNewWay() {
 		return newlyInsertet;
 	}
-
-	public AddTagMap(String name, LatLng location, List<Way> ways) {
+	
+	public void setName(String name) {
 		this.name = name;
-		this.location = location;
-		this.ways = ways;
-		for(Way w : ways) 
-			w.addTag("sur:tag", name);
+		if(this.ways!=null)
+			for(Way w : ways) 
+				w.addTag("sur:tag", name);
 	}
-
+	
+	public void setLocation(LatLng location) {
+		this.location = location;
+		mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 19));
+	}
+	
+	public void setWays(List<Way> ways) {
+		this.ways = ways;
+		if(this.name!=null)
+			for(Way w : ways) 
+				w.addTag("sur:tag", name);
+	}
+	
 	@Override
 	public void onMapClick(LatLng l) {
 		Coordinate c = new Coordinate(l.latitude, l.longitude);
@@ -90,9 +101,6 @@ public class AddTagMap extends Fragment implements OnMapClickListener, OnClickLi
 		mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 		mMap.getUiSettings().setZoomControlsEnabled(false);
 		mMap.setOnMapClickListener(this);
-
-		TextView textView = (TextView) rootView.findViewById(R.id.add_tag_name);
-		textView.setText(name);
 
 		paint_button = (Button) rootView.findViewById(R.id.paint_button);
 		paint_button.setOnClickListener(this);

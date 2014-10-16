@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
+import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 
 import android.os.AsyncTask;
@@ -38,7 +39,8 @@ public class InformUsTask extends AsyncTask<Way, Integer, Integer> {
 			con.data("standort",location.toString());
 			
 			try {
-				con.execute();
+				Response res = con.execute();
+				System.err.println(res.body());
 			} catch (IOException e) {
 				return -1;
 			}
