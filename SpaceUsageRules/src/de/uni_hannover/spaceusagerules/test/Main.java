@@ -44,11 +44,11 @@ public class Main {
 			g.start();
 			gens.add(g);
 		}
-		f = new File("../SpaceUsageRulesVis/assets/Rules2.txt");
-		BufferedWriter bw = new BufferedWriter(new FileWriter(f));
 		for(Genetic g : gens) {
 			g.join();
 		}
+		f = new File("../SpaceUsageRulesVis/assets/Rules.txt");
+		BufferedWriter bw = new BufferedWriter(new FileWriter(f));
 		for(Genetic g : gens) {
 			bw.write(g.getRule());
 			bw.write(" -> ");

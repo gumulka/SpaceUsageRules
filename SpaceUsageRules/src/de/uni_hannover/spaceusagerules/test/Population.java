@@ -16,7 +16,6 @@ import de.uni_hannover.spaceusagerules.core.Way;
 
 public class Population implements Comparable<Population>{
 
-	private static final int lengthInfluence = 300; // high -> low influence
 	public static final int maxFitness = 10000;
 	
 	private int fitness;
@@ -24,6 +23,26 @@ public class Population implements Comparable<Population>{
 	
 	public int getFitness() {
 		return fitness;
+	}
+	
+	public Population(Population p) throws IOException {
+		weights = new TreeMap<String,Double>();
+		weights.putAll(p.weights);
+		Random r = new Random();
+		File f = new File("possibilities.txt");
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		String line;
+		while((line = br.readLine()) != null) {
+			if(r.nextBoolean() && r.nextBoolean() && r.nextBoolean()) {
+				double d = r.nextDouble();
+				d *=2;
+				if(weights.keySet().contains(line) && r.nextBoolean())
+					weights.remove(line);
+				else
+					weights.put(line, d);
+			}
+		}
+		br.close();
 	}
 	
 	public Population() throws IOException {
@@ -94,37 +113,39 @@ public class Population implements Comparable<Population>{
 		return distance;
 	}
 	
+	public static Way getNearestArea(Coordinate c, List<Way> ways, Map<String,Double> weights) {
+		Way best = null;
+		double distance = Double.MAX_VALUE;
+		double d;
+		for(Way w : ways) {
+			if(!w.isArea())
+				continue;
+			d = calcDist(c, w, weights);
+			if(d<distance || (d==distance && w.getPolyline().boundingBoxArea() < best.getPolyline().boundingBoxArea())) {
+				best = w;
+				distance = d;
+			}
+		}
+		return best;
+	}
+	
 	public void calcFitness(List<Polyline> truths, List<List<Way>> possiblities, List<Coordinate> locations) {
 		Way best = null;
-		double distance = 0;
-		double d;
 		fitness = 0;
 		for(int i = 0; i<truths.size(); i++) {
 			Coordinate l = locations.get(i);
-			for(Way w : possiblities.get(i)) {
-				if(best==null) {
-					best = w;
-					distance = calcDist(l,w, weights);
-					continue;
-				}
-				d = calcDist(l, w, weights);
-				if(d<distance) {
-					best = w;
-					distance = d;
-				}
-			}
+			best = getNearestArea(l, possiblities.get(i), weights);
 			double overlapArea = best.getPolyline().boundingBoxOverlapArea(truths.get(i));
 			overlapArea = Math.min(overlapArea/best.getPolyline().boundingBoxArea(), overlapArea/truths.get(i).boundingBoxArea());
 			fitness += maxFitness * (overlapArea);
 		}
-		double bla = (weights.size()+ lengthInfluence);
-		bla = lengthInfluence/bla;
-		fitness = (int) (fitness * bla);
 		fitness /= truths.size();
 	}
 	
 	@Override
 	public int compareTo(Population o) {
+		if(o.fitness==this.fitness)
+			return this.weights.size()-o.weights.size();
 		return o.fitness-this.fitness;
 	}
 

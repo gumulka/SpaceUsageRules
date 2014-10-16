@@ -28,14 +28,7 @@ public class Polyline {
 		boundingBox[2] =  10000;
 		boundingBox[3] = -10000;
 		for(Coordinate c : coords) {
-			if(c.latitude < boundingBox[0])
-				boundingBox[0] = c.latitude;
-			if(c.latitude > boundingBox[1])
-				boundingBox[1] = c.latitude;
-			if(c.longitude < boundingBox[2])
-				boundingBox[2] = c.longitude;
-			if(c.longitude > boundingBox[3])
-				boundingBox[3] = c.longitude;
+			add(c);
 		}
 	}
 	
@@ -64,6 +57,16 @@ public class Polyline {
 			boundingBox[3] = c.longitude;
 		}
 		points.addAll(coords);
+	}
+	
+	public List<Coordinate> getBoundingBoxPolygon() {
+		List<Coordinate> back = new LinkedList<Coordinate>();
+		back.add(new Coordinate(boundingBox[0],boundingBox[2]));
+		back.add(new Coordinate(boundingBox[1],boundingBox[2]));
+		back.add(new Coordinate(boundingBox[1],boundingBox[3]));
+		back.add(new Coordinate(boundingBox[0],boundingBox[3]));
+		back.add(new Coordinate(boundingBox[0],boundingBox[2]));
+		return back;
 	}
 	
 	/**
@@ -120,22 +123,10 @@ public class Polyline {
 	public double boundingBoxOverlapArea(Polyline p2) {
 		double[] bb = p2.getBoundingBox();
 		double x_min, x_max, y_min, y_max;
-		if(boundingBox[0]<bb[0])
-			x_min= bb[0];
-		else
-			x_min = boundingBox[0];
-		if(boundingBox[1]<bb[1])
-			x_max= boundingBox[1];
-		else
-			x_max = bb[1];
-		if(boundingBox[2]<bb[2])
-			y_min= bb[2];
-		else
-			y_min = boundingBox[2];
-		if(boundingBox[3]<bb[3])
-			y_max = boundingBox[3];
-		else
-			y_max= bb[3];
+		x_min = Math.max(boundingBox[0],bb[0]);
+		x_max = Math.min(boundingBox[1],bb[1]);
+		y_min = Math.max(boundingBox[2],bb[2]);
+		y_max = Math.min(boundingBox[3],bb[3]);
 		if(x_min>x_max)
 			return 0;
 		if(y_min>y_max)
@@ -150,7 +141,7 @@ public class Polyline {
 			return 0;
 		return (boundingBox[1] - boundingBox[0])*(boundingBox[3]-boundingBox[2]);
 	}
-	
+	/*
 	public Polyline overlapArea(Polyline p2) {
 		// if one of them is not an Area, then there is no intersecting Area possible
 		if(!isArea() || !p2.isArea())
@@ -165,5 +156,5 @@ public class Polyline {
 	
 	public static double calculateArea(List<Coordinate> area){
 		return 0;
-	}
+	} // */
 }

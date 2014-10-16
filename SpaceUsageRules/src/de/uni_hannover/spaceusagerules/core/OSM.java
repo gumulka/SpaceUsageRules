@@ -32,7 +32,23 @@ public class OSM {
         return getObjectList(c, (float) 0.0005);
     }
 
-    public static List<Way> getObjectList(Coordinate c, float radius){
+    public static List<Way> getObjectList(Coordinate c, float radius) {
+    	if(buffer) {
+    		String filename = String.format(Locale.GERMAN, "buffer/%02.4f_%02.4f_%02.4f.xml",c.latitude, c.longitude, radius);
+    		return getObjectList(c, radius, new File(filename));
+    	}
+    	return getObjectList(c, radius, null);
+    }
+    
+    public static List<Way> getObjectList(Coordinate c, File f) {
+    	boolean b = buffer;
+    	buffer = true;
+    	List<Way> back = getObjectList(c, (float) 0.0005, f);
+    	buffer = b;
+    	return back;
+    }
+    
+    public static List<Way> getObjectList(Coordinate c, float radius, File f){
         List<Way> newObjects = new LinkedList<Way>();
         Map<Long,Coordinate> coords = new TreeMap<Long,Coordinate>();
         String connection = "http://openstreetmap.org/api/0.6/map?bbox="
@@ -40,14 +56,12 @@ public class OSM {
                 + (c.longitude+radius) + "," + (c.latitude+radius);
         try {
         	Document doc = null;
-    		String filename = String.format(Locale.GERMAN, "buffer/%02.4f_%02.4f_%02.4f.xml",c.latitude, c.longitude, radius);
-    		File f = new File(filename);
-        	if(buffer && f.exists() && f.canRead()) {
-        			doc = Jsoup.parse(f, "UTF-8");
+    		if(buffer && f!= null && f.exists() && f.canRead()) {
+    			doc = Jsoup.parse(f, "UTF-8");
         	} else {
         		Connection.Response res = Jsoup.connect(connection).userAgent("InMa SpaceUsageRules").followRedirects(true).execute();
         		doc = res.parse();
-        		if(buffer) {
+        		if(buffer && f!=null) {
         			FileWriter fw = new FileWriter(f);
         			BufferedWriter bfw = new BufferedWriter(fw);
         			bfw.write(res.body());

@@ -1,0 +1,12 @@
+smoking
+dog_waste
+cellphone
+access:dog
+food
+swimming
+access:motorvehicles
+noise
+open_fire
+access:car
+fishing
+littering

@@ -15,7 +15,17 @@
  */
 package de.uni_hannover.spaceusagerules.fragments;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import android.app.Activity;
+import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -25,6 +35,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import de.uni_hannover.spaceusagerules.R;
 
@@ -38,13 +50,30 @@ public class Cup extends ListFragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.list_view, container, false);
     }
+    private Map<Integer,Integer> listToID = new TreeMap<Integer,Integer>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String[] numbers = new String[96];
-        for (int i = 0; i < 96; i++) {
-            numbers[i] = getString(R.string.show_number) + (i + 1);
+        List<String> numbers = new LinkedList<String>();
+        AssetManager assetManager = getActivity().getAssets();
+        try {
+            InputStream ins = assetManager.open("Data.txt");
+
+            BufferedReader r = new BufferedReader(new InputStreamReader(ins));
+            String line;
+            while ((line = r.readLine()) != null) {
+                String[] data = line.split(",");
+                if(data.length==1)
+                    continue;
+                int id = Integer.parseInt(data[0]);
+                if(listToID.values().contains(id))
+                	continue;
+                listToID.put(numbers.size(), id);
+                numbers.add(getString(R.string.show_number) + " " + id);
+            }
+        }catch(IOException e) {
+            e.printStackTrace();
         }
         // We need to use a different list item layout for devices older than Honeycomb
         int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
@@ -87,6 +116,6 @@ public class Cup extends ListFragment {
         getListView().setItemChecked(position, true);
 
         // Notify the parent activity of selected item
-        mCallback.onItemSelected(position);
+        mCallback.onItemSelected(listToID.get(position));
     }
 }

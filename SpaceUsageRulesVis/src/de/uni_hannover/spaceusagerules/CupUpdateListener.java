@@ -1,6 +1,7 @@
 package de.uni_hannover.spaceusagerules;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,6 +17,7 @@ import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.widget.Toast;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Image;
 import de.uni_hannover.spaceusagerules.core.OSM;
@@ -31,6 +33,7 @@ public class CupUpdateListener extends AsyncTask<Coordinate, Void, List<Way>> {
     private boolean obsolete = false;
     Coordinate location;
     int position;
+    File file;
 
     public CupUpdateListener(int position) {
     	this.position = position;
@@ -38,17 +41,24 @@ public class CupUpdateListener extends AsyncTask<Coordinate, Void, List<Way>> {
         ConnectivityManager connMgr = (ConnectivityManager)
                 MainActivity.context().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-        	try {
-        		AssetManager assetManager = MainActivity.context().getAssets();
-        		String filename = String.format(Locale.GERMAN, "%04d.jpg",position+1);
-        		InputStream ins = assetManager.open(filename);
-        		location = Image.readCoordinates(ins);
-        		execute(location);
-        	} catch (Exception e) {
-        		e.printStackTrace();
-        	}
-        } // */
+
+       	try {
+    		AssetManager assetManager = MainActivity.context().getAssets();
+    		String filename = String.format(Locale.GERMAN, "%04d.jpg",position);
+    		InputStream ins = assetManager.open(filename);
+    		location = Image.readCoordinates(ins);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+		String filename = String.format(Locale.GERMAN, "%02.4f_%02.4f.xml",location.latitude, location.longitude);
+		file = new File(MainActivity.context().getFilesDir(), filename);
+
+		if (networkInfo != null && networkInfo.isConnected() || (file.exists() && file.canRead())) {
+    		execute(location);
+        }
+		else
+			Toast.makeText(MainActivity.context(), "Kein Netzwerk verfügbar", Toast.LENGTH_LONG).show();
+		// */
     }
 	
 	private Map<String,Double> readWeights(String attribute)  {
@@ -95,7 +105,7 @@ public class CupUpdateListener extends AsyncTask<Coordinate, Void, List<Way>> {
             r.readLine();
             while ((line = r.readLine()) != null) {
             	String[] s = line.split(",");
-            	if(Integer.parseInt(s[0]) == position+1){
+            	if(Integer.parseInt(s[0]) == position){
             		attributes.add(s[3].trim());
             	}
             }
@@ -115,22 +125,8 @@ public class CupUpdateListener extends AsyncTask<Coordinate, Void, List<Way>> {
     			}
     		}
     	}
-    	List<Way> ways = OSM.getObjectList(l); //,(float) 0.0015);
-    	Way best = null;
-    	double distance = 100000;
-    	double d;
-		for(Way w : ways) {
-			if(best==null) {
-				best = w;
-				distance = Population.calcDist(l,w,weights);
-				continue;
-			}
-			d = Population.calcDist(l, w,weights);
-			if(d<distance) {
-				best = w;
-				distance = d;
-			}
-		}
+    	List<Way> ways = OSM.getObjectList(l, file); //,(float) 0.0015);
+    	Way best = Population.getNearestArea(l,ways,weights);
     	best.addTag("InformatiCup", "guess");
     	return ways;
     }

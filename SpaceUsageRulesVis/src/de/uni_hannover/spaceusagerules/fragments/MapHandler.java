@@ -121,7 +121,7 @@ public class MapHandler extends SupportMapFragment {
         lonmin =  10000;
         lonmax = -10000;
 
-        String filename = String.format(Locale.GERMAN,"%04d.truth.kml",position+1);
+        String filename = String.format(Locale.GERMAN,"%04d.truth.kml",position);
         AssetManager assetManager = getActivity().getAssets();
         StringBuilder total = new StringBuilder();
         try {
@@ -151,7 +151,7 @@ public class MapHandler extends SupportMapFragment {
                 String[] data = line.split(",");
                 if(data.length==1)
                     continue;
-                if(Integer.parseInt(data[0]) == (position+1)) {
+                if(Integer.parseInt(data[0]) == position) {
                     if(mo==null) {
                         mo = new MarkerOptions();
                         LatLng my = new LatLng(Double.parseDouble(data[1]),Double.parseDouble(data[2]));
@@ -167,7 +167,7 @@ public class MapHandler extends SupportMapFragment {
         }
 
         try {
-            filename = String.format(Locale.GERMAN, "%04d.jpg",position+1);
+            filename = String.format(Locale.GERMAN, "%04d.jpg",position);
             InputStream ins = assetManager.open(filename);
             Coordinate real = Image.readCoordinates(ins);
             MarkerOptions mo = new MarkerOptions();
