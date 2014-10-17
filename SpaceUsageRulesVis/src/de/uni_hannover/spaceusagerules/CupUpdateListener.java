@@ -23,7 +23,7 @@ import de.uni_hannover.spaceusagerules.core.Image;
 import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Way;
 import de.uni_hannover.spaceusagerules.fragments.MapHandler;
-import de.uni_hannover.spaceusagerules.test.Population;
+import de.uni_hannover.spaceusagerules.gen_alg.Population;
 
 /**
  * Created by gumulka on 10/10/14.
@@ -58,7 +58,6 @@ public class CupUpdateListener extends AsyncTask<Coordinate, Void, List<Way>> {
         }
 		else
 			Toast.makeText(MainActivity.context(), "Kein Netzwerk verfügbar", Toast.LENGTH_LONG).show();
-		// */
     }
 	
 	private Map<String,Double> readWeights(String attribute)  {
@@ -142,5 +141,5 @@ public class CupUpdateListener extends AsyncTask<Coordinate, Void, List<Way>> {
             return;
         MapHandler res = (MapHandler) ((MainActivity) MainActivity.context()).getSupportFragmentManager().findFragmentById(R.id.map_fragment);
         res.addOSMData(ways);
-    } // */
+    }
 }

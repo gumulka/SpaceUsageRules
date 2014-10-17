@@ -31,6 +31,6 @@ proguard/
 .DS_Store
 .metadata/
 SpaceUsageRulesVis/libs/InMa_Core.jar
-
+HelferApp/libs/InMa_Core.jar
 
 SpaceUsageRules/buffer/

@@ -21,8 +21,8 @@ import de.uni_hannover.spaceusagerules.core.Way;
 
 public class Genetic extends Thread{
 
-	private static final int popsize = 400;
-	private static final int maxRounds = 50000;
+	private static final int popsize = 300;
+	private static final int maxRounds = 5000;
 	private static final int minRounds = 2000;
 	private static final int copyBest = popsize*1/10;
 	private static final int mutate = popsize*4/10;

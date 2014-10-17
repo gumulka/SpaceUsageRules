@@ -24,12 +24,14 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 
 import de.uni_hannover.inma.R;
+import de.uni_hannover.inma.controller.InformUsTask;
 import de.uni_hannover.inma.controller.LocationUpdateListener;
 import de.uni_hannover.inma.controller.QueryOsmTask;
 import de.uni_hannover.inma.view.AddTagFragment;
 import de.uni_hannover.inma.view.AddTagMap;
 import de.uni_hannover.inma.view.PlaceholderFragment;
 import de.uni_hannover.inma.view.Umgebung;
+import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Way;
 
 public class MainActivity extends ActionBarActivity {
@@ -39,6 +41,7 @@ public class MainActivity extends ActionBarActivity {
 	private List<Way> ways;
 
     private List<String> possibilities;
+    private AddTagMap tagMap = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -124,10 +127,27 @@ public class MainActivity extends ActionBarActivity {
 		
 	}
 	
+	public void addTagToOsm(View v) {
+		Way wa = tagMap.getNewWay();
+		if(wa!=null) {
+			new InformUsTask(this, new Coordinate(location.getLatitude(),location.getLongitude())).execute(wa);
+		}
+		else {
+			Way[] add = new Way[ways.size()];
+			int i = 0;
+			for(Way w : ways) {
+				if("true".equals(w.getValue("sur:clicked")))
+					add[i++] = w;
+			}
+			new InformUsTask(this, new Coordinate(location.getLatitude(),location.getLongitude())).execute(add);
+		}
+	}
+	
 	public void addTagToMap(String tagname) {
 		LatLng l = new LatLng(location.getLatitude(),location.getLongitude());
+		tagMap = new AddTagMap(tagname,l,ways);
 		getSupportFragmentManager().beginTransaction()
-		.add(R.id.container, new AddTagMap(tagname,l,ways)).commit();
+		.add(R.id.container, tagMap).addToBackStack(null).commit();
 	}
 	
 	public void updateLocation(Location l) {
