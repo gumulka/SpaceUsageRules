@@ -18,7 +18,8 @@ public class Line {
 	
 	/** normal vector of the line */
 	private Coordinate normalVector;
-	/** distance from the origin to the line */
+	/** distance from the origin to the line <BR>
+	 * it's the d in ax+by = d */
 	private double normalDistance;
 	
 	/** vector from start to end. Used as normal vector for an orthogonal line through start. */
@@ -76,9 +77,23 @@ public class Line {
 		return normalVector;
 	}
 	
-	private Coordinate basisTransformation(Coordinate p){
+	/**
+	 * Computes a change of basis with translation. The new origin is {@link #start}.
+	 * Standard x is mapped to the vector from {@link #start} to {@link #end}.
+	 * Standard y is mapped to {@link #normalVector}.
+	 * @param p point to transformed.
+	 * @return translated and transformed point.
+	 */
+	public Coordinate basisChange(Coordinate p){
 		
-		return null;
+		//new x is the distance to the line perpendicular to this line through start.
+		double newX = orientedHNFDistance(p, lineVector, inlineDistance);
+		
+		//new y is the distance to the this line
+		double newY = orientedHNFDistance(p, normalVector, normalDistance);
+		
+		//swap x and y since x is longitude and y is latitude
+		return new Coordinate(newY, newX);
 	}
 	
 	
@@ -100,6 +115,18 @@ public class Line {
 	 */
 	public double orientedDistanceTo(Coordinate c){
 		return orientedHNFDistance(c, normalVector, normalDistance);
+	}
+	
+	public boolean isOnLine(Coordinate p){
+		
+		Coordinate transformed = basisChange(p);
+		//in the transformed state, p has to have latitude 0 
+		//and longitude between 0 and 1 to be on this line.
+		if(transformed.latitude != 0.) return false;
+		if(transformed.longitude < 0.) return false;
+		if(transformed.latitude > 1.) return false;
+		
+		return true;
 	}
 	
 	/**
@@ -124,6 +151,69 @@ public class Line {
 		//if c is "between" return the absolute value of the distance to the line.
 		return Math.abs(orientedDistanceTo(c));
 	}
+	
+	/**
+	 * Checks if two line sections intersect.<BR>
+	 * Tip: If you want to work with the intersection, if there is one, use 
+	 * {@link #getIntersection(Line)} and {@link Coordinate#isNaN()} and avoid computing the
+	 * same intersection twice.
+	 * @param other the line to intersect with
+	 * @return <code>true</code> if the two line sections meet - <code>false</code> otherwise
+	 */
+	public boolean isIntersecting(Line other){
+		return !getIntersection(other).isNaN();
+	}
+	
+	/**
+	 * Computes the intersection of two line sections. Returns ({@link Double#NaN},{@link Double#NaN})
+	 * if the lines are parallel or the sections simply don't meet.<BR>
+	 * Tip: Use {@link Coordinate#isNaN()} to check if this is a valid intersection. That way 
+	 * {@link #isIntersecting(Line)} doesn't have to compute the intersection a second time.
+	 * @param other the line to intersect with.
+	 * @return intersections of two line sections or (NaN,NaN) if there is no intersection
+	 */
+	public Coordinate getIntersection(Line other){
+		Coordinate intersection = getCrossingPoint(other);
+		if(intersection.isNaN()) return intersection;
+		
+		//check if other is part of both lines.
+		if(isOnLine(intersection) && other.isOnLine(intersection)){
+			return intersection;
+		}
+		else return new Coordinate(Double.NaN, Double.NaN);
+	}
+	
+	/**
+	 * Computes the intersection of two infinite lines. If they are parallel 
+	 * ({@link Double#NaN},{@link Double#NaN}) is returned. Uses 
+	 * <A HREF="https://en.wikipedia.org/wiki/Intersection_%28Euclidean_geometry%29#Two_lines">
+	 * Cramers rule</A>.
+	 * @param other the line to intersect with
+	 * @return the intersection or (NaN,NaN) if parallel
+	 */
+	private Coordinate getCrossingPoint(Line other){
+		
+		double a1 = normalVector.longitude;
+		double b1 = normalVector.latitude;
+		double c1 = normalDistance;
+		
+		double a2 = other.getNormalVector().longitude;
+		double b2 = other.getNormalVector().latitude;
+		double c2 = other.normalDistance;
+		
+		double denom = a1*b2 - a2*b1;
+		
+		//if the denominator is 0 then the two lines are parallel or they are the same
+		if(denom==0.){
+			return new Coordinate(Double.NaN, Double.NaN);
+		}
+		
+		double xs = (c1*b2 - c2*b1)/denom;
+		double ys = (a1*c2 - a2*c1)/denom;
+		
+		return new Coordinate(xs,ys);
+	}
+	
 	
 	/** Returns the start point of the line section */
 	public Coordinate getStart() {

@@ -57,89 +57,19 @@ public class Coordinate {
 		Line line = new Line(lineStart, lineEnd);
 		return line.distanceTo(this);
 	}
+	
+	
 	/**
-	* substracts another coordinate from this.
-	* @param c the other coordinate
-	* @return the difference between the two coordinates.
-	*/
-	public Coordinate minus(Coordinate c) {
-	return new Coordinate(latitude - c.latitude, longitude-c.longitude);
-	}
-	/**
+	 * Use {@link Polyline#inside(Coordinate)} instead.
 	 * Determines if this point lies inside a given polygon.
 	 * Inspired by the ray cast algorithm.
 	 * @param polygon List of points that forms the polygon, first and last points have to be the same
 	 * @return <code>true</code> if this lies inside - <code>false</code> otherwise
 	 */
+	@Deprecated
 	public boolean inside(List<Coordinate> poly) {
-		
-		List<Coordinate> polygon = new LinkedList<Coordinate>();
-		for(Coordinate c : poly) {
-			polygon.add(this.minus(c));
-		} 
-		Coordinate c = new Coordinate(0,0);
-		
-		
-		//check if this is equal to a corner of the polygon
-		for(Coordinate corner : polygon){
-			if(this.equals(corner))
-				return true;
-		}
-		
-		
-		
-		//create line parallel to the x-Axis through this
-		Line cast = new Line(c, new Coordinate(0, 1.));
-		//repeat until no point is on the line: rotate the line, by moving the end point a fraction along the normal vector
-		while(pointsOnLine(polygon, cast)){
-			Coordinate newEnd = cast.getEnd();
-			newEnd.longitude += cast.getNormalVector().longitude/10.;
-			newEnd.latitude += cast.getNormalVector().latitude/10.;
-			cast.setEnd(newEnd);
-		}
-		
-		System.out.println(cast.toString());
-		
-		//create lines from the points and put them in a list
-		List<Line> edges = new Vector<Line>();
-		for(int i=0;i<polygon.size()-1;i++){
-			edges.add(new Line(polygon.get(i), polygon.get(i+1)));
-		}
-		//for(Line l : edges) System.out.println(l.toString());
-		System.out.println(edges.size()+" Lines");
-		//remove all lines where both points have longitude < this.longitude TODO WRONG!!!!!!
-		Line testedLine;
-		for(int i=0;i<edges.size();i++){
-			testedLine = edges.get(i);
-			if(testedLine.getStart().longitude < 0 
-				&& testedLine.getEnd().longitude < 0)
-			{
-				edges.remove(i);
-				i--;
-				continue;
-			}
-		}
-		System.out.println(edges.size()+" Lines");
-		
-		//remove all lines that have the same sign in the oriented HNF distance
-		for(int i=0;i<edges.size();i++){
-			testedLine = edges.get(i);
-			if(Math.signum(cast.orientedDistanceTo(testedLine.getStart()))
-				== Math.signum(cast.orientedDistanceTo(testedLine.getEnd())))
-			{
-				edges.remove(i);
-				i--;
-				continue;
-			}
-		}
-		System.out.println(edges.size()+" Lines");
-		
-		//TODO Sonderfall: wenn der Punkt auf einer Kante auf der Linken seite liegt, dann wird eine gerade Anzahl an Schnittpunkten erfasst und der Punkt als außerhalb liegend deklariert.
-		//now the only lines left are those, that cross the half line
-		//if their number is even, this point is outside
-		if(edges.size()%2 == 0) return false;
-		//if their number is odd, this point is inside
-		else return true;
+		Polyline polygon = new Polyline(poly);
+		return polygon.inside(this);
 	}
 	
 	/**
@@ -148,7 +78,7 @@ public class Coordinate {
 	 * @param line to check
 	 * @return <code>true</code> if one or more points are on the line - <code>false</code> if no point is on the line
 	 */
-	private boolean pointsOnLine(List<Coordinate> list, Line line){
+	static boolean pointsOnLine(List<Coordinate> list, Line line){
 		for(Coordinate c : list){
 			if(line.orientedDistanceTo(c)==0.) return true;
 		}
@@ -182,6 +112,17 @@ public class Coordinate {
 			return distanceToNearestLine(edges);
 		}
 	}
+	
+	/**
+	 * Checks if one or both components are {@link Double#NaN}.
+	 * @return <code>true</code> if one or both components are NaN - <code>false</code> otherwise
+	 */
+	public boolean isNaN(){
+		if(longitude == Double.NaN) return true;
+		if(latitude == Double.NaN) return true;
+		return false;
+	}
+	
 	
 	/**
 	 * Computes the distance to the nearest line. Can be used for both open and closed polygons. 

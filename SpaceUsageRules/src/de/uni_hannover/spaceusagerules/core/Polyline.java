@@ -141,6 +141,80 @@ public class Polyline {
 			return 0;
 		return (boundingBox[1] - boundingBox[0])*(boundingBox[3]-boundingBox[2]);
 	}
+	
+	/**
+	 * Determines it a point is in this polygon. Does not check if this object is 
+	 * actually a polygon or just a line.
+	 * Inspired by the <A HREF="https://en.wikipedia.org/wiki/Point_in_polygon#Ray_casting_algorithm">ray casting algorithm</A>
+	 * @param p point to check
+	 * @return <code>true</code> if the point is inside or on the outline - <code>false</code> otherwise.
+	 */
+	public boolean inside(Coordinate p){
+		
+		//check if p is one of the points
+		for(Coordinate c : points){
+			if(c==p || p.equals(c)) return true;
+		}
+		
+		//create lines and put them in a list
+		List<Line> edges = new LinkedList<Line>();
+		for(int i=0;i<points.size()-1;i++){
+			edges.add(new Line(points.get(i), points.get(i+1)));
+		}
+		
+		//check if p is on any of the lines
+		for(Line l : edges){
+			if(l.isOnLine(p)) return true;
+		}
+		
+		//do ray casting
+		//create the ray
+		Line ray = new Line(p, new Coordinate(p.latitude, p.longitude+1.));
+		//if necessary rotate ray until no corner of this polyline is on it
+		while(Coordinate.pointsOnLine(points, ray)){
+			Coordinate newEnd = ray.getEnd();
+			newEnd.longitude += ray.getNormalVector().longitude/10.;
+			newEnd.latitude += ray.getNormalVector().latitude/10.;
+			ray.setEnd(newEnd);
+		}
+		
+		//change basis of all edges
+		List<Line> transformedEdges = new LinkedList<Line>();
+		for(Line l: edges){
+			transformedEdges.add(
+					new Line(ray.basisChange(l.getStart()),
+							ray.basisChange(l.getEnd())));
+		}
+		
+		//delete all transformed edges where both points have longitude<0
+		//and delete all lines with both ends on the same side of ray
+		Coordinate start, end;
+		for(int i=0;i<transformedEdges.size();i++){
+			start = transformedEdges.get(i).getStart();
+			end = transformedEdges.get(i).getEnd();
+			
+			if(start.longitude<0. && end.longitude<0.){
+				transformedEdges.remove(i);
+				i--;
+				continue;
+			}
+			
+			if(Math.signum(start.latitude) == Math.signum(end.latitude)){
+				transformedEdges.remove(i);
+				i--;
+				continue;
+			}
+		}
+		
+		//the lines left are those that cross ray.
+		//if their number is even p is outside the polygon
+		if(transformedEdges.size()%2 == 0) return false;
+		//if their number is odd p is inside the polygon
+		else return true;
+	}
+	
+	
+	
 	/*
 	public Polyline overlapArea(Polyline p2) {
 		// if one of them is not an Area, then there is no intersecting Area possible
@@ -157,4 +231,6 @@ public class Polyline {
 	public static double calculateArea(List<Coordinate> area){
 		return 0;
 	} // */
+	
+	
 }
