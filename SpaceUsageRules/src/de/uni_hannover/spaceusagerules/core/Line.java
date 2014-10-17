@@ -76,6 +76,12 @@ public class Line {
 		return normalVector;
 	}
 	
+	private Coordinate basisTransformation(Coordinate p){
+		
+		return null;
+	}
+	
+	
 	/**
 	 * An arbitrary method to get the distance to a line by using HNF.
 	 * @param c point to measure the distance to
@@ -150,6 +156,11 @@ public class Line {
 	/** returns the normal vector */
 	public Coordinate getNormalVector() {
 		return normalVector;
+	}
+	
+	@Override
+	public String toString(){
+		return start.toString() + "->" + end.toString();
 	}
 	
 }

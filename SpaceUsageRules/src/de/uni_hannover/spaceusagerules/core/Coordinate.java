@@ -47,7 +47,14 @@ public class Coordinate {
 		Line line = new Line(lineStart, lineEnd);
 		return line.distanceTo(this);
 	}
-	
+	/**
+	* substracts another coordinate from this.
+	* @param c the other coordinate
+	* @return the difference between the two coordinates.
+	*/
+	public Coordinate minus(Coordinate c) {
+	return new Coordinate(latitude - c.latitude, longitude-c.longitude);
+	}
 	/**
 	 * Determines if this point lies inside a given polygon.
 	 * Inspired by the ray cast algorithm.
@@ -55,7 +62,15 @@ public class Coordinate {
 	 * @return <code>true</code> if this lies inside - <code>false</code> otherwise
 	 */
 	public boolean inside(List<Coordinate> polygon) {
-
+		
+		//check if this is equal to a corner of the polygon
+		for(Coordinate corner : polygon){
+			if(this.equals(corner))
+				return true;
+		}
+		
+		
+		
 		//create line parallel to the x-Axis through this
 		Line cast = new Line(this, new Coordinate(latitude, longitude+1.));
 		//repeat until no point is on the line: rotate the line, by moving the end point a fraction along the normal vector
@@ -65,12 +80,17 @@ public class Coordinate {
 			newEnd.latitude += cast.getNormalVector().latitude/10.;
 			cast.setEnd(newEnd);
 		}
+		
+		System.out.println(cast.toString());
+		
 		//create lines from the points and put them in a list
 		List<Line> edges = new Vector<Line>();
 		for(int i=0;i<polygon.size()-1;i++){
 			edges.add(new Line(polygon.get(i), polygon.get(i+1)));
 		}
-		//remove all lines where both points have longitude < this.longitude
+		//for(Line l : edges) System.out.println(l.toString());
+		System.out.println(edges.size()+" Lines");
+		//remove all lines where both points have longitude < this.longitude TODO WRONG!!!!!!
 		Line testedLine;
 		for(int i=0;i<edges.size();i++){
 			testedLine = edges.get(i);
@@ -82,6 +102,8 @@ public class Coordinate {
 				continue;
 			}
 		}
+		System.out.println(edges.size()+" Lines");
+		
 		//remove all lines that have the same sign in the oriented HNF distance
 		for(int i=0;i<edges.size();i++){
 			testedLine = edges.get(i);
@@ -93,6 +115,9 @@ public class Coordinate {
 				continue;
 			}
 		}
+		System.out.println(edges.size()+" Lines");
+		
+		//TODO Sonderfall: wenn der Punkt auf einer Kante auf der Linken seite liegt, dann wird eine gerade Anzahl an Schnittpunkten erfasst und der Punkt als außerhalb liegend deklariert.
 		//now the only lines left are those, that cross the half line
 		//if their number is even, this point is outside
 		if(edges.size()%2 == 0) return false;
@@ -166,6 +191,6 @@ public class Coordinate {
 	}
 	
 	public String toString() {
-		return String.format("%3.6f - %3.6f", latitude, longitude);
+		return String.format("(%3.6f|%3.6f)", longitude, latitude);
 	}
 }
