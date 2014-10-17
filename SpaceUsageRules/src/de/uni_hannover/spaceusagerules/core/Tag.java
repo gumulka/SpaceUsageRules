@@ -1,4 +1,4 @@
-package de.uni_hannover.inma.model;
+package de.uni_hannover.spaceusagerules.core;
 
 import java.util.LinkedList;
 import java.util.List;

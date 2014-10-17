@@ -1,5 +1,6 @@
 package de.uni_hannover.spaceusagerules.core;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -8,7 +9,12 @@ import java.util.Vector;
  * This class represents a coordinate on the world map.
  *
  */
-public class Coordinate {
+public class Coordinate  implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 373886907184981572L;
 	
 	public double latitude;// like the y-Coordinate
 	public double longitude; // like the x-Coordinate
@@ -183,6 +189,6 @@ public class Coordinate {
 	}
 	
 	public String toString() {
-		return String.format("%3.6f - %3.6f", latitude, longitude);
+		return String.format("%3.6f:%3.6f", latitude, longitude);
 	}
 }

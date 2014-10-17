@@ -1,6 +1,7 @@
 package de.uni_hannover.spaceusagerules.core;
 
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +10,14 @@ import java.util.TreeMap;
 /**
  * Created by gumulka on 10/10/14.
  */
-public class Way {
+public class Way implements Serializable{
 
-    Polyline coordinates;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4356641146890722134L;
+	
+	Polyline coordinates;
     private Map<String,String> tags;
     private String name;
 

@@ -1,11 +1,16 @@
 package de.uni_hannover.spaceusagerules.core;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Polyline {
+public class Polyline  implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4719490392798466108L;
 	List<Coordinate> points;
 	double[] boundingBox = new double[4];
 	

@@ -43,7 +43,7 @@ public class OSM {
     public static List<Way> getObjectList(Coordinate c, File f) {
     	boolean b = buffer;
     	buffer = true;
-    	List<Way> back = getObjectList(c, (float) 0.0005, f);
+    	LinkedList<Way> back = getObjectList(c, (float) 0.0005, f);
     	buffer = b;
     	return back;
     }
