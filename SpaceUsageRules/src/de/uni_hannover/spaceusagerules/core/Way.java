@@ -81,6 +81,10 @@ public class Way implements Serializable{
     public boolean isArea() {
         return coordinates.isArea();
     }
+    
+    public double getArea() {
+    	return coordinates.boundingBoxArea();
+    }
 
     public String toString() {
         return name;

@@ -140,23 +140,26 @@ public class ShowMapActivity extends ActionBarActivity implements OnMapClickList
 	private void markBuilding(Coordinate c) {
 		Way clicked = null;
 		for (Way w : ways) {
-			if (c.inside(w.getCoordinates())) {
-				clicked = w;
-				if ("true".equalsIgnoreCase(w.getValue("sur:clicked")))
-					w.addTag("sur:clicked", "false");
-				else
-					w.addTag("sur:clicked", "true");
+			if (w.getPolyline().inside(c)) {
+				if(clicked == null || clicked.getArea() > w.getArea())
+					clicked = w;
 			}
 		}
 		if (clicked == null)
 			return;
+		if ("true".equalsIgnoreCase(clicked.getValue("sur:clicked")))
+			clicked.addTag("sur:clicked", "false");
+		else
+			clicked.addTag("sur:clicked", "true");
+
 		redraw();
 	}
 
 	private void redraw() {
 		mMap.clear();
 		if(edit) {
-			updateMapPart(newlyInsertet);
+			if(newlyInsertet!=null)
+				updateMapPart(newlyInsertet);
 		} else {
 			for (Way w : ways)
 				if(w.isArea())

@@ -10,6 +10,7 @@ public class InsideTest {
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		List<Coordinate> line = new LinkedList<Coordinate>();
 		line.add(new Coordinate(52.3645,9.6868));

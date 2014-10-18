@@ -27,7 +27,7 @@ public class Polyline  implements Serializable {
 	}
 	
 	public Polyline(List<Coordinate> coords) {
-		points = coords;
+		points = new LinkedList<Coordinate>();
 		boundingBox[0] =  10000;
 		boundingBox[1] = -10000;
 		boundingBox[2] =  10000;
@@ -52,16 +52,8 @@ public class Polyline  implements Serializable {
 	
 	public void addAll(Collection<Coordinate> coords) {
 		for(Coordinate c : coords) {
-		if(c.latitude < boundingBox[0])
-			boundingBox[0] = c.latitude;
-		if(c.latitude > boundingBox[1])
-			boundingBox[1] = c.latitude;
-		if(c.longitude < boundingBox[2])
-			boundingBox[2] = c.longitude;
-		if(c.longitude > boundingBox[3])
-			boundingBox[3] = c.longitude;
+			add(c);
 		}
-		points.addAll(coords);
 	}
 	
 	public List<Coordinate> getBoundingBoxPolygon() {
@@ -147,6 +139,14 @@ public class Polyline  implements Serializable {
 		return (boundingBox[1] - boundingBox[0])*(boundingBox[3]-boundingBox[2]);
 	}
 	
+	public boolean insideBoundingBox(Coordinate c) {
+		if(c.latitude<boundingBox[0] || c.latitude>boundingBox[1])
+			return false;
+		if(c.longitude<boundingBox[2] || c.longitude>boundingBox[3])
+			return false;
+		return true;
+	}
+	
 	/**
 	 * Determines it a point is in this polygon. Does not check if this object is 
 	 * actually a polygon or just a line.
@@ -156,27 +156,33 @@ public class Polyline  implements Serializable {
 	 */
 	public boolean inside(Coordinate p){
 		
+		if(!insideBoundingBox(p))
+			return false;
+		
+		List<Coordinate> zeroPoints = new LinkedList<Coordinate>();
 		//check if p is one of the points
 		for(Coordinate c : points){
 			if(c==p || p.equals(c)) return true;
+			zeroPoints.add(p.minus(c));
 		}
+		Coordinate zero = new Coordinate(0,0);
 		
 		//create lines and put them in a list
 		List<Line> edges = new LinkedList<Line>();
-		for(int i=0;i<points.size()-1;i++){
-			edges.add(new Line(points.get(i), points.get(i+1)));
+		for(int i=0;i<zeroPoints.size()-1;i++){
+			edges.add(new Line(zeroPoints.get(i), zeroPoints.get(i+1)));
 		}
 		
 		//check if p is on any of the lines
 		for(Line l : edges){
-			if(l.isOnLine(p)) return true;
+			if(l.isOnLine(zero)) return true;
 		}
 		
 		//do ray casting
 		//create the ray
-		Line ray = new Line(p, new Coordinate(p.latitude, p.longitude+1.));
+		Line ray = new Line(zero, new Coordinate(0, 10000.));
 		//if necessary rotate ray until no corner of this polyline is on it
-		while(Coordinate.pointsOnLine(points, ray)){
+		while(Coordinate.pointsOnLine(zeroPoints, ray)){
 			Coordinate newEnd = ray.getEnd();
 			newEnd.longitude += ray.getNormalVector().longitude/10.;
 			newEnd.latitude += ray.getNormalVector().latitude/10.;
