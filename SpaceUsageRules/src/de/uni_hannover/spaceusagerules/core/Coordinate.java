@@ -10,15 +10,15 @@ import java.util.Vector;
  *
  */
 public class Coordinate  implements Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 373886907184981572L;
-	
+
 	public double latitude;// like the y-Coordinate
 	public double longitude; // like the x-Coordinate
-	
+
 	public Coordinate(double latitude, double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -32,7 +32,7 @@ public class Coordinate  implements Serializable {
 	public Coordinate minus(Coordinate c) {
 		return new Coordinate(latitude - c.latitude, longitude-c.longitude);
 	}
-	
+
 	/**
 	 * Computes the quadratic distance from this point to another one.
 	 * Pulling the square root is thereby left out. That is useful for comparing distances. 
@@ -43,7 +43,7 @@ public class Coordinate  implements Serializable {
 		//uses the formula (x2-x1)^2 + (y2-y1)^2
 		return (b.latitude-latitude)*(b.latitude-latitude) + (b.longitude-longitude)*(b.longitude-longitude);
 	}
-	
+
 	/**
 	 * Computes the distance to another {@link Coordinate}.
 	 * Uses {@link #squareDistanceTo(Coordinate)}.
@@ -53,7 +53,7 @@ public class Coordinate  implements Serializable {
 	public double distanceTo(Coordinate b) {
 		return Math.sqrt(squareDistanceTo(b));
 	}
-	
+
 	/**
 	 * Better use {@link Line#distanceTo(Coordinate)}.
 	 * Computes distance to the line bounded by two points.
@@ -63,79 +63,33 @@ public class Coordinate  implements Serializable {
 		Line line = new Line(lineStart, lineEnd);
 		return line.distanceTo(this);
 	}
-	
+
 	/**
+	 * Use {@link Polyline#inside(Coordinate)} instead.
 	 * Determines if this point lies inside a given polygon.
 	 * Inspired by the ray cast algorithm.
 	 * @param polygon List of points that forms the polygon, first and last points have to be the same
 	 * @return <code>true</code> if this lies inside - <code>false</code> otherwise
 	 */
+	@Deprecated
 	public boolean inside(List<Coordinate> poly) {
-		
-		List<Coordinate> polygon = new LinkedList<Coordinate>();
-		for(Coordinate c : poly) {
-			polygon.add(this.minus(c));
-		} 
-		Coordinate c = new Coordinate(0,0);
-		
-
-		//create line parallel to the x-Axis through this
-		Line cast = new Line(c, new Coordinate(0, 1.));
-		//repeat until no point is on the line: rotate the line, by moving the end point a fraction along the normal vector
-		while(pointsOnLine(polygon, cast)){
-			Coordinate newEnd = cast.getEnd();
-			newEnd.longitude += cast.getNormalVector().longitude/10.;
-			newEnd.latitude += cast.getNormalVector().latitude/10.;
-			cast.setEnd(newEnd);
-		}
-		//create lines from the points and put them in a list
-		List<Line> edges = new Vector<Line>();
-		for(int i=0;i<polygon.size()-1;i++){
-			edges.add(new Line(polygon.get(i), polygon.get(i+1)));
-		}
-		//remove all lines where both points have longitude < this.longitude
-		Line testedLine;
-		for(int i=0;i<edges.size();i++){
-			testedLine = edges.get(i);
-			if(testedLine.getStart().longitude < 0 
-				&& testedLine.getEnd().longitude < 0)
-			{
-				edges.remove(i);
-				i--;
-				continue;
-			}
-		}
-		//remove all lines that have the same sign in the oriented HNF distance
-		for(int i=0;i<edges.size();i++){
-			testedLine = edges.get(i);
-			if(Math.signum(cast.orientedDistanceTo(testedLine.getStart()))
-				== Math.signum(cast.orientedDistanceTo(testedLine.getEnd())))
-			{
-				edges.remove(i);
-				i--;
-				continue;
-			}
-		}
-		//now the only lines left are those, that cross the half line
-		//if their number is even, this point is outside
-		if(edges.size()%2 == 0) return false;
-		//if their number is odd, this point is inside
-		else return true;
+		Polyline polygon = new Polyline(poly);
+		return polygon.inside(this);
 	}
-	
+
 	/**
 	 * Checks if any point lies out of the given list lies on the given line.
 	 * @param list of points to check
 	 * @param line to check
 	 * @return <code>true</code> if one or more points are on the line - <code>false</code> if no point is on the line
 	 */
-	private boolean pointsOnLine(List<Coordinate> list, Line line){
+	static boolean pointsOnLine(List<Coordinate> list, Line line){
 		for(Coordinate c : list){
 			if(line.orientedDistanceTo(c)==0.) return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Computes the distance to a polygon. If the last point in the list doesn't equal the first
 	 * point, it isn't treated as a closed polygon, but as a series of lines.
@@ -143,12 +97,12 @@ public class Coordinate  implements Serializable {
 	 * @return distance to a polygon, <code>0</code> if the point lies inside.
 	 */
 	public double distanceTo(List<Coordinate> polygon) {
-		
+
 		List<Line> edges = new Vector<Line>();
 		for(int i=0;i<polygon.size()-1;i++){
 			edges.add(new Line(polygon.get(i), polygon.get(i+1)));
 		}
-		
+
 		if(polygon.get(0).equals(polygon.get(polygon.size()-1))){
 			// wenn es ein polygon ist.
 			//if the point is inside, then distance is 0
@@ -163,7 +117,18 @@ public class Coordinate  implements Serializable {
 			return distanceToNearestLine(edges);
 		}
 	}
-	
+
+	/**
+	 * Checks if one or both components are {@link Double#NaN}.
+	 * @return <code>true</code> if one or both components are NaN - <code>false</code> otherwise
+	 */
+	public boolean isNaN(){
+		if(longitude == Double.NaN) return true;
+		if(latitude == Double.NaN) return true;
+		return false;
+	}
+
+
 	/**
 	 * Computes the distance to the nearest line. Can be used for both open and closed polygons. 
 	 * @param edges list of lines
@@ -179,15 +144,15 @@ public class Coordinate  implements Serializable {
 		}
 		return nearest;
 	}
-	
-	
+
+
 	public boolean equals(Object o) {
 		if(o instanceof Coordinate) {
 			return ((Coordinate) o).latitude == latitude && ((Coordinate) o).longitude == longitude;
 		}
 		return false;
 	}
-	
+
 	public String toString() {
 		return String.format("%3.6f:%3.6f", latitude, longitude);
 	}
