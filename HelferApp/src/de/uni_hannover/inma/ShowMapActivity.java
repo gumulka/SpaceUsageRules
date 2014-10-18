@@ -9,14 +9,13 @@ import org.jsoup.Connection.Method;
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +23,8 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
@@ -32,7 +32,7 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Way;
 
-public class ShowMapActivity extends ActionBarActivity implements OnMapClickListener, OnClickListener{
+public class ShowMapActivity extends Fragment implements OnMapClickListener, OnClickListener{
 
 	private List<Way> ways = null;
 	private Coordinate location = null;
@@ -41,33 +41,46 @@ public class ShowMapActivity extends ActionBarActivity implements OnMapClickList
 	private Way newlyInsertet = null;
 	private boolean edit = false;
 	Button paint_button = null;
+	MapView mv = null;
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_show_map);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.activity_show_map, container, false);
+
 		if (savedInstanceState == null) {
-		    Intent intent = getIntent();
-		    ways = (List<Way>) intent.getSerializableExtra(IDs.WAYS);
-		    location = (Coordinate) intent.getSerializableExtra(IDs.LOCATION);
-		    tagname = intent.getStringExtra(IDs.TAGNAME);
+			Bundle intent = getArguments();
+		    ways = (List<Way>) intent.getSerializable(IDs.WAYS);
+		    location = (Coordinate) intent.getSerializable(IDs.LOCATION);
+		    tagname = intent.getString(IDs.TAGNAME);
 		}
 		else {
 			ways = (List<Way>) savedInstanceState.getSerializable(IDs.WAYS);
 			location = (Coordinate) savedInstanceState.getSerializable(IDs.LOCATION);
 			tagname = savedInstanceState.getString(IDs.TAGNAME);
 			edit = savedInstanceState.getBoolean(IDs.EDIT);
-			newlyInsertet = (Way) savedInstanceState.getSerializable(IDs.NEW_WAY);
+			if(savedInstanceState.containsKey(IDs.NEW_WAY))
+				newlyInsertet = (Way) savedInstanceState.getSerializable(IDs.NEW_WAY);
+			savedInstanceState.remove(IDs.NEW_WAY);
+			savedInstanceState.remove(IDs.WAYS);
+			savedInstanceState.remove(IDs.LOCATION);
 		}
+
+		mv = (MapView) rootView.findViewById(R.id.mapView);
+		mv.onCreate(savedInstanceState);
+	    
+//		mv.onResume();// needed to get the map to display immediately
+
+	    try {
+	        MapsInitializer.initialize(getActivity().getApplicationContext());
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		
+		return rootView;
 	}
 
-	
-	public void alterTagName(String newTagName) {
-		tagname = newTagName;
-		TextView tv = (TextView) findViewById(R.id.add_tag_name);
-		tv.setText(newTagName);
-	}
 	
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -78,9 +91,35 @@ public class ShowMapActivity extends ActionBarActivity implements OnMapClickList
         outState.putSerializable(IDs.LOCATION, location);
         outState.putString(IDs.TAGNAME, tagname);
         outState.putBoolean(IDs.EDIT, edit);
-        outState.putSerializable(IDs.NEW_WAY, newlyInsertet);
+        if(newlyInsertet!= null) 
+        	outState.putSerializable(IDs.NEW_WAY, newlyInsertet);
     }
 
+	public void onStart() {
+		super.onStart();
+		
+		paint_button = (Button) getActivity().findViewById(R.id.paint_button);
+		paint_button.setOnClickListener(this);
+		if(edit) 
+			paint_button.setText(getString(R.string.cancel));
+		MapView mv = (MapView) getActivity().findViewById(R.id.mapView);
+		mMap = mv.getMap();
+		mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+		mMap.getUiSettings().setZoomControlsEnabled(false);
+		mMap.setOnMapClickListener(this);
+		redraw();
+		mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude,location.longitude), 19));
+
+		TextView tv = (TextView) getActivity().findViewById(R.id.add_tag_name);
+		tv.setText(tagname);
+	}
+
+	public void alterTagName(String newTagName) {
+		tagname = newTagName;
+		TextView tv = (TextView) getActivity().findViewById(R.id.add_tag_name);
+		tv.setText(newTagName);
+	}
+	
 	public void addTagToOsm(View view) {
 		if(newlyInsertet!=null) {
 			new InformUsTask().execute(newlyInsertet);
@@ -96,29 +135,6 @@ public class ShowMapActivity extends ActionBarActivity implements OnMapClickList
 		}
 	}
 
-
-
-    
-	public void onStart() {
-		super.onStart();
-		
-		paint_button = (Button) findViewById(R.id.paint_button);
-		paint_button.setOnClickListener(this);
-		if(edit) 
-			paint_button.setText(getString(R.string.cancel));
-
-		mMap = ((SupportMapFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.map)).getMap();
-		mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-		mMap.getUiSettings().setZoomControlsEnabled(false);
-		mMap.setOnMapClickListener(this);
-		redraw();
-		mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude,location.longitude), 19));
-
-		TextView tv = (TextView) findViewById(R.id.add_tag_name);
-		tv.setText(tagname);
-	}
-
 	@Override
 	public void onMapClick(LatLng l) {
 		Coordinate c = new Coordinate(l.latitude, l.longitude);
@@ -131,7 +147,6 @@ public class ShowMapActivity extends ActionBarActivity implements OnMapClickList
 	private void addCoordinate(Coordinate c) {
 		if (newlyInsertet == null) {
 			newlyInsertet = new Way();
-			newlyInsertet.addTag("sur:tag", tagname);
 		}
 		newlyInsertet.addCoordinate(c);
 		redraw();
@@ -202,36 +217,32 @@ public class ShowMapActivity extends ActionBarActivity implements OnMapClickList
 	}
 	
 	
-	
-	
-	
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.show_map, menu);
-		return true;
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-	
 	public void afterInforming(int status) {
     	if(status<0)
-			Toast.makeText(this, getString(R.string.no_data_transmit), Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), getString(R.string.no_data_transmit), Toast.LENGTH_SHORT).show();
     	else
-    		Toast.makeText(this, getString(R.string.data_transmit), Toast.LENGTH_SHORT).show();
+    		Toast.makeText(getActivity(), getString(R.string.data_transmit), Toast.LENGTH_SHORT).show();
 	}
 
+	
+	public void onDestroy() {
+		super.onDestroy();
+		mv.onDestroy();
+	}
+	public void onResume() {
+		super.onPause();
+		mv.onResume();
+	}
+	public void onPause() {
+		super.onPause();
+		mv.onPause();
+	}
+
+@Override
+public void onLowMemory() {
+    super.onLowMemory();
+    mv.onLowMemory();
+}
 	
 private class InformUsTask extends AsyncTask<Way, Integer, Integer> {
 

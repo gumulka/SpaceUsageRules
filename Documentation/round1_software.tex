@@ -1,0 +1,25 @@
+\section{Softwareimplementierung}
+\subsection{Entwurf}
+
+
+\subsection{Eingabeformat}
+Regeln werden aus einer Textdatei eingelesen, in welcher zeilenweise die Regeln zu je einem Verbot stehen.
+Die Datei besteht aus zwei Zeilen, in der ersten steht der Name des Verbotes in der Zweiten die Menge an Regeln.
+Die Menge wird durch eckige Klammern verdeutlicht und die einzelnen Regeln durch Kommata getrennt die Trennung von Key und Value erfolgt durch einen Bindestrich.
+Soll eine Regel generell für alle Values eines Keys gelten, so kann die Value weggelassen werden und nur der Key angegeben.
+
+Eine Gültige Eingabe kann also folgendermaßen sein:
+\begin{lstlisting}[frame=single]
+smoking="no" -> [addr:housenumber -> 0.5, landuse - forest -> 1.5]
+fishing="no" -> []
+\end{lstlisting}
+Dieses Regelwerk sagt aus, dass ein Nichtrauchen Verbot wahrscheinlich in Flächen gilt, welche eine Hausnummer zugewiesen haben
+und sehr unwahrscheinlich in Gebieten, die als Waldgebiete ausgeschildert sind.
+Für das Angelverbot sind keine Regeln definiert. Unser Algorithmus wird sich also nur die nächstegelegene Fläche als wahrscheinlich nehmen,
+oder sollten der Punkt innerhalb von 2 Flächen liegen\footnote{Es könnte eine Fläche 'Niedersachsen' und eine Fläche 'Waldgebiet' definiert sein.},
+so wird die kleinere von beiden ausgewählt.
+
+\subsection{Probleme}
+Da die Berechnung der Schnittpolygone sehr aufwändig ist und wir nur eine Näherung benötigen,
+wird die Berechnung der Schnittpolygone und deren Flächen vereinfach durch erstellen von Bounding Boxes.
+Es wird also nicht das wirkliche Schnittpolygon berechnet, sondern die Schnitt Bounding Box, sowie die Fläche der Bounding Box.

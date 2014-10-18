@@ -97,7 +97,7 @@ public class Population implements Comparable<Population>{
 	}
 	
 	public static double calcDist(Coordinate c, Way w, Map<String,Double> weights) {
-		double distance = c.distanceTo(w.getCoordinates());
+		double distance = c.distanceTo(w.getPolyline());
 //		distance *= 1000;
 		distance += 1;
 		String combine;

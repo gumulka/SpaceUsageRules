@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import de.uni_hannover.inma.view.AddTagListFragment;
+import de.uni_hannover.inma.view.PlaceholderFragment;
 import de.uni_hannover.inma.view.AddTagListFragment.OnTagSelectedListener;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Way;
@@ -47,13 +48,14 @@ public class AddTagActivity extends ActionBarActivity implements OnTagSelectedLi
 
 	@Override
 	public void onTagSelected(String tagname) {
-		for(Way w : ways) 
-			w.addTag("sur:tag", tagname);
-	    Intent intent = new Intent(this, ShowMapActivity.class);
-	    intent.putExtra(IDs.LOCATION, location);
-	    intent.putExtra(IDs.WAYS, (Serializable) ways);
-	    intent.putExtra(IDs.TAGNAME, tagname);
-	    startActivity(intent);		
+		Fragment newFragment = new ShowMapActivity();
+		Bundle args = new Bundle();
+	    args.putSerializable(IDs.LOCATION, location);
+	    args.putSerializable(IDs.WAYS, (Serializable) ways);
+	    args.putSerializable(IDs.TAGNAME, tagname);
+		newFragment.setArguments(args);
+		getSupportFragmentManager().beginTransaction()
+				.add(R.id.container, newFragment).addToBackStack(null).commit();
 	}
 
 	@Override

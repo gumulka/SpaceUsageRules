@@ -95,6 +95,7 @@ public class Coordinate  implements Serializable {
 	 * @param polygon closed polygon or open polyline
 	 * @return distance to a polygon, <code>0</code> if the point lies inside.
 	 */
+	@Deprecated
 	public double distanceTo(List<Coordinate> polygon) {
 
 		List<Line> edges = new Vector<Line>();
@@ -106,6 +107,36 @@ public class Coordinate  implements Serializable {
 			// wenn es ein polygon ist.
 			//if the point is inside, then distance is 0
 			if(inside(polygon)) return 0;
+			//otherwise compute the distance to the polygon line
+			else return distanceToNearestLine(edges);
+		}
+		else
+		{
+			// ansonsten ist es eine Linie mit mehreren Punkten.
+			// -> get the distance to the nearest line.
+			return distanceToNearestLine(edges);
+		}
+	}
+
+	/**
+	 * Computes the distance to a polygon. If the last point in the list doesn't equal the first
+	 * point, it isn't treated as a closed polygon, but as a series of lines.
+	 * @param polygon closed polygon or open polyline
+	 * @return distance to a polygon, <code>0</code> if the point lies inside.
+	 */
+	public double distanceTo(Polyline polygon) {
+
+		List<Coordinate> points = polygon.getPoints();
+		
+		List<Line> edges = new Vector<Line>();
+		for(int i=0;i<points.size()-1;i++){
+			edges.add(new Line(points.get(i), points.get(i+1)));
+		}
+
+		if(polygon.isArea()){
+			// wenn es ein polygon ist.
+			//if the point is inside, then distance is 0
+			if(polygon.inside(this)) return 0;
 			//otherwise compute the distance to the polygon line
 			else return distanceToNearestLine(edges);
 		}

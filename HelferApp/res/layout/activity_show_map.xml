@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+<com.google.android.gms.maps.MapView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/mapView"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/add_tag_name"
@@ -30,6 +30,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="false"
         android:onClick="addTagToOsm"
+        android:background="@android:color/background_dark"
+        android:textColor="@android:color/primary_text_dark"
         android:text="@string/right" />
 
     <Button
@@ -41,6 +43,7 @@
         android:layout_alignParentRight="false"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="false"
+        android:background="@android:color/background_dark"
         android:text="@string/paint" />
 
 </RelativeLayout>

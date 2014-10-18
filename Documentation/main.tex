@@ -1,0 +1,106 @@
+\documentclass[twoside]{report}
+
+% Page & text layout
+\usepackage{geometry}
+\geometry{%
+  a4paper,%
+  top=2.5cm,%
+  bottom=2.5cm,%
+  left=2.5cm,%
+  right=2.5cm%
+}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+
+\usepackage{listings}
+
+% Headers & footers
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\fancyhead[LE]{\fancyplain{}{\bfseries\thepage}}
+\fancyhead[CE]{\fancyplain{}{}}
+\fancyhead[RE]{\fancyplain{}{\bfseries\leftmark}}
+\fancyhead[LO]{\fancyplain{}{\bfseries\rightmark}}
+\fancyhead[CO]{\fancyplain{}{}}
+\fancyhead[RO]{\fancyplain{}{\bfseries\thepage}}
+\fancyfoot[LE]{\fancyplain{}{}}
+\fancyfoot[CE]{\fancyplain{}{}}
+\fancyfoot[RE]{\fancyplain{}{\bfseries\scriptsize SpaceUsageRules Documentation von InMa }}
+\fancyfoot[LO]{\fancyplain{}{\bfseries\scriptsize SpaceUsageRules Documentation von InMa }}
+\fancyfoot[CO]{\fancyplain{}{}}
+\fancyfoot[RO]{\fancyplain{}{}}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\chaptermark}[1]{%
+  \markboth{#1}{}%
+}
+\renewcommand{\sectionmark}[1]{%
+  \markright{\thesection\ #1}%
+}
+
+% Indices & bibliography
+%\usepackage{natbib}
+%\usepackage[titles]{tocloft}
+%\setcounter{tocdepth}{3}
+%\setcounter{secnumdepth}{5}
+%\makeindex
+
+% Hyperlinks (required, but should be loaded last)
+\usepackage{ifpdf}
+\ifpdf
+  \usepackage[pdftex,pagebackref=true]{hyperref}
+\else
+  \usepackage[ps2pdf,pagebackref=true]{hyperref}
+\fi
+\hypersetup{%
+  colorlinks=true,%
+  linkcolor=blue,%
+  citecolor=blue,%
+  unicode%
+}
+
+% Custom commands
+
+
+\title{Space Usage Rules}
+\author{Fabian Pflug  |  Peter Zilz}
+
+%===== C O N T E N T S =====
+
+\begin{document}
+
+% Titlepage & ToC
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+\hypersetup{pageanchor=false}
+\pagenumbering{roman}
+\maketitle
+\clearpage
+\renewcommand{\titlepage}{\relax}
+\input{abstract}
+\cleardoublepage
+\tableofcontents
+
+\cleardoublepage
+\pagenumbering{arabic}
+\hypersetup{pageanchor=true}
+\chapter{Main Page}
+\input{index}
+
+\cleardoublepage
+\chapter{Erste Runde}
+\input{round1}
+
+\cleardoublepage
+\chapter{Zweite Runde}
+\input{round2}
+
+
+
+
+
+% Index
+
+\end{document}
