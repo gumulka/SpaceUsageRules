@@ -1,12 +1,19 @@
 \section{Softwareimplementierung}
+Auch wenn Anfangs eine deutliche Tendenz zu C/C++ als Programmiersprache der Wahl war, fiel durch das spätere Interesse für eine
+Android Applikation die Wahl auf Java. So ist es einfach möglich einen Kern mit Algorithmen zu schreiben und diesen von den
+verschiedenen Anwendungen als Bibliothek nutzen zu lassen.
+
 \subsection{Entwurf}
 
 
 \subsection{Eingabeformat}
+\subsubsection{Regeln}
+\label{sec:Eingabedaten_Wir}
 Regeln werden aus einer Textdatei eingelesen, in welcher zeilenweise die Regeln zu je einem Verbot stehen.
-Die Datei besteht aus zwei Zeilen, in der ersten steht der Name des Verbotes in der Zweiten die Menge an Regeln.
-Die Menge wird durch eckige Klammern verdeutlicht und die einzelnen Regeln durch Kommata getrennt die Trennung von Key und Value erfolgt durch einen Bindestrich.
-Soll eine Regel generell für alle Values eines Keys gelten, so kann die Value weggelassen werden und nur der Key angegeben.
+Die Datei besteht aus zwei Spalten, in der Ersten steht der Name des Verbotes in der Zweiten die Menge der Regeln.
+Die Menge wird durch eckige Klammern verdeutlicht und die einzelnen Regeln durch Kommata getrennt.
+Die Trennung von Key und Value erfolgt durch einen Bindestrich.
+Soll eine Regel generell für alle Values eines Keys gelten, so kann die Value weggelassen und nur der Key angegeben werden.
 
 Eine Gültige Eingabe kann also folgendermaßen sein:
 \begin{lstlisting}[frame=single]
@@ -16,8 +23,20 @@ fishing="no" -> []
 Dieses Regelwerk sagt aus, dass ein Nichtrauchen Verbot wahrscheinlich in Flächen gilt, welche eine Hausnummer zugewiesen haben
 und sehr unwahrscheinlich in Gebieten, die als Waldgebiete ausgeschildert sind.
 Für das Angelverbot sind keine Regeln definiert. Unser Algorithmus wird sich also nur die nächstegelegene Fläche als wahrscheinlich nehmen,
-oder sollten der Punkt innerhalb von 2 Flächen liegen\footnote{Es könnte eine Fläche 'Niedersachsen' und eine Fläche 'Waldgebiet' definiert sein.},
+oder sollten der Punkt innerhalb von 2 Flächen liegen\footnote{Es könnte z.B. eine Fläche 'Niedersachsen' und eine Fläche 'Waldgebiet' definiert sein.},
 so wird die kleinere von beiden ausgewählt.
+
+\subsubsection{Daten}
+\label{sec:Eingabedaten_GI}
+Hier werden die aus der Aufgabenstellung übernommenen Regeln beachtet und das Eingabeformat wie beschrieben umgesetzt.
+\begin{quote}
+Die erste Zeile enthält die Anzahl $c$ der Space Usage Rules. Es folgen zeilenweise die Informationen
+über die $c$ Regeldefinitionen.
+Eine Zeile beginnt mit der ID der Space Usage Rule gefolgt von deren Position in geographischen
+Koordinaten in der Form $Breitengrad, Längengrad$. Als Eingabewerte sind für $Breitengrad$ und
+$Längengrad$ Fließkommazahlen mit einem ’.’ als Dezimaltrennzeichen erlaubt. Die einzelnen Informationen
+sind durch Kommas und optionale Leerzeichen getrennt.
+\end{quote}
 
 \subsection{Probleme}
 Da die Berechnung der Schnittpolygone sehr aufwändig ist und wir nur eine Näherung benötigen,
