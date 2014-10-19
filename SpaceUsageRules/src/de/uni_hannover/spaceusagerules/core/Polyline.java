@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 public class Polyline  implements Serializable {
 	
@@ -149,7 +150,9 @@ public class Polyline  implements Serializable {
 	
 	/**
 	 * Determines it a point is in this polygon. Does not check if this object is 
-	 * actually a polygon or just a line.
+	 * actually a polygon or just a line.<BR>
+	 * The use of {@link #insideBoundingBox(Coordinate)} as a first approximation is encouraged,
+	 * because it works much faster.<BR>
 	 * Inspired by the <A HREF="https://en.wikipedia.org/wiki/Point_in_polygon#Ray_casting_algorithm">ray casting algorithm</A>
 	 * @param p point to check
 	 * @return <code>true</code> if the point is inside or on the outline - <code>false</code> otherwise.
@@ -224,6 +227,95 @@ public class Polyline  implements Serializable {
 		else return true;
 	}
 	
+	/**
+	 * Checks if two polygons overlap, it is not checked if they are indeed polygons.
+	 * It is tested if any of the corner points lies within the other polygon. For two
+	 * polygons to overlap this has to be the case.<BR>
+	 * The use of {@link #intersectionPossible(Polyline)} as a first approximation is encouraged.
+	 * @param other the other polygon to overlap with
+	 * @return <code>true</code> if they overlap - <code>false</code> otherwise
+	 */
+	public boolean isOverlapping(Polyline other){
+		
+		//check if they share a corner
+		for(Coordinate c1 : points){
+			for(Coordinate c2: other.points){
+				if(c1.equals(c2)) return true;
+			}
+		}
+		
+		//check if a corner of this is in other
+		for(Coordinate c1 : points){
+			if(other.inside(c1)) return true;
+		}
+		
+		//check if a corner of other is in this
+		for(Coordinate c2 : other.points){
+			if(inside(c2)) return true;
+		}
+		
+		//if none of these hold true, then they don't overlap
+		return false;
+	}
+	
+	/**
+	 * Computes the area of this polygon. If this is not a polygon 0 is returned.<BR>
+	 * Uses the <A HREF="https://en.wikipedia.org/wiki/Shoelace_formula">
+	 * shoelace algorithm</A>.
+	 * @return the area of the polygon or 0. if it isn't a polygon
+	 */
+	public double area(){
+		
+		if(!isArea()) return 0.;
+		
+		double area=0.;
+		Coordinate c1, c2;
+		for(int i=0;i<points.size();i++){
+			c1 = points.get(i);
+			c2 = points.get((i+1)%points.size());
+			area += (c1.longitude+c2.longitude)*(c2.latitude-c1.latitude);
+		}
+		area /= 2.;
+		
+		return area;
+	}
+	
+	/**
+	 * Returns a list with the intersections of two polylines (or outlines of polygons).
+	 * If they don't meet, an empty list is returned.
+	 * @param other the other polyline to intersect with
+	 * @return list of intersections or empty list of there are no intersections.
+	 */
+	public List<Coordinate> getIntersections(Polyline other){
+		
+		List<Coordinate> intersections = new Vector<Coordinate>();
+
+		for(Coordinate c1:points){
+			for(Coordinate c2 : other.points){
+				if(c1.equals(c2)) intersections.add(c1); 
+			}
+		}
+		
+		List<Line> edges1 = new Vector<Line>();
+		for(int i=0;i<points.size()-1;i++){
+			edges1.add(new Line(points.get(i),points.get(i+1)));
+		}
+		
+		List<Line> edges2 = new Vector<Line>();
+		for(int i=0;i<points.size()-1;i++){
+			edges2.add(new Line(other.points.get(i), other.points.get(i+1)));
+		}
+		
+		Coordinate cross;
+		for(Line l1 : edges1){
+			for(Line l2: edges2){
+				cross = l1.getIntersection(l2);
+				if(!cross.isNaN()) intersections.add(cross);
+			}
+		}
+		
+		return intersections;
+	}
 	
 	
 	/*
@@ -238,10 +330,6 @@ public class Polyline  implements Serializable {
 		
 		return null;
 	}
-	
-	public static double calculateArea(List<Coordinate> area){
-		return 0;
-	} // */
-	
+	*/
 	
 }
