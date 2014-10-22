@@ -40,21 +40,7 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".AddTagActivity"
-            android:label="@string/title_activity_add_tag" >
-        </activity>
-        <activity
-            android:name=".ShowTagActivity"
-            android:label="@string/title_activity_show_tag" >
-        </activity>
-
         <uses-library android:name="com.google.android.maps" />
-
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" >
-        </activity>
     </application>
 
 </manifest>

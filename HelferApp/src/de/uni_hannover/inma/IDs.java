@@ -12,4 +12,5 @@ public class IDs {
 	public static final String NEW_WAY = "newway";
 	public static final String DIRTY = "dirty";
 	public static final String TAGS = "tags";
+	public static final int MENU_EDIT_CONTENT = 32;
 }

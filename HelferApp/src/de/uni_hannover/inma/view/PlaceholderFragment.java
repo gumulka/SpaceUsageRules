@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import de.uni_hannover.inma.IDs;
+import de.uni_hannover.inma.MainActivity;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -14,7 +15,7 @@ public class PlaceholderFragment extends Fragment {
 	
 	
 	private int layoutID = -1;
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -30,6 +31,18 @@ public class PlaceholderFragment extends Fragment {
 		View rootView = inflater.inflate(layoutID, container,
 				false);
 		return rootView;
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		((MainActivity) getActivity()).setDirty(false);
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		((MainActivity) getActivity()).setDirty(true);
 	}
 	
     @Override

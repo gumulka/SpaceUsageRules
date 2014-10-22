@@ -37,8 +37,25 @@ public class Way implements Serializable{
         return 0x7F999999;
     }
 
+    public int getFillColor(String key) {
+    	String tagValue = tags.get(key);
+    	if(tagValue!= null) {
+    		if(tagValue.equalsIgnoreCase("yes"))
+    			return 0x7F00AA00;
+    		if(tagValue.equalsIgnoreCase("no"))
+    			return 0x7FAA0000;
+    		if(tagValue.equalsIgnoreCase("partly"))
+    			return 0x4FAAAA00;
+    	}
+        return 0x7F999999;
+    }
+
     public int getStrokeColor() {
         return getFillColor() + 0x30000000;
+    }
+    
+    public int getStrokeColor(String key) {
+        return getFillColor(key) + 0x30000000;
     }
 
     public boolean isValid() {
@@ -68,6 +85,10 @@ public class Way implements Serializable{
     public void addTag(String key, String value) {
         tags.put(key,value);
         name = key + " -> " + value;
+    }
+    
+    public void removeTag(String key) {
+    	tags.remove(key);
     }
 
     public List<Coordinate> getCoordinates() {

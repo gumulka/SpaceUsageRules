@@ -2,14 +2,12 @@
 <resources>
 
     <string name="app_name">Flächennutzung</string>
-    <string name="start_message">Suche nach aktueller Position.</string>
     <string name="action_settings">Einstellungen</string>
     <string name="increase">Umkreis vergrößern</string>
     <string name="add_tag">Regel hinzufügen</string>
     <string name="helptext1">Leider konnten wir in deiner Umgebung keine Nutzungsregeln finden.</string>
     <string name="helptext2">Das hängt oftmals damit zusammen, dass es noch sehr neu ist diese in Openstreetmap zu definieren und es deshalb erst sehr wenige gibt.</string>
     <string name="helptext3">Hilf uns das zu verbessern indem du eigene Regeln hinzufügst.</string>
-    <string name="autocomplete_hint">Suche</string>
     <string name="found_location">Standort bestimmt.</string>
     <string name="start_search">Beginne mit Suche</string>
     <string name="your_position">Deine Position</string>
@@ -21,9 +19,12 @@
     <string name="start_text">Bitte warten sie, während Ihre Position bestimmt und Nutzungsregeln in der Nähe gesucht werden.</string>
     <string name="no_network">Netzwerk nicht verfügbar.</string>
     <string name="no_location">Position nicht verfügbar.</string>
-    <string name="title_activity_add_tag">AddTagActivity</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_show_map">ShowMapActivity</string>
-    <string name="title_activity_show_tag">ShowMapActivity</string>
+    <string name="nothing_selected">Bitte mindestens eine Fläche wählen oder Einzeichnen.</string>
+    <string name="choose_restriction">Wie ist die Nutzung?</string>
+    <string-array name="area_possibilities">
+        <item >Verboten</item>
+        <item >Teilweise</item>
+        <item >Erlaubt</item>
+    </string-array>
 
 </resources>

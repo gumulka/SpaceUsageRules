@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -26,13 +25,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import de.uni_hannover.inma.view.AddMapFragment;
+import de.uni_hannover.inma.view.AddTagListFragment;
+import de.uni_hannover.inma.view.AddTagListFragment.OnAddTagSelectedListener;
 import de.uni_hannover.inma.view.PlaceholderFragment;
+import de.uni_hannover.inma.view.ShowMapFragment;
+import de.uni_hannover.inma.view.ShowTagListFragment;
+import de.uni_hannover.inma.view.ShowTagListFragment.OnShowTagSelectedListener;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Tag;
 import de.uni_hannover.spaceusagerules.core.Way;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements OnShowTagSelectedListener, OnAddTagSelectedListener{
 
 	private int layoutID = R.layout.fragment_main;
 	private Coordinate location = null;
@@ -40,6 +45,7 @@ public class MainActivity extends ActionBarActivity {
 	private float area = (float) 0.0005;
 	private LinkedList<String> possibilities = null;
 	private boolean dirty = false;
+	private List<Tag> umgebung;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -70,14 +76,9 @@ public class MainActivity extends ActionBarActivity {
 		replaceFragment();
 	}
 
-	public void onStart() {
-		super.onStart();
-		dirty = false;
-	}
-	
-	public void onStop() {
-		super.onStop();
-		dirty = true;
+	public void setDirty(boolean dirty) {
+		System.err.println("Dirty is now " + dirty);
+		this.dirty = dirty;
 	}
 	
 	@Override
@@ -117,6 +118,17 @@ public class MainActivity extends ActionBarActivity {
 		if (id == R.id.action_settings) {
 			return true;
 		}
+		if(id == R.id.action_add_tag) {
+			Fragment newFragment = new AddTagListFragment();
+			Bundle args = new Bundle();
+		    args.putSerializable(IDs.LOCATION, location);
+		    args.putSerializable(IDs.WAYS, (Serializable) ways);
+		    args.putSerializable(IDs.POSSIBILITIES, getPossibilities());
+			newFragment.setArguments(args);
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.container, newFragment).addToBackStack(null).commit();
+			return true;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -135,25 +147,31 @@ public class MainActivity extends ActionBarActivity {
 		updateOsmData();
 	}
 	public void addTag(View view) {
-	    Intent intent = new Intent(this, AddTagActivity.class);
-	    intent.putExtra(IDs.LOCATION, location);
-	    intent.putExtra(IDs.WAYS, (Serializable) ways);
-	    intent.putExtra(IDs.POSSIBILITIES, (Serializable) getPossibilities());
-	    startActivity(intent);
-
+		Fragment newFragment = new AddTagListFragment();
+		Bundle args = new Bundle();
+	    args.putSerializable(IDs.LOCATION, location);
+	    args.putSerializable(IDs.WAYS, (Serializable) ways);
+	    args.putSerializable(IDs.POSSIBILITIES, getPossibilities());
+		newFragment.setArguments(args);
+		getSupportFragmentManager().beginTransaction()
+				.add(R.id.container, newFragment).addToBackStack(null).commit();
 	}
 
-	public void onLocationUpdate(List<Tag> umgebung) {
+	public void onLocationUpdate() {
 		if(dirty)
 			return;
 		if (umgebung.isEmpty()) {
 			layoutID = R.layout.help_us;
 			replaceFragment();
 		} else {
-		    Intent intent = new Intent(this, ShowTagActivity.class);
-		    intent.putExtra(IDs.LOCATION, location);
-		    intent.putExtra(IDs.TAGS, (Serializable) umgebung);
-		    startActivity(intent);
+			Fragment newFragment = new ShowTagListFragment();
+			Bundle args = new Bundle();
+		    args.putSerializable(IDs.LOCATION, location);
+		    args.putSerializable(IDs.TAGS, (Serializable) umgebung);
+		    newFragment.setArguments(args);
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.container, newFragment).addToBackStack(null).commit();
+			setDirty(true);
 		}
 	}
 
@@ -171,34 +189,28 @@ public class MainActivity extends ActionBarActivity {
 					Toast.LENGTH_LONG).show();
 	}
 
-	private class LocationUpdateListener implements LocationListener {
-
-		private boolean location_available = false;
-
-		public void onLocationChanged(Location location) {
-			updateLocation(location);
-		}
-
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-		}
-
-		public void onProviderEnabled(String provider) {
-			if (!location_available)
-				// Toast.makeText(this, getString(R.string.found_location),
-				// Toast.LENGTH_SHORT).show();
-				location_available = true;
-		}
-
-		public void onProviderDisabled(String provider) {
-			location_available = false;
-			// Toast.makeText(this, getString(R.string.no_location),
-			// Toast.LENGTH_LONG).show();
-		}
-
+	@Override
+	public void onShowTagSelected(Tag t) {
+		Fragment newFragment = new ShowMapFragment();
+		Bundle args = new Bundle();
+	    args.putSerializable(IDs.LOCATION, location);
+	    args.putSerializable(IDs.WAYS, (Serializable) t.getWays());
+	    args.putSerializable(IDs.TAGNAME, t.toString());
+		newFragment.setArguments(args);
+		getSupportFragmentManager().beginTransaction()
+				.add(R.id.container, newFragment).addToBackStack(null).commit();
 	}
 
-	public void addAreaData(List<Way> ways) {
-		this.ways = ways;
+	@Override
+	public void onAddTagSelected(String tagname) {
+		Fragment newFragment = new AddMapFragment();
+		Bundle args = new Bundle();
+	    args.putSerializable(IDs.LOCATION, location);
+	    args.putSerializable(IDs.WAYS, (Serializable) ways);
+	    args.putSerializable(IDs.TAGNAME, tagname);
+		newFragment.setArguments(args);
+		getSupportFragmentManager().beginTransaction()
+				.add(R.id.container, newFragment).addToBackStack(null).commit();
 	}
 
 	public float getRadius() {
@@ -224,38 +236,70 @@ public class MainActivity extends ActionBarActivity {
 		return possibilities;
 	}
 
-	public class QueryOsmTask extends AsyncTask<Coordinate, Integer, List<Tag>> {
+	private class LocationUpdateListener implements LocationListener {
 
-		@Override
-		protected List<Tag> doInBackground(Coordinate... urls) {
-			List<Way> ways = OSM.getObjectList(urls[0], getRadius());
+		private boolean location_available = false;
 
-			Map<String, Tag> possibilities = new TreeMap<String, Tag>();
-			List<Tag> tags = new LinkedList<Tag>();
-			for (String line : getPossibilities())
-				possibilities.put(line, new Tag(line));
-			for (Way w : ways) {
-				for (String s : w.getTags().keySet()) {
-					if (possibilities.keySet().contains(s)) {
-						Tag t = possibilities.get(s);
-						if (t != null)
-							t.addWay(w);
-					}
+		public void onLocationChanged(Location location) {
+			updateLocation(location);
+		}
+
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+		}
+
+		public void onProviderEnabled(String provider) {
+			if (!location_available)
+				 Toast.makeText(getApplicationContext(), getString(R.string.found_location), Toast.LENGTH_SHORT).show();
+				location_available = true;
+		}
+
+		public void onProviderDisabled(String provider) {
+			location_available = false;
+			Toast.makeText(getApplicationContext(), getString(R.string.no_location),Toast.LENGTH_LONG).show();
+		}
+
+	}
+
+	public void order(List<Way> ways) {
+		this.ways = ways;
+
+		Map<String, Tag> possibilities = new TreeMap<String, Tag>();
+		umgebung = new LinkedList<Tag>();
+		for (String line : getPossibilities())
+			possibilities.put(line, new Tag(line));
+		for (Way w : ways) {
+			for (String s : w.getTags().keySet()) {
+				if (possibilities.keySet().contains(s)) {
+					Tag t = possibilities.get(s);
+					if (t != null)
+						t.addWay(w);
 				}
 			}
-			addAreaData(ways);
-			for (Tag t : possibilities.values()) {
-				if (!t.isEmpty())
-					tags.add(t);
-			}
-			return tags;
+		}
+		for (Tag t : possibilities.values()) {
+			if (!t.isEmpty())
+				umgebung.add(t);
+		}
+	}
+	
+	public void reOrder() {
+		order(ways);
+	}
+	
+	public class QueryOsmTask extends AsyncTask<Coordinate, Integer, Integer> {
+
+		@Override
+		protected Integer doInBackground(Coordinate... urls) {
+			List<Way> ways = OSM.getObjectList(urls[0], getRadius());
+			order(ways);
+			return 1;
 
 		}
 
 		// onPostExecute displays the results of the AsyncTask.
 		@Override
-		protected void onPostExecute(List<Tag> ways) {
-			onLocationUpdate(ways);
+		protected void onPostExecute(Integer a) {
+			onLocationUpdate();
 		} // */
 	}
 

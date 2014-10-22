@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="de.uni_hannover.inma.MainActivity$PlaceholderFragment" >
+    tools:context="de.uni_hannover.inma.MainActivity$PlaceholderFragment"
+    android:background="@android:color/background_light" >
 
 
     <TextView
