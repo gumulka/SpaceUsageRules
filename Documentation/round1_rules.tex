@@ -1,65 +1,5 @@
 \section{Regeln}
 
-\subsection{Grundüberlegungen}
-Aus den Beispielen im Text lässt sich ableiten, dass es sinnvoll ist 'nicht rauchen' Gebiete eher in Bereiche zu legen, welche Gebäude representieren,
-oder alternativ Parkplätze bei der Berechnung auszublenden.
-
-\subsection{Testdatensatz}
-Zunächst wurde der Testdatensatz mithilfe von Google Maps, Google Street View, Google Earth und OpenStreetMap auf Richtigkeit, Machbarkeit der Lösungen und eventuelle Fehler überprüft.
-Im Testdatensatz lassen sich etliche Fehler und Unvollständigkeiten finden. So sind für die Datensätze:
-\begin{itemize}
-\item 33 (nur teilweise)
-\item 34 (nur teilweise)
-\item 36
-\item 38
-\item 39
-\item 41
-\item 43 - 45
-\item 49 (nur teilweise)
-\item 50 (nur teilweise)
-\item 53
-\item 55 - 62
-\end{itemize}
-keine Representationen der beabsichtigten Geltungsbereiche in OpenStreetMap vorhanden.
-\newline
-\\
-Weitere Fehler sind:
-\begin{itemize}
-\item 16 Der Bereich müsste größer sein.
-\item 33 Sollte den selben Bereich abdecken wie 24.
-\item 40 Es ist kein Häuserblock gemeint, sonder nur ein einzelnes Haus auf der gegenüberliegenden Strassenseite.
-\item 43 Der reale Bereich ist etwas verschoben.
-\item 51 Der reale Bereich liegt auf der gegenüberliegenden Strassenseite.
-\item 55 Das gewählte Gebäude ist falsch. Das reale befindet sich weiter westlich.
-\item 57 Das Bild zeigt das Gebäude, welches bei Bild 41 abfotografiert wurde.
-\item 59 Das Bild suggestiert, dass das Parkverbot in dem Strassenabschnitt vor dem Gebäude gilt und nicht in diesem, da es sich um ein Wohnhaus handelt.
-\item 62
-\item 84 Das Bild suggestert einen anderen Bereich, als auf Google Maps angezeigt wird. (in Maps ist kein See erkennbar.)
-\item 85 Das Bild zeigt ein 'Betreten Verboten' Schild mit Schienen im Hintergrund und sollte dementsprechend für den Schienenbereich gelten und nicht für das Bahnhofsgebäude.
-\item 90 Das Verbot sollte nur für ein einzelnen Haus gelten.
-\item 93 Das Verbot gilt sinnvollerweise für den Zoo und nicht ein einzelnes Gebäude, welches davor liegt.
-\item 96 Das 'Betreten Verboten im Brandfall' gilt nur für den Fahrstuhl und nicht für das ganze Gebäude.
-\end{itemize}
-
-\subsection{Herangehensweise}
-\subsubsection{Erweiterung der Testdaten}
-Da in dem Testdatensatz so viele Fehler vorhanden sind, ist geplant diesen zu erweitern. Dazu wird eine Android-App programmiert, in welcher Nutzer SpaceUsageRules
-abhängig von ihrer Position angezeigt bekommen und sie neue hinzufügen können.
-Um die Qualität unserer bisherige Regeln zu überprüfen, und dem Benutzer die Eingabe zu vereinfachen, wird ein Vorschlag gemacht,
-welchen er annehmen oder abändern kann. Auch soll es ihm möglich sein einen komplett neuen Bereich einzeichnen zu können.
-Die angelegten Daten werden anschließend mit OpenStreetMap synchronisiert, sodass sich für die Nutzer auch ein eigener Nutzen ergibt
-und sie ein Ergebnis ihres Beitrages sehen.
-Für jede angelegte Regel werden Nutzungsdaten an uns übertragen, die aus der Position des Nutzers, des Menge an Verbotsnamen sowie des angelegten Bereiches besteht.
-Wir erhoffen uns daraus einen Testdatensatz zu bekommen, welcher um den Faktor 5 bis 10 größer ist und es uns erlaubt die erstellten Regeln effizienter zu überprüfen.
-\footnote{Bei der Erstellung von Regeln werden die vom Benutzer hinzugefügten Tags natürlich irgnoriert.}
-
-
-\subsubsection{Regelbeschreibung}
-Da in fast allen Fällen ein sehr nah gelegenes Polygon gemeint ist, wird zunächst auf den Abstand aller vorhandenen Polygone etwas aufaddiert,
-um den Abstand 0 zu vermeiden, und diese danach nach unseren Regeln zu gewichten um anschließend das Polygon auszuwählen,
-welches nach der Gewichtung den kürzesten Abstand hat.
-
-
 \subsection{Formale Beschreibung:}
 Sei $ID$ die die Bezeichnung eines Bildes.\\
 Sei $t$ ein Tag $(key \to value)$ aus OpenStreetMap.\\
@@ -129,25 +69,3 @@ und dieses mit der gewichtet nächsten Großfläche geschnitten.
 Eine Großfläche X definiert sich dadurch, dass ihre Fläche $A_X$ einen schwellwert $u$ überschreitet.
 Es ist zu prüfen ob es sinnvoll ist dieses generell zu tun oder für bestimmte Regel ausser kraft zu setzen wie
 z.B. ein Verbot nach offenem Feuer, welches in einem ganzen Parkgebiet gelten wird.
-
-\subsection{Automatisierte Regelerstellung}
-Da wir an die Qualität des erweiterten Testdatensatzes glauben und uns die Grundaufgabe nicht informatiklastig genug ist
-haben wir beschlossen unser selbst definiertes Regelwerk abschließend gegen ein Learning Classifier System antreten zu lassen.
-\subsubsection{Eingabedaten}
-\begin{itemize}
-\item Eine Liste mit SpaceUsageRules wie in \fref{sec:Eingabedaten_GI} definiert.
-\item Die dazugehörigen truth.kml Dateien.
-%\item Eine Liste mit möglichen Tags.\footnote{Diese wird vorab erstellt als (gefilterte) Liste aller Tags die im größeren Umkreis aller $ID$s vorhanden sind.}
-\item Verschiedene Parameter zum Steuern des genetischen Algorithmus \begin{itemize}
-\item Anzahl der Durchläufe
-\item gewünschter Fitnesswert
-\item Populationsgröße
-\item Anzahl der Population, welche unverändert in die nächste Generation gehen.
-\item Anzahl der Populationen, welche mutiert in die nächste Generation gehen.
-\item Anzahl der Populationen, welche mit anderen gemisch in die nächste Generation gehen.
-\end{itemize}
-\end{itemize}
-\subsubsection{Ausgabedaten}
-Das System ist so entworfen, dass es als Ausgabe Daten liefert wie in \fref{sec:Eingabedaten_Wir} verlangt werden.
-\subsubsection{Fitnessfunktion}
-Als Fitnessfunktion wird eine ähnliche Funktion wie in \fref{eq:guete} verwendet. Jedoch wird nicht $R$ insgesamt, sondern jedes $R_v$ einzeln evaluiert.

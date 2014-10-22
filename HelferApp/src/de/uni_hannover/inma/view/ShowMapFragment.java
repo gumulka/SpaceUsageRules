@@ -1,4 +1,4 @@
-package de.uni_hannover.inma;
+package de.uni_hannover.inma.view;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -29,10 +29,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import de.uni_hannover.inma.IDs;
+import de.uni_hannover.inma.R;
+import de.uni_hannover.inma.R.id;
+import de.uni_hannover.inma.R.layout;
+import de.uni_hannover.inma.R.string;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Way;
 
-public class ShowMapActivity extends Fragment implements OnMapClickListener, OnClickListener{
+public class ShowMapFragment extends Fragment implements OnMapClickListener, OnClickListener{
 
 	private List<Way> ways = null;
 	private Coordinate location = null;

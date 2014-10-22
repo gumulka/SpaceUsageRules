@@ -24,5 +24,6 @@
     <string name="title_activity_add_tag">AddTagActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_show_map">ShowMapActivity</string>
+    <string name="title_activity_show_tag">ShowMapActivity</string>
 
 </resources>

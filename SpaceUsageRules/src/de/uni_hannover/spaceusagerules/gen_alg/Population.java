@@ -98,8 +98,7 @@ public class Population implements Comparable<Population>{
 	
 	public static double calcDist(Coordinate c, Way w, Map<String,Double> weights) {
 		double distance = c.distanceTo(w.getPolyline());
-//		distance *= 1000;
-		distance += 1;
+		distance += 0.01;
 		String combine;
 		for(String s : w.getTags().keySet()) {
 			combine = s + " - " + w.getValue(s);

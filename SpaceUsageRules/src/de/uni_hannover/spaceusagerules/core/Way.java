@@ -28,6 +28,10 @@ public class Way implements Serializable{
             return 0x7FAA0000;
         if("true".equalsIgnoreCase(tags.get("sur:clicked")))
             return 0x7F0000AA;
+        if("green".equalsIgnoreCase(tags.get("InMaColor")))
+            return 0x7F00AA00;
+        if("red".equalsIgnoreCase(tags.get("InMaColor")))
+            return 0x7FAA0000;
     	if(tags.containsKey("building"))
     		return 0x4FAAAA00;
         return 0x7F999999;

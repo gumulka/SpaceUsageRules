@@ -11,4 +11,5 @@ public class IDs {
 	public static final String EDIT = "edit";
 	public static final String NEW_WAY = "newway";
 	public static final String DIRTY = "dirty";
+	public static final String TAGS = "tags";
 }

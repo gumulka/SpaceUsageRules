@@ -150,10 +150,10 @@ public class MainActivity extends ActionBarActivity {
 			layoutID = R.layout.help_us;
 			replaceFragment();
 		} else {
-			layoutID = R.layout.help_us;
-			replaceFragment();
-			// getSupportFragmentManager().beginTransaction()
-			// .add(R.id.container, new Umgebung(umgebung)).commit();
+		    Intent intent = new Intent(this, ShowTagActivity.class);
+		    intent.putExtra(IDs.LOCATION, location);
+		    intent.putExtra(IDs.TAGS, (Serializable) umgebung);
+		    startActivity(intent);
 		}
 	}
 

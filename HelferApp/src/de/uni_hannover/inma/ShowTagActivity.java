@@ -1,7 +1,6 @@
 package de.uni_hannover.inma;
 
 import java.io.Serializable;
-import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,18 +8,16 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import de.uni_hannover.inma.view.AddTagListFragment;
-import de.uni_hannover.inma.view.AddTagListFragment.OnTagSelectedListener;
 import de.uni_hannover.inma.view.ShowMapFragment;
+import de.uni_hannover.inma.view.ShowTagListFragment;
+import de.uni_hannover.inma.view.ShowTagListFragment.OnTagSelectedListener;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
-import de.uni_hannover.spaceusagerules.core.Way;
+import de.uni_hannover.spaceusagerules.core.Tag;
 
-public class AddTagActivity extends ActionBarActivity implements OnTagSelectedListener{
+public class ShowTagActivity extends ActionBarActivity implements OnTagSelectedListener{
     
 	Coordinate location = null;
-	List<Way> ways = null;
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,29 +27,27 @@ public class AddTagActivity extends ActionBarActivity implements OnTagSelectedLi
 		
 		if (savedInstanceState == null) {
 		    Intent intent = getIntent();
-		    ways = (List<Way>) intent.getSerializableExtra(IDs.WAYS);
 		    location = (Coordinate) intent.getSerializableExtra(IDs.LOCATION);
 		    
-			Fragment frag = new AddTagListFragment();
+			Fragment frag = new ShowTagListFragment();
             Bundle args = new Bundle();
-            args.putSerializable(IDs.POSSIBILITIES, intent.getSerializableExtra(IDs.POSSIBILITIES));
+            args.putSerializable(IDs.TAGS, intent.getSerializableExtra(IDs.TAGS));
             frag.setArguments(args);
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, frag).commit();
 		}
 		else {
-			ways = (List<Way>) savedInstanceState.getSerializable(IDs.WAYS);
 			location = (Coordinate) savedInstanceState.getSerializable(IDs.LOCATION);
 		}
 	}
 
 	@Override
-	public void onTagSelected(String tagname) {
+	public void onTagSelected(Tag t) {
 		Fragment newFragment = new ShowMapFragment();
 		Bundle args = new Bundle();
 	    args.putSerializable(IDs.LOCATION, location);
-	    args.putSerializable(IDs.WAYS, (Serializable) ways);
-	    args.putSerializable(IDs.TAGNAME, tagname);
+	    args.putSerializable(IDs.WAYS, (Serializable) t.getWays());
+	    args.putSerializable(IDs.TAGNAME, t.toString());
 		newFragment.setArguments(args);
 		getSupportFragmentManager().beginTransaction()
 				.add(R.id.container, newFragment).addToBackStack(null).commit();
@@ -65,16 +60,10 @@ public class AddTagActivity extends ActionBarActivity implements OnTagSelectedLi
 		// Save the current article selection in case we need to recreate the
 		// fragment
 		outState.putSerializable(IDs.LOCATION, (Serializable) location);
-		outState.putSerializable(IDs.WAYS, (Serializable) ways);
 	}
 	
 	
 	
-	
-	
-	
-	
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
