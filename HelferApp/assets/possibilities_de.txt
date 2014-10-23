@@ -1,0 +1,14 @@
+smoking		-rauchen
+dog_waste	-Hundehaufen
+cellphone	-Handy
+access:dog	-Zutritt für Hunde
+food		-Essen
+swimming	-schwimmen
+access:motorvehicles-Fahrzeugzugang
+noise		-Lärm
+open_fire	-Offenes Feuer
+access:car	-Autozugang
+fishing		-Angeln
+littering	-Verschmutzen
+wheelchair	-Barrierefrei
+

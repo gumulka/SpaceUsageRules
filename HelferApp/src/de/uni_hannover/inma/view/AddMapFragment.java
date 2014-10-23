@@ -16,7 +16,6 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,8 +27,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
@@ -40,7 +38,7 @@ import de.uni_hannover.inma.R;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Way;
 
-public class AddMapFragment extends Fragment implements OnMapClickListener{
+public class AddMapFragment extends SupportMapFragment implements OnMapClickListener{
 
 	public interface OnDataTransmitListener {
 		public void onDataTransmit();
@@ -54,62 +52,44 @@ public class AddMapFragment extends Fragment implements OnMapClickListener{
 	private GoogleMap mMap = null;
 	private Way newlyInsertet = null;
 	private boolean edit = false;
-	private MapView mv = null;
+	
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_add_map, container, false);
 
 		setHasOptionsMenu(true);
-		if (savedInstanceState == null) {
-			Bundle intent = getArguments();
-		    ways = (List<Way>) intent.getSerializable(IDs.WAYS);
-		    location = (Coordinate) intent.getSerializable(IDs.LOCATION);
-		    tagname = intent.getString(IDs.TAGNAME);
-		    tagid = intent.getString(IDs.TAGID);
-		}
-		else {
-			ways = (List<Way>) savedInstanceState.getSerializable(IDs.WAYS);
-			location = (Coordinate) savedInstanceState.getSerializable(IDs.LOCATION);
-			tagname = savedInstanceState.getString(IDs.TAGNAME);
-			tagid = savedInstanceState.getString(IDs.TAGID);
-			edit = savedInstanceState.getBoolean(IDs.EDIT);
-			if(savedInstanceState.containsKey(IDs.NEW_WAY))
-				newlyInsertet = (Way) savedInstanceState.getSerializable(IDs.NEW_WAY);
-			savedInstanceState.remove(IDs.NEW_WAY);
-			savedInstanceState.remove(IDs.WAYS);
-			savedInstanceState.remove(IDs.LOCATION);
-		}
+		Bundle intent = getArguments();
+		ways = (List<Way>) intent.getSerializable(IDs.WAYS);
+		location = (Coordinate) intent.getSerializable(IDs.LOCATION);
+		tagname = intent.getString(IDs.TAGNAME);
+		tagid = intent.getString(IDs.TAGID);
+		if(intent.containsKey(IDs.EDIT))
+			edit = intent.getBoolean(IDs.EDIT);
+		if(intent.containsKey(IDs.NEW_WAY))
+			newlyInsertet = (Way) intent.getSerializable(IDs.NEW_WAY);
 
-		mv = (MapView) rootView.findViewById(R.id.mapViewAdd);
-		mv.onCreate(savedInstanceState);
-	    
-//		mv.onResume();// needed to get the map to display immediately
-
-	    try {
-	        MapsInitializer.initialize(getActivity().getApplicationContext());
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-		
-		return rootView;
+		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
 	
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
+        Bundle intent = getArguments();
+        if(intent == null) {
+        	intent = new Bundle();
+        	setArguments(intent);
+        }
         // Save the current article selection in case we need to recreate the fragment
-        outState.putSerializable(IDs.WAYS, (Serializable) ways);
-        outState.putSerializable(IDs.LOCATION, location);
-        outState.putString(IDs.TAGNAME, tagname);
-        outState.putString(IDs.TAGID, tagid);
-        outState.putBoolean(IDs.EDIT, edit);
+        intent.putSerializable(IDs.WAYS, (Serializable) ways);
+        intent.putSerializable(IDs.LOCATION, location);
+        intent.putString(IDs.TAGNAME, tagname);
+        intent.putString(IDs.TAGID, tagid);
+        intent.putBoolean(IDs.EDIT, edit);
         if(newlyInsertet!= null) 
-        	outState.putSerializable(IDs.NEW_WAY, newlyInsertet);
+        	intent.putSerializable(IDs.NEW_WAY, newlyInsertet);
     }
 
 	@SuppressLint("NewApi")
@@ -117,8 +97,7 @@ public class AddMapFragment extends Fragment implements OnMapClickListener{
 		super.onStart();
 		getActivity().getActionBar().setTitle(tagname);
 		getActivity().invalidateOptionsMenu();
-		MapView mv = (MapView) getActivity().findViewById(R.id.mapViewAdd);
-		mMap = mv.getMap();
+		mMap = getMap();
 		mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 		mMap.getUiSettings().setZoomControlsEnabled(false);
 		mMap.setOnMapClickListener(this);
@@ -128,6 +107,7 @@ public class AddMapFragment extends Fragment implements OnMapClickListener{
 	}
 	
 	public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
+		System.err.println("Bla bla Bla!!");
 		MenuItem paint = menu.findItem(R.id.action_edit_map);
 		if(paint!=null)
 			paint.setVisible(true);
@@ -286,26 +266,11 @@ public class AddMapFragment extends Fragment implements OnMapClickListener{
 	}
 
 	
-	public void onDestroy() {
-		super.onDestroy();
-		mv.onDestroy();
-	}
-	public void onResume() {
-		super.onPause();
-		mv.onResume();
-	}
 	@SuppressLint("NewApi")
 	public void onPause() {
 		super.onPause();
-		mv.onPause();
 		getActivity().getActionBar().setTitle(R.string.app_name);
 	}
-
-@Override
-public void onLowMemory() {
-    super.onLowMemory();
-    mv.onLowMemory();
-}
 
 public class ChooseDialogFragment extends DialogFragment {
 	@Override

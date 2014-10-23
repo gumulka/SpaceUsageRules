@@ -3,16 +3,20 @@ package de.uni_hannover.inma.view;
 import java.io.Serializable;
 import java.util.List;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
@@ -22,76 +26,82 @@ import de.uni_hannover.inma.R;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Way;
 
-public class ShowMapFragment extends Fragment{
+public class ShowMapFragment extends SupportMapFragment implements OnMapLongClickListener{
 
 	private List<Way> ways = null;
 	private Coordinate location = null;
 	private String tagname = null;
 	private String tagid = null;
 	private GoogleMap mMap = null;
-	private MapView mv = null;
+	private SearchFromHereInterface mCallback;
+	
+	public interface SearchFromHereInterface {
+		public void searchFromHere(LatLng l);
+	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_show_map, container, false);
+		View rootView = super.onCreateView(inflater, container, savedInstanceState);
+		Bundle intent = getArguments();
+		ways = (List<Way>) intent.getSerializable(IDs.WAYS);
+		location = (Coordinate) intent.getSerializable(IDs.LOCATION);
+		tagname = intent.getString(IDs.TAGNAME);
+		tagid = intent.getString(IDs.TAGID);
 
-		if (savedInstanceState == null) {
-			Bundle intent = getArguments();
-		    ways = (List<Way>) intent.getSerializable(IDs.WAYS);
-		    location = (Coordinate) intent.getSerializable(IDs.LOCATION);
-		    tagname = intent.getString(IDs.TAGNAME);
-		    tagid = intent.getString(IDs.TAGID);
+		mMap = getMap();
+		mMap.setOnMapLongClickListener(this);
+		mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+		mMap.getUiSettings().setZoomControlsEnabled(false);
+		redraw();
+		if(savedInstanceState==null) {
+			mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude,location.longitude), 19));
 		}
-		else {
-			ways = (List<Way>) savedInstanceState.getSerializable(IDs.WAYS);
-			location = (Coordinate) savedInstanceState.getSerializable(IDs.LOCATION);
-			tagname = savedInstanceState.getString(IDs.TAGNAME);
-			tagid = savedInstanceState.getString(IDs.TAGID);
-			savedInstanceState.remove(IDs.NEW_WAY);
-			savedInstanceState.remove(IDs.WAYS);
-			savedInstanceState.remove(IDs.LOCATION);
-		}
-
-		mv = (MapView) rootView.findViewById(R.id.mapViewShow);
-		mv.onCreate(savedInstanceState);
-	    
-//		mv.onResume();// needed to get the map to display immediately
-
-	    try {
-	        MapsInitializer.initialize(getActivity().getApplicationContext());
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-		
 		return rootView;
 	}
 
-	
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        Bundle intent = getArguments();
+        if(intent == null) {
+        	intent = new Bundle();
+        	setArguments(intent);
+        }
         // Save the current article selection in case we need to recreate the fragment
-        outState.putSerializable(IDs.WAYS, (Serializable) ways);
-        outState.putSerializable(IDs.LOCATION, location);
-        outState.putString(IDs.TAGNAME, tagname);
-        outState.putString(IDs.TAGID, tagid);
+        intent.putSerializable(IDs.WAYS, (Serializable) ways);
+        intent.putSerializable(IDs.LOCATION, location);
+        intent.putString(IDs.TAGNAME, tagname);
+        intent.putString(IDs.TAGID, tagid);
     }
 
 	public void onStart() {
 		super.onStart();
 		getActivity().getActionBar().setTitle(tagname);
-		MapView mv = (MapView) getActivity().findViewById(R.id.mapViewShow);
-		mMap = mv.getMap();
-		mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-		mMap.getUiSettings().setZoomControlsEnabled(false);
-		redraw();
-		mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude,location.longitude), 19));
-
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mCallback = (SearchFromHereInterface) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ " must implement SearchFromHereInterface");
+		}
 	}
 
+	public String getTagID() {
+		return tagid;
+	}
+	
+	public void newData(List<Way> ways) {
+		this.ways.addAll(ways);
+		redraw();
+	}
+	
 	private void redraw() {
 		mMap.clear();
 		for (Way w : ways)
@@ -118,26 +128,41 @@ public class ShowMapFragment extends Fragment{
 		return new LatLng(c.latitude, c.longitude);
 	}
 
-	
-	public void onDestroy() {
-		super.onDestroy();
-		mv.onDestroy();
-	}
-	public void onResume() {
-		super.onPause();
-		mv.onResume();
-	}
-	
 	public void onPause() {
 		super.onPause();
-		mv.onPause();
 		getActivity().getActionBar().setTitle(R.string.app_name);
 	}
 
 	@Override
-	public void onLowMemory() {
-		super.onLowMemory();
-    	mv.onLowMemory();
+	public void onMapLongClick(LatLng arg0) {
+		new SearchDialogFragment(arg0).show(getFragmentManager(), "askuser");
 	}
 	
+	public class SearchDialogFragment extends DialogFragment {
+		
+		private LatLng l;
+		
+		public SearchDialogFragment(LatLng l) {
+			this.l = l;
+		}
+		
+	    @Override
+	    public Dialog onCreateDialog(Bundle savedInstanceState) {
+	        // Use the Builder class for convenient dialog construction
+	        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+	        builder.setMessage(R.string.dialog_search_here)
+	               .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+	                   public void onClick(DialogInterface dialog, int id) {
+	                	   mCallback.searchFromHere(l);
+	                   }
+	               })
+	               .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+	                   public void onClick(DialogInterface dialog, int id) {
+	                       // User cancelled the dialog
+	                   }
+	               });
+	        // Create the AlertDialog object and return it
+	        return builder.create();
+	    }
+	}
 }

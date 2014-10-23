@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -30,12 +31,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.model.LatLng;
+
 import de.uni_hannover.inma.view.AddMapFragment;
 import de.uni_hannover.inma.view.AddMapFragment.OnDataTransmitListener;
 import de.uni_hannover.inma.view.AddTagListFragment;
 import de.uni_hannover.inma.view.AddTagListFragment.OnAddTagSelectedListener;
 import de.uni_hannover.inma.view.PlaceholderFragment;
 import de.uni_hannover.inma.view.ShowMapFragment;
+import de.uni_hannover.inma.view.ShowMapFragment.SearchFromHereInterface;
 import de.uni_hannover.inma.view.ShowTagListFragment;
 import de.uni_hannover.inma.view.ShowTagListFragment.OnShowTagSelectedListener;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
@@ -43,7 +48,7 @@ import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Tag;
 import de.uni_hannover.spaceusagerules.core.Way;
 
-public class MainActivity extends ActionBarActivity implements OnShowTagSelectedListener, OnAddTagSelectedListener, OnDataTransmitListener{
+public class MainActivity extends ActionBarActivity implements OnShowTagSelectedListener, OnAddTagSelectedListener, OnDataTransmitListener, SearchFromHereInterface{
 
 	private int layoutID = R.layout.fragment_main;
 	private Coordinate location = null;
@@ -58,18 +63,16 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		if (location == null) {
-			updateLocation();
-		}
-
 		if (savedInstanceState != null) {
 			layoutID = savedInstanceState.getInt(IDs.LAYOUT_ID);
 			location = (Coordinate) savedInstanceState
 					.getSerializable(IDs.LOCATION);
-			area = savedInstanceState.getFloat(IDs.AREA, (float) 0.03);
+			area = savedInstanceState.getFloat(IDs.AREA, (float) 0.005);
 			ways = (List<Way>) savedInstanceState.getSerializable(IDs.WAYS);
+		} else {
+			updateLocation();
+			replaceFragment();
 		}
-		replaceFragment();
 	}
 
 	private void updateLocation() {
@@ -123,8 +126,16 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 		    startActivity(intent);
 			return true;
 		}
+		if(id == R.id.action_help) {
+			layoutID = R.layout.first_use;
+			replaceFragment();
+			return true;
+		}
 		if(id == R.id.action_add_tag) {
-			addTag(null);
+			if(location!=null)
+				addTag(null);
+			else
+				Toast.makeText(this, R.string.no_location, Toast.LENGTH_LONG).show();
 			return true;
 		}
 		if(id==R.id.action_request_update){
@@ -135,9 +146,14 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 	}
 
 	public void updateLocation(Location location) {
-		Coordinate l = new Coordinate(location.getLatitude(),
+		this.location = new Coordinate(location.getLatitude(),
 				location.getLongitude());
-		this.location = l;
+		updateOsmData();
+	}
+	
+	@Override
+	public void searchFromHere(LatLng l) {
+		this.location = new Coordinate(l.latitude, l.longitude);
 		updateOsmData();
 	}
 	
@@ -173,6 +189,18 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 
 
 	public void onLocationUpdate() {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
+        System.err.println(f);
+		if(f instanceof ShowMapFragment) {
+			String t = ((ShowMapFragment) f).getTagID();
+			for(Tag tag : umgebung)
+				if(tag.getTagId().equals(t)) {
+					((ShowMapFragment) f).newData(tag.getWays());
+					return;
+				}
+			Toast.makeText(this, R.string.no_data_found, Toast.LENGTH_LONG).show();
+			return;
+		}
 		if (umgebung.isEmpty()) {
 			layoutID = R.layout.help_us;
 			replaceFragment();
@@ -227,17 +255,22 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 	public float getRadius() {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		float syncConnPref = sharedPref.getFloat("search_range", (float) 0.5);
-		System.err.println("pref: " + syncConnPref);
-		System.err.println(0.0001 + area * syncConnPref*syncConnPref);
 		return (float) (0.0001 + area * syncConnPref*syncConnPref);
 	}
 
 	public Map<String,String> getPossibilities() {
+		String tryme = "possibilities_" +Locale.getDefault().getLanguage() + ".txt"; 
 		if (possibilities == null) {
 			possibilities = new TreeMap<String,String>();
 			AssetManager assetManager = getAssets();
+			InputStream ins = null;
 			try {
-				InputStream ins = assetManager.open("possibilities.txt");
+				ins = assetManager.open(tryme);
+			} catch (IOException e1) {
+			}
+			try {
+				if(ins == null)
+					ins = assetManager.open("possibilities.txt");
 				BufferedReader r = new BufferedReader(
 						new InputStreamReader(ins));
 				String line;

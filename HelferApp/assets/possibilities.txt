@@ -1,12 +1,13 @@
-smoking
-dog_waste
-cellphone
-access:dog
-food
-swimming
-access:motorvehicles
-noise
-open_fire
-access:car
-fishing
-littering
+smoking 	- smoking
+dog_waste 	- dog waste
+cellphone 	- cellphone
+access:dog 	- access for dogs
+food 		- food
+swimming 	- swimming
+access:motorvehicles - access for motorvehicles
+noise 		- noise
+open_fire 	- open fire
+access:car 	- access for cars
+fishing 	- fishing
+littering 	- littering
+wheelchair 	- wheelchair
