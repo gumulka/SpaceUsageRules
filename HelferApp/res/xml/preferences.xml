@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="pref_wheelchair_only"
+        android:title="@string/pref_wheelchair_only"
+        android:summary="@string/pref_wheelchair_only_summ"
+        android:defaultValue="false" />
+    
+    <net.jayschwa.android.preference.SliderPreference
+    android:key="search_range"
+    android:title="@string/slider_search_range"
+    android:summary="@array/slider_search_summary"
+    android:defaultValue="0.2"
+    android:dialogMessage="@string/slider_search_message" />
+    
+</PreferenceScreen>

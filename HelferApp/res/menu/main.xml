@@ -11,6 +11,13 @@
         app:showAsAction="ifRoom"/>
 
     <item
+        android:id="@+id/action_request_update"
+        android:orderInCategory="50"
+        android:title="@string/update_location"
+        android:icon="@drawable/ic_action_refresh"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/action_edit_map"
         android:orderInCategory="20"
         android:title="@string/paint"
@@ -29,7 +36,7 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/settings"
         app:showAsAction="never"/>
 
 </menu>

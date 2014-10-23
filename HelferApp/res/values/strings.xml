@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Flächennutzung</string>
-    <string name="action_settings">Einstellungen</string>
+    <string name="settings">Einstellungen</string>
     <string name="increase">Umkreis vergrößern</string>
     <string name="add_tag">Regel hinzufügen</string>
     <string name="helptext1">Leider konnten wir in deiner Umgebung keine Nutzungsregeln finden.</string>
@@ -26,5 +26,17 @@
         <item >Teilweise</item>
         <item >Erlaubt</item>
     </string-array>
-
+    <string name="update_location">Update</string>
+    
+    <string name="pref_wheelchair_only">Nur Barrierefrei</string>
+    <string name="pref_wheelchair_only_summ">Alle anderen Sachen werden ausgeblendet.</string>
+	<string name="slider_search_range">Suchradius</string>
+	<string-array name="slider_search_summary">
+	    <item>klein</item>
+	    <item>normal</item>
+	    <item>groß</item>
+	    <item>sehr groß</item>
+	</string-array>
+	<string name="slider_search_message">Ein größerer Suchradius, bedeutet mehr Daten.</string>
+    
 </resources>

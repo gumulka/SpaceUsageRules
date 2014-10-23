@@ -3,13 +3,11 @@ package de.uni_hannover.inma.view;
 import java.io.Serializable;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -29,6 +27,7 @@ public class ShowMapFragment extends Fragment{
 	private List<Way> ways = null;
 	private Coordinate location = null;
 	private String tagname = null;
+	private String tagid = null;
 	private GoogleMap mMap = null;
 	private MapView mv = null;
 	
@@ -43,17 +42,19 @@ public class ShowMapFragment extends Fragment{
 		    ways = (List<Way>) intent.getSerializable(IDs.WAYS);
 		    location = (Coordinate) intent.getSerializable(IDs.LOCATION);
 		    tagname = intent.getString(IDs.TAGNAME);
+		    tagid = intent.getString(IDs.TAGID);
 		}
 		else {
 			ways = (List<Way>) savedInstanceState.getSerializable(IDs.WAYS);
 			location = (Coordinate) savedInstanceState.getSerializable(IDs.LOCATION);
 			tagname = savedInstanceState.getString(IDs.TAGNAME);
+			tagid = savedInstanceState.getString(IDs.TAGID);
 			savedInstanceState.remove(IDs.NEW_WAY);
 			savedInstanceState.remove(IDs.WAYS);
 			savedInstanceState.remove(IDs.LOCATION);
 		}
 
-		mv = (MapView) rootView.findViewById(R.id.mapView);
+		mv = (MapView) rootView.findViewById(R.id.mapViewShow);
 		mv.onCreate(savedInstanceState);
 	    
 //		mv.onResume();// needed to get the map to display immediately
@@ -76,28 +77,20 @@ public class ShowMapFragment extends Fragment{
         outState.putSerializable(IDs.WAYS, (Serializable) ways);
         outState.putSerializable(IDs.LOCATION, location);
         outState.putString(IDs.TAGNAME, tagname);
+        outState.putString(IDs.TAGID, tagid);
     }
 
-	@SuppressLint("NewApi")
 	public void onStart() {
 		super.onStart();
-		MapView mv = (MapView) getActivity().findViewById(R.id.mapView);
+		getActivity().getActionBar().setTitle(tagname);
+		MapView mv = (MapView) getActivity().findViewById(R.id.mapViewShow);
 		mMap = mv.getMap();
 		mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 		mMap.getUiSettings().setZoomControlsEnabled(false);
 		redraw();
 		mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude,location.longitude), 19));
 
-		TextView tv = (TextView) getActivity().findViewById(R.id.add_tag_name);
-		tv.setText(tagname);
 	}
-
-	public void alterTagName(String newTagName) {
-		tagname = newTagName;
-		TextView tv = (TextView) getActivity().findViewById(R.id.add_tag_name);
-		tv.setText(newTagName);
-	}
-	
 
 	private void redraw() {
 		mMap.clear();
@@ -115,7 +108,7 @@ public class ShowMapFragment extends Fragment{
 			return;
 		PolygonOptions po = new PolygonOptions();
 		po.strokeWidth(2);
-		po.strokeColor(w.getStrokeColor(tagname)).fillColor(w.getFillColor(tagname));
+		po.strokeColor(w.getStrokeColor(tagid)).fillColor(w.getFillColor(tagid));
 		for (Coordinate c : w.getCoordinates())
 			po.add(toLatLon(c));
 		mMap.addPolygon(po);
@@ -134,9 +127,11 @@ public class ShowMapFragment extends Fragment{
 		super.onPause();
 		mv.onResume();
 	}
+	
 	public void onPause() {
 		super.onPause();
 		mv.onPause();
+		getActivity().getActionBar().setTitle(R.string.app_name);
 	}
 
 	@Override

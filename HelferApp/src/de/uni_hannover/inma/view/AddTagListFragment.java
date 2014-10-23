@@ -9,14 +9,18 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import de.uni_hannover.inma.IDs;
+import de.uni_hannover.inma.R;
 
 public class AddTagListFragment extends ListFragment {
 
-	OnAddTagSelectedListener mCallback;
+	private OnAddTagSelectedListener mCallback;
 	private List<String> possibilities;
 	private int lastClicked = -1;
 
@@ -26,10 +30,6 @@ public class AddTagListFragment extends ListFragment {
 	public interface OnAddTagSelectedListener {
 		/** Called by HeadlinesFragment when a list item is selected */
 		public void onAddTagSelected(String tagname);
-	}
-
-	public void addPossibilities(List<String> possibilities) {
-		this.possibilities = possibilities;
 	}
 
 	@SuppressLint("InlinedApi")
@@ -48,6 +48,16 @@ public class AddTagListFragment extends ListFragment {
 			possibilities = (List<String>) savedInstanceState.getSerializable(IDs.POSSIBILITIES);
 		}
 
+	}
+
+	
+	public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
+		MenuItem edit = menu.findItem(R.id.action_add_tag);
+		if(edit!=null)
+			edit.setVisible(false);
+		MenuItem update = menu.findItem(R.id.action_request_update);
+		if(update!=null)
+			update.setVisible(false);
 	}
 
 	@Override

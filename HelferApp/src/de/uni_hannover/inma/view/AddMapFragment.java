@@ -9,6 +9,7 @@ import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -41,9 +42,15 @@ import de.uni_hannover.spaceusagerules.core.Way;
 
 public class AddMapFragment extends Fragment implements OnMapClickListener{
 
+	public interface OnDataTransmitListener {
+		public void onDataTransmit();
+	}
+	
+	private OnDataTransmitListener mCallback;
 	private List<Way> ways = null;
 	private Coordinate location = null;
 	private String tagname = null;
+	private String tagid = null;
 	private GoogleMap mMap = null;
 	private Way newlyInsertet = null;
 	private boolean edit = false;
@@ -61,11 +68,13 @@ public class AddMapFragment extends Fragment implements OnMapClickListener{
 		    ways = (List<Way>) intent.getSerializable(IDs.WAYS);
 		    location = (Coordinate) intent.getSerializable(IDs.LOCATION);
 		    tagname = intent.getString(IDs.TAGNAME);
+		    tagid = intent.getString(IDs.TAGID);
 		}
 		else {
 			ways = (List<Way>) savedInstanceState.getSerializable(IDs.WAYS);
 			location = (Coordinate) savedInstanceState.getSerializable(IDs.LOCATION);
 			tagname = savedInstanceState.getString(IDs.TAGNAME);
+			tagid = savedInstanceState.getString(IDs.TAGID);
 			edit = savedInstanceState.getBoolean(IDs.EDIT);
 			if(savedInstanceState.containsKey(IDs.NEW_WAY))
 				newlyInsertet = (Way) savedInstanceState.getSerializable(IDs.NEW_WAY);
@@ -74,7 +83,7 @@ public class AddMapFragment extends Fragment implements OnMapClickListener{
 			savedInstanceState.remove(IDs.LOCATION);
 		}
 
-		mv = (MapView) rootView.findViewById(R.id.mapView);
+		mv = (MapView) rootView.findViewById(R.id.mapViewAdd);
 		mv.onCreate(savedInstanceState);
 	    
 //		mv.onResume();// needed to get the map to display immediately
@@ -97,6 +106,7 @@ public class AddMapFragment extends Fragment implements OnMapClickListener{
         outState.putSerializable(IDs.WAYS, (Serializable) ways);
         outState.putSerializable(IDs.LOCATION, location);
         outState.putString(IDs.TAGNAME, tagname);
+        outState.putString(IDs.TAGID, tagid);
         outState.putBoolean(IDs.EDIT, edit);
         if(newlyInsertet!= null) 
         	outState.putSerializable(IDs.NEW_WAY, newlyInsertet);
@@ -105,8 +115,9 @@ public class AddMapFragment extends Fragment implements OnMapClickListener{
 	@SuppressLint("NewApi")
 	public void onStart() {
 		super.onStart();
+		getActivity().getActionBar().setTitle(tagname);
 		getActivity().invalidateOptionsMenu();
-		MapView mv = (MapView) getActivity().findViewById(R.id.mapView);
+		MapView mv = (MapView) getActivity().findViewById(R.id.mapViewAdd);
 		mMap = mv.getMap();
 		mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 		mMap.getUiSettings().setZoomControlsEnabled(false);
@@ -126,6 +137,9 @@ public class AddMapFragment extends Fragment implements OnMapClickListener{
 		MenuItem edit = menu.findItem(R.id.action_add_tag);
 		if(edit!=null)
 			edit.setVisible(false);
+		MenuItem update = menu.findItem(R.id.action_request_update);
+		if(update!=null)
+			update.setVisible(false);
 	}
 
 	@Override
@@ -143,11 +157,6 @@ public class AddMapFragment extends Fragment implements OnMapClickListener{
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-	
-
-	public void alterTagName(String newTagName) {
-		tagname = newTagName;
 	}
 	
 	public void addTagToOsm() {
@@ -194,15 +203,15 @@ public class AddMapFragment extends Fragment implements OnMapClickListener{
 		if (clicked == null)
 			return;
 		clicked.addTag("sur:clicked", "true");
-		String value = clicked.getValue(tagname);
+		String value = clicked.getValue(tagid);
 		if(value==null) 
-			clicked.addTag(tagname, "no");
+			clicked.addTag(tagid, "no");
 		else if (value.equalsIgnoreCase("no"))
-			clicked.addTag(tagname, "partly");
+			clicked.addTag(tagid, "partly");
 		else if (value.equalsIgnoreCase("partly"))
-			clicked.addTag(tagname, "yes");
+			clicked.addTag(tagid, "yes");
 		else if (value.equalsIgnoreCase("yes"))
-			clicked.removeTag(tagname);
+			clicked.removeTag(tagid);
 
 		redraw();
 	}
@@ -228,7 +237,7 @@ public class AddMapFragment extends Fragment implements OnMapClickListener{
 			return;
 		PolygonOptions po = new PolygonOptions();
 		po.strokeWidth(2);
-		po.strokeColor(w.getStrokeColor(tagname)).fillColor(w.getFillColor(tagname));
+		po.strokeColor(w.getStrokeColor(tagid)).fillColor(w.getFillColor(tagid));
 		for (Coordinate c : w.getCoordinates())
 			po.add(toLatLon(c));
 		mMap.addPolygon(po);
@@ -258,8 +267,22 @@ public class AddMapFragment extends Fragment implements OnMapClickListener{
 	public void afterInforming(int status) {
     	if(status<0)
 			Toast.makeText(getActivity(), getString(R.string.no_data_transmit), Toast.LENGTH_SHORT).show();
-    	else
+    	else {
     		Toast.makeText(getActivity(), getString(R.string.data_transmit), Toast.LENGTH_SHORT).show();
+    		mCallback.onDataTransmit();
+    	}
+	}
+	
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+
+		try {
+			mCallback = (OnDataTransmitListener) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ " must implement OnDataTransmitListener");
+		}
+		
 	}
 
 	
@@ -271,9 +294,11 @@ public class AddMapFragment extends Fragment implements OnMapClickListener{
 		super.onPause();
 		mv.onResume();
 	}
+	@SuppressLint("NewApi")
 	public void onPause() {
 		super.onPause();
 		mv.onPause();
+		getActivity().getActionBar().setTitle(R.string.app_name);
 	}
 
 @Override
@@ -293,13 +318,13 @@ public class ChooseDialogFragment extends DialogFragment {
 	               // of the selected item
 	            	   switch(which) {
 	            	   case 0:
-		            	   newlyInsertet.addTag(tagname, "no");
+		            	   newlyInsertet.addTag(tagid, "no");
 		            	   break;
 	            	   case 1:
-		            	   newlyInsertet.addTag(tagname, "partly");
+		            	   newlyInsertet.addTag(tagid, "partly");
 		            	   break;
 	            	   case 2:
-		            	   newlyInsertet.addTag(tagname, "yes");
+		            	   newlyInsertet.addTag(tagid, "yes");
 		            	   break;
 	            	   }
 	            	   
@@ -322,7 +347,7 @@ private class InformUsTask extends AsyncTask<Way, Integer, Integer> {
 				coords += c.toString() + ";";
 			}
 			con.data("coords", coords);
-			con.data("tag", tagname);
+			con.data("tag", tagid);
 			con.data("standort",location.toString());
 			
 			try {

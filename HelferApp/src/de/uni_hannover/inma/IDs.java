@@ -12,5 +12,6 @@ public class IDs {
 	public static final String NEW_WAY = "newway";
 	public static final String DIRTY = "dirty";
 	public static final String TAGS = "tags";
-	public static final int MENU_EDIT_CONTENT = 32;
+	public static final String TAGID = "tagid";
+	public static final String PREF_SEARCH_RADIUS = "search_range";
 }
