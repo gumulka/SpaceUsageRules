@@ -20,12 +20,15 @@ public class Line {
 	private Coordinate normalVector;
 	/** distance from the origin to the line <BR>
 	 * it's the d in ax+by = d */
-	private double normalDistance;
+	public double normalDistance;
 	
 	/** vector from start to end. Used as normal vector for an orthogonal line through start. */
-	private Coordinate lineVector;
+	Coordinate lineVector;
 	/** distance from the origin to the orthogonal line. */
-	private double inlineDistance; 
+	double inlineDistance;
+	
+	/** measures the length of this line section */
+	double lineLength;
 	
 	/**
 	 * Creates a line with normal vector.
@@ -44,12 +47,16 @@ public class Line {
 	private void updateValues(){
 		normalVector = computeNormalVector(start, end);
 		normalDistance = 0.;
+		//computes the scalar product: start*normal 
 		normalDistance = orientedDistanceTo(start);
 		
 		lineVector = new Coordinate(end.latitude-start.latitude, end.longitude-start.longitude);
-		inlineDistance = lineVector.longitude*start.longitude + lineVector.latitude*start.longitude;
+		lineLength = start.distanceTo(end);
+		lineVector.longitude /= lineLength;
+		lineVector.latitude /= lineLength;
+		inlineDistance = start.longitude*lineVector.longitude + start.latitude*lineVector.latitude;
+
 	}
-	
 	
 	/**
 	 * Computes the normal vector to the line given by the two points.
@@ -105,7 +112,7 @@ public class Line {
 	 * @return oriented distance using HNF, may be negative
 	 */
 	private static double orientedHNFDistance(Coordinate c, Coordinate normal, double d){
-		return c.longitude*normal.longitude + c.latitude*c.longitude - d;
+		return c.longitude*normal.longitude + c.latitude*normal.latitude - d;
 	}
 	
 	/**
@@ -124,7 +131,7 @@ public class Line {
 		//and longitude between 0 and 1 to be on this line.
 		if(transformed.latitude != 0.) return false;
 		if(transformed.longitude < 0.) return false;
-		if(transformed.latitude > 1.) return false;
+		if(transformed.latitude > lineLength) return false;
 		
 		return true;
 	}
@@ -144,7 +151,7 @@ public class Line {
 		if(inline <= 0.){
 			return start.distanceTo(c);
 		}
-		else if(inline >= 1.){
+		else if(inline >= lineLength){
 			return end.distanceTo(c);
 		}
 		
@@ -248,6 +255,10 @@ public class Line {
 		return normalVector;
 	}
 	
+	public Coordinate getLineVector() {
+		return lineVector;
+	}
+
 	@Override
 	public String toString(){
 		return start.toString() + "->" + end.toString();
