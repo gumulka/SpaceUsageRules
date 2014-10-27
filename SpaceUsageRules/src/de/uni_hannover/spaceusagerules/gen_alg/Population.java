@@ -141,7 +141,6 @@ public class Population implements Comparable<Population>{
 		fitness /= truths.size();
 	}
 	
-	@Override
 	public int compareTo(Population o) {
 		if(o.fitness==this.fitness)
 			return this.weights.size()-o.weights.size();

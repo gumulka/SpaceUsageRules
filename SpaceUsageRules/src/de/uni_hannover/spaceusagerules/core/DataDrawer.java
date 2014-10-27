@@ -209,7 +209,7 @@ public class DataDrawer {
 			oldID=id;
 			System.out.println("Bearbeite " + id);
 			InputStream is = new FileInputStream(new File("../SpaceUsageRulesVis/assets/" + id + ".jpg"));
-			DataDrawer drawer = new DataDrawer(5000,5000, 0.0005f);
+			DataDrawer drawer = new DataDrawer(8000,8000, 0.0005f);
 			drawer.render(Image.readCoordinates(is));
 			Way right = new Way();
 			right.addAllCoordinates(KML.loadKML(new File("../SpaceUsageRulesVis/assets/" + id + ".truth.kml")).getPoints());
@@ -228,8 +228,6 @@ public class DataDrawer {
 		} // */
 
 	}
-
-
 
 	public Color getPolygonFillColor() {
 		return polygonFillColor;
