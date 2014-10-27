@@ -1,6 +1,8 @@
 package de.uni_hannover.spaceusagerules.core;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -11,9 +13,44 @@ import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 
+/**
+ * Klasse zum Einlesen von Bild-Metadaten.
+ * 
+ * @author Fabian Pflug
+ *
+ */
 public class Image {
-
 	
+	/**
+	 * List die Datei ein und extrahiert aus dem Metadaten die Coordinaten, an denen das Bild aufgenommen wurde, wenn vorhanden.
+	 * @param filename der Dateiname des Bildes.
+	 * @return Die GPS Position an der es aufgenommen wurde.
+	 * @throws ImageProcessingException
+	 * @throws IOException
+	 */
+	public static Coordinate readCoordinates(String filename) throws ImageProcessingException, IOException {
+		return readCoordinates(new File(filename));
+	}
+
+	/**
+	 * List die Datei ein und extrahiert aus dem Metadaten die Coordinaten, an denen das Bild aufgenommen wurde, wenn vorhanden.
+	 * @param f Der Dateizeiger zum Bild.
+	 * @return Die GPS Position an der es aufgenommen wurde.
+	 * @throws ImageProcessingException
+	 * @throws IOException
+	 */
+	public static Coordinate readCoordinates(File f) throws ImageProcessingException, IOException {
+		InputStream is = new FileInputStream(f);
+		return readCoordinates(is);
+	}
+	
+	/**
+	 * List die Datei ein und extrahiert aus dem Metadaten die Coordinaten, an denen das Bild aufgenommen wurde, wenn vorhanden.
+	 * @param is Ein Stream, aus welchem ein Bild gelesen werden kann.
+	 * @return Die GPS Position an der es aufgenommen wurde.
+	 * @throws ImageProcessingException
+	 * @throws IOException
+	 */
 	public static Coordinate readCoordinates(InputStream is) throws ImageProcessingException, IOException {
 		BufferedInputStream bis = new BufferedInputStream(is);
 		Metadata meta = ImageMetadataReader.readMetadata(bis, false);

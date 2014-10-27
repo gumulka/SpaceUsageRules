@@ -12,17 +12,30 @@ public class Polyline  implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 4719490392798466108L;
+	/**
+	 * Eine Liste mit punkten, welche diese Polylinie ausmachen.
+	 */
 	List<Coordinate> points;
+	/**
+	 * die Bounding Box, welche sich um diese Polyline spannt.
+	 */
 	double[] boundingBox = new double[4];
 	
+	/**
+	 * Konstruktor, welche die BoundingBox mit maximalen Werten Initialisiert, sodass sie bei dem erstbesten Punkt richtig ist.
+	 */
 	public Polyline() {
 		points = new LinkedList<Coordinate>();
-		boundingBox[0] =  10000;
-		boundingBox[1] = -10000;
-		boundingBox[2] =  10000;
-		boundingBox[3] = -10000;
+		boundingBox[0] =  Double.MAX_VALUE;
+		boundingBox[1] =  Double.MIN_VALUE;
+		boundingBox[2] =  Double.MAX_VALUE;
+		boundingBox[3] =  Double.MIN_VALUE;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Coordinate> getPoints() {
 		return points;
 	}

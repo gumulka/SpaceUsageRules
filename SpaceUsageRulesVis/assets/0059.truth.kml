@@ -1,36 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<kml xmlns="http://earth.google.com/kml/2.1">
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
 <Document>
-<Style id="Poly1">
-<LineStyle>
-<color>7f00ff00</color>
-<width>2</width>
-</LineStyle>
-<PolyStyle>
-<color>7f00ff00</color>
-</PolyStyle>
-</Style>
-<Placemark>
-<name>0059</name>
-<description><img src='0059.jpg' width = '400' /></description>
-<styleUrl>#Poly1</styleUrl>
-<Polygon>
-<altitudeMode>clampToGround</altitudeMode>
-<extrude>1</extrude>
-<tessellate>1</tessellate>
-<outerBoundaryIs>
-<LinearRing>
-<coordinates>
-5.34581691,50.93041176
-5.34587055,50.93041176
-5.34587055,50.93036273
-5.34570962,50.93037288
-5.34572572,50.93041176
-5.34581691,50.93041176
-</coordinates>
-</LinearRing>
-</outerBoundaryIs>
-</Polygon>
-</Placemark>
+	<name>0059.truth.kml</name>
+	<open>1</open>
+	<Style id="Poly1">
+		<LineStyle>
+			<color>7f00ff00</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7f00ff00</color>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="Poly10">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#Poly1</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#Poly11</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="Poly11">
+		<LineStyle>
+			<color>7f00ff00</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7f00ff00</color>
+		</PolyStyle>
+	</Style>
+	<Placemark>
+		<name>0059</name>
+		<description><![CDATA[<img src="Dataset/0059.jpg" width="400"></img>]]></description>
+		<styleUrl>#Poly10</styleUrl>
+		<Polygon>
+			<extrude>1</extrude>
+			<tessellate>1</tessellate>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						5.345847219068485,50.93042435217092,0 5.345843921810838,50.93035712023884,0 5.34591239475807,50.93035254931871,0 5.345919161952035,50.93042474145582,0 5.345877311473552,50.93042576875473,0 5.345847219068485,50.93042435217092,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
 </Document>
 </kml>

@@ -1,35 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<kml xmlns="http://earth.google.com/kml/2.1">
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
 <Document>
-<Style id="Poly1">
-<LineStyle>
-<color>7f00ff00</color>
-<width>2</width>
-</LineStyle>
-<PolyStyle>
-<color>7f00ff00</color>
-</PolyStyle>
-</Style>
-<Placemark>
-<name>0049</name>
-<description><img src='0049.jpg' width = '400' /></description>
-<styleUrl>#Poly1</styleUrl>
-<Polygon>
-<altitudeMode>clampToGround</altitudeMode>
-<extrude>1</extrude>
-<tessellate>1</tessellate>
-<outerBoundaryIs>
-<LinearRing>
-<coordinates>
-5.36574036,50.93961393
-5.36698490,50.93956322
-5.36666036,50.93937899
-5.36596030,50.93938068
-5.36574036,50.93961393
-</coordinates>
-</LinearRing>
-</outerBoundaryIs>
-</Polygon>
-</Placemark>
+	<name>0049.truth.kml</name>
+	<open>1</open>
+	<Style id="Poly1">
+		<LineStyle>
+			<color>7f00ff00</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7f00ff00</color>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="Poly10">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#Poly11</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#Poly1</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="Poly11">
+		<LineStyle>
+			<color>7f00ff00</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7f00ff00</color>
+		</PolyStyle>
+	</Style>
+	<Placemark>
+		<name>0049</name>
+		<description><![CDATA[<img src="Dataset/0049.jpg" width="400"></img>]]></description>
+		<styleUrl>#Poly10</styleUrl>
+		<Polygon>
+			<extrude>1</extrude>
+			<tessellate>1</tessellate>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						5.36569825321936,50.93923090709453,0 5.366281448276046,50.93917323443537,0 5.366351933439293,50.93953260729314,0 5.36576126354174,50.9395691930783,0 5.36569825321936,50.93923090709453,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
 </Document>
 </kml>
