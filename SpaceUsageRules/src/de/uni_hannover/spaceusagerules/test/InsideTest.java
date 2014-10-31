@@ -34,7 +34,7 @@ public class InsideTest {
 		line.add(new Coordinate(52.38010,9.30500));
 		line.add(new Coordinate(52.38010,9.30510));
 		line.add(new Coordinate(52.38000,9.30510));
-		line.add(new Coordinate(52.38000,9.30500));
+		line.add(new Coordinate(52.38000,9.30480));
 		c = new Coordinate(52.380010,9.30499);
 		assertTrue(!line.inside(c)); 
 

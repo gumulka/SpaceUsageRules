@@ -20,6 +20,7 @@ public class Way implements Serializable{
 	Polyline coordinates;
     private Map<String,String> tags;
     private String name;
+    private long id;
 
     public int getFillColor() {
         if("truth".equalsIgnoreCase(tags.get("InformatiCup")))
@@ -45,6 +46,8 @@ public class Way implements Serializable{
     		if(tagValue.equalsIgnoreCase("no"))
     			return 0x7FAA0000;
     		if(tagValue.equalsIgnoreCase("partly"))
+    			return 0x4FAAAA00;
+    		if(tagValue.equalsIgnoreCase("limited"))
     			return 0x4FAAAA00;
     	}
         return 0x7F999999;
@@ -118,4 +121,12 @@ public class Way implements Serializable{
     public Polyline getPolyline() {
     	return coordinates;
     }
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 }
