@@ -19,23 +19,40 @@ import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Polyline;
 import de.uni_hannover.spaceusagerules.core.Way;
 
+/** 
+ * Klasse zum durchlaufen eines Genetischen Algorithmus.
+ */
 public class Genetic extends Thread{
 
+  	/** Die anzahl der Populationen, welche den Algorithmus durchlaufen sollen */
 	private static final int popsize = 300;
+  	/** die Anzahl der Runden, welche Maximal durchlaufen werden sollen, bevor der Algorithmus abgebrochen wird. */
 	private static final int maxRounds = 50000;
+  	/** Die Anzahl der Runden, welche Mindestens durchlaufen werden sollen, selbst wenn der Wert schon erreicht ist. */
 	private static final int minRounds = 20000;
+  	/** Die Anzahl der Populationen, welche unbearbeitet in die nächste generation übernommen werden sollen */
 	private static final int copyBest = popsize*1/10;
+  	/** Die Anzahnl der Populationen, welche mutiert in die nächste Generation übernommen werden solllen. */
 	private static final int mutate = popsize*4/10;
+  	/** Die Anzahl der Populationen pro Generation, welche aus anderen zusammen gesetzt werden sollen */
 	private static final int merge = popsize*3/10;
+  	/** Die Menge der Poplationen, aus denen die Populationen zusammen gesetzt werden sollen. */
 	private static final int mergeFrom = popsize/2;
+  	/** Die Minimale Fitness, welche erreicht werden soll um den Algorithmus zu beenden. */
 	private static final int targetMinFitness = Population.maxFitness*95/100;
 	
+  	/** Die Liste der Polygone, welche das richtige Ergebnis representieren. */
 	private List<Polyline> truths;
+  	/** die Liste der Coordinaten, von welchem aus die Lösungspolygone gesucht werden sollen */
 	private List<Coordinate> starting;
+  	/** Eine Liste von Listen, welche die Möglichen Lösungen Respresentieren. */
 	private List<List<Way>> possebilities;
+  	/** Die Liste der Populationen, welche aktuell bearbeitet werden. */ 
 	private List<Population> pops, nextGen;
+  	/** der Name der SpaceUsageRule, nach der Optimiert werden soll. */
 	private String suche;
 	
+  
 	public Genetic(String sign) throws Exception {
 		suche = sign;
 		truths = new ArrayList<Polyline>();
@@ -74,7 +91,10 @@ public class Genetic extends Thread{
 		}
 	}
 	
-	private void nextGen() throws IOException {
+	/**
+     * erzeugt die nächste generation, indem die alte sortiert und dann neue erzeugt werden.
+     */
+  	private void nextGen() throws IOException {
 		Collections.sort(pops);
 		for(int i = 0; i<copyBest; i++) {
 			nextGen.add(pops.get(i));
@@ -96,6 +116,9 @@ public class Genetic extends Thread{
 		nextGen = new ArrayList<Population>();
 	}
 	
+  	/**
+     * die Methode zum durchlaufen des Genetischen algorithmus mit der Steuerung aus den statischen finalen Variablen.
+     */
 	public void run() {
 		for(int i = 0; i<maxRounds; i++) {
 			calcFitness();
@@ -113,13 +136,18 @@ public class Genetic extends Thread{
 	//	System.out.println(new Date());
 	}
 
+  	/**
+     * Gibt die beste Population zurück. 
+     */
 	public Population getBest() {
 		return pops.get(0);
 	}
 	
+  	/**
+     * gibt den Namen der SpaceUsageRule zurück
+     */
 	public String getRule() {
 		return suche;
-	}
-	
+    }
 	
 }

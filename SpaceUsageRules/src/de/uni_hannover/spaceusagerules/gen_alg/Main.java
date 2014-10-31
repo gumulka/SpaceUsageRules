@@ -15,6 +15,9 @@ import com.drew.imaging.ImageProcessingException;
 
 import de.uni_hannover.spaceusagerules.core.OSM;
 
+/**
+ * Klasse, welche für jede SpaceUsageRule aus dem Testdatensatz einen genetischen Algorithmus erstellt und diesen durchlaufen lässt.
+ */
 public class Main {
 
 	/**
