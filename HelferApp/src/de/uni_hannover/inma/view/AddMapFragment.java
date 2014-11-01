@@ -1,12 +1,8 @@
 package de.uni_hannover.inma.view;
 
-import java.io.IOException;
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
-
-import org.jsoup.Connection;
-import org.jsoup.Connection.Method;
-import org.jsoup.Jsoup;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -36,6 +32,7 @@ import de.uni_hannover.inma.IDs;
 import de.uni_hannover.inma.MainActivity;
 import de.uni_hannover.inma.R;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
+import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Way;
 
 public class AddMapFragment extends SupportMapFragment implements OnMapClickListener{
@@ -107,7 +104,6 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 	}
 	
 	public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
-		System.err.println("Bla bla Bla!!");
 		MenuItem paint = menu.findItem(R.id.action_edit_map);
 		if(paint!=null)
 			paint.setVisible(true);
@@ -140,21 +136,13 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 	}
 	
 	public void addTagToOsm() {
-		if(newlyInsertet!=null && newlyInsertet.getCoordinates().size()>2) {
-			new InformUsTask().execute(newlyInsertet);
+		if(newlyInsertet!=null && newlyInsertet.getPolyline().getPoints().size()>2) {
+			List<Way> single = new LinkedList<Way>();
+			single.add(newlyInsertet);
+			new InformUsTask().execute(single);
 		}
 		else {
-			Way[] add = new Way[ways.size()];
-			int i = 0;
-			for(Way w : ways) {
-				if("true".equals(w.getValue("sur:clicked")))
-					add[i++] = w;
-			}
-			if(i!=0)
-				new InformUsTask().execute(add);
-			else {
-				Toast.makeText(getActivity(), getString(R.string.nothing_selected), Toast.LENGTH_LONG).show();
-			}
+			new InformUsTask().execute(ways);
 		}
 	}
 
@@ -182,14 +170,13 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 		}
 		if (clicked == null)
 			return;
-		clicked.addTag("sur:clicked", "true");
 		String value = clicked.getValue(tagid);
 		if(value==null) 
-			clicked.addTag(tagid, "no");
+			clicked.alterTag(tagid, "no");
 		else if (value.equalsIgnoreCase("no"))
-			clicked.addTag(tagid, "partly");
+			clicked.alterTag(tagid, "partly");
 		else if (value.equalsIgnoreCase("partly"))
-			clicked.addTag(tagid, "yes");
+			clicked.alterTag(tagid, "yes");
 		else if (value.equalsIgnoreCase("yes"))
 			clicked.removeTag(tagid);
 
@@ -218,7 +205,7 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 		PolygonOptions po = new PolygonOptions();
 		po.strokeWidth(2);
 		po.strokeColor(w.getStrokeColor(tagid)).fillColor(w.getFillColor(tagid));
-		for (Coordinate c : w.getCoordinates())
+		for (Coordinate c : w.getPolyline().getPoints())
 			po.add(toLatLon(c));
 		mMap.addPolygon(po);
 	}
@@ -247,6 +234,8 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 	public void afterInforming(int status) {
     	if(status<0)
 			Toast.makeText(getActivity(), getString(R.string.no_data_transmit), Toast.LENGTH_SHORT).show();
+    	else if(status==0)
+    			Toast.makeText(getActivity(), getString(R.string.no_data_found), Toast.LENGTH_SHORT).show();
     	else {
     		Toast.makeText(getActivity(), getString(R.string.data_transmit), Toast.LENGTH_SHORT).show();
     		mCallback.onDataTransmit();
@@ -283,13 +272,13 @@ public class ChooseDialogFragment extends DialogFragment {
 	               // of the selected item
 	            	   switch(which) {
 	            	   case 0:
-		            	   newlyInsertet.addTag(tagid, "no");
+		            	   newlyInsertet.alterTag(tagid, "no");
 		            	   break;
 	            	   case 1:
-		            	   newlyInsertet.addTag(tagid, "partly");
+		            	   newlyInsertet.alterTag(tagid, "limited");
 		            	   break;
 	            	   case 2:
-		            	   newlyInsertet.addTag(tagid, "yes");
+		            	   newlyInsertet.alterTag(tagid, "yes");
 		            	   break;
 	            	   }
 	            	   
@@ -299,30 +288,15 @@ public class ChooseDialogFragment extends DialogFragment {
 	}
 }
 	
-private class InformUsTask extends AsyncTask<Way, Integer, Integer> {
+private class InformUsTask extends AsyncTask<List<Way>, Integer, Integer> {
 
 	@Override
-	protected Integer doInBackground(Way... params) {
-		for(Way w: params) {
-			if(w==null)
-				continue;
-			Connection con = Jsoup.connect("http://www.sur.gummu.de/add.php").method(Method.POST);
-			String coords = "";
-			for(Coordinate c : w.getCoordinates()) {
-				coords += c.toString() + ";";
-			}
-			con.data("coords", coords);
-			con.data("tag", tagid);
-			con.data("standort",location.toString());
-			
-			try {
-				con.execute();
-				((MainActivity) getActivity()).reOrder();
-			} catch (IOException e) {
-				return -1;
-			}
-		}
-		return 1;
+	protected Integer doInBackground(List<Way>... params) {
+
+		int status = OSM.alterContent(params[0], location) ;
+		
+		((MainActivity) getActivity()).reOrder();
+		return status;
 	}
 	
     // onPostExecute displays the results of the AsyncTask.

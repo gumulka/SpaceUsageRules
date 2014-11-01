@@ -14,6 +14,9 @@ import de.uni_hannover.spaceusagerules.core.Image;
 import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Way;
 
+/** 
+ * einfache Klasse, welche die Key-Value Paare in der Umgebung aller Testdatensätze raussucht und anschließend in eine Datei schreibt.
+ */
 public class Generator {
 
 	/**

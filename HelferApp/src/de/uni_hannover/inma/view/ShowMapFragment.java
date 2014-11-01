@@ -119,7 +119,7 @@ public class ShowMapFragment extends SupportMapFragment implements OnMapLongClic
 		PolygonOptions po = new PolygonOptions();
 		po.strokeWidth(2);
 		po.strokeColor(w.getStrokeColor(tagid)).fillColor(w.getFillColor(tagid));
-		for (Coordinate c : w.getCoordinates())
+		for (Coordinate c : w.getPolyline().getPoints())
 			po.add(toLatLon(c));
 		mMap.addPolygon(po);
 	}

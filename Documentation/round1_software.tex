@@ -29,14 +29,21 @@ so wird die kleinere von beiden ausgewählt.
 \subsubsection{Daten}
 \label{sec:Eingabedaten_GI}
 Hier werden die aus der Aufgabenstellung übernommenen Regeln beachtet und das Eingabeformat wie beschrieben umgesetzt.
-\begin{quote}
+\begin{aquote}{GI Aufgabenstellung}
 Die erste Zeile enthält die Anzahl $c$ der Space Usage Rules. Es folgen zeilenweise die Informationen
 über die $c$ Regeldefinitionen.
 Eine Zeile beginnt mit der ID der Space Usage Rule gefolgt von deren Position in geographischen
 Koordinaten in der Form $Breitengrad, Längengrad$. Als Eingabewerte sind für $Breitengrad$ und
 $Längengrad$ Fließkommazahlen mit einem ’.’ als Dezimaltrennzeichen erlaubt. Die einzelnen Informationen
 sind durch Kommas und optionale Leerzeichen getrennt.
-\end{quote}
+\end{aquote}
+
+\subsection{Test}
+Um die Qualität hoch zu halten werden für alle wichtigen Klassen und Methoden JUnit Tests
+entworfen. Dabei ist das jeweils andere Teammitglied angehalten anhand der Dokumentation Blackbox-Test zu 
+schreiben um bei den Test unvoreingenommen zu sein und engagiert möglichst viele Fehler zu finden.
+
+
 
 \subsection{Probleme}
 Da die Berechnung der Schnittpolygone sehr aufwändig ist und wir nur eine Näherung benötigen,
