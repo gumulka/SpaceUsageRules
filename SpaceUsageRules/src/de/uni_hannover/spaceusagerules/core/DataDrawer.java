@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
@@ -66,7 +67,7 @@ public class DataDrawer {
 		//create drawable polygon
 		int[] ints;
 		Polygon polygon = new Polygon();
-		for(Coordinate c : w.getCoordinates()){
+		for(Coordinate c : w.getPolyline().getPoints()){
 			ints = transformToInt(c);
 			polygon.addPoint(ints[0]+margin, ints[1]+margin);
 		}
@@ -136,7 +137,10 @@ public class DataDrawer {
 	
 	
 	private List<Way> retrieveData(Coordinate p){
-		List<Way> output = OSM.getObjectList(p, radius);
+		List<Way> output = new LinkedList<Way>(); 
+		for(Way w : OSM.getObjectList(p, radius))
+			if(w.isArea())
+				output.add(w);
 		return output;
 	}
 	
@@ -150,18 +154,16 @@ public class DataDrawer {
 		minY = Double.MAX_VALUE;
 		maxY = Double.MIN_VALUE;
 		for(Way w : data){
-			for(Coordinate c : w.getCoordinates()){
-				if(c.longitude>maxX) maxX = c.longitude;
-				if(c.longitude<minX) minX = c.longitude;
-				if(c.latitude>maxY) maxY = c.latitude;
-				if(c.latitude<minY) minY = c.latitude;
-			}
+			double[] bb = w.getPolyline().getBoundingBox();
+			if(bb[2]<minX) minX = bb[2];
+			if(bb[3]>maxX) maxX = bb[3];
+			if(bb[0]<minY) minY = bb[0];
+			if(bb[1]>maxY) maxY = bb[1];
 		}
 		
 		//polygone zeichnen
 		for(Way w : data){
-			if(w.isArea())
-				drawWay(w);
+			drawWay(w);
 		}
 		
 		//draw reference point p
@@ -204,6 +206,8 @@ public class DataDrawer {
 		while((line = br.readLine()) != null) {
 			String[] bla = line.split(",");
 			String id = bla[0].trim();
+			int ID = Integer.parseInt(id);
+			if(ID<63) continue;
 			if(id.equals(oldID))
 				continue;
 			oldID=id;

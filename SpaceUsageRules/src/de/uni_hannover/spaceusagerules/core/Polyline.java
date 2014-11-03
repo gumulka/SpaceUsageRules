@@ -42,10 +42,10 @@ public class Polyline  implements Serializable {
 	
 	public Polyline(List<Coordinate> coords) {
 		points = new LinkedList<Coordinate>();
-		boundingBox[0] =  10000;
-		boundingBox[1] = -10000;
-		boundingBox[2] =  10000;
-		boundingBox[3] = -10000;
+		boundingBox[0] =  Double.MAX_VALUE;
+		boundingBox[1] =  Double.MIN_VALUE;
+		boundingBox[2] =  Double.MAX_VALUE;
+		boundingBox[3] =  Double.MIN_VALUE;
 		for(Coordinate c : coords) {
 			add(c);
 		}
