@@ -5,7 +5,9 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * Klasse zur Representation eines Weg-Objektes in OSM.
@@ -27,6 +29,8 @@ public class Way implements Serializable{
     private long id;
 
     private Map<String,String> changedTags;
+    
+    private Set<String> removed;
     
 	/**
      * Gibt eine Füllfarbe abhängig von Tag's zurück
@@ -61,7 +65,7 @@ public class Way implements Serializable{
     		if(tagValue.equalsIgnoreCase("limited"))
     			return 0x4FAAAA00;
     	}
-        return 0x7F0000AA;
+        return 0x7FAAAAAA;
     }
 
 	/**
@@ -93,6 +97,7 @@ public class Way implements Serializable{
         coordinates = new Polyline();
         tags = new TreeMap<String, String>();
         changedTags = new TreeMap<String, String>();
+        removed = new TreeSet<String>();
         this.name = name;
         this.id = -1;
     }
@@ -104,6 +109,7 @@ public class Way implements Serializable{
         coordinates = new Polyline();
         tags = new TreeMap<String, String>();
         changedTags = new TreeMap<String, String>();
+        removed = new TreeSet<String>();
         this.name = "";
         this.id = -1;
     }
@@ -137,6 +143,8 @@ public class Way implements Serializable{
     }
 
     public void alterTag(String key, String value) {
+    	if(removed.contains(key))
+    		removed.remove(key);
     	changedTags.put(key, value);
     }
     
@@ -144,7 +152,12 @@ public class Way implements Serializable{
      * Entfernt ein key-Value Paar aus der Map. Sollte es nicht vohanden sein, so wird kein Fehler geworfen.
      */
     public void removeTag(String key) {
-    	tags.remove(key);
+    	removed.add(key);
+    	changedTags.remove(key);
+    }
+    
+    public Set<String> getRemoved() {
+    	return removed;
     }
 
 	/**
@@ -170,6 +183,8 @@ public class Way implements Serializable{
      * gibt die Value zu dem gegebenen Key zurück oder null, wenn dieser nicht vorhanden ist.
      */
     public String getValue(String key) {
+    	if(removed.contains(key))
+    		return null;
     	if(changedTags.containsKey(key))
     		return changedTags.get(key);
         return tags.get(key);

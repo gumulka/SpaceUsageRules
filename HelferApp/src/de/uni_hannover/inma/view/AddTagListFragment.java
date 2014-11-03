@@ -1,10 +1,8 @@
 package de.uni_hannover.inma.view;
 
-import java.io.Serializable;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,7 +19,6 @@ import de.uni_hannover.inma.R;
 public class AddTagListFragment extends ListFragment {
 
 	private OnAddTagSelectedListener mCallback;
-	private List<String> possibilities;
 	private int lastClicked = -1;
 
 
@@ -29,11 +26,10 @@ public class AddTagListFragment extends ListFragment {
 	// deliver messages
 	public interface OnAddTagSelectedListener {
 		/** Called by HeadlinesFragment when a list item is selected */
-		public void onAddTagSelected(String tagname);
+		public void onAddTagSelected(int tagnumber);
 	}
 
 	@SuppressLint("InlinedApi")
-	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,11 +37,9 @@ public class AddTagListFragment extends ListFragment {
         Bundle args = getArguments();
         if (args != null) {
 			lastClicked = args.getInt(IDs.LAST_CLICKED, -1);
-			possibilities = (List<String>) args.getSerializable(IDs.POSSIBILITIES);
         }
 		if(savedInstanceState != null) {
 			lastClicked = savedInstanceState.getInt(IDs.LAST_CLICKED, -1);
-			possibilities = (List<String>) savedInstanceState.getSerializable(IDs.POSSIBILITIES);
 		}
 
 	}
@@ -83,9 +77,10 @@ public class AddTagListFragment extends ListFragment {
 		// Honeycomb
 		int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB 
 				? android.R.layout.simple_list_item_activated_1	: android.R.layout.simple_list_item_1;
-		if(possibilities != null)
-			setListAdapter(new ArrayAdapter<String>(getActivity(), layout,
-				possibilities));
+
+        Resources res = getActivity().getResources();
+        String[] tagList = res.getStringArray(R.array.tags_readable);
+		setListAdapter(new ArrayAdapter<String>(getActivity(), layout, tagList));
 		
         // During startup, check if there are arguments passed to the fragment.
         // onStart is a good place to do this because the layout has already been
@@ -118,7 +113,6 @@ public class AddTagListFragment extends ListFragment {
 
 		// Save the current article selection in case we need to recreate the
 		// fragment
-		outState.putSerializable(IDs.POSSIBILITIES, (Serializable) possibilities);
 		outState.putInt(IDs.LAST_CLICKED, lastClicked);
 	}
 
@@ -126,7 +120,7 @@ public class AddTagListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         // Notify the parent activity of selected item
-        mCallback.onAddTagSelected(possibilities.get(position));
+        mCallback.onAddTagSelected(position);
         
         // Set the item as checked to be highlighted when in two-pane layout
         getListView().setItemChecked(position, true);

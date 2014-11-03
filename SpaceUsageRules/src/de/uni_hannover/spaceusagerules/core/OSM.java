@@ -39,6 +39,7 @@ public class OSM {
 		buffer = use;
 	}
 
+	@Deprecated
 	public static List<Way> getObjectList(Coordinate c) {
 		return getObjectList(c, (float) 0.0005);
 	}
@@ -50,9 +51,10 @@ public class OSM {
 					radius);
 			return getObjectList(c, radius, new File(filename));
 		}
-		return getObjectList(c, radius, null);
+		return getObjectList(c, radius, null, null);
 	}
 
+	@Deprecated
 	public static List<Way> getObjectList(Coordinate c, File f) {
 		boolean b = buffer;
 		buffer = true;
@@ -62,18 +64,36 @@ public class OSM {
 	}
 
 	public static List<Way> getObjectList(Coordinate c, float radius, File f) {
+		return getObjectList(c, radius, f, null);
+	}
+
+	public static List<Way> getObjectList(Coordinate c, float radius,
+			String tagname) {
+		return getObjectList(c, radius, null, tagname);
+	}
+
+	public static List<Way> getObjectList(Coordinate c, float radius, File f,
+			String tagname) {
 		List<Way> newObjects = new LinkedList<Way>();
 		Map<Long, Coordinate> coords = new TreeMap<Long, Coordinate>();
-		String connection = "http://api.openstreetmap.org/api/0.6/map?bbox="
-				+ (c.longitude - radius) + "," + (c.latitude - radius) + ','
-				+ (c.longitude + radius) + "," + (c.latitude + radius);
+		String connection = null;
+		if (tagname == null)
+			connection = "http://api.openstreetmap.org/api/0.6/map?bbox="
+					+ (c.longitude - radius) + "," + (c.latitude - radius)
+					+ ',' + (c.longitude + radius) + ","
+					+ (c.latitude + radius);
+		else
+			connection = "http://www.overpass-api.de/api/xapi?way[bbox="
+					+ (c.longitude - radius) + "," + (c.latitude - radius)
+					+ ',' + (c.longitude + radius) + ","
+					+ (c.latitude + radius) + "][" + tagname + "=*]";
 		System.out.println(connection);
 		try {
 			Document doc = null;
 			if (buffer && f != null && f.exists() && f.canRead()) {
 				doc = Jsoup.parse(f, "UTF-8");
 			} else {
-				Connection.Response res = Jsoup.connect(connection)
+				Connection.Response res = Jsoup.connect(connection).timeout(10000)
 						.userAgent("InMa SpaceUsageRules")
 						.followRedirects(true).execute();
 				doc = res.parse();
@@ -143,7 +163,7 @@ public class OSM {
 		if (status == 0)
 			return status;
 		String conc = "";
-		for(String c : concerned) 
+		for (String c : concerned)
 			conc += c + ", ";
 		OAuthService service = new ServiceBuilder().provider(OSMOauth.class)
 				.apiKey("aqfuSUHbSVZU3IpFFX0SSfvrxgEbVjpVaiCEendn")
@@ -156,7 +176,9 @@ public class OSM {
 				"https://api.openstreetmap.org/api/0.6/changeset/create");
 		request.addHeader("Content-type", "text/xml");
 		request.addPayload("<osm version='0.6' generator='GummuForOSM'><changeset><tag k=\"created_by\" v=\"GummuForOSM\"/>"
-				+ "<tag k=\"comment\" v=\"Adding some tags concerning " + conc + "\"/></changeset></osm>");
+				+ "<tag k=\"comment\" v=\"Adding some tags concerning "
+				+ conc
+				+ "\"/></changeset></osm>");
 		service.signRequest(accessToken, request);
 		Response response = request.send();
 		if (response.getCode() != 200)
@@ -177,33 +199,43 @@ public class OSM {
 					return -3;
 				String last = wayBody.substring(end);
 				wayBody = wayBody.substring(0, end);
-				int cha = wayBody.indexOf('"', wayBody.indexOf("changeset"))+1;
-				wayBody = wayBody.substring(0, cha) + changesetID + wayBody.substring(wayBody.indexOf('"',cha));
-				cha = wayBody.indexOf('"', wayBody.indexOf("user"))+1;
-				wayBody = wayBody.substring(0, cha) + "Gumulka" + wayBody.substring(wayBody.indexOf('"',cha));
-				cha = wayBody.indexOf('"', wayBody.indexOf("uid"))+1;
-				wayBody = wayBody.substring(0, cha) + "2387983" + wayBody.substring(wayBody.indexOf('"',cha));
-				cha = wayBody.indexOf('"', wayBody.indexOf("timestamp"))+1;
+				int cha = wayBody.indexOf('"', wayBody.indexOf("changeset")) + 1;
+				wayBody = wayBody.substring(0, cha) + changesetID
+						+ wayBody.substring(wayBody.indexOf('"', cha));
+				cha = wayBody.indexOf('"', wayBody.indexOf("user")) + 1;
+				wayBody = wayBody.substring(0, cha) + "Gumulka"
+						+ wayBody.substring(wayBody.indexOf('"', cha));
+				cha = wayBody.indexOf('"', wayBody.indexOf("uid")) + 1;
+				wayBody = wayBody.substring(0, cha) + "2387983"
+						+ wayBody.substring(wayBody.indexOf('"', cha));
+				cha = wayBody.indexOf('"', wayBody.indexOf("timestamp")) + 1;
 				Date d = new Date();
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-				wayBody = wayBody.substring(0, cha) + df.format(d) + wayBody.substring(wayBody.indexOf('"',cha));
+				wayBody = wayBody.substring(0, cha) + df.format(d)
+						+ wayBody.substring(wayBody.indexOf('"', cha));
+				for(String key : w.getRemoved()) {
+					int tagstart = wayBody.lastIndexOf("<tag",
+							wayBody.indexOf(key));
+					int tagend = wayBody.indexOf('>', tagstart) + 1;
+					wayBody = wayBody.substring(0, tagstart) + wayBody.substring(tagend);
+				}
 				for (String key : w.getChangedTags().keySet()) {
 					if (w.getTags().containsKey(key)) {
 						// es war bereits vorher ein Wert da.
-						int tagstart = wayBody
-								.lastIndexOf("<tag", wayBody.indexOf(key));
+						int tagstart = wayBody.lastIndexOf("<tag",
+								wayBody.indexOf(key));
 						int value = wayBody.indexOf("v=\"", tagstart) + 3;
-						String endstring = wayBody.substring(wayBody
-								.indexOf('"', value));
+						String endstring = wayBody.substring(wayBody.indexOf(
+								'"', value));
 						wayBody = wayBody.substring(0, value) + w.getValue(key)
 								+ endstring;
 					} else {
 						// Wert wird neu erstellt.
-						wayBody += "<tag k=\"" + key + "\" v=\"" + w.getValue(key)
-								+ "\" />\n";
+						wayBody += "<tag k=\"" + key + "\" v=\""
+								+ w.getValue(key) + "\" />\n";
 					}
 				}
-				request = new OAuthRequest(Verb.POST,
+				request = new OAuthRequest(Verb.PUT,
 						"https://api.openstreetmap.org/api/0.6/way/"
 								+ w.getId());
 				request.addPayload(wayBody + last);
@@ -211,18 +243,20 @@ public class OSM {
 				service.signRequest(accessToken, request);
 				response = request.send();
 				if (response.getCode() != 200) {
-					System.err.println(wayBody + last); 
+					System.err.println(wayBody + last);
+					System.err.println(w.getId());
 					System.err.println(response.getCode());
 					System.err.println(response.getBody());
 					System.err.println(response.getHeaders());
 					status = -4;
 				}
-
 			}
 		}
-    	request = new OAuthRequest(Verb.PUT, "http://api.openstreetmap.org/api/0.6/changeset/" + changesetID  + "/close");
-    	service.signRequest(accessToken, request);
-    	response = request.send();
+		request = new OAuthRequest(Verb.PUT,
+				"http://api.openstreetmap.org/api/0.6/changeset/" + changesetID
+						+ "/close");
+		service.signRequest(accessToken, request);
+		response = request.send();
 		return status;
 	}
 

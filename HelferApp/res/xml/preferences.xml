@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <CheckBoxPreference
-        android:key="pref_wheelchair_only"
-        android:title="@string/pref_wheelchair_only"
-        android:summary="@string/pref_wheelchair_only_summ"
+        android:key="pref_only"
+        android:title="@string/pref_only"
+        android:summary="@string/pref_only_summ"
         android:defaultValue="false" />
+    
+    <ListPreference
+        android:dependency="pref_only"
+        android:key="pref_only_tag"
+        android:title="@string/pref_only_tag"
+        android:dialogTitle="@string/pref_only_tag_dialog"
+        android:entries="@array/tags_readable" 
+        android:entryValues="@array/tags" />
+    
     
     <net.jayschwa.android.preference.SliderPreference
     android:key="search_range"

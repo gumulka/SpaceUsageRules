@@ -135,6 +135,7 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 		return super.onOptionsItemSelected(item);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void addTagToOsm() {
 		if(newlyInsertet!=null && newlyInsertet.getPolyline().getPoints().size()>2) {
 			List<Way> single = new LinkedList<Way>();
@@ -144,6 +145,11 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 		else {
 			new InformUsTask().execute(ways);
 		}
+	}
+	
+	public void newData(List<Way> data) {
+		this.ways = data;
+		redraw();
 	}
 
 	@Override
@@ -174,12 +180,11 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 		if(value==null) 
 			clicked.alterTag(tagid, "no");
 		else if (value.equalsIgnoreCase("no"))
-			clicked.alterTag(tagid, "partly");
-		else if (value.equalsIgnoreCase("partly"))
+			clicked.alterTag(tagid, "limited");
+		else if (value.equalsIgnoreCase("limited"))
 			clicked.alterTag(tagid, "yes");
 		else if (value.equalsIgnoreCase("yes"))
 			clicked.removeTag(tagid);
-
 		redraw();
 	}
 

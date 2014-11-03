@@ -9,14 +9,18 @@
     <string name="helptext2">Das hängt oftmals damit zusammen, dass es noch sehr neu ist diese in Openstreetmap zu definieren und es deshalb erst sehr wenige gibt.</string>
     <string name="helptext3">Hilf uns das zu verbessern indem du eigene Regeln hinzufügst.</string>
     <string name="starttext1">Danke, dass du die App heruntergeladen hast. Im folgenden will ich dir kurz ein paar Tips geben:</string>
-    <string name="starttext2">Du kannst der App eigene Bereiche über das "+" hinzufügen. Wähle dazu ein Flächen an, oder zeichne nach Klick auf den Stift einen eigenen Bereich.</string>
-    <string name="starttext3">Du kommst jederzeit wieder zu dieser Seite, indem du auf "Hilfe" klickst.</string>
+    <string name="starttext3">Du kannst der App eigene Bereiche über das "+" hinzufügen. Wähle dazu eine Fläche an, oder zeichne(durch antippen der Eckpunkte) nach Klick auf den Stift einen eigenen Bereich.</string>
+    <string name="starttext4">In dieser App werden Daten aus OpenStreetMap und Google Maps kombiniert.</string>
+    <string name="starttext2">Diese App ist dazu da, Bereich auf der Karte zu markieren, in welchen bestimmte Verbote gelten. Welche genau das sein sollen, kannst du in den Einstellungen ändern, oder aber dir einfach alle anzeigen lassen.
+        
+        Da aktuell noch nicht so viele Verbote definiert sind, hilf uns doch, indem du weitere hinzufügst und es anderen so ermöglichst zu sehen ob sie hier z.B. rauchen dürfen, oder aber welche Teile der Stadt mit Rollstuhl zugänglich sind.</string>
     <string name="help">Hilfe</string>
     <string name="found_location">Standort bestimmt.</string>
     <string name="start_search">Beginne mit Suche</string>
     <string name="your_position">Deine Position</string>
     <string name="right">Übernehmen</string>
     <string name="paint">Bereich einzeichnen.</string>
+    <string name="show_map">Zeige Karte</string>
     <string name="cancel">Abbrechen</string>
     <string name="ok">Suchen</string>
     <string name="no_data_transmit">Daten konnten nicht übertragen werden.</string>
@@ -34,9 +38,44 @@
     </string-array>
     <string name="update_location">Update</string>
     
-    <string name="pref_wheelchair_only">Nur Barrierefrei</string>
-    <string name="pref_wheelchair_only_summ">Alle anderen Sachen werden ausgeblendet.</string>
-	<string name="slider_search_range">Suchradius</string>
+    <string-array name="tags">
+		<item >wheelchair</item>
+        <item >smoking</item>
+        <item >dog_waste</item>
+        <item >cellphone</item>
+        <item >access:dog</item>
+        <item >food</item>
+        <item >swimming</item>
+        <item >access:motorvehicles</item>
+        <item >noise</item>
+        <item >open_fire</item>
+        <item >access:car</item>
+        <item >fishing</item>
+        <item >littering</item>
+    </string-array>
+    
+    <string-array name="tags_readable">
+		<item >Barrierefrei</item>
+        <item >rauchen</item>
+        <item >Hundehaufen</item>
+        <item >Handy</item>
+        <item >Zutritt für Hunde</item>
+        <item >Essen</item>
+        <item >schwimmen</item>
+        <item >Fahrzeugzugang</item>
+        <item >Lärm</item>
+        <item >offenes Feuer</item>
+        <item >Autozugang</item>
+        <item >Angeln</item>
+        <item >Verschmutzen</item>
+    </string-array>
+    <string name="tag_default">wheelchair</string>
+    
+    <string name="pref_only">Einzelnutzung</string>
+    <string name="pref_only_summ">Alle anderen Sachen werden ausgeblendet.</string>
+    <string name="pref_only_tag">Beschränkt auf:</string>
+    <string name="pref_only_tag_dialog">Bitte wählen sie aus.</string>
+    	<string name="slider_search_range">Suchradius</string>
 	<string-array name="slider_search_summary">
 	    <item>klein</item>
 	    <item>normal</item>
