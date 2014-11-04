@@ -1,16 +1,18 @@
 package de.uni_hannover.inma.view;
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,8 +34,8 @@ import de.uni_hannover.inma.IDs;
 import de.uni_hannover.inma.MainActivity;
 import de.uni_hannover.inma.R;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
-import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Way;
+import de.uni_hannover.spaceusagerules.io.OSM;
 
 public class AddMapFragment extends SupportMapFragment implements OnMapClickListener{
 
@@ -42,13 +44,14 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 	}
 	
 	private OnDataTransmitListener mCallback;
-	private List<Way> ways = null;
+	private Set<Way> ways = null;
 	private Coordinate location = null;
 	private String tagname = null;
 	private String tagid = null;
 	private GoogleMap mMap = null;
 	private Way newlyInsertet = null;
 	private boolean edit = false;
+	private Menu menu = null;
 	
 	
 	@SuppressWarnings("unchecked")
@@ -58,7 +61,7 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 
 		setHasOptionsMenu(true);
 		Bundle intent = getArguments();
-		ways = (List<Way>) intent.getSerializable(IDs.WAYS);
+		ways = (Set<Way>) intent.getSerializable(IDs.WAYS);
 		location = (Coordinate) intent.getSerializable(IDs.LOCATION);
 		tagname = intent.getString(IDs.TAGNAME);
 		tagid = intent.getString(IDs.TAGID);
@@ -99,17 +102,21 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 		mMap.getUiSettings().setZoomControlsEnabled(false);
 		mMap.setOnMapClickListener(this);
 		redraw();
-		mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude,location.longitude), 19));
+		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude,location.longitude), 19));
 
 	}
 	
 	public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
+		this.menu = menu;
 		MenuItem paint = menu.findItem(R.id.action_edit_map);
 		if(paint!=null)
 			paint.setVisible(true);
 		MenuItem submit = menu.findItem(R.id.action_send_data);
 		if(submit!=null)
 			submit.setVisible(true);
+		MenuItem list = menu.findItem(R.id.action_show_list);
+		if(list!=null)
+			list.setVisible(false);
 		MenuItem edit = menu.findItem(R.id.action_add_tag);
 		if(edit!=null)
 			edit.setVisible(false);
@@ -138,7 +145,7 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 	@SuppressWarnings("unchecked")
 	public void addTagToOsm() {
 		if(newlyInsertet!=null && newlyInsertet.getPolyline().getPoints().size()>2) {
-			List<Way> single = new LinkedList<Way>();
+			Set<Way> single = new TreeSet<Way>();
 			single.add(newlyInsertet);
 			new InformUsTask().execute(single);
 		}
@@ -147,8 +154,8 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 		}
 	}
 	
-	public void newData(List<Way> data) {
-		this.ways = data;
+	public void newData(Set<Way> data) {
+		this.ways.addAll(data);
 		redraw();
 	}
 
@@ -242,6 +249,26 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
     	else if(status==0)
     			Toast.makeText(getActivity(), getString(R.string.no_data_found), Toast.LENGTH_SHORT).show();
     	else {
+    		MenuItem paint = menu.findItem(R.id.action_edit_map);
+    		if(paint!=null)
+    			paint.setVisible(false);
+    		MenuItem submit = menu.findItem(R.id.action_send_data);
+    		if(submit!=null)
+    			submit.setVisible(false);
+    		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+    		boolean prefOnly = sharedPref.getBoolean("pref_only", false);
+    		String prefOnly_string = sharedPref.getString("pref_only_tag", null);
+    		if(!prefOnly || prefOnly_string==null) {
+    			MenuItem list = menu.findItem(R.id.action_show_list);
+    			if(list!=null)
+    				list.setVisible(true);
+    		}
+    		MenuItem edit = menu.findItem(R.id.action_add_tag);
+    		if(edit!=null)
+    			edit.setVisible(true);
+    		MenuItem update = menu.findItem(R.id.action_request_update);
+    		if(update!=null)
+    			update.setVisible(true);
     		Toast.makeText(getActivity(), getString(R.string.data_transmit), Toast.LENGTH_SHORT).show();
     		mCallback.onDataTransmit();
     	}
@@ -293,10 +320,11 @@ public class ChooseDialogFragment extends DialogFragment {
 	}
 }
 	
-private class InformUsTask extends AsyncTask<List<Way>, Integer, Integer> {
+private class InformUsTask extends AsyncTask<Set<Way>, Integer, Integer> {
 
+	@SuppressWarnings("unchecked")
 	@Override
-	protected Integer doInBackground(List<Way>... params) {
+	protected Integer doInBackground(Set<Way>... params) {
 
 		int status = OSM.alterContent(params[0], location) ;
 		

@@ -11,13 +11,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
 
 import de.uni_hannover.spaceusagerules.core.Coordinate;
-import de.uni_hannover.spaceusagerules.core.Image;
-import de.uni_hannover.spaceusagerules.core.KML;
-import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Polyline;
 import de.uni_hannover.spaceusagerules.core.Way;
+import de.uni_hannover.spaceusagerules.io.Image;
+import de.uni_hannover.spaceusagerules.io.KML;
+import de.uni_hannover.spaceusagerules.io.OSM;
 
 /** 
  * Klasse zum durchlaufen eines Genetischen Algorithmus.
@@ -46,7 +47,7 @@ public class Genetic extends Thread{
   	/** die Liste der Coordinaten, von welchem aus die Lösungspolygone gesucht werden sollen */
 	private List<Coordinate> starting;
   	/** Eine Liste von Listen, welche die Möglichen Lösungen Respresentieren. */
-	private List<List<Way>> possebilities;
+	private List<Set<Way>> possebilities;
   	/** Die Liste der Populationen, welche aktuell bearbeitet werden. */ 
 	private List<Population> pops, nextGen;
   	/** der Name der SpaceUsageRule, nach der Optimiert werden soll. */
@@ -57,7 +58,7 @@ public class Genetic extends Thread{
 		suche = sign;
 		truths = new ArrayList<Polyline>();
 		starting = new ArrayList<Coordinate>();
-		possebilities = new ArrayList<List<Way>>();
+		possebilities = new ArrayList<Set<Way>>();
 		pops = new ArrayList<Population>();
 		nextGen = new ArrayList<Population>();
 

@@ -10,9 +10,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
-import de.uni_hannover.spaceusagerules.core.Image;
-import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Way;
+import de.uni_hannover.spaceusagerules.io.Image;
+import de.uni_hannover.spaceusagerules.io.OSM;
 
 /** 
  * einfache Klasse, welche die Key-Value Paare in der Umgebung aller Testdatensätze raussucht und anschließend in eine Datei schreibt.

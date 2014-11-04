@@ -1,4 +1,4 @@
-package de.uni_hannover.spaceusagerules.core;
+package de.uni_hannover.spaceusagerules.io;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -20,6 +20,9 @@ import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
+
+import de.uni_hannover.spaceusagerules.core.Coordinate;
+import de.uni_hannover.spaceusagerules.core.Way;
 
 public class DataDrawer {
 	

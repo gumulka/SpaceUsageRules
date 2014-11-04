@@ -13,7 +13,7 @@ import java.util.TreeSet;
 
 import com.drew.imaging.ImageProcessingException;
 
-import de.uni_hannover.spaceusagerules.core.OSM;
+import de.uni_hannover.spaceusagerules.io.OSM;
 
 /**
  * Klasse, welche für jede SpaceUsageRule aus dem Testdatensatz einen genetischen Algorithmus erstellt und diesen durchlaufen lässt.

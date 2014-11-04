@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
 import java.util.TreeMap;
 
 import de.uni_hannover.spaceusagerules.core.Coordinate;
@@ -112,7 +113,7 @@ public class Population implements Comparable<Population>{
 		return distance;
 	}
 	
-	public static Way getNearestArea(Coordinate c, List<Way> ways, Map<String,Double> weights) {
+	public static Way getNearestArea(Coordinate c, Set<Way> ways, Map<String,Double> weights) {
 		Way best = null;
 		double distance = Double.MAX_VALUE;
 		double d;
@@ -128,7 +129,7 @@ public class Population implements Comparable<Population>{
 		return best;
 	}
 	
-	public void calcFitness(List<Polyline> truths, List<List<Way>> possiblities, List<Coordinate> locations) {
+	public void calcFitness(List<Polyline> truths, List<Set<Way>> possiblities, List<Coordinate> locations) {
 		Way best = null;
 		fitness = 0;
 		for(int i = 0; i<truths.size(); i++) {

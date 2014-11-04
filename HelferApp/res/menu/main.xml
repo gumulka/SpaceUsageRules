@@ -4,22 +4,29 @@
     tools:context="de.uni_hannover.inma.MainActivity" >
 
     <item
-        android:id="@+id/action_add_tag"
+        android:id="@+id/action_show_list"
         android:orderInCategory="10"
+        android:title="@string/show_list"
+        android:icon="@drawable/ic_action_view_as_list"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_add_tag"
+        android:orderInCategory="20"
         android:title="@string/add_tag"
         android:icon="@drawable/ic_action_new"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_request_update"
-        android:orderInCategory="50"
+        android:orderInCategory="22"
         android:title="@string/update_location"
         android:icon="@drawable/ic_action_refresh"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_edit_map"
-        android:orderInCategory="20"
+        android:orderInCategory="25"
         android:title="@string/paint"
         android:icon="@drawable/ic_action_edit"
         android:visible="false"
