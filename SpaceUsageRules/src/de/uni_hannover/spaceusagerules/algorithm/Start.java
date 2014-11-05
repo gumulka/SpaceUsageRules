@@ -49,7 +49,6 @@ public class Start extends Thread{
 		this.minOverlap = globalMinOverlap;
 	}
 	
-	
 	public void addVerbot(String verbot) {
 		this.verbote.add(verbot);
 	}
@@ -58,6 +57,7 @@ public class Start extends Thread{
 		File f = new File(imagePath + id + ".png");
 		if(f.exists() && !f.delete())
 			System.err.println("Konnte das Bild zu " + id + " nicht löschen.");
+		
 		
 		Rules best = null;
 		float minRulesOverlap = 0.1f;
@@ -69,7 +69,7 @@ public class Start extends Thread{
 			}
 		}
 		if(best == null) {
-			best = new Rules(new TreeSet<String>(), new TreeMap<String,Float>());
+			best = new Rules(new TreeSet<String>(), new TreeMap<String,Double>());
 		}
 		
 		System.out.println(id + " benutzt Regelset: " + best);
@@ -89,6 +89,7 @@ public class Start extends Thread{
 		drawer.render(ways);
 		drawer.drawWay(truth,Color.green);
 		drawer.drawWay(guess,Color.pink);
+		System.err.println("Anforderungen an " + id + " nicht geschafft.");
 		try {
 			drawer.saveImage(imagePath + id + ".png");
 		} catch (IOException e) {
@@ -143,10 +144,10 @@ public class Start extends Thread{
 			Set<String> verbooote = new TreeSet<String>();
 			for(String s : v)
 				verbooote.add(s.trim());
-			Map<String,Float> ruules = new TreeMap<String, Float>();
+			Map<String,Double> ruules = new TreeMap<String, Double>();
 			for(String s : rules.split(",")) {
 				String[] bla = s.split("->");
-				ruules.put(bla[0].trim(), Float.parseFloat(bla[1]));
+				ruules.put(bla[0].trim(), Double.parseDouble(bla[1]));
 			}
 			allRules.add(new Rules(verbooote,ruules));
 		}
@@ -179,8 +180,7 @@ public class Start extends Thread{
 						running.remove(r);
 						break;
 					}
-				}
 			}
 		}
-
+	}
 }

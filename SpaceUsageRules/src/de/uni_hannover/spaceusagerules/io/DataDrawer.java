@@ -6,13 +6,8 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -107,6 +102,7 @@ public class DataDrawer {
 		
 	}
 	
+	@SuppressWarnings("unused")
 	private List<String> filterTags(List<String> input){
 		
 		List<String> output = new Vector<String>();

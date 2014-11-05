@@ -2,16 +2,23 @@ package de.uni_hannover.spaceusagerules.algorithm;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Way;
 
 public class Rules{
 
-	private Set<String> verbote;
-	private Map<String,Float> weights;
+	protected Set<String> verbote;
+	protected Map<String,Double> weights;
 	
-	public Rules(Set<String> verbote, Map<String,Float> rules) {
+	public Rules() {
+		this.verbote = new TreeSet<String>();
+		this.weights = new TreeMap<String,Double>();
+	}
+	
+	public Rules(Set<String> verbote, Map<String,Double> rules) {
 		this.verbote = verbote;
 		this.weights = rules;
 	}

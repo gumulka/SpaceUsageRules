@@ -1,9 +1,7 @@
 package de.uni_hannover.spaceusagerules.gen_alg;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -23,14 +21,14 @@ import de.uni_hannover.spaceusagerules.io.OSM;
 /** 
  * Klasse zum durchlaufen eines Genetischen Algorithmus.
  */
-public class Genetic extends Thread{
+public class Genetic extends Thread implements Comparable<Genetic>{
 
   	/** Die anzahl der Populationen, welche den Algorithmus durchlaufen sollen */
 	private static final int popsize = 300;
   	/** die Anzahl der Runden, welche Maximal durchlaufen werden sollen, bevor der Algorithmus abgebrochen wird. */
 	private static final int maxRounds = 50000;
   	/** Die Anzahl der Runden, welche Mindestens durchlaufen werden sollen, selbst wenn der Wert schon erreicht ist. */
-	private static final int minRounds = 20000;
+	private static final int minRounds = 1000;
   	/** Die Anzahl der Populationen, welche unbearbeitet in die nächste generation übernommen werden sollen */
 	private static final int copyBest = popsize*1/10;
   	/** Die Anzahnl der Populationen, welche mutiert in die nächste Generation übernommen werden solllen. */
@@ -40,7 +38,7 @@ public class Genetic extends Thread{
   	/** Die Menge der Poplationen, aus denen die Populationen zusammen gesetzt werden sollen. */
 	private static final int mergeFrom = popsize/2;
   	/** Die Minimale Fitness, welche erreicht werden soll um den Algorithmus zu beenden. */
-	private static final int targetMinFitness = Population.maxFitness*95/100;
+	private static final int targetMinFitness = Population.maxFitness*90/100;
 	
   	/** Die Liste der Polygone, welche das richtige Ergebnis representieren. */
 	private List<Polyline> truths;
@@ -53,9 +51,11 @@ public class Genetic extends Thread{
   	/** der Name der SpaceUsageRule, nach der Optimiert werden soll. */
 	private String suche;
 	
-  
-	public Genetic(String sign) throws Exception {
-		suche = sign;
+	private Set<String> possible;
+	
+	public Genetic(String signlist, Set<String> IDs, Set<String> possible) throws Exception {
+		suche = signlist;
+		this.possible = possible;
 		truths = new ArrayList<Polyline>();
 		starting = new ArrayList<Coordinate>();
 		possebilities = new ArrayList<Set<Way>>();
@@ -63,27 +63,17 @@ public class Genetic extends Thread{
 		nextGen = new ArrayList<Population>();
 
 		for(int i = 0; i<popsize; i++) {
-			pops.add(new Population());
+			pops.add(new Population(possible));
 		}
-		
-		File f = new File("../SpaceUsageRulesVis/assets/Data.txt");
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		String line;
-		br.readLine();
-		while((line = br.readLine()) != null) {
-			String[] bla = line.split(",");
-			if(bla[3].trim().equals(sign)) {
-				int i = Integer.parseInt(bla[0]);
-				String filename = String.format(Locale.GERMAN,"../SpaceUsageRulesVis/assets/%04d.jpg",i);
+		for(String s : IDs) {
+				String filename = String.format(Locale.GERMAN,"../SpaceUsageRulesVis/assets/%s.jpg",s);
 				InputStream is = new FileInputStream(new File(filename));
 				Coordinate c = Image.readCoordinates(is); 
 				starting.add(c);
-				filename = String.format(Locale.GERMAN,"../SpaceUsageRulesVis/assets/%04d.truth.kml",i);
+				filename = String.format(Locale.GERMAN,"../SpaceUsageRulesVis/assets/%s.truth.kml",s);
 				truths.add(KML.loadKML(new File(filename)));
 				possebilities.add(OSM.getObjectList(c));
-			}
 		}
-		br.close();
 	}
 	
 	private void calcFitness() {
@@ -107,11 +97,11 @@ public class Genetic extends Thread{
 			nextGen.add(pops.get(a).recombine(pops.get(b)));
 		}
 		for(int i = 0; i<mutate; i++) {
-			Population p = new Population(pops.get(i));
+			Population p = new Population(pops.get(i),possible);
 			nextGen.add(p);
 		}
 		for(int i = 0; i<(popsize-merge-copyBest-mutate); i++) {
-			nextGen.add(new Population());
+			nextGen.add(new Population(possible));
 		}
 		pops = nextGen;
 		nextGen = new ArrayList<Population>();
@@ -121,20 +111,41 @@ public class Genetic extends Thread{
      * die Methode zum durchlaufen des Genetischen algorithmus mit der Steuerung aus den statischen finalen Variablen.
      */
 	public void run() {
-		for(int i = 0; i<maxRounds; i++) {
+		int i = 0;
+		int oldFitness = -1;
+		int verbesserungen = -1;
+		int letzteVerbesserung = 0;
+		int letzteOptimierung = 0;
+		int optimierungen = 0;
+		int rules = 0;
+		int fitness;
+		for(i = 0; i<maxRounds; i++) {
 			calcFitness();
 			try {
 				nextGen();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			fitness = pops.get(0).getFitness();
+			if(oldFitness<fitness) {
+				oldFitness = fitness;
+				letzteVerbesserung = i;
+				verbesserungen++;
+				rules = pops.get(0).getNumberOfRules();
+				optimierungen = 0;
+			}
+			else if(pops.get(0).getNumberOfRules()<rules){
+				rules = pops.get(0).getNumberOfRules();
+				optimierungen++;
+				letzteOptimierung = i;
+			}
 			if(i>minRounds && pops.get(0).getFitness()>targetMinFitness)
 				break;
 		}
 		if(pops.size()!=popsize)
 			System.out.println(pops.size());
-		System.out.println(suche + "(" + truths.size() + ") -> " + pops.get(0));
-	//	System.out.println(new Date());
+		System.out.println(i + suche + " -> " + pops.get(0));
+		System.out.println(verbesserungen + " Verbesserungen (" + letzteVerbesserung + ") und " + optimierungen + " Optimierungen (" + letzteOptimierung + ") seitdem");
 	}
 
   	/**
@@ -145,10 +156,15 @@ public class Genetic extends Thread{
 	}
 	
   	/**
-     * gibt den Namen der SpaceUsageRule zurück
+     * gibt die Namen der SpaceUsageRules zurück
      */
 	public String getRule() {
 		return suche;
     }
+
+	@Override
+	public int compareTo(Genetic o) {
+		return o.truths.size() - this.truths.size();
+	}
 	
 }

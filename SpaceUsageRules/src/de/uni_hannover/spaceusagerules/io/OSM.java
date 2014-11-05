@@ -40,7 +40,6 @@ public class OSM {
 		buffer = use;
 	}
 
-	@Deprecated
 	public static Set<Way> getObjectList(Coordinate c) {
 		return getObjectList(c, (float) 0.0005);
 	}
