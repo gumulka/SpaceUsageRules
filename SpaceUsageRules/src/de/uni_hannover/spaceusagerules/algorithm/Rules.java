@@ -1,13 +1,12 @@
 package de.uni_hannover.spaceusagerules.algorithm;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Way;
 
-public class Rules {
+public class Rules{
 
 	private Set<String> verbote;
 	private Map<String,Float> weights;
@@ -19,10 +18,11 @@ public class Rules {
 
 	public double calcDist(Coordinate c, Way w) {
 		double distance = c.distanceTo(w.getPolyline());
-		distance += 0.01;
+		w.addOriginalTag("InMa_preDistance", "" + distance);
+		distance += 0.0002;
 		String combine;
 		for(String s : w.getTags().keySet()) {
-			combine = s + " - " + w.getValue(s);
+			combine = s.trim() + " - " + w.getValue(s).trim();
 			if(weights.keySet().contains(s)) {
 				distance *= weights.get(s);
 			}
@@ -33,7 +33,7 @@ public class Rules {
 		return distance;
 	}
 	
-	public Way calculateBest(List<Way> ways, Coordinate location) {
+	public Way calculateBest(Set<Way> ways, Coordinate location) {
 		Way best = null;
 		double distance = Double.MAX_VALUE;
 		double d;
@@ -51,12 +51,10 @@ public class Rules {
 	}
 	
 	public float overlap(Set<String> v) {
-		if(verbote.size()==0 && v.size()==0)
-			return 1;
 		if(verbote.size()==0)
-			return 0.5f;
+			return 0.1f;
 		if(v.size()==0)
-			return 0.5f;
+			return 0.0f;
 		float start = 1, diff = .5f / verbote.size();
 		for(String s : verbote) {
 			if(!v.contains(s))
@@ -70,4 +68,8 @@ public class Rules {
 		return start;
 	}
 	
+	public String toString() {
+		return verbote.toString() + " -> " + weights.toString();
+	}
+
 }

@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -28,21 +29,18 @@ public class DataDrawer {
 	
 	private Color polygonFillColor = Color.white;
 	
-	private double minX, maxX, minY, maxY;
-	
-	private float radius;
-	
 	private int width, height;
 	private int margin = 5;
 	private String format = "png";
 	private Graphics gr;
 	private BufferedImage image;
 	
-	public DataDrawer(int width, int height, float radius){
+	private Coordinate location;
+	
+	public DataDrawer(int width, int height, Coordinate middle){
 		this.width = width;
 		this.height = height;
-		this.radius = radius;
-
+		this.location = middle;
 		
 		//Bild erstellen
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -85,6 +83,14 @@ public class DataDrawer {
 		Rectangle boundingBox = polygon.getBounds();
 		int centerX = boundingBox.width/2 + boundingBox.x;
 		int centerY = boundingBox.height/2 + boundingBox.y;
+		if(centerY>height)
+			centerY = height *95 / 100;
+		if(centerX>width)
+			centerX = width *95 / 100;
+		if(centerY<0)
+			centerY = height *5 / 100;
+		if(centerX<0)
+			centerX = width *5 / 100;
 		gr.setColor(color);
 		gr.drawLine(centerX-3, centerY, centerX+3, centerY);
 		gr.drawLine(centerX, centerY-3, centerX, centerY+3);
@@ -96,6 +102,7 @@ public class DataDrawer {
 			tag.add(key+"->"+w.getTags().get(key));
 		}
 //		tag = filterTags(tag);
+		gr.setColor(Color.BLACK);
 		drawTags(tag,centerX,centerY);
 		
 	}
@@ -131,15 +138,16 @@ public class DataDrawer {
 	private int[] transformToInt(Coordinate p){
 		
 		int[] output = new int[2];
-		
-		output[0] = (int)((p.longitude-minX)/(maxX-minX)*(double)(width-2*margin));
-		output[1] = (int)((-p.latitude+maxY)/(maxX-minX)*(double)(height-2*margin));
+		output[0] = (int)((p.longitude-location.longitude)/(0.002)*(double)(width-2*margin)) + width/2;
+		output[1] = height/2 - (int)((p.latitude-location.latitude)/(0.002)*(double)(width-2*margin));
+//		output[0] = (int)((p.longitude-minX)/(maxX-minX)*(double)(width-2*margin));
+//		output[1] = (int)((-p.latitude+maxY)/(maxX-minX)*(double)(height-2*margin));
 		
 		return output;
 	}
 	
 	
-	private List<Way> retrieveData(Coordinate p){
+	private List<Way> retrieveData(Coordinate p, float radius){
 		List<Way> output = new LinkedList<Way>(); 
 		for(Way w : OSM.getObjectList(p, radius))
 			if(w.isArea())
@@ -147,22 +155,13 @@ public class DataDrawer {
 		return output;
 	}
 	
-	public void render(Coordinate p){
-		
-		List<Way> data = retrieveData(p);
-		
-		//min & max festlegen
-		minX = Double.MAX_VALUE;
-		maxX = Double.MIN_VALUE;
-		minY = Double.MAX_VALUE;
-		maxY = Double.MIN_VALUE;
-		for(Way w : data){
-			double[] bb = w.getPolyline().getBoundingBox();
-			if(bb[2]<minX) minX = bb[2];
-			if(bb[3]>maxX) maxX = bb[3];
-			if(bb[0]<minY) minY = bb[0];
-			if(bb[1]>maxY) maxY = bb[1];
-		}
+	
+	public void render(float radius){
+		List<Way> data = retrieveData(location, radius);
+		render(data);
+	}
+	
+	public void render(Collection<Way> data) {
 		
 		//polygone zeichnen
 		for(Way w : data){
@@ -170,7 +169,7 @@ public class DataDrawer {
 		}
 		
 		//draw reference point p
-		int[] ref = transformToInt(p);
+		int[] ref = transformToInt(location);
 		gr.setColor(Color.DARK_GRAY);
 		gr.drawOval(ref[0]-6, ref[1]-6, 12, 12);
 		gr.fillOval(ref[0]-5, ref[1]-5, 10, 10);
@@ -194,46 +193,6 @@ public class DataDrawer {
 		ios.close();
 		fos.close();
 		
-	}
-	
-	
-	public static void main(String[] args) throws Exception {
-		OSM.useBuffer(true);
-		
-		
-		File f = new File("../SpaceUsageRulesVis/assets/Data.txt");
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		String line;
-		br.readLine();
-		String oldID = null;
-		while((line = br.readLine()) != null) {
-			String[] bla = line.split(",");
-			String id = bla[0].trim();
-			int ID = Integer.parseInt(id);
-			if(ID<63) continue;
-			if(id.equals(oldID))
-				continue;
-			oldID=id;
-			System.out.println("Bearbeite " + id);
-			InputStream is = new FileInputStream(new File("../SpaceUsageRulesVis/assets/" + id + ".jpg"));
-			DataDrawer drawer = new DataDrawer(8000,8000, 0.0005f);
-			drawer.render(Image.readCoordinates(is));
-			Way right = new Way();
-			right.addAllCoordinates(KML.loadKML(new File("../SpaceUsageRulesVis/assets/" + id + ".truth.kml")).getPoints());
-			drawer.drawWay(right,Color.green);
-			drawer.saveImage("images/" + id + ".png");
-		}
-		br.close();
-		
-		/*
-		DataDrawer drawer = new DataDrawer(10000,5000, 0.0005f);
-		BufferedImage image = drawer.render(new Coordinate(50.9304, 5.33901));
-		try {
-			drawer.saveImage("001.png", image);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} // */
-
 	}
 
 	public Color getPolygonFillColor() {

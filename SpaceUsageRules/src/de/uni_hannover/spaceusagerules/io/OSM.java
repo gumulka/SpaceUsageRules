@@ -88,14 +88,13 @@ public class OSM {
 					+ (c.longitude - radius) + "," + (c.latitude - radius)
 					+ ',' + (c.longitude + radius) + ","
 					+ (c.latitude + radius) + "][" + tagname + "=*]";
-		System.out.println(connection);
 		try {
 			Document doc = null;
 			if (buffer && f != null && f.exists() && f.canRead()) {
 				doc = Jsoup.parse(f, "UTF-8");
 			} else {
 				Connection.Response res = Jsoup.connect(connection).timeout(10000)
-						.userAgent("InMa SpaceUsageRules")
+						.userAgent("InMa")
 						.followRedirects(true).execute();
 				doc = res.parse();
 				if (buffer && f != null) {
