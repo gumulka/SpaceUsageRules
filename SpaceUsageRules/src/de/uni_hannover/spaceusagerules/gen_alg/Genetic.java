@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -24,21 +25,17 @@ import de.uni_hannover.spaceusagerules.io.OSM;
 public class Genetic extends Thread implements Comparable<Genetic>{
 
   	/** Die anzahl der Populationen, welche den Algorithmus durchlaufen sollen */
-	private static final int popsize = 300;
-  	/** die Anzahl der Runden, welche Maximal durchlaufen werden sollen, bevor der Algorithmus abgebrochen wird. */
-	private static final int maxRounds = 50000;
-  	/** Die Anzahl der Runden, welche Mindestens durchlaufen werden sollen, selbst wenn der Wert schon erreicht ist. */
-	private static final int minRounds = 1000;
+	public static  int popsize = 200;
+	/** Dei Anzahl der Runden, die ohne Optimierung durchlaufen werden, bevor der Algorithmus stoppt. */
+	public static  int withoutOtimization = 300;
   	/** Die Anzahl der Populationen, welche unbearbeitet in die nächste generation übernommen werden sollen */
-	private static final int copyBest = popsize*1/10;
+	public static  int copyBest = popsize*1/10;
   	/** Die Anzahnl der Populationen, welche mutiert in die nächste Generation übernommen werden solllen. */
-	private static final int mutate = popsize*4/10;
+	public static  int mutate = popsize*4/10;
   	/** Die Anzahl der Populationen pro Generation, welche aus anderen zusammen gesetzt werden sollen */
-	private static final int merge = popsize*3/10;
+	public static  int merge = popsize*3/10;
   	/** Die Menge der Poplationen, aus denen die Populationen zusammen gesetzt werden sollen. */
-	private static final int mergeFrom = popsize/2;
-  	/** Die Minimale Fitness, welche erreicht werden soll um den Algorithmus zu beenden. */
-	private static final int targetMinFitness = Population.maxFitness*90/100;
+	public static  int mergeFrom = popsize/2;
 	
   	/** Die Liste der Polygone, welche das richtige Ergebnis representieren. */
 	private List<Polyline> truths;
@@ -51,9 +48,10 @@ public class Genetic extends Thread implements Comparable<Genetic>{
   	/** der Name der SpaceUsageRule, nach der Optimiert werden soll. */
 	private String suche;
 	
-	private Set<String> possible;
+	private Collection<String> possible;
+	public static boolean kill = false;
 	
-	public Genetic(String signlist, Set<String> IDs, Set<String> possible) throws Exception {
+	public Genetic(String signlist, Set<String> IDs, Collection<String> possible) throws Exception {
 		suche = signlist;
 		this.possible = possible;
 		truths = new ArrayList<Polyline>();
@@ -119,7 +117,9 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 		int optimierungen = 0;
 		int rules = 0;
 		int fitness;
-		for(i = 0; i<maxRounds; i++) {
+		while(true) {
+			if(kill)
+				break;
 			calcFitness();
 			try {
 				nextGen();
@@ -139,13 +139,12 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 				optimierungen++;
 				letzteOptimierung = i;
 			}
-			if(i>minRounds && pops.get(0).getFitness()>targetMinFitness)
+			if(i-letzteVerbesserung > withoutOtimization && i-letzteOptimierung > withoutOtimization)
 				break;
+			i++;
 		}
-		if(pops.size()!=popsize)
-			System.out.println(pops.size());
-		System.out.println(i + suche + " -> " + pops.get(0));
-		System.out.println(verbesserungen + " Verbesserungen (" + letzteVerbesserung + ") und " + optimierungen + " Optimierungen (" + letzteOptimierung + ") seitdem");
+//		System.out.println(i + suche + " -> " + pops.get(0));
+//		System.out.println(verbesserungen + " Verbesserungen (" + letzteVerbesserung + ") und " + optimierungen + " Optimierungen (" + letzteOptimierung + ") seitdem");
 	}
 
   	/**

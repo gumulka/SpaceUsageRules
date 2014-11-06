@@ -1,6 +1,7 @@
 package de.uni_hannover.spaceusagerules.gen_alg;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -22,7 +23,7 @@ public class Population extends Rules implements Comparable<Population>{
 		return fitness;
 	}
 	
-	public Population(Population p, Set<String> possible) throws IOException {
+	public Population(Population p, Collection<String> possible) throws IOException {
 		weights = new TreeMap<String,Double>();
 		weights.putAll(p.weights);
 		Random r = new Random();
@@ -38,7 +39,7 @@ public class Population extends Rules implements Comparable<Population>{
 		}
 	}
 	
-	public Population(Set<String> possible) throws IOException {
+	public Population(Collection<String> possible) throws IOException {
 		weights = new TreeMap<String,Double>();
 		Random r = new Random();
 		for(String p : possible) {
