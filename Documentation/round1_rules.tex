@@ -1,6 +1,11 @@
 \section{Regeln}
 
-\subsection{Formale Beschreibung:}
+\subsection{Regelbeschreibung}
+Da in fast allen Fällen ein sehr nah gelegenes Polygon gemeint ist, wird zunächst auf den Abstand aller vorhandenen Polygone etwas aufaddiert,
+um den Abstand 0 zu vermeiden, und diese danach nach unseren Regeln zu gewichten um anschließend das Polygon auszuwählen,
+welches nach der Gewichtung den kürzesten Abstand hat.
+
+\subsection{Formale Beschreibung}
 Sei $ID$ die die Bezeichnung eines Bildes.\\
 Sei $t$ ein Tag $(key \to value)$ aus OpenStreetMap.\\
 Sei $r(t)$ eine Regel $t \to [0..2]$ \\
@@ -29,7 +34,7 @@ G(ID,R) := \{X \in O_{ID} | & Gew(R,ID,X) < Gew(R,ID,Y)\\
 \end{align}
 
 \subsection{Beispiel}
-Eine Regel kann z.B. so aussehen:
+Eine Regel kann z.B. so aussehen:\\
 Für das Verbot Nichtrauchen: wenn ein Tag den Key 'building' enhält dann halbiere den Abstand. \\
 $R_{nichtrauchen} = [r('building') = 0.5]$\\
 \newline
@@ -66,14 +71,15 @@ Wir suchen also einen Regelsatz $R$ für den $Güte(R)$ maximal ist.
 \subsection{Visuelle Überprüfung}
 \label{sec:visuelle_ueberpruefung}
 Um die KML-Dateien nicht immer manuell in Google-Earth laden zu müssen, wurde eine weitere Klasse geschrieben, welche zur Visualisierung der Daten gedacht ist.
-Dabei werden Bilder erstellt, in welchen die Daten aus OSM als schwarze Linien, bzw Polygone eingezeichnet werden. Zusätzlich werden die Tags, 
+Dabei werden Bilder erstellt, in welchen die Daten aus OSM als schwarze Linien, bzw Polygone eingezeichnet werden. Zusätzlich werden die Tags,
 welche die Objekte enthalten zu jedem Objekt eingezeichnet um schnell eine Übersicht zu haben, was wozu gehört.
 Um die Güte des Regeldatensatzes, bzw des Algorithmus subjektiv beurteilen zu können, werden die truth, bzw. die von unserem Algorithmus erdachten Polygone
-farblich eingezeichnet. so ist eine schnelle Beurteilung, ob man das richtige Poylgon gewählt hat, bzw welche Tags man evtl noch beachten sollten möglich.
+farblich eingezeichnet. So ist eine schnelle Beurteilung, ob man das richtige Poylgon gewählt hat, bzw welche Tags man evtl. noch beachten sollte, möglich.
 
 \subsection{Incrementelle Regelerstellung}
 Aus dem Testdatensatz werden zunächst alle Datensätze herausgefiltert, welche nicht einfach lösbar sind.
-Es wird mit einem leeren Regelsatz angefangen und dieser anschließend inkrementel erweitert. Dazu wird wie Folgt vorgegangen:
+(Siehe \fref{sec:Testdatensatz})
+Es wird mit einem leeren Regelsatz angefangen und dieser anschließend inkrementel erweitert. Dazu wird wie folgt vorgegangen:
 \begin{enumerate}
 \item Definiere für jeden Datensatz ein optimales Polygon, bzw einen Overlap-Wert, welcher erreicht werden muss.
 \item Der Regelsatz wird auf alle Testdatensätze angewendet.
@@ -82,9 +88,9 @@ Es wird mit einem leeren Regelsatz angefangen und dieser anschließend inkrement
 \item gehe zu 2
 \end{enumerate}
 Nachdem alle einfachen Fälle abgedeckt sind, kann nun mit den schwierigeren Vorgegangen werden.
-Gehe dazu erneut so vor.
 
-\subsection{Mögliche Erweiterung}
+
+\subsection{Erweiterung}
 Um den Fall abzudecken, in welchem in OpenStreetMap keine ausreichenden Daten vorhanden sind, wird um den Punkt $C_{ID}$ ein
 Achteck\footnote{Relativ geringer Rechenaufwand bei gleichzeitig bester Annäherung an einen Kreis.} mit Radius $b$ gelegt
 und dieses mit der gewichtet nächsten Großfläche geschnitten.

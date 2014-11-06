@@ -3,6 +3,7 @@ Aus den Beispielen im Text lässt sich ableiten, dass es sinnvoll ist 'nicht rau
 oder alternativ Parkplätze bei der Berechnung auszublenden.
 
 \subsection{Testdatensatz}
+\label{sec:Testdatensatz}
 Zunächst wurde der Testdatensatz mithilfe von Google Maps, Google Street View, Google Earth und OpenStreetMap auf Richtigkeit, Machbarkeit der Lösungen und eventuelle Fehler überprüft.
 Im Testdatensatz lassen sich etliche Fehler und Unvollständigkeiten finden. So sind für die Datensätze:
 \begin{itemize}
@@ -34,11 +35,11 @@ Weitere Fehler sind:
 \item 84 Das Bild suggestiert einen anderen Bereich, als auf Google Maps angezeigt wird. (in Maps ist kein See erkennbar.)
 \item 85 Das Bild zeigt ein 'Betreten Verboten' Schild mit Schienen im Hintergrund und sollte dementsprechend für den Schienenbereich gelten und nicht für das Bahnhofsgebäude.
 \item 90 Das Verbot sollte nur für ein einzelnen Haus gelten.
-\item 93 Das Verbot gilt sinnvollerweise für den Zoo und nicht ein einzelnes Gebäude, welches davor liegt.
+\item 93 Das Verbot gilt sinnvollerweise für den Zoo und nicht ein einzelnes Gebäude.
 \item 96 Das 'Betreten Verboten im Brandfall' gilt nur für den Fahrstuhl und nicht für das ganze Gebäude.
 \end{itemize}
 
-\subsubsection{Fehlerbehebung}
+\subsection{Fehlerbehebung}
 Nach Rücksprache mit Herrn Porada, sowie Herrn Schöning haben sich einige Fehler klären lassen.
 \begin{itemize}
 \item Die Fehler in 16, 33 und 59 wurden berichtigt.
@@ -49,7 +50,6 @@ Nach Rücksprache mit Herrn Porada, sowie Herrn Schöning haben sich einige Fehl
 \end{itemize}
 
 
-\section{Herangehensweise}
 \subsection{Erweiterung der Testdaten}
 Da in dem Testdatensatz so viele Fehler vorhanden sind, ist geplant diesen zu erweitern. Dazu wird eine Android-App programmiert, in welcher Nutzer SpaceUsageRules
 abhängig von ihrer Position angezeigt bekommen und sie neue hinzufügen können.
@@ -59,10 +59,3 @@ Die angelegten Daten werden anschließend mit OpenStreetMap synchronisiert, soda
 und sie ein Ergebnis ihres Beitrages sehen.
 Für jede angelegte Regel werden Nutzungsdaten an uns übertragen, die aus der Position des Nutzers, des Menge an Verbotsnamen sowie des angelegten Bereiches besteht.
 Wir erhoffen uns daraus einen Testdatensatz zu bekommen, welcher um den Faktor 5 bis 10 größer ist und es uns erlaubt die erstellten Regeln effizienter zu überprüfen.
-\footnote{Bei der Erstellung von Regeln werden die vom Benutzer hinzugefügten Tags natürlich irgnoriert.}
-
-
-\subsection{Regelbeschreibung}
-Da in fast allen Fällen ein sehr nah gelegenes Polygon gemeint ist, wird zunächst auf den Abstand aller vorhandenen Polygone etwas aufaddiert,
-um den Abstand 0 zu vermeiden, und diese danach nach unseren Regeln zu gewichten um anschließend das Polygon auszuwählen,
-welches nach der Gewichtung den kürzesten Abstand hat.

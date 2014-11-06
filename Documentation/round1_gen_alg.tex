@@ -1,19 +1,21 @@
 \section{Automatisierte Regelerstellung}
-Da wir an die Qualität des erweiterten Testdatensatzes glauben und uns die Grundaufgabe nicht informatiklastig genug ist
+Da uns die Grundaufgabe nicht informatiklastig genug ist
 haben wir beschlossen unser selbst definiertes Regelwerk abschließend gegen ein Learning Classifier System antreten zu lassen.
+
+
 \subsection{Eingabedaten}
 \begin{itemize}
 \item Eine Liste mit SpaceUsageRules wie in \fref{sec:Eingabedaten_GI} definiert.
 \item Die dazugehörigen truth.kml Dateien.
-%\item Eine Liste mit möglichen Tags.\footnote{Diese wird vorab erstellt als (gefilterte) Liste aller Tags die im größeren Umkreis aller $ID$s vorhanden sind.}
-\item Verschiedene Parameter zum Steuern des genetischen Algorithmus \begin{itemize}
-\item Anzahl der Durchläufe
-\item gewünschter Fitnesswert
-\item Populationsgröße
-\item Anzahl der Population, welche unverändert in die nächste Generation gehen.
-\item Anzahl der Populationen, welche mutiert in die nächste Generation gehen.
-\item Anzahl der Populationen, welche mit anderen gemischt in die nächste Generation gehen.
-\end{itemize}
+\item Verschiedene Parameter zum Steuern des genetischen Algorithmus
+\footnote{Es gibt hierfür Standartwerte}
+  \begin{itemize}
+  \item Populationsgröße
+  \item Anzahl der Verbesserungsversuche
+  \item Anzahl der Population, welche unverändert in die nächste Generation gehen.
+  \item Anzahl der Populationen, welche mutiert in die nächste Generation gehen.
+  \item Anzahl der Populationen, welche mit anderen gemischt in die nächste Generation gehen.
+  \end{itemize}
 \end{itemize}
 \subsection{Ausgabedaten}
 Das System ist so entworfen, dass es als Ausgabe Daten liefert wie in \fref{sec:Eingabedaten_Wir} verlangt werden.

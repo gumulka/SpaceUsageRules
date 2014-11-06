@@ -1,3 +1,12 @@
+dir_*
+classde_*
+main.ilg
+main.ind
+refman.tex
+doxyref.tex
+annotated.tex
+hierarchy.tex
+refman.pdf
 main.out
 main.log
 main.idx
