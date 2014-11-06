@@ -46,7 +46,7 @@ Daraus errechnet sich:
 
 $G(ID,R) = A$
 
-\subsection{Überprüfung der Regelsätze}
+\subsection{Maschinelle Überprüfung der Regelsätze}
 Um die Güte der verschiedenen Regeln zu überprüfen wird ein Programm geschrieben, welche für jede Regel die die Schnittpolygone von unseren Polygonen mit
 den Musterlösungen bildet und anschließen durch je die Fläche unseres Polygons, sowie des Musterlösungspolygons teilt.
 Von beiden Zahlen wird das Minimun genommen und als Indicator der Lösungsgüte angesehen.\\
@@ -61,6 +61,28 @@ Güte(R) := \sum_{v \in V} \frac{ f(v,R)}{\#S_v}
 \end{equation}
 
 Wir suchen also einen Regelsatz $R$ für den $Güte(R)$ maximal ist.
+
+
+\subsection{Visuelle Überprüfung}
+\label{sec:visuelle_ueberpruefung}
+Um die KML-Dateien nicht immer manuell in Google-Earth laden zu müssen, wurde eine weitere Klasse geschrieben, welche zur Visualisierung der Daten gedacht ist.
+Dabei werden Bilder erstellt, in welchen die Daten aus OSM als schwarze Linien, bzw Polygone eingezeichnet werden. Zusätzlich werden die Tags, 
+welche die Objekte enthalten zu jedem Objekt eingezeichnet um schnell eine Übersicht zu haben, was wozu gehört.
+Um die Güte des Regeldatensatzes, bzw des Algorithmus subjektiv beurteilen zu können, werden die truth, bzw. die von unserem Algorithmus erdachten Polygone
+farblich eingezeichnet. so ist eine schnelle Beurteilung, ob man das richtige Poylgon gewählt hat, bzw welche Tags man evtl noch beachten sollten möglich.
+
+\subsection{Incrementelle Regelerstellung}
+Aus dem Testdatensatz werden zunächst alle Datensätze herausgefiltert, welche nicht einfach lösbar sind.
+Es wird mit einem leeren Regelsatz angefangen und dieser anschließend inkrementel erweitert. Dazu wird wie Folgt vorgegangen:
+\begin{enumerate}
+\item Definiere für jeden Datensatz ein optimales Polygon, bzw einen Overlap-Wert, welcher erreicht werden muss.
+\item Der Regelsatz wird auf alle Testdatensätze angewendet.
+\item Für jeden Datensatz, bei welchem die Regeln nicht das optimale Polygon finden, wird ein Bild wie in \fref{sec:visuelle_ueberpruefung} erstellt.
+\item Dem Benutzer werden alle Bilder, angezeigt und dieser kann nun weitere Regeln hinzufügen oder bestehende ändern.
+\item gehe zu 2
+\end{enumerate}
+Nachdem alle einfachen Fälle abgedeckt sind, kann nun mit den schwierigeren Vorgegangen werden.
+Gehe dazu erneut so vor.
 
 \subsection{Mögliche Erweiterung}
 Um den Fall abzudecken, in welchem in OpenStreetMap keine ausreichenden Daten vorhanden sind, wird um den Punkt $C_{ID}$ ein
