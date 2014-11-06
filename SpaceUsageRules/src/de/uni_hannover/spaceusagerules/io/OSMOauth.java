@@ -1,4 +1,4 @@
-package de.uni_hannover.spaceusagerules.core;
+package de.uni_hannover.spaceusagerules.io;
 
 import org.scribe.builder.api.DefaultApi10a;
 import org.scribe.model.Token;

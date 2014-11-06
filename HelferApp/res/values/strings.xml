@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">Flächennutzung</string>
+    <string name="app_name">Was gilt wo?</string>
     <string name="settings">Einstellungen</string>
-    <string name="increase">Umkreis vergrößern</string>
     <string name="add_tag">Regel hinzufügen</string>
-    <string name="helptext1">Leider konnten wir in deiner Umgebung keine Nutzungsregeln finden.</string>
-    <string name="helptext2">Das hängt oftmals damit zusammen, dass es noch sehr neu ist diese in Openstreetmap zu definieren und es deshalb erst sehr wenige gibt.</string>
-    <string name="helptext3">Hilf uns das zu verbessern indem du eigene Regeln hinzufügst.</string>
     <string name="starttext1">Danke, dass du die App heruntergeladen hast. Im folgenden will ich dir kurz ein paar Tips geben:</string>
     <string name="starttext3">Du kannst der App eigene Bereiche über das "+" hinzufügen. Wähle dazu eine Fläche an, oder zeichne(durch antippen der Eckpunkte) nach Klick auf den Stift einen eigenen Bereich.</string>
-    <string name="starttext4">In dieser App werden Daten aus OpenStreetMap und Google Maps kombiniert.</string>
-    <string name="starttext2">Diese App ist dazu da, Bereich auf der Karte zu markieren, in welchen bestimmte Verbote gelten. Welche genau das sein sollen, kannst du in den Einstellungen ändern, oder aber dir einfach alle anzeigen lassen.
-        
+    <string name="starttext4">In dieser App nutzt Daten aus OpenStreetMap und Google Maps.</string>
+    <string name="starttext2">Diese App ist dazu da, Bereiche auf der Karte zu markieren, in welchen bestimmte Verbote gelten. Welche genau das sein sollen, kannst du in den Einstellungen ändern, oder aber dir einfach alle anzeigen lassen.
         Da aktuell noch nicht so viele Verbote definiert sind, hilf uns doch, indem du weitere hinzufügst und es anderen so ermöglichst zu sehen ob sie hier z.B. rauchen dürfen, oder aber welche Teile der Stadt mit Rollstuhl zugänglich sind.</string>
     <string name="help">Hilfe</string>
     <string name="found_location">Standort bestimmt.</string>
@@ -21,8 +15,10 @@
     <string name="right">Übernehmen</string>
     <string name="paint">Bereich einzeichnen.</string>
     <string name="show_map">Zeige Karte</string>
+    <string name="show_list">Übersicht</string>
     <string name="cancel">Abbrechen</string>
     <string name="ok">Suchen</string>
+    <string name="no_alternative">Es gibt keine anderen Regeln in der Nähe.</string>
     <string name="no_data_transmit">Daten konnten nicht übertragen werden.</string>
     <string name="no_data_found">Keine Daten gefunden.</string>
     <string name="data_transmit">Daten übertragen.</string>
@@ -37,7 +33,6 @@
         <item >Erlaubt</item>
     </string-array>
     <string name="update_location">Update</string>
-    
     <string-array name="tags">
 		<item >wheelchair</item>
         <item >smoking</item>
@@ -53,7 +48,6 @@
         <item >fishing</item>
         <item >littering</item>
     </string-array>
-    
     <string-array name="tags_readable">
 		<item >Barrierefrei</item>
         <item >rauchen</item>
@@ -70,7 +64,6 @@
         <item >Verschmutzen</item>
     </string-array>
     <string name="tag_default">wheelchair</string>
-    
     <string name="pref_only">Einzelnutzung</string>
     <string name="pref_only_summ">Alle anderen Sachen werden ausgeblendet.</string>
     <string name="pref_only_tag">Beschränkt auf:</string>
@@ -84,5 +77,4 @@
 	</string-array>
 	<string name="slider_search_message">Ein größerer Suchradius, bedeutet mehr Daten.</string>
 	<string name="dialog_search_here">In dieser Umgebung suchen?</string>
-    
 </resources>

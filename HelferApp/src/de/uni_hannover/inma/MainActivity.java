@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,10 +21,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -31,41 +33,40 @@ import de.uni_hannover.inma.view.AddMapFragment;
 import de.uni_hannover.inma.view.AddMapFragment.OnDataTransmitListener;
 import de.uni_hannover.inma.view.AddTagListFragment;
 import de.uni_hannover.inma.view.AddTagListFragment.OnAddTagSelectedListener;
-import de.uni_hannover.inma.view.PlaceholderFragment;
+import de.uni_hannover.inma.view.HelpFragment;
 import de.uni_hannover.inma.view.ShowMapFragment;
 import de.uni_hannover.inma.view.ShowMapFragment.SearchFromHereInterface;
 import de.uni_hannover.inma.view.ShowTagListFragment;
 import de.uni_hannover.inma.view.ShowTagListFragment.OnShowTagSelectedListener;
+import de.uni_hannover.inma.view.StartFragment;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
-import de.uni_hannover.spaceusagerules.core.OSM;
 import de.uni_hannover.spaceusagerules.core.Tag;
 import de.uni_hannover.spaceusagerules.core.Way;
+import de.uni_hannover.spaceusagerules.io.OSM;
 
-public class MainActivity extends ActionBarActivity implements OnShowTagSelectedListener, OnAddTagSelectedListener, OnDataTransmitListener, SearchFromHereInterface{
+public class MainActivity extends ActionBarActivity implements OnShowTagSelectedListener, OnAddTagSelectedListener, OnDataTransmitListener, SearchFromHereInterface {
 
-	private int layoutID = R.layout.fragment_main;
 	private Coordinate location = null;
-	private List<Way> ways = null;
-	private float area = (float) 0.005;
+	private Set<Way> ways = null;
 	private List<Tag> umgebung = null;
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		if (savedInstanceState != null) {
-			layoutID = savedInstanceState.getInt(IDs.LAYOUT_ID);
 			location = (Coordinate) savedInstanceState
 					.getSerializable(IDs.LOCATION);
-			area = savedInstanceState.getFloat(IDs.AREA, (float) 0.005);
-			ways = (List<Way>) savedInstanceState.getSerializable(IDs.WAYS);
+			ways = (Set<Way>) savedInstanceState.getSerializable(IDs.WAYS);
 		} else {
+			ways = new TreeSet<Way>();
 			updateLocation();
-			replaceFragment();
-		}
+			Fragment newFragment = new StartFragment();
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.container, newFragment).commit();		}
 	}
-
+	
 	private void updateLocation() {
 		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -82,27 +83,22 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-
-		// Save the current article selection in case we need to recreate the
-		// fragment
-		outState.putInt(IDs.LAYOUT_ID, layoutID);
 		outState.putSerializable(IDs.LOCATION, (Serializable) location);
 		outState.putSerializable(IDs.WAYS, (Serializable) ways);
-	}
-
-	private void replaceFragment() {
-		Fragment newFragment = new PlaceholderFragment();
-		Bundle args = new Bundle();
-		args.putInt(IDs.LAYOUT_ID, layoutID);
-		newFragment.setArguments(args);
-		getSupportFragmentManager().beginTransaction()
-				.add(R.id.container, newFragment).addToBackStack(null).commit();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		boolean prefOnly = sharedPref.getBoolean("pref_only", false);
+		String prefOnly_string = sharedPref.getString("pref_only_tag", null);
+		if(prefOnly && prefOnly_string!=null) {
+			MenuItem list = menu.findItem(R.id.action_show_list);
+			if(list!=null)
+				list.setVisible(false);
+		}
 		return true;
 	}
 
@@ -118,13 +114,21 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 			return true;
 		}
 		if(id == R.id.action_help) {
-			layoutID = R.layout.first_use;
-			replaceFragment();
+			Fragment newFragment = new HelpFragment();
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.container, newFragment).addToBackStack(null).commit();
+			return true;
+		}
+		if(id == R.id.action_show_list) {
+			if(umgebung.size()>1)
+				onDataTransmit();
+			else
+				Toast.makeText(this, R.string.no_alternative, Toast.LENGTH_SHORT).show();
 			return true;
 		}
 		if(id == R.id.action_add_tag) {
 			if(location!=null)
-				addTag(null);
+				addTag();
 			else
 				Toast.makeText(this, R.string.no_location, Toast.LENGTH_LONG).show();
 			return true;
@@ -135,41 +139,33 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-	public void updateLocation(Location location) {
-		this.location = new Coordinate(location.getLatitude(),
-				location.getLongitude());
-		updateOsmData();
-	}
 	
 	@Override
 	public void searchFromHere(LatLng l) {
 		this.location = new Coordinate(l.latitude, l.longitude);
-		updateOsmData();
-	}
+		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isConnected()) {
+			new QueryOsmTask().execute(false);
+			Toast.makeText(getApplicationContext(), getString(R.string.start_search),
+					Toast.LENGTH_SHORT).show();
+		}
+		else
+			Toast.makeText(getApplicationContext(), getString(R.string.no_network),
+					Toast.LENGTH_LONG).show();	}
 	
-	public void increase(View view) {
-		this.area *=2;
-		updateOsmData();
-	}
-	
-	public void showMap(View view) {
-		Tag t = new Tag("","");
-		onShowTagSelected(t);
-	}
-	
-	public void addTag(View view) {
+	private void addTag() {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		boolean prefOnly = sharedPref.getBoolean("pref_only", false);
 		String prefOnly_string = sharedPref.getString("pref_only_tag", null);
 		if(prefOnly && prefOnly_string!=null) {
+    		new QueryOsmTask().execute(true);
 	        Resources res = getResources();
 	        String[] tagList = res.getStringArray(R.array.tags);
 	        int i = 0;
 	        for(String s : tagList) {
 	        	if(s.equals(prefOnly_string)) {
 	        		onAddTagSelected(i);
-	        		new QueryOsmTask().execute(false);
 	        		return;
 	        	}
 	        	i++;
@@ -193,10 +189,10 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 	    args.putSerializable(IDs.TAGS, (Serializable) umgebung);
 	    newFragment.setArguments(args);
 		getSupportFragmentManager().beginTransaction()
-				.add(R.id.container, newFragment).addToBackStack(null).commit();
+				.add(R.id.container, newFragment).commit();
 	}
 
-	public void onLocationUpdate() {
+	public void onNewDataAvailable() {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
 		if(f instanceof ShowMapFragment) {
 			String t = ((ShowMapFragment) f).getTagID();
@@ -211,35 +207,30 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 			}
 		}
 		if(f instanceof AddMapFragment) {
+			System.err.println("KEKSE");
 			((AddMapFragment) f).newData(ways);
 			return;
 		}
-		if (umgebung.isEmpty()) {
-			layoutID = R.layout.help_us;
-			replaceFragment();
-		} else if(umgebung.size()==1) {
-			onShowTagSelected(umgebung.get(0));
+		if(f instanceof AddTagListFragment)
+			return ;
+		if(f instanceof ShowTagListFragment) {
+			
+			return;
 		}
-		else {
-			onDataTransmit();
+		if(f instanceof StartFragment) {
+			if (umgebung.isEmpty()) {
+				Tag t = new Tag("","");
+				onShowTagSelected(t);
+			} else if(umgebung.size()==1) {
+				onShowTagSelected(umgebung.get(0));
+			}
+			else {
+				onDataTransmit();
+			}
+			return;
 		}
-	}
-
-	private void updateOsmData() {
-		// Called when a new location is found by the network location provider.
-		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected()) {
-			SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-			boolean prefOnly = sharedPref.getBoolean("pref_only", false);
-			String prefOnly_string = sharedPref.getString("pref_only_tag", null);
-			new QueryOsmTask().execute(prefOnly && prefOnly_string != null);
-			Toast.makeText(this, getString(R.string.start_search),
-					Toast.LENGTH_SHORT).show();
-		}
-		else
-			Toast.makeText(this, getString(R.string.no_network),
-					Toast.LENGTH_LONG).show();
+		System.err.println("Ich sollte niemals hierher kommen!!!!!");
+		System.err.println(f);
 	}
 
 	@Override
@@ -251,8 +242,11 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 	    args.putSerializable(IDs.TAGNAME, t.getName());
 	    args.putSerializable(IDs.TAGID, t.getTagId());
 		newFragment.setArguments(args);
-		getSupportFragmentManager().beginTransaction()
-				.add(R.id.container, newFragment).addToBackStack(null).commit();
+		FragmentTransaction trans = getSupportFragmentManager().beginTransaction()
+				.add(R.id.container, newFragment);
+		if(umgebung.size()>1)
+			trans = trans.addToBackStack(null);
+		trans.commit();
 	}
 
 	@Override
@@ -276,19 +270,28 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 	public float getRadius() {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		float syncConnPref = sharedPref.getFloat("search_range", (float) 0.5);
-		return (float) (0.0001 + area * syncConnPref*syncConnPref);
+		return (float) (0.0001 + 0.003 * syncConnPref*syncConnPref);
 	}
 	
 	private class LocationUpdateListener implements LocationListener {
-
+		private Location last_location = null;
 		private boolean location_available = false;
-		private boolean updated = false;
 
-		public void onLocationChanged(Location location) {
-			if(!updated) {
-				updateLocation(location);
+		public void onLocationChanged(Location loc) {
+			if(last_location==null || last_location.distanceTo(loc)>20) {
+			location = new Coordinate(loc.getLatitude(),loc.getLongitude());
+			last_location = loc;
+			ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+			if (networkInfo != null && networkInfo.isConnected()) {
+				new QueryOsmTask().execute(false);
+				Toast.makeText(getApplicationContext(), getString(R.string.start_search),
+						Toast.LENGTH_SHORT).show();
 			}
-			updated = true;
+			else
+				Toast.makeText(getApplicationContext(), getString(R.string.no_network),
+						Toast.LENGTH_LONG).show();
+		}
 		}
 
 		public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -307,8 +310,8 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 
 	}
 
-	public void order(List<Way> ways) {
-		this.ways = ways;
+	public void order(Set<Way> ways) {
+		this.ways.addAll(ways);
 
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		boolean prefOnly = sharedPref.getBoolean("pref_only", false);
@@ -319,12 +322,20 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
         String[] readableList = res.getStringArray(R.array.tags_readable);
         
 		Map<String, Tag> possible = new TreeMap<String, Tag>();
-		umgebung = new LinkedList<Tag>();
+		if(umgebung != null) {
+			for(Tag t : umgebung) {
+				possible.put(t.getTagId(), t);
+			}
+			umgebung.clear();
+		}else
+			umgebung = new LinkedList<Tag>();
 		if(prefOnly && prefOnly_string != null) {
-			possible.put(prefOnly_string,new Tag(prefOnly_string,prefOnly_string));
+			if(!possible.containsKey(prefOnly_string))
+				possible.put(prefOnly_string,new Tag(prefOnly_string,prefOnly_string));
 		} else {
 			for(int i = 0;i<tagList.length;i++)
-				possible.put(tagList[i], new Tag(readableList[i],tagList[i]));
+				if(!possible.containsKey(tagList[i]))
+					possible.put(tagList[i], new Tag(readableList[i],tagList[i]));
 		}
 		for (Way w : ways) {
 			for (String s : w.getTags().keySet()) {
@@ -336,7 +347,7 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 			}
 		}
 		for (Tag t : possible.values()) {
-			if (!t.isEmpty())
+			if (!t.isEmpty() || possible.size() <2)
 				umgebung.add(t);
 		}
 	}
@@ -350,12 +361,17 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 		@Override
 		protected Integer doInBackground(Boolean... loc) {
 			SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+			boolean pref_only = sharedPref.getBoolean("pref_only", false);
 			String prefOnly_string = sharedPref.getString("pref_only_tag", null);
-			List<Way> ways = null;
-			if(loc[0] && prefOnly_string != null) {
-				ways = OSM.getObjectList(location, getRadius()*2, prefOnly_string);
-			} else
+			Set<Way> ways = null;
+			if(loc[0]) {
 				ways = OSM.getObjectList(location, getRadius());
+			}
+			else if(pref_only && prefOnly_string != null) {
+				ways = OSM.getObjectList(location, getRadius()*2, prefOnly_string);
+			} else {
+				ways = OSM.getObjectList(location, getRadius());
+			}
 			order(ways);
 			return 1;
 		}
@@ -363,7 +379,7 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 		// onPostExecute displays the results of the AsyncTask.
 		@Override
 		protected void onPostExecute(Integer a) {
-			onLocationUpdate();
+			onNewDataAvailable();
 		}
 	}
 }

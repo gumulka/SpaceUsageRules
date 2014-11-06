@@ -3,23 +3,175 @@ package de.uni_hannover.spaceusagerules.gen_alg;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import com.drew.imaging.ImageProcessingException;
 
-import de.uni_hannover.spaceusagerules.core.OSM;
+import de.uni_hannover.spaceusagerules.core.Way;
+import de.uni_hannover.spaceusagerules.io.Image;
+import de.uni_hannover.spaceusagerules.io.OSM;
 
 /**
  * Klasse, welche für jede SpaceUsageRule aus dem Testdatensatz einen genetischen Algorithmus erstellt und diesen durchlaufen lässt.
  */
-public class Main {
+public class Main implements Comparable<Main>{
 
+	public static final int MAXTHREADS = 4;
+	
+	private static List<String> possibla = null;
+	private static Map<String,Set<String>> tags = null;
+	private static int max = 0;
+	private static boolean prepared = false;
+	
+	
+	private List<Genetic> allGens;
+	private int diff = Integer.MAX_VALUE;
+	private int fitness = 0;
+	
+	
+	public static void prepare() throws IOException, ImageProcessingException {
+		OSM.useBuffer(true);
+		
+		Map<String,Integer> possibilities = new TreeMap<String,Integer>();
+		tags = new TreeMap<String,Set<String>>();
+		File f = new File("../SpaceUsageRulesVis/assets/Data.txt");
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		String lastID = null;
+		String tag = "";
+		String line;
+		line = br.readLine();
+		if(max == 0) 
+			max = Integer.parseInt(line);
+		// für alle zusammenstellungen von Tags einen Genetischen algorithmus machen.
+		for(int i = 0; i<max;i++) {
+			line = br.readLine();
+			if(line == null)
+				break;
+			String[] bla = line.split(",");
+			if(bla[0].equals(lastID)) {
+				tag += bla[3].trim() + ", ";
+			}
+			else {
+				// fügt der Liste aller möglichen möglichkeiten die in der Umgebung dieses Tags vorkommenden hinzu.
+				String filename = String.format(Locale.GERMAN,"../SpaceUsageRulesVis/assets/%s.jpg",bla[0]);
+				InputStream is = new FileInputStream(new File(filename));
+				for(Way w : OSM.getObjectList(Image.readCoordinates(is))) {
+					for(Entry<String,String> e : w.getTags().entrySet()) {
+						Integer value = possibilities.get(e.getKey());
+						if(value == null) 
+							possibilities.put(e.getKey(), 0);
+						else
+							possibilities.put(e.getKey(), ++value);
+						value = possibilities.get(e.getKey() + " - " + e.getValue());
+						if(value == null) 
+							possibilities.put(e.getKey() + " - " + e.getValue(), 0);
+						else
+							possibilities.put(e.getKey() + " - " + e.getValue(), ++value);
+					}
+				}
+				// das letzte Komma abschneiden.
+				if(tag.contains(",")) {
+					tag = tag.substring(0, tag.lastIndexOf(','));
+				}
+				if(tag.length()!=0) {
+					Set<String> IDs = tags.get(tag);
+					if(IDs == null) {
+						IDs = new TreeSet<String>();
+						tags.put(tag,IDs);
+					}
+					IDs.add(lastID);
+				}
+				tag = bla[3].trim() + ", ";
+				lastID = bla[0];
+			}
+		}
+		br.close();
+		
+		possibla = new LinkedList<String>();
+		int kicked = 0;
+		for(Entry<String,Integer> e : possibilities.entrySet())
+			if(e.getValue()>1)
+				possibla.add(e.getKey());
+			else
+				kicked++;
+		System.out.println("rauschgeschmissen: " +kicked + "/" + possibilities.size() + " möglichen Regeln");
+		
+		System.out.println(tags.size() + " verschiedene Tags.");
+		prepared = true;
+	}
+	
+	public void run() throws Exception {
+		if(!prepared)
+			return;
+		long startTime = System.currentTimeMillis();
+		allGens = new ArrayList<Genetic>();
+		for(Entry<String,Set<String>> e: tags.entrySet())
+			allGens.add(new Genetic(e.getKey(),e.getValue(), possibla));
+		Collections.sort(allGens);
+		List<Genetic> gens = new LinkedList<Genetic>();
+		for(Genetic g : allGens) {
+			while(true) {
+				if(gens.size()<MAXTHREADS) {
+					g.start();
+					gens.add(g);
+					break;
+				} else
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException ex) {
+					}
+				for(Thread r : gens)
+					if(!r.isAlive()) {
+						gens.remove(r);
+						break;
+					}
+			}
+		}
+		for(Genetic g : gens) {
+			g.join();
+		}
+
+		for(Genetic g : allGens) {
+			fitness += g.getBest().getFitness();
+		}
+		
+		diff = (int) ((System.currentTimeMillis() - startTime)/1000);
+	}
+	
+	public void writeout() throws IOException {
+		File f = new File("../SpaceUsageRulesVis/assets/Rules.gen." + max + ".txt");
+		BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+		for(Genetic g : allGens) {
+			bw.write("[ " + g.getRule());
+			bw.write("] -> ");
+			bw.write(g.getBest().toString());
+			bw.newLine();
+		}
+		bw.close();
+	}	
+	
+	public int getDiff()  {
+		return diff;
+	}
+	
+	public int getFitness() {
+		return fitness;
+	}
+	
 	/**
 	 * @param args
 	 * @throws IOException
@@ -27,55 +179,78 @@ public class Main {
 	 */
 	public static void main(String[] args) throws Exception,
 			IOException {
-		OSM.useBuffer(true);
-		
-		
-		Set<String> tags = new TreeSet<String>();
-		File f = new File("../SpaceUsageRulesVis/assets/Data.txt");
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		String line;
-		br.readLine();
-		while((line = br.readLine()) != null) {
-			String[] bla = line.split(",");
-			tags.add(bla[3].trim());
-		}
-		br.close();
-		System.out.println(tags.size() + " verschiedene Tags.");
-		List<Genetic> gens = new LinkedList<Genetic>();
-		for(String s: tags) {
-			Genetic g = new Genetic(s);
-			g.start();
-			gens.add(g);
-		}
-		for(Genetic g : gens) {
-			g.join();
-		}
-		f = new File("../SpaceUsageRulesVis/assets/Rules.txt");
-		BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-		for(Genetic g : gens) {
-			bw.write(g.getRule());
-			bw.write(" -> ");
-			bw.write(g.getBest().toString());
-			bw.newLine();
-		}
-		bw.close();
-		/*
-		List<Double> all = new ArrayList<Double>();
-		for(int i = 1;i<=96;i++) {
-
-			String filename = String.format(Locale.GERMAN, "../SpaceUsageRulesVis/assets/%04d.jpg",i);
-    		InputStream ins = new FileInputStream(new File(filename));
-    		Coordinate location = Image.readCoordinates(ins);
-    		filename = String.format(Locale.GERMAN, "../SpaceUsageRulesVis/assets/%04d.truth.kml",i);
-    		Polyline p = KML.loadKML(new File(filename));
-    		if(p.isArea())
-    			all.add(location.distanceTo(p.getPoints()));
-		}
-		Collections.sort(all);
-		for(Double d : all)
-			System.out.println(d);
-			
-		// */
+		 Runtime.getRuntime().addShutdownHook(new Thread()
+	        {
+	            @Override
+	            public void run()
+	            {
+	            	Genetic.kill = true;
+	            	System.out.println("Shutdown hook ran!");
+	            }
+	        });
+		 OSM.useBuffer(true);
+		 Main.prepare();
+		 
+		 /*
+		 Main test = new Main(300,200,4,3);
+		 test.run();
+		 System.out.println(test);
+		 test.writeout(); // */
+		 
+		 int[] maxis = {90, 128};
+		 int[] popsizes = {100,200,500};
+		 int[] withouts = {100, 200, 500};
+		 int[] mutates =  {2,4, 6};
+		 int[] merges = {1,3,5};
+		 for(int m : maxis) {
+			 List<Main> all = new LinkedList<Main>();
+			 Main.max = m;
+			 for(int p : popsizes) {
+				 System.out.println("New Popsize: " + p);
+				 for(int w: withouts) {
+					 for(int mu : mutates) {
+						 for(int me : merges) {
+							 Main test = new Main(p,w,mu,me);
+							 test.run();
+							 System.out.println(test);
+							 all.add(test);
+						 }
+					 }
+				 }
+			 }
+			 Collections.sort(all);
+			 all.get(0).writeout();
+			 System.out.println("----->");
+			 for(Main main : all)
+				 System.out.println(main);
+			 System.out.println("<-----"); // */
+		 }
+	}
+	
+	int p,w,mu,me;
+	public Main(int p, int w, int mu, int me) {
+		this.p = p;
+		this.w = w;
+		this.mu = mu;
+		this.me = me;
+		 Genetic.popsize = p;
+		 Genetic.withoutOtimization = w;
+		 Genetic.mutate = p*mu/10;
+		 Genetic.merge = p*me/10;
 	}
 
+	
+	public String toString() {
+		String ret = String.format("Fitness: %6d, Laufzeit: %d:%02d:%02d\n",fitness, diff/3600, (diff/60)%60, diff%60);
+		ret += String.format("Pop: %d, Wi: %d, Mu: %d, Me: %d",p,w,mu,me);
+		return ret;
+	}
+	
+	@Override
+	public int compareTo(Main o) {
+		int f = o.getFitness() - fitness;
+		if(f==0)
+			return this.getDiff() - o.getDiff();
+		return f;
+	}
 }

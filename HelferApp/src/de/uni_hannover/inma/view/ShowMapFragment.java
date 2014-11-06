@@ -1,7 +1,7 @@
 package de.uni_hannover.inma.view;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -28,7 +28,7 @@ import de.uni_hannover.spaceusagerules.core.Way;
 
 public class ShowMapFragment extends SupportMapFragment implements OnMapLongClickListener{
 
-	private List<Way> ways = null;
+	private Set<Way> ways = null;
 	private Coordinate location = null;
 	private String tagname = null;
 	private String tagid = null;
@@ -45,7 +45,7 @@ public class ShowMapFragment extends SupportMapFragment implements OnMapLongClic
 			Bundle savedInstanceState) {
 		View rootView = super.onCreateView(inflater, container, savedInstanceState);
 		Bundle intent = getArguments();
-		ways = (List<Way>) intent.getSerializable(IDs.WAYS);
+		ways = (Set<Way>) intent.getSerializable(IDs.WAYS);
 		location = (Coordinate) intent.getSerializable(IDs.LOCATION);
 		tagname = intent.getString(IDs.TAGNAME);
 		tagid = intent.getString(IDs.TAGID);
@@ -97,7 +97,7 @@ public class ShowMapFragment extends SupportMapFragment implements OnMapLongClic
 		return tagid;
 	}
 	
-	public void newData(List<Way> ways) {
+	public void newData(Set<Way> ways) {
 		this.ways.addAll(ways);
 		redraw();
 	}

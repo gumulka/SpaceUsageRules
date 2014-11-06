@@ -1,4 +1,4 @@
-package de.uni_hannover.spaceusagerules.core;
+package de.uni_hannover.spaceusagerules.io;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -28,6 +26,9 @@ import org.scribe.model.Token;
 import org.scribe.model.Verb;
 import org.scribe.oauth.OAuthService;
 
+import de.uni_hannover.spaceusagerules.core.Coordinate;
+import de.uni_hannover.spaceusagerules.core.Way;
+
 /**
  * Created by gumulka on 10/10/14.
  */
@@ -39,12 +40,11 @@ public class OSM {
 		buffer = use;
 	}
 
-	@Deprecated
-	public static List<Way> getObjectList(Coordinate c) {
+	public static Set<Way> getObjectList(Coordinate c) {
 		return getObjectList(c, (float) 0.0005);
 	}
 
-	public static List<Way> getObjectList(Coordinate c, float radius) {
+	public static Set<Way> getObjectList(Coordinate c, float radius) {
 		if (buffer) {
 			String filename = String.format(Locale.GERMAN,
 					"buffer/%02.4f_%02.4f_%02.4f.xml", c.latitude, c.longitude,
@@ -55,26 +55,26 @@ public class OSM {
 	}
 
 	@Deprecated
-	public static List<Way> getObjectList(Coordinate c, File f) {
+	public static Set<Way> getObjectList(Coordinate c, File f) {
 		boolean b = buffer;
 		buffer = true;
-		List<Way> back = getObjectList(c, (float) 0.0005, f);
+		Set<Way> back = getObjectList(c, (float) 0.0005, f);
 		buffer = b;
 		return back;
 	}
 
-	public static List<Way> getObjectList(Coordinate c, float radius, File f) {
+	public static Set<Way> getObjectList(Coordinate c, float radius, File f) {
 		return getObjectList(c, radius, f, null);
 	}
 
-	public static List<Way> getObjectList(Coordinate c, float radius,
+	public static Set<Way> getObjectList(Coordinate c, float radius,
 			String tagname) {
 		return getObjectList(c, radius, null, tagname);
 	}
 
-	public static List<Way> getObjectList(Coordinate c, float radius, File f,
+	public static Set<Way> getObjectList(Coordinate c, float radius, File f,
 			String tagname) {
-		List<Way> newObjects = new LinkedList<Way>();
+		Set<Way> newObjects = new TreeSet<Way>();
 		Map<Long, Coordinate> coords = new TreeMap<Long, Coordinate>();
 		String connection = null;
 		if (tagname == null)
@@ -87,14 +87,13 @@ public class OSM {
 					+ (c.longitude - radius) + "," + (c.latitude - radius)
 					+ ',' + (c.longitude + radius) + ","
 					+ (c.latitude + radius) + "][" + tagname + "=*]";
-		System.out.println(connection);
 		try {
 			Document doc = null;
 			if (buffer && f != null && f.exists() && f.canRead()) {
 				doc = Jsoup.parse(f, "UTF-8");
 			} else {
 				Connection.Response res = Jsoup.connect(connection).timeout(10000)
-						.userAgent("InMa SpaceUsageRules")
+						.userAgent("InMa")
 						.followRedirects(true).execute();
 				doc = res.parse();
 				if (buffer && f != null) {
@@ -115,7 +114,6 @@ public class OSM {
 				Way w = new Way();
 				long wayID = Long.parseLong(e.attr("id"));
 				w.setId(wayID);
-				w.addOriginalTag("visible", e.attr("visible"));
 				for (Element x : e.select("nd")) {
 					long id = Long.parseLong(x.attr("ref"));
 					w.addCoordinate(coords.get(id));
@@ -131,7 +129,7 @@ public class OSM {
 		return newObjects;
 	}
 
-	public static int alterContent(List<Way> ways, Coordinate location) {
+	public static int alterContent(Set<Way> ways, Coordinate location) {
 		int status = 0;
 		Set<String> concerned = new TreeSet<String>();
 		for (Way w : ways) {

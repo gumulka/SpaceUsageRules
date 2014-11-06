@@ -1,10 +1,8 @@
 package de.uni_hannover.spaceusagerules.core;
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
-
-import de.uni_hannover.spaceusagerules.core.Way;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Tag implements Serializable{
 	/**
@@ -15,12 +13,12 @@ public class Tag implements Serializable{
 	private String tagname;
 	private String tagid;
 	
-	private List<Way> ways;
+	private Set<Way> ways;
 	
 	public Tag(String tagname, String tagid) {
 		this.tagname = tagname;
 		this.tagid = tagid;
-		ways = new LinkedList<Way>();
+		ways = new TreeSet<Way>();
 	}
 	
 	public String getName() {
@@ -39,7 +37,7 @@ public class Tag implements Serializable{
 		return ways.isEmpty();
 	}
 	
-	public List<Way> getWays() {
+	public Set<Way> getWays() {
 		return ways;
 	}
 	

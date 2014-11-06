@@ -19,7 +19,7 @@
     android:key="search_range"
     android:title="@string/slider_search_range"
     android:summary="@array/slider_search_summary"
-    android:defaultValue="0.2"
+    android:defaultValue="0.4"
     android:dialogMessage="@string/slider_search_message" />
     
 </PreferenceScreen>

@@ -1,4 +1,4 @@
-package de.uni_hannover.spaceusagerules.core;
+package de.uni_hannover.spaceusagerules.io;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -11,6 +11,9 @@ import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+
+import de.uni_hannover.spaceusagerules.core.Coordinate;
+import de.uni_hannover.spaceusagerules.core.Polyline;
 
 /**
  * Eine Klasse zum einlesen und Schreiben von KML Dateien.

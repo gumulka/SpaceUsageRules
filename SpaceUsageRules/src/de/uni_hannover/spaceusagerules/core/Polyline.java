@@ -196,7 +196,7 @@ public class Polyline  implements Serializable {
 		
 		//do ray casting
 		//create the ray
-		Line ray = new Line(zero, new Coordinate(0, 10000.));
+		Line ray = new Line(zero, new Coordinate(0, 1.));
 		//if necessary rotate ray until no corner of this polyline is on it
 		while(Coordinate.pointsOnLine(zeroPoints, ray)){
 			Coordinate newEnd = ray.getEnd();

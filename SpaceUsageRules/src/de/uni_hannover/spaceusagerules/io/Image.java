@@ -1,4 +1,4 @@
-package de.uni_hannover.spaceusagerules.core;
+package de.uni_hannover.spaceusagerules.io;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -12,6 +12,8 @@ import com.drew.lang.Rational;
 import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
+
+import de.uni_hannover.spaceusagerules.core.Coordinate;
 
 /**
  * Klasse zum Einlesen von Bild-Metadaten.

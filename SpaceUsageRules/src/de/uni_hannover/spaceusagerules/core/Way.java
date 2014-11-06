@@ -12,7 +12,7 @@ import java.util.TreeSet;
 /**
  * Klasse zur Representation eines Weg-Objektes in OSM.
  */
-public class Way implements Serializable{
+public class Way implements Serializable, Comparable<Way>{
 
     /**
 	 * 
@@ -232,5 +232,17 @@ public class Way implements Serializable{
 	 */
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Way) 
+			return this.id == ((Way) obj).id;
+		return false;
+	}
+
+	@Override
+	public int compareTo(Way o) {
+		return (int) (this.id - o.id);
 	}
 }
