@@ -109,6 +109,10 @@ public class Genetic extends Thread implements Comparable<Genetic>{
      * die Methode zum durchlaufen des Genetischen algorithmus mit der Steuerung aus den statischen finalen Variablen.
      */
 	public void run() {
+		if(mutate + merge + copyBest > popsize) {
+			System.err.println("Population ist going to grow. Aborting.");
+			return; 
+		}
 		int i = 0;
 		int oldFitness = -1;
 		int verbesserungen = -1;

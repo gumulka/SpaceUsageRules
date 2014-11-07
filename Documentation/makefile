@@ -2,7 +2,14 @@
 
 all: main.pdf
 
-main.pdf: clean main.tex
+doxyref.tex:
+	cd .. ; doxygen Doxyfile
+	cp ../doc/latex/*.tex .
+	cp ../doc/latex/*.pdf .
+	#cp ../doc/latex/*.eps .
+	sed -n '/input{/p; /chapter{/p' refman.tex > doxyref.tex
+
+main.pdf: clean main.tex doxyref.tex graphics
 	pdflatex main
 	makeindex main.idx
 	pdflatex main
@@ -16,9 +23,21 @@ main.pdf: clean main.tex
 	makeindex main.idx
 	pdflatex main
 
+graphics: LaufzeitGen90Q.png
+
+LaufzeitGen90Q.png:
+	gnuplot -e "load 'Laufzeit.plot'"
+	awk '$$12 ~ 5 && $$10 < 6 {print $$0}' LaufzeitGen90.txt > tmp.txt
+	gnuplot -e "load 'LaufzeitMerge5.plot'"
+	rm tmp.txt
 
 show:
 	evince main.pdf
 
 clean:
 	rm -f *.ps *.dvi *.aux *.toc *.idx *.ind *.ilg *.log *.out *.brf *.blg *.bbl main.pdf
+
+clean_all: clean
+	rm -f ./classde* ./dir_* annotated.tex hierarchy.tex refman.tex
+	rm -r ../doc
+	rm -f ./Laufzeit*.png

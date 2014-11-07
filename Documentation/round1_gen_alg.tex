@@ -8,7 +8,7 @@ haben wir beschlossen unser selbst definiertes Regelwerk abschließend gegen ein
 \item Eine Liste mit SpaceUsageRules wie in \fref{sec:Eingabedaten_GI} definiert.
 \item Die dazugehörigen truth.kml Dateien.
 \item Verschiedene Parameter zum Steuern des genetischen Algorithmus
-\footnote{Es gibt hierfür Standartwerte}
+%\footnote{Siehe auch fref{sec:Evaluation_genAlg}}
   \begin{itemize}
   \item Populationsgröße
   \item Anzahl der Verbesserungsversuche
@@ -17,7 +17,54 @@ haben wir beschlossen unser selbst definiertes Regelwerk abschließend gegen ein
   \item Anzahl der Populationen, welche mit anderen gemischt in die nächste Generation gehen.
   \end{itemize}
 \end{itemize}
+
 \subsection{Ausgabedaten}
-Das System ist so entworfen, dass es als Ausgabe Daten liefert wie in \fref{sec:Eingabedaten_Wir} verlangt werden.
+Das System ist so entworfen, dass es als Ausgabe Daten liefert wie in \fref{sec:Eingabedaten_Wir} von unserem Algortihmus verlangt werden.
+
 \subsection{Fitnessfunktion}
-Als Fitnessfunktion wird eine ähnliche Funktion wie in \fref{eq:guete} verwendet. Jedoch wird nicht $R$ insgesamt, sondern jedes $R_v$ einzeln evaluiert.
+
+\subsection{Evaluation}
+\label{sec:Evaluation_genAlg}
+\begin{figure}
+  \begin{subfigure}[b]{\textwidth}
+  \includegraphics[width=\textwidth]{LaufzeitGen90Q.png}
+  \caption{Qualität}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{\textwidth}
+  \includegraphics[width=16cm]{LaufzeitGen90T.png}
+  \caption{Laufzeit}
+  \end{subfigure}
+\caption{in Abhängigkeit verschiedener Paramter.\protect\footnotemark}
+\label{fig:GenAlgAll}
+\end{figure}
+
+Wie in \fref{fig:GenAlgAll} zu sehen ist, wird die Laufzeit und die Ergebnisse des Genetischen Algorithmus positiv beeinflusst,
+wenn man den Merge-Wert möglichst hoch setzt. Kein anderer Faktor hat so einen hohen Einfluss auf das Ergebniss.
+Auch ist ersichtlich, dass wenn man schnelle Ergebnisse haben möchte, der Algorithmus auch mit sehr kleinen
+Populationen und Fehlerkorrekturwerten brauchbare Ergebnisse und kurzer Zeit liefert. (unter 5 min)
+
+\begin{figure}
+  \begin{subfigure}[b]{\textwidth}
+  \includegraphics[width=\textwidth]{LaufzeitMerge5Q.png}
+  \caption{Qualität}
+  \label{fig:QualitätMerge5}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{\textwidth}
+  \includegraphics[width=\textwidth]{LaufzeitMerge5T.png}
+  \caption{Laufzeit}
+  \label{fig:LaufzeitMerge5}
+  \end{subfigure}
+\caption{des Genetischen Algorithmus für fixen Merge-Wert von 5.\protect}
+\label{fig:GenAlgMerge5}
+\end{figure}
+
+Wenn wir festlegen, dass 50\% der Populationen in der neuen Generation aus den Besten der alten zusammen gepaart werden sollen,
+dann erhalten wir Ergebnisse (Siehe \fref{fig:GenAlgMerge5}), die darauf schließen lassen, dass die Qualität zwar mit geringeren Wiederholungen
+mehr schwankt, die allgemeine Laufzeit aber sehr gut ist.
+Des weiteren ist Ersichtlich, dass die Anzahl der Populationen, bzw Anzahl der Populationen, welche mutiert übernommen werden sollen
+keinen nennenswerten Einfluss auf die Qualität hat.
+
+\footnotetext{Beim erstellen der Grafiken wurden nur die einfachen Datensätze ausgewertet.
+Alle Durchläufe fanden auf dem selben Rechner statt (Core i5-3570K - 16GB RAM)}

@@ -5,32 +5,35 @@ Da in fast allen Fällen ein sehr nah gelegenes Polygon gemeint ist, wird zunäc
 um den Abstand 0 zu vermeiden, und diese danach nach unseren Regeln zu gewichten um anschließend das Polygon auszuwählen,
 welches nach der Gewichtung den kürzesten Abstand hat.
 
+
+
 \subsection{Formale Beschreibung}
 Sei $ID$ die die Bezeichnung eines Bildes.\\
 Sei $t$ ein Tag $(key \to value)$ aus OpenStreetMap.\\
 Sei $r(t)$ eine Regel $t \to [0..2]$ \\
 Sei $Z_{X}$ die Menge der Tag $t$ für die Gilt: $t$ kommt in X vor. \\
-Sei $R_v$ eine Menge von Funktionen $r$ für das Verbot $v$\\
+Sei $V$ eine Menge von Verboten $v$.\\
+Sei $V_{ID}$ die Menge der Verbote für die gilt: $v$ wird auf dem Bild zu $ID$ abgebildet.\\
+Sei $R_V$ eine Menge von Funktionen $r$ für die Verbote $V$\\
 Sei $C_{ID}$ die Geocoordinate, an welcher das Bild zu $ID$ aufgenommen wurde. \\
 Sei $D_{X,ID}$ der Abstand eines Polygons $X$ zu $C_{ID}$ \\
 Sei $O_{ID}$ eine Menge von Polygonen aus OpenStreetMap in der Umgebung zu $C_{ID}$\\
 Sei $A_{X}$ die Fläche des Polygons $X$\\
-Sei $V$ die Menge aller Verbote $v$.\\
-Sei $V_{ID}$ die Menge der Verbote für die gilt: $v$ wird auf dem Bild zu $ID$ abgebildet.\\
-Sei $S_{v}$ die Menge der $ID$ für die gilt: $v \in V_{ID}$\\
+Sei $s(V) : v \to r(t)$  Eine Abbildung von Verbote zu einer Menge von Regeln\\
 Sei $P_{ID}$ das gegebene Lösungspolygon zu $ID$.\\
 Sei $I(X,Y)$ das Schnittpolygon der Polygone X und Y\\
+Sei $o$ ein Offset $\in \mathbb{R}$
 \\
-Sollte es für ein $t$ kein $r(t)$ geben, so wird die standartregel:
+Sollte es für ein $t$ kein $r(t)$ geben, so wird die Standartregel:
 $r(t) = 1$ angewendet.
 
 \begin{equation}
-Gew(R,ID,X) := \sum_{v \in V_{ID}} \Big((1 + D_{X,ID})\prod_{t \in Z_X} \prod_{r \in R_v} r(t)\Big)
+Gew(ID,X) := (D_{X,ID} + o) * \prod_{r \in s(V_{ID})} \prod_{t \in Z_{ID}} r(t);
 \end{equation}
 
 \begin{align}
-G(ID,R) := \{X \in O_{ID} | & Gew(R,ID,X) < Gew(R,ID,Y)\\
-& \lor \Big(Gew(R,ID,X)=Gew(R,ID,Y) \land A_X < A_Y\Big) \forall Y\} \notag
+G(ID) := \{X \in O_{ID} | & Gew(ID,X) < Gew(ID,Y)\\
+& \lor \Big(Gew(ID,X)=Gew(ID,Y) \land A_X < A_Y\Big) \forall Y \in O_{ID}\} \notag
 \end{align}
 
 \subsection{Beispiel}
@@ -38,18 +41,19 @@ Eine Regel kann z.B. so aussehen:\\
 Für das Verbot Nichtrauchen: wenn ein Tag den Key 'building' enhält dann halbiere den Abstand. \\
 $R_{nichtrauchen} = [r('building') = 0.5]$\\
 \newline
-Seien in der Umgebung zu $ID$ nur zwei Flächen A,B in OpenStreetMap vorhanden.
+Sei der Offset als 1 angenommen und in der Umgebung zu $ID$ nur zwei
+Flächen A,B in OpenStreetMap vorhanden.
 \begin{itemize}
-\item A enthält die Tags: 'building -> yes', 'addr:housenumber -> 34' und hat den Abstand 0.002;
+\item A enthält die Tags: 'building -> yes', 'addr:housenumber -> 34' und hat den Abstand 0.2;
 \item B enthält die Tags: 'landuse->residential' und hat den Abstand 0;
 \end{itemize}
 Daraus errechnet sich:
 \begin{itemize}
-\item $Gew(R,ID,A) = (1+0.002) * 0.5 * 1 = 0.501$
-\item $Gew(R,ID,B) = (1+0.0) * 1 = 1$
+\item $Gew(ID,A) = (0.2 + 1) * 0.5 * 1 = 0.6$
+\item $Gew(ID,B) = (0.0 + 1) * 1 = 1$
 \end{itemize}
 
-$G(ID,R) = A$
+$G(ID) = A$
 
 \subsection{Maschinelle Überprüfung der Regelsätze}
 Um die Güte der verschiedenen Regeln zu überprüfen wird ein Programm geschrieben, welche für jede Regel die die Schnittpolygone von unseren Polygonen mit
@@ -78,16 +82,17 @@ farblich eingezeichnet. So ist eine schnelle Beurteilung, ob man das richtige Po
 
 \subsection{Incrementelle Regelerstellung}
 Aus dem Testdatensatz werden zunächst alle Datensätze herausgefiltert, welche nicht einfach lösbar sind.
-(Siehe \fref{sec:Testdatensatz})
+(Vgl. \fref{sec:Testdatensatz})
 Es wird mit einem leeren Regelsatz angefangen und dieser anschließend inkrementel erweitert. Dazu wird wie folgt vorgegangen:
 \begin{enumerate}
 \item Definiere für jeden Datensatz ein optimales Polygon, bzw einen Overlap-Wert, welcher erreicht werden muss.
-\item Der Regelsatz wird auf alle Testdatensätze angewendet.
+\item Der Regelsatz wird auf alle Testdatensätze angewendet. \label{start_inc_alg}
 \item Für jeden Datensatz, bei welchem die Regeln nicht das optimale Polygon finden, wird ein Bild wie in \fref{sec:visuelle_ueberpruefung} erstellt.
 \item Dem Benutzer werden alle Bilder, angezeigt und dieser kann nun weitere Regeln hinzufügen oder bestehende ändern.
-\item gehe zu 2
+\item gehe zu \ref{start_inc_alg}
 \end{enumerate}
-Nachdem alle einfachen Fälle abgedeckt sind, kann nun mit den schwierigeren Vorgegangen werden.
+
+Nachdem abdecken der einfachen Fälle kann mit den schwierigeren genauso vorgegangen werden.
 
 
 \subsection{Erweiterung}
@@ -95,5 +100,5 @@ Um den Fall abzudecken, in welchem in OpenStreetMap keine ausreichenden Daten vo
 Achteck\footnote{Relativ geringer Rechenaufwand bei gleichzeitig bester Annäherung an einen Kreis.} mit Radius $b$ gelegt
 und dieses mit der gewichtet nächsten Großfläche geschnitten.
 Eine Großfläche X definiert sich dadurch, dass ihre Fläche $A_X$ einen schwellwert $u$ überschreitet.
-Es ist zu prüfen ob es sinnvoll ist dieses generell zu tun oder für bestimmte Regel ausser kraft zu setzen wie
+Es ist zu prüfen ob es sinnvoll ist dieses generell zu tun oder für bestimmte Regel ausser Kraft zu setzen wie
 z.B. ein Verbot nach offenem Feuer, welches in einem ganzen Parkgebiet gelten wird.

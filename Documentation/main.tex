@@ -17,6 +17,10 @@
 \usepackage{titling} % um die Befehle \theauthor zu haben.
 \usepackage{ulem}   % zum durchstreichen von text.
 
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
 \parindent0pt % sorgt dafür, dass neue Absätze nicht eingerückt werden.
 
 %%% DOXYGEN Commandos
@@ -94,12 +98,12 @@
 \fancyhead[LO]{\fancyplain{}{\bfseries\rightmark}}
 \fancyhead[CO]{\fancyplain{}{}}
 \fancyhead[RO]{\fancyplain{}{\bfseries\thepage}}
-\fancyfoot[LE]{\fancyplain{}{}}
+\fancyfoot[LE]{\fancyplain{}{\bfseries\scriptsize \theauthor}}
 \fancyfoot[CE]{\fancyplain{}{}}
-\fancyfoot[RE]{\fancyplain{}{\bfseries\scriptsize SpaceUsageRules Documentation von InMa }}
-\fancyfoot[LO]{\fancyplain{}{\bfseries\scriptsize SpaceUsageRules Documentation von InMa }}
+\fancyfoot[RE]{\fancyplain{}{\bfseries\scriptsize Dokumentation zu Flächennutzungsregeln }}
+\fancyfoot[LO]{\fancyplain{}{\bfseries\scriptsize Dokumentation zu Flächennutzungsregeln }}
 \fancyfoot[CO]{\fancyplain{}{}}
-\fancyfoot[RO]{\fancyplain{}{}}
+\fancyfoot[RO]{\fancyplain{}{\bfseries\scriptsize \theauthor}}
 \renewcommand{\footrulewidth}{0.4pt}
 \renewcommand{\chaptermark}[1]{%
   \markboth{#1}{}%
@@ -132,7 +136,7 @@
   {\savebox\mybox{#1}\begin{quote}}
   {\signed{\usebox\mybox}\end{quote}}
 
-\title{Documentation zu \\[.5\baselineskip]Flächennutzungsregeln.}
+\title{Dokumentation zu \\[.5\baselineskip] Flächennutzungsregeln}
 \author{Fabian Pflug  |  Peter Zilz}
 \date{\today}
 
