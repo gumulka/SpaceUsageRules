@@ -2,14 +2,13 @@
 
 all: main.pdf
 
-doxyref.tex:
-	cd .. ; doxygen Doxyfile
-	cp ../doc/latex/*.tex .
-	cp ../doc/latex/*.pdf .
-	#cp ../doc/latex/*.eps .
-	sed -n '/input{/p; /chapter{/p' refman.tex > doxyref.tex
+doku: doc/doxyref.tex
 
-main.pdf: clean main.tex doxyref.tex graphics
+doc/doxyref.tex:
+	cd .. ; doxygen Doxyfile
+	cd doc; sed -i 's/classde/doc\/classde/' *.tex ; sed -n '/input{/p; /chapter{/p' refman.tex > doxyref.tex
+
+main.pdf: clean main.tex doku graphics
 	pdflatex main
 	makeindex main.idx
 	pdflatex main
@@ -38,6 +37,5 @@ clean:
 	rm -f *.ps *.dvi *.aux *.toc *.idx *.ind *.ilg *.log *.out *.brf *.blg *.bbl main.pdf
 
 clean_all: clean
-	rm -f ./classde* ./dir_* annotated.tex hierarchy.tex refman.tex
-	rm -r ../doc
+	rm -f -r doc
 	rm -f ./Laufzeit*.png
