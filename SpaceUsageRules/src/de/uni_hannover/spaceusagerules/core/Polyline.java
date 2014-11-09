@@ -5,7 +5,11 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
-
+/**
+ * Javadoc schreiben
+ * @author Peter Zilz
+ *
+ */
 public class Polyline  implements Serializable {
 	
 	/**
@@ -83,9 +87,8 @@ public class Polyline  implements Serializable {
 	/**
 	 * checks if an intersection between two polygons is possible by using bounding boxes.
 	 * 
-	 * it is much faster, than calculation the acutual intersection. 
-	 * @param a1 list of points for the first polygon
-	 * @param a2 list of points for the second polygon
+	 * it is much faster, than calculation the actual intersection. 
+	 * @param p2 the second Polygone
 	 * @return true if the bounding boxes overlap.
 	 */
 	public boolean intersectionPossible(Polyline p2) {
@@ -293,14 +296,26 @@ public class Polyline  implements Serializable {
 		return area;
 	}
 	
+	
+	/**
+	 * @todo implementation
+	 * return the union of this and the other polyline or null if they don't intersect/have no Point in common.
+	 * @param p2 the second Polyline
+	 * @return a new Polyline as the union of the two polylines or null
+	 */
+	public Polyline getMergingPolyline(Polyline p2) {
+		return null;
+	}
+	
 	/**
 	 * Returns a list with the intersections of two polylines (or outlines of polygons).
 	 * If they don't meet, an empty list is returned.
+	 * @todo methode erstellen, welche ein Polygon erstellt, dass aus der Schnittmenge zweier Polygone besteht.
+	 * Die hier sieht gerade noch so falsch aus...
 	 * @param other the other polyline to intersect with
 	 * @return list of intersections or empty list of there are no intersections.
 	 */
 	public List<Coordinate> getIntersections(Polyline other){
-		
 		List<Coordinate> intersections = new Vector<Coordinate>();
 
 		for(Coordinate c1:points){
@@ -329,20 +344,5 @@ public class Polyline  implements Serializable {
 		
 		return intersections;
 	}
-	
-	
-	/*
-	public Polyline overlapArea(Polyline p2) {
-		// if one of them is not an Area, then there is no intersecting Area possible
-		if(!isArea() || !p2.isArea())
-			return null;
-		// check if the an intersection is possible.
-		// faster runtime, then calculation the actual intersection.
-		if(!intersectionPossible(p2))
-			return null;
-		
-		return null;
-	}
-	*/
 	
 }

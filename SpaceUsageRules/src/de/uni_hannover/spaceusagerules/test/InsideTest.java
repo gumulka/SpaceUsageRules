@@ -63,6 +63,24 @@ public class InsideTest {
 		line.add(new Coordinate(50,15));
 		c = new Coordinate(25,10);
 		assertTrue(!line.inside(c));
+		 
+		
+		line = new Polyline(); // konvexes Polygon
+		line.add(new Coordinate(52.42934,9.72744));
+		line.add(new Coordinate(52.42951,9.72740)); // it looks like this. with bottom left as first, going clockwise
+		line.add(new Coordinate(52.42951,9.72751)); //   __  __
+		line.add(new Coordinate(52.42945,9.72753)); //   | |_| |
+		line.add(new Coordinate(52.42945,9.72758)); //   |_____|
+		line.add(new Coordinate(52.42952,9.72756)); 
+		line.add(new Coordinate(52.42952,9.72767));
+		line.add(new Coordinate(52.42935,9.72770));
+		line.add(new Coordinate(52.42934,9.72744));
+		// Punkt in der Aushölung
+		c = new Coordinate(52.42951,9.72754);
+		assertTrue(!line.inside(c));
+		// Punkt im Flügel.
+		c = new Coordinate(52.42950,9.72761);
+		assertTrue(line.inside(c));
 		
 	}
 	

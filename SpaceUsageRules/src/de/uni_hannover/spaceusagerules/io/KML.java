@@ -15,6 +15,7 @@ import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Polyline;
 
 /**
+ * @todo Javadoc ins englische umschreiben.
  * A class to read in and write out KML-data from files.
  * @author Fabian Pflug
  */

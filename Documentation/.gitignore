@@ -9,3 +9,7 @@ main.pdf
 main.toc
 *.png
 *.pdf
+class*
+dir*
+todo.tex
+doxyref.tex

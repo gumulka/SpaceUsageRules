@@ -2,13 +2,15 @@
 
 all: main.pdf
 
-doku: doc/doxyref.tex
+doku: doxyref.tex
 
-doc/doxyref.tex:
+doxyref.tex:
 	cd .. ; doxygen Doxyfile
-	cd doc; sed -i 's/classInMa/doc\/classInMa/' *.tex
-	cd doc; sed -i 's/namespaceInMa/doc\/namespaceInMa/' *.tex
+	cp doc/class* .
+	cp doc/dir* .
+	cp doc/todo.tex .
 	cd doc; sed -n '/input{/p; /chapter{/p' refman.tex > doxyref.tex
+	cp doc/doxyref.tex .
 
 main.pdf: clean main.tex doku graphics
 	pdflatex main
@@ -44,3 +46,4 @@ clean:
 clean_all: clean
 	rm -f -r doc
 	rm -f ./Laufzeit*.png
+	rm -f ./class* ./dir* ./todo.tex ./doxyref.tex todo.tex

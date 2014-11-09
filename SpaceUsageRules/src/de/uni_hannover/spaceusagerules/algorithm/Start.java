@@ -26,7 +26,7 @@ import de.uni_hannover.spaceusagerules.io.OSM;
 
 /**
  * 
- * 
+ * @todo write Javadoc
  * @author Fabian Pflug
  *
  */

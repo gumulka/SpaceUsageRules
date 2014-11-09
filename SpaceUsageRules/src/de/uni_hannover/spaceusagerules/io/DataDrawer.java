@@ -20,6 +20,11 @@ import javax.imageio.stream.ImageOutputStream;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Way;
 
+/**
+ * @todo Javadoc schreiben.
+ * @author Peter Zilz
+ *
+ */
 public class DataDrawer {
 	
 	private Color polygonFillColor = Color.white;
@@ -176,7 +181,7 @@ public class DataDrawer {
 	public void saveImage(String name) throws IOException
 	{
 		
-		//TODO optional: create metadata
+		///@todo optional: create metadata
 		
 		FileOutputStream fos = new FileOutputStream(name);
 		

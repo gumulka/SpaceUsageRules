@@ -10,7 +10,10 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
- * Klasse zur Representation eines Weg-Objektes in OSM.
+ * Representation of an OSM-Object
+ * 
+ * @todo die Javadoc ins englische umschreiben.
+ * @author Fabian Pflug
  */
 public class Way implements Serializable, Comparable<Way>{
 
@@ -19,41 +22,37 @@ public class Way implements Serializable, Comparable<Way>{
 	 */
 	private static final long serialVersionUID = 4356641146890722134L;
 
-    /** Die representation des Polygons, bzw der Polyline, welche zu diesem Weg gehören. */
+    /** the polyline or polygon belonging to this object. */
 	Polyline coordinates;
-    /** Map mit einer Zuordnung von Key - Value paaren in OSM-Tags. */ 
+    /** map with key - value pairs for this object. (tags in OSM) */ 
     private Map<String,String> tags;
-    /** Ein Optionaler Name, welcher gesetzt werden kann und für die Darstellung bei toString() benutzt wird. */
+    /** an optional name. if set it is used for the toString Method */
     private String name;
-    /** Die OSM-ID des Objektes */
+    /** the OSM-ID of this object or -1 */
     private long id;
 
+    /**
+     * the values which are altered an should be written to OSM. 
+     */
     private Map<String,String> changedTags;
     
+    /**
+     * the tags which should be removed from OSM.
+     */
     private Set<String> removed;
     
 	/**
-     * Gibt eine Füllfarbe abhängig von Tag's zurück
+     * return a fillColor depending on tags.
      */
     @Deprecated
     public int getFillColor() {
-        if("truth".equalsIgnoreCase(tags.get("InformatiCup")))
-            return 0x7F00AA00;
-        if("guess".equalsIgnoreCase(tags.get("InformatiCup")))
-            return 0x7FAA0000;
-        if("true".equalsIgnoreCase(tags.get("sur:clicked")))
-            return 0x7F0000AA;
-        if("green".equalsIgnoreCase(tags.get("InMaColor")))
-            return 0x7F00AA00;
-        if("red".equalsIgnoreCase(tags.get("InMaColor")))
-            return 0x7FAA0000;
     	if(tags.containsKey("building"))
     		return 0x4FAAAA00;
         return 0x7F999999;
     }
 
 	/**
-     * Gibt eine Füllfarbe in Abhängigkeit von einem bestimmten Key in der Tagmap zurück.
+     * returns a fillColor depending of the value of a given key.
      */
     public int getFillColor(String key) {
     	String tagValue = getValue(key);
@@ -69,7 +68,7 @@ public class Way implements Serializable, Comparable<Way>{
     }
 
 	/**
-     * Gibt eine Randfarbe abhängig von Tag's zurück
+     * return a stroke color depending on tags.
      */
     @Deprecated
     public int getStrokeColor() {
@@ -77,7 +76,7 @@ public class Way implements Serializable, Comparable<Way>{
     }
 
 	/**
-     * Gibt eine Randfarbe in Abhängigkeit von einem bestimmten Key in der Tagmap zurück.
+     * returns a stroke color depending of the value of a given key.
      */
     public int getStrokeColor(String key) {
         return getFillColor(key) + 0x30000000;

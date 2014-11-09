@@ -26,6 +26,7 @@ import de.uni_hannover.spaceusagerules.io.Image;
 import de.uni_hannover.spaceusagerules.io.OSM;
 
 /**
+ * @todo die Javadoc schreiben.
  * Klasse, welche für jede SpaceUsageRule aus dem Testdatensatz einen genetischen Algorithmus erstellt und diesen durchlaufen lässt.
  */
 public class Main extends Thread implements Comparable<Main>{
@@ -233,7 +234,7 @@ public class Main extends Thread implements Comparable<Main>{
 		 } // */ 
 	}
 	
-	int p,w,mu,me;
+	private int p,w,mu,me;
 	public Main(int p, int w, int mu, int me) {
 		this.p = p;
 		this.w = w;

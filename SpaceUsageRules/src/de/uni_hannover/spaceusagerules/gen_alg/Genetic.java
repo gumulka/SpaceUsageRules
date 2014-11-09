@@ -20,6 +20,7 @@ import de.uni_hannover.spaceusagerules.io.KML;
 import de.uni_hannover.spaceusagerules.io.OSM;
 
 /** 
+ * @todo die javadoc ins englische umschreiben.
  * Klasse zum durchlaufen eines Genetischen Algorithmus.
  */
 public class Genetic extends Thread implements Comparable<Genetic>{

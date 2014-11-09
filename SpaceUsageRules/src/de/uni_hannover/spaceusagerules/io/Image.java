@@ -16,6 +16,7 @@ import com.drew.metadata.Tag;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
 
 /**
+ * @todo Javadoc ins englische umschreiben.
  * Klasse zum Einlesen von Bild-Metadaten.
  * 
  * @author Fabian Pflug

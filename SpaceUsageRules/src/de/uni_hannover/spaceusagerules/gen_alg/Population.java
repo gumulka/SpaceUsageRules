@@ -13,6 +13,11 @@ import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Polyline;
 import de.uni_hannover.spaceusagerules.core.Way;
 
+/**
+ * @todo javadoc schreiben.
+ * @author Fabian Pflug
+ *
+ */
 public class Population extends Rules implements Comparable<Population>{
 
 	public static final int maxFitness = 10000;

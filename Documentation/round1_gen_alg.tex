@@ -35,9 +35,9 @@ Nachdem alle Algorithmen durchgelaufen sind, werden die Optimalen eingesammelt u
 \subsection[Evaluation]{Evaluation\protect\footnotemark}
 \footnotetext{Es wurden nur die einfachen Datensätze ausgewertet.
 Alle Durchläufe fanden auf dem selben Rechner statt (Core i5-3570K - 16GB RAM)}
-
 \label{sec:Evaluation_genAlg}
-\begin{figure}
+
+\begin{figure}[h]
   \begin{subfigure}[b]{\textwidth}
   \includegraphics[width=\textwidth]{LaufzeitGen90Q.png}
   \caption{Qualität}
@@ -55,14 +55,14 @@ Wie in \fref{fig:GenAlgAll} zu sehen ist, wird die Laufzeit und die Ergebnisse d
 wenn man den Merge-Wert möglichst hoch setzt. Kein anderer Faktor hat so einen positiven Einfluss auf das Ergebniss.
 (Bei höheren Populationsgrößen steigt zwar auch die Qualität, aber gleichzeitig auch die Laufzeit im Gegensatz zum Merge-Wert)
 
-\begin{figure}
-  \begin{subfigure}[b]{\textwidth}
+\begin{figure}[h]
+  \begin{subfigure}[h]{\textwidth}
   \includegraphics[width=\textwidth]{LaufzeitMerge5Q.png}
   \caption{Qualität}
   \label{fig:QualitätMerge5}
   \end{subfigure}
 
-  \begin{subfigure}[b]{\textwidth}
+  \begin{subfigure}[h]{\textwidth}
   \includegraphics[width=\textwidth]{LaufzeitMerge5T.png}
   \caption{Laufzeit}
   \label{fig:LaufzeitMerge5}
@@ -78,3 +78,14 @@ Es ist also zu vermuten, dass bereits für eine kleine Anzahl von Wiederholungen
 ein brauchbares Ergebnis erzielt werden kann.
 Des weiteren ist Ersichtlich, dass die Anzahl der Populationen, welche mutiert übernommen werden sollen
 keinen nennenswerten Einfluss auf die Qualität oder Laufzeit hat.
+
+
+Sollte das Programm später mit einem größeren Datensatz genutzt werden, schlagen wir also folgende Parameter vor:
+  \begin{itemize}
+\itemsep2pt
+  \item Populationsgröße: 200 (500, wenn man die Rechenzeit hat.)
+  \item Anzahl der Verbesserungsversuche: 100 (500, wenn man die Rechenzeit hat.)
+  \item Anzahl der unveränderten Populationen: 20
+  \item Anzahl der mutierten Populationen: 40
+  \item Anzahl der gemergten Populationen: 100
+  \end{itemize}

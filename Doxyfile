@@ -153,7 +153,7 @@ INPUT                  = SpaceUsageRules/src
 INPUT_ENCODING         = UTF-8
 
 
-INPUT_FILTER = "sed 's/package de.uni_hannover.spaceusagerules.\(.*\);/package InMa.\1;/'"
+INPUT_FILTER = "sed 's/package de.uni_hannover.spaceusagerules.\(.*\);/package \1;/'"
 
 
 # The RECURSIVE tag can be used to specify whether or not subdirectories should

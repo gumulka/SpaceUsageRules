@@ -1,8 +1,10 @@
-package de.uni_hannover.spaceusagerules.core;
+package de.uni_hannover.inma;
 
 import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
+
+import de.uni_hannover.spaceusagerules.core.Way;
 
 public class Tag implements Serializable{
 	/**
