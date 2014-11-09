@@ -24,13 +24,13 @@ import de.uni_hannover.spaceusagerules.io.OSM;
  */
 public class Genetic extends Thread implements Comparable<Genetic>{
 
-  	/** Die anzahl der Populationen, welche den Algorithmus durchlaufen sollen */
+  	/** Die Anzahl der Populationen, welche den Algorithmus durchlaufen sollen */
 	public static  int popsize = 200;
 	/** Dei Anzahl der Runden, die ohne Optimierung durchlaufen werden, bevor der Algorithmus stoppt. */
 	public static  int withoutOtimization = 300;
   	/** Die Anzahl der Populationen, welche unbearbeitet in die nächste generation übernommen werden sollen */
 	public static  int copyBest = popsize*1/10;
-  	/** Die Anzahnl der Populationen, welche mutiert in die nächste Generation übernommen werden solllen. */
+  	/** Die Anzahl der Populationen, welche mutiert in die nächste Generation übernommen werden solllen. */
 	public static  int mutate = popsize*4/10;
   	/** Die Anzahl der Populationen pro Generation, welche aus anderen zusammen gesetzt werden sollen */
 	public static  int merge = popsize*3/10;
@@ -48,7 +48,9 @@ public class Genetic extends Thread implements Comparable<Genetic>{
   	/** der Name der SpaceUsageRule, nach der Optimiert werden soll. */
 	private String suche;
 	
+	/** Die Menge der möglichen Tags, welche einen Einfluss auf die Auswertung haben können. */
 	private Collection<String> possible;
+	/** wenn ein SigInt abgefangen wird, dann wird kill auf true gesetzt und beendet den Algorithmus vorzeitig. */
 	public static boolean kill = false;
 	
 	public Genetic(String signlist, Set<String> IDs, Collection<String> possible) throws Exception {
@@ -101,16 +103,20 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 		for(int i = 0; i<(popsize-merge-copyBest-mutate); i++) {
 			nextGen.add(new Population(possible));
 		}
+		if(nextGen.size() != pops.size()) {
+			System.err.println("Unterschiedliche Längen!!!!");
+		}
 		pops = nextGen;
 		nextGen = new ArrayList<Population>();
 	}
 	
   	/**
-     * die Methode zum durchlaufen des Genetischen algorithmus mit der Steuerung aus den statischen finalen Variablen.
+     * die Methode zum durchlaufen des Genetischen algorithmus mit der Steuerung aus den statischen Variablen.
      */
+	@SuppressWarnings("unused")
 	public void run() {
 		if(mutate + merge + copyBest > popsize) {
-			System.err.println("Population ist going to grow. Aborting.");
+//			System.err.println("Population ist going to grow. Aborting.");
 			return; 
 		}
 		int i = 0;
@@ -165,6 +171,9 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 		return suche;
     }
 
+	/**
+	 * Vergleich um die Gentischen Algorithmen nach ihrer geschätzten Laufzeit zu sortieren.
+	 */
 	@Override
 	public int compareTo(Genetic o) {
 		return o.truths.size() - this.truths.size();

@@ -7,10 +7,12 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -22,19 +24,32 @@ import de.uni_hannover.spaceusagerules.io.Image;
 import de.uni_hannover.spaceusagerules.io.KML;
 import de.uni_hannover.spaceusagerules.io.OSM;
 
+/**
+ * 
+ * 
+ * @author Fabian Pflug
+ *
+ */
 public class Start extends Thread{
 
+	/** The base path, where the input-data is located.	 */
 	private static String path = "../SpaceUsageRulesVis/assets/";
+	/** the output path, to save the images to */
 	private static String imagePath = "images/";
+	/** a the parsed rules from the input File */
 	private static Set<Rules> allRules = new HashSet<Rules>();
+	/** a target overlap value for all ID's */
 	private static final double globalMinOverlap = 0.85;
-	private static final int MAXRUNNING = 6;
+	/** number of maximal running Threads in parallel */
+	private static final int MAXRUNNING = 1;
 	
+	/**  */
 	private Set<String> verbote;
 	private Coordinate location;
 	private String id;
 	private Way truth;
 	private double minOverlap;
+	private Way guess;
 	
 	public Start(Coordinate backup, String id) {
 		this.verbote = new TreeSet<String>();
@@ -52,6 +67,20 @@ public class Start extends Thread{
 	public void addVerbot(String verbot) {
 		this.verbote.add(verbot);
 	}
+	
+	public void generateImage(Collection<Way> ways) {
+		DataDrawer drawer = new DataDrawer(3840,2160,location);
+		drawer.render(ways);
+		drawer.drawWay(truth,Color.green);
+		drawer.drawWay(guess,Color.pink);
+		System.err.println("Anforderungen an " + id + " nicht geschafft.");
+		try {
+			drawer.saveImage(imagePath + id + ".png");
+		} catch (IOException e) {
+			System.err.println("Konnte das Bild zu " + id + " nicht speichern.\n" + imagePath + id + ".png");
+		}
+	}
+	
 	
 	public void run() {
 		File f = new File(imagePath + id + ".png");
@@ -76,7 +105,7 @@ public class Start extends Thread{
 		
 		Set<Way> ways = OSM.getObjectList(location, 0.0005f);
 		
-		Way guess = best.calculateBest(ways, location);
+		guess = best.calculateBest(ways, location);
 		ways.remove(guess);
 		truth.addAllCoordinates(KML.loadKML(new File(path + id + ".truth.kml")).getPoints());
 		
@@ -85,17 +114,7 @@ public class Start extends Thread{
 		if(overlapArea>minOverlap)
 			return;
 		guess.addOriginalTag("InMa_Overlap", "" + overlapArea);
-		DataDrawer drawer = new DataDrawer(3840,2160,location);
-		drawer.render(ways);
-		drawer.drawWay(truth,Color.green);
-		drawer.drawWay(guess,Color.pink);
-		System.err.println("Anforderungen an " + id + " nicht geschafft.");
-		try {
-			drawer.saveImage(imagePath + id + ".png");
-		} catch (IOException e) {
-			System.err.println("Konnte das Bild zu " + id + " nicht speichern.\n" + imagePath + id + ".png");
-		}
-		
+		generateImage(ways);
 	}
 	
 	public void setMinOverlap(double overlap) {
@@ -114,7 +133,7 @@ public class Start extends Thread{
 		Map<String,Start> instances = new TreeMap<String,Start>();
 		String line;
 		line = br.readLine();
-		int max = Integer.parseInt(line);
+		int max = 90; // Integer.parseInt(line);
 		for(int i = 0; i<max;i++) {
 			line = br.readLine();
 			if(line == null)
@@ -126,7 +145,6 @@ public class Start extends Thread{
 				a.addVerbot(bla[3].trim());
 			}
 			else {
-				System.out.println(id);
 				Coordinate backup = new Coordinate(Double.parseDouble(bla[1]), Double.parseDouble(bla[2]));
 				Start s = new Start(backup, id);
 				s.addVerbot(bla[3].trim());
@@ -182,5 +200,22 @@ public class Start extends Thread{
 					}
 			}
 		}
+		for(Start s : instances.values())
+			try {
+				s.join();
+			} catch (InterruptedException e) {
+			}
+			
+		for(Entry<String,Start> id : instances.entrySet()) {
+			f = new File(path + id.getKey() + ".computed.kml");
+			KML.writeKML(id.getValue().getGuess().getPolyline(), id.getKey(), f);
+			
+		}
+		
 	}
+	
+	public Way getGuess() {
+		return guess;
+	}
+	
 }

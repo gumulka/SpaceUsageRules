@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,12 +15,13 @@ import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Polyline;
 
 /**
- * Eine Klasse zum einlesen und Schreiben von KML Dateien.
+ * A class to read in and write out KML-data from files.
  * @author Fabian Pflug
  */
 public class KML {
 
-    static final String first = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+	/** the first part of the kml-data */
+	static final String first = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<kml xmlns=\"http://earth.google.com/kml/2.1\">\n" +
             "<Document>\n" +
             "<Style id=\"Poly1\">\n" +
@@ -35,6 +35,7 @@ public class KML {
             "</Style>\n" +
             "<Placemark>\n" +
             "<name>";
+	/** the second part of the kml-data */
     static final String second = "</name>\n" +
             "<description></description>\n" +
             "<styleUrl>#Poly1</styleUrl>\n" +
@@ -45,6 +46,7 @@ public class KML {
             "<outerBoundaryIs>\n" +
             "<LinearRing>\n" +
             "<coordinates>\n";
+    /** the third part of the kml-data */
     static final String third = "</coordinates>\n" +
             "</LinearRing>\n" +
             "</outerBoundaryIs>\n" +
@@ -85,8 +87,8 @@ public class KML {
      * @throws UnsupportedEncodingException
      * @throws IOException Alle IO-Exceptions, welche beim schreiben geworfen werden.
      */
-    public static void writeKML(List<Coordinate> coordinates, File f) throws UnsupportedEncodingException, IOException {
-    	writeKML(coordinates, "", f);
+    public static void writeKML(Polyline p, File f) throws UnsupportedEncodingException, IOException {
+    	writeKML(p, "", f);
     }
     
     /**
@@ -97,10 +99,11 @@ public class KML {
      * @throws UnsupportedEncodingException
      * @throws IOException Alle IO-Exceptions, welche beim schreiben geworfen werden.
      */
-    public static void writeKML(List<Coordinate> coordinates, String name, File f) throws UnsupportedEncodingException, IOException {
+    public static void writeKML(Polyline p, String name, File f) 
+    		throws UnsupportedEncodingException, IOException {
     	OutputStream os = new FileOutputStream(f);
     	BufferedOutputStream bos = new BufferedOutputStream(os);
-    	String kml = writeKML(coordinates, name);
+    	String kml = writeKML(p, name);
     	bos.write(kml.getBytes("UTF-8"));
     	bos.close();
     	os.close();
@@ -112,9 +115,9 @@ public class KML {
      * @param name Namen, welcher in Google Earth angezeigt werden soll.
      * @return String mit einem gültigen KML-XML
      */
-    public static String writeKML(List<Coordinate> coordinates, String name) {
+    public static String writeKML(Polyline p, String name) {
         String coords = "";
-        for(Coordinate l : coordinates) {
+        for(Coordinate l : p.getPoints()) {
             coords += l.latitude + "," + l.longitude + "\n";
         }
         return first + name + second + coords + third;

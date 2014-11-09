@@ -6,7 +6,9 @@ doku: doc/doxyref.tex
 
 doc/doxyref.tex:
 	cd .. ; doxygen Doxyfile
-	cd doc; sed -i 's/classde/doc\/classde/' *.tex ; sed -n '/input{/p; /chapter{/p' refman.tex > doxyref.tex
+	cd doc; sed -i 's/classInMa/doc\/classInMa/' *.tex
+	cd doc; sed -i 's/namespaceInMa/doc\/namespaceInMa/' *.tex
+	cd doc; sed -n '/input{/p; /chapter{/p' refman.tex > doxyref.tex
 
 main.pdf: clean main.tex doku graphics
 	pdflatex main
@@ -22,7 +24,10 @@ main.pdf: clean main.tex doku graphics
 	makeindex main.idx
 	pdflatex main
 
-graphics: LaufzeitGen90Q.png
+graphics: LaufzeitGen90Q.png DataDrawerZoom.png
+
+DataDrawerZoom.png:
+	convert DataDrawer.png -crop 1000x700+1450+700 DataDrawerZoom.png
 
 LaufzeitGen90Q.png:
 	gnuplot -e "load 'Laufzeit.plot'"

@@ -1,54 +1,95 @@
 package de.uni_hannover.spaceusagerules.algorithm;
 
+import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
 import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Way;
-
+/**
+ * represents our rules and the related restrictions.
+ * 
+ * \latexonly (see also \fref{sec:Regeln}) \endlatexonly
+ * 
+ * @author Fabian Pflug
+ *
+ */
 public class Rules{
 
-	protected Set<String> verbote;
+	/** a set of all the restrictions. */
+	protected Collection<String> restrictions;
+	/** the rules as "osm-key - osm-value to [0..2]"	 */
 	protected Map<String,Double> weights;
 	
+	/** a offset to add to the distance of all polygons before weighting them.
+	 * 
+	 * the value is found using some test with different magic numbers. from 0.1 to 0.00001.
+	 */
+	private static final double OFFSET = 0.0002;
+	
+	/**
+	 * initializes with an empty set of rules and restictions.
+	 */
 	public Rules() {
-		this.verbote = new TreeSet<String>();
+		this.restrictions = new TreeSet<String>();
 		this.weights = new TreeMap<String,Double>();
 	}
 	
-	public Rules(Set<String> verbote, Map<String,Double> rules) {
-		this.verbote = verbote;
+	/**
+	 *  Initializes with the given rules and restrictions.
+	 * @param restrictions a set of restrictions.
+	 * @param rules a set of rules as "osm-key - osm-value to [0..2]"
+	 */
+	public Rules(Collection<String> restrictions, Map<String,Double> rules) {
+		this.restrictions = restrictions;
 		this.weights = rules;
 	}
 
+	/**
+	 * calculates the weighted distance from a given coordinate to the given way. 
+	 * @param c the coordinate to calculate the distance from
+	 * @param w the OSM-object to calculate the distance to
+	 * @return the weighted distance by tag and rules
+	 */
 	public double calcDist(Coordinate c, Way w) {
 		double distance = c.distanceTo(w.getPolyline());
 		w.addOriginalTag("InMa_preDistance", "" + distance);
-		distance += 0.0002;
+		distance += OFFSET;
 		String combine;
+		// iterate over all Tags in the OSM object
 		for(String s : w.getTags().keySet()) {
 			combine = s.trim() + " - " + w.getValue(s).trim();
-			if(weights.keySet().contains(s)) {
-				distance *= weights.get(s);
-			}
+			// check for key + value
 			if(weights.keySet().contains(combine)) {
 				distance *= weights.get(combine);
+			}
+			// and just key
+			if(weights.keySet().contains(s)) {
+				distance *= weights.get(s);
 			}
 		}
 		return distance;
 	}
 	
-	public Way calculateBest(Set<Way> ways, Coordinate location) {
+	/**
+	 * calculates the way with the nearest weighted distance to the given location.
+	 * @param ways a collection of ways to check.
+	 * @param location the starting location
+	 * @return a way from ways
+	 */
+	public Way calculateBest(Collection<Way> ways, Coordinate location) {
 		Way best = null;
 		double distance = Double.MAX_VALUE;
 		double d;
 		for(Way w : ways) {
+			// we only look at areas at the moment, because we want to have a polygon, no polyline.
 			if(!w.isArea())
 				continue;
 			d = calcDist(location, w);
+			// this is used later in DataDrawer to print out the distance to the user.
 			w.addOriginalTag("InMa_Distance", "" + d);
+			// get the Object with the lowest distance, or if equal, the smaller one.
 			if(d<distance || (d==distance && w.getPolyline().boundingBoxArea() < best.getPolyline().boundingBoxArea())) {
 				best = w;
 				distance = d;
@@ -57,26 +98,36 @@ public class Rules{
 		return best;
 	}
 	
-	public float overlap(Set<String> v) {
-		if(verbote.size()==0)
+	
+	/**
+	 * calculates the overlap of this collection of restrictions with another. 
+	 * @param v a collection of restrictions
+	 * @return a value between 0 and 1, defining the overlap or 0.1 if this Rules has no restrictions.
+	 */
+	public float overlap(Collection<String> v) {
+		if(restrictions.size()==0)
 			return 0.1f;
 		if(v.size()==0)
 			return 0.0f;
-		float start = 1, diff = .5f / verbote.size();
-		for(String s : verbote) {
+		float start = 1, diff = .5f / restrictions.size();
+		for(String s : restrictions) {
 			if(!v.contains(s))
 				start -= diff;
 		}
 		diff= .5f /v.size();
 		for(String s : v) {
-			if(!verbote.contains(s))
+			if(!restrictions.contains(s))
 				start -= diff;
 		}
 		return start;
 	}
 	
+	/**
+	 * returns the rules to print out
+	 * \latexonly as defined in \fref{sec:Eingabedaten_Wir} \endlatexonly
+	 */
 	public String toString() {
-		return verbote.toString() + " -> " + weights.toString();
+		return restrictions.toString() + " -> " + weights.toString();
 	}
 
 }

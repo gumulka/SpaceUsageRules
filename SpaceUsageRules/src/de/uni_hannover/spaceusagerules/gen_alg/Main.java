@@ -28,9 +28,9 @@ import de.uni_hannover.spaceusagerules.io.OSM;
 /**
  * Klasse, welche für jede SpaceUsageRule aus dem Testdatensatz einen genetischen Algorithmus erstellt und diesen durchlaufen lässt.
  */
-public class Main implements Comparable<Main>{
+public class Main extends Thread implements Comparable<Main>{
 
-	public static final int MAXTHREADS = 4;
+	public static final int MAXTHREADS = 2;
 	
 	private static List<String> possibla = null;
 	private static Map<String,Set<String>> tags = null;
@@ -114,13 +114,18 @@ public class Main implements Comparable<Main>{
 		prepared = true;
 	}
 	
-	public void run() throws Exception {
+	public void run() {
 		if(!prepared)
 			return;
 		long startTime = System.currentTimeMillis();
 		allGens = new ArrayList<Genetic>();
 		for(Entry<String,Set<String>> e: tags.entrySet())
-			allGens.add(new Genetic(e.getKey(),e.getValue(), possibla));
+			try {
+				allGens.add(new Genetic(e.getKey(),e.getValue(), possibla));
+			} catch (Exception e1) {
+				System.err.println("Fehler beim erstellen der Genetics");
+				return;
+			}
 		Collections.sort(allGens);
 		List<Genetic> gens = new LinkedList<Genetic>();
 		for(Genetic g : allGens) {
@@ -142,7 +147,10 @@ public class Main implements Comparable<Main>{
 			}
 		}
 		for(Genetic g : gens) {
-			g.join();
+			try {
+				g.join();
+			} catch (InterruptedException e1) {
+			}
 		}
 
 		for(Genetic g : allGens) {
@@ -150,6 +158,8 @@ public class Main implements Comparable<Main>{
 		}
 		
 		diff = (int) ((System.currentTimeMillis() - startTime)/1000);
+		if(fitness > 0 || diff>10)
+			System.out.println(this);
 	}
 	
 	public void writeout() throws IOException {
@@ -189,30 +199,30 @@ public class Main implements Comparable<Main>{
 	            }
 	        });
 		 OSM.useBuffer(true);
-		 Main.prepare();
 		 
 		 /*
-		 Main test = new Main(300,200,4,3);
+		 Main test = new Main(200,200,2,5);
 		 test.run();
 		 System.out.println(test);
 		 test.writeout(); // */
 		 
-		 int[] maxis = {90, 128};
-		 int[] popsizes = {100,200,500};
-		 int[] withouts = {100, 200, 500};
-		 int[] mutates =  {2,4, 6};
-		 int[] merges = {1,3,5};
+		 
+		 
+		 int[] maxis = {90};
+		 int[] popsizes = {100,200,350,500};
+		 int[] withouts = { 500};
+		 int[] mutates =  {1, 3, 5};
+		 int[] merges = {1, 3, 5, 6, 7};
 		 for(int m : maxis) {
 			 List<Main> all = new LinkedList<Main>();
 			 Main.max = m;
+			 Main.prepare();
 			 for(int p : popsizes) {
-				 System.out.println("New Popsize: " + p);
 				 for(int w: withouts) {
 					 for(int mu : mutates) {
 						 for(int me : merges) {
 							 Main test = new Main(p,w,mu,me);
 							 test.run();
-							 System.out.println(test);
 							 all.add(test);
 						 }
 					 }
@@ -220,11 +230,7 @@ public class Main implements Comparable<Main>{
 			 }
 			 Collections.sort(all);
 			 all.get(0).writeout();
-			 System.out.println("----->");
-			 for(Main main : all)
-				 System.out.println(main);
-			 System.out.println("<-----"); // */
-		 }
+		 } // */ 
 	}
 	
 	int p,w,mu,me;
@@ -237,11 +243,13 @@ public class Main implements Comparable<Main>{
 		 Genetic.withoutOtimization = w;
 		 Genetic.mutate = p*mu/10;
 		 Genetic.merge = p*me/10;
+		 Genetic.copyBest = p/10;
+		 Genetic.mergeFrom = p/2;
 	}
 
 	
 	public String toString() {
-		String ret = String.format("Fitness: %6d, Laufzeit: %d:%02d:%02d\n",fitness, diff/3600, (diff/60)%60, diff%60);
+		String ret = String.format("Fitness: %6d, Laufzeit: %d:%02d:%02d ",fitness, diff/3600, (diff/60)%60, diff%60);
 		ret += String.format("Pop: %d, Wi: %d, Mu: %d, Me: %d",p,w,mu,me);
 		return ret;
 	}

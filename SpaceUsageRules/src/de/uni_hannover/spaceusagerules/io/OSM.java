@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,6 +21,7 @@ import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
@@ -34,12 +37,22 @@ import de.uni_hannover.spaceusagerules.core.Way;
  */
 public class OSM {
 
+	/** if the local filebuffer is to be used. Deactivated by default */
 	private static boolean buffer = false;
 
+	/** to reduce the load on the OSM-Server, it is possible to use a local filebuffer 
+	 * 
+	 * @param use if the buffer is to be used.
+	 */
 	public static void useBuffer(boolean use) {
 		buffer = use;
 	}
 
+	/**
+	 * the simplest way to get a Set of OSM-objects is by just giving a coordinate.
+	 * @param c the coordinate where data should be fetched around.
+	 * @return a Collection of OSM-Objects.
+	 */
 	public static Set<Way> getObjectList(Coordinate c) {
 		return getObjectList(c, (float) 0.0005);
 	}
@@ -77,7 +90,7 @@ public class OSM {
 		Set<Way> newObjects = new TreeSet<Way>();
 		Map<Long, Coordinate> coords = new TreeMap<Long, Coordinate>();
 		String connection = null;
-		if (tagname == null)
+		if (tagname == null) // there is no single Tag given. Fetch all the Data!
 			connection = "http://api.openstreetmap.org/api/0.6/map?bbox="
 					+ (c.longitude - radius) + "," + (c.latitude - radius)
 					+ ',' + (c.longitude + radius) + ","
@@ -123,6 +136,28 @@ public class OSM {
 				}
 				newObjects.add(w);
 			}
+			// Adding tags from Points, wich are inside a Polygon.
+			Map<String, String> tags = new TreeMap<String,String>();
+			for (Element e : doc.select("node")) {
+				Elements el = e.select("tag");
+				if(el.size()==0)
+					continue;
+				float lon = Float.parseFloat(e.attr("lon"));
+				float lat = Float.parseFloat(e.attr("lat"));
+				Coordinate coord =  new Coordinate(lat, lon);
+				tags.clear();
+				for (Element x : el) {
+					tags.put(x.attr("k"), x.attr("v"));
+				}
+				for(Way w : newObjects) {
+					if(w.getPolyline().inside(coord)) {
+						for(Entry<String,String> entry : tags.entrySet()) {
+							w.addOriginalTag(entry.getKey(),entry.getValue());
+						}
+					}
+				}
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -186,7 +221,55 @@ public class OSM {
 			if (w.getChangedTags().size() == 0)
 				continue;
 			if (w.getId() == -1) {
-				return -5;
+				List<String> nodeIDs = new LinkedList<String>();
+				for(Coordinate c : w.getPolyline().getPoints()) {
+					String payload = "<osm>" +
+							"<node changeset=\"" + changesetID + "\" lat=\"" + c.latitude + "\" lon=\"" + c.longitude + "\">" +
+							"</node>" +
+							"</osm>";
+					request = new OAuthRequest(Verb.PUT,
+							"https://api.openstreetmap.org/api/0.6/node/create");
+					request.addPayload(payload);
+					request.addHeader("Content-type", "text/xml");
+					service.signRequest(accessToken, request);
+					response = request.send();
+					if (response.getCode() != 200) {
+						System.err.println(payload);
+						System.err.println(w.getId());
+						System.err.println(response.getCode());
+						System.err.println(response.getBody());
+						System.err.println(response.getHeaders());
+						return -5;
+					}
+					nodeIDs.add(response.getBody());
+				}
+				
+				String payload = "<osm>\n" +
+						"<way changeset=\"" + changesetID + "\" >\n";
+				for(String s : nodeIDs) {
+					payload += " <nd ref=\"" + s + "\"/>\n";
+				}
+				for (String key : w.getChangedTags().keySet()) {
+						// Wert wird neu erstellt.
+					payload += " <tag k=\"" + key + "\" v=\""
+							+ w.getValue(key) + "\" />\n";
+				}
+				payload += "</way>" +
+						"</osm>";
+				request = new OAuthRequest(Verb.PUT,
+						"https://api.openstreetmap.org/api/0.6/way/create");
+				request.addPayload(payload);
+				request.addHeader("Content-type", "text/xml");
+				service.signRequest(accessToken, request);
+				response = request.send();
+				if (response.getCode() != 200) {
+					System.err.println(payload);
+					System.err.println(w.getId());
+					System.err.println(response.getCode());
+					System.err.println(response.getBody());
+					System.err.println(response.getHeaders());
+					return -4;
+				}
 			} else {
 				request = new OAuthRequest(Verb.GET,
 						"http://api.openstreetmap.org/api/0.6/way/" + w.getId());

@@ -120,10 +120,14 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 			return true;
 		}
 		if(id == R.id.action_show_list) {
-			if(umgebung.size()>1)
-				onDataTransmit();
+			if(location!=null && umgebung != null) {
+				if(umgebung.size()>1)
+					onDataTransmit();
+				else
+					Toast.makeText(this, R.string.no_alternative, Toast.LENGTH_SHORT).show();
+			}
 			else
-				Toast.makeText(this, R.string.no_alternative, Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.no_location, Toast.LENGTH_LONG).show();
 			return true;
 		}
 		if(id == R.id.action_add_tag) {

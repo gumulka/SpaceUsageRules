@@ -17,14 +17,21 @@ Soll eine Regel generell für alle Values eines Keys gelten, so kann die Value w
 
 Eine Gültige Eingabe kann also folgendermaßen sein:
 \begin{lstlisting}[frame=single]
-smoking="no" -> [addr:housenumber -> 0.5, landuse - forest -> 1.5]
-fishing="no" -> []
+[smoking="no"] -> [addr:housenumber -> 0.5, landuse - forest -> 1.5]
+[fishing="no", smoking="no"] -> []
 \end{lstlisting}
 Dieses Regelwerk sagt aus, dass ein Nichtrauchen Verbot wahrscheinlich in Flächen gilt, welche eine Hausnummer zugewiesen haben
 und sehr unwahrscheinlich in Gebieten, die als Waldgebiete ausgeschildert sind.
-Für das Angelverbot sind keine Regeln definiert. Unser Algorithmus wird sich also nur die nächstegelegene Fläche als wahrscheinlich nehmen,
+Für das Angel- und Rauchverbot sind keine Regeln definiert. Unser Algorithmus wird sich also nur die nächstegelegene Fläche als wahrscheinlich nehmen,
 oder sollten der Punkt innerhalb von 2 Flächen liegen\footnote{Es könnte z.B. eine Fläche 'Niedersachsen' und eine Fläche 'Waldgebiet' definiert sein.},
 so wird die kleinere von beiden ausgewählt.
+
+\textbf{Wichtig:} Es wird der Regelsatz angewendet, welche die größtmögliche Überlappung bei dem Verbotsmengen hat.
+Sollte es also eine Verbotsmenge in den Daten geben, welche aus \begin{lstlisting}[frame=single]
+smoking="no", food="no"
+\end{lstlisting}
+besteht, so wird das Regelwerk für smoking=''no'' angewendet. Um das explizit auszuschließen sind Verbotmengen mit leeren Regelmengen anzugeben
+wie im Beispiel für Angel- und Rauchverbot getan.
 
 \subsubsection{Daten}
 \label{sec:Eingabedaten_GI}
@@ -33,8 +40,8 @@ Hier werden die aus der Aufgabenstellung übernommenen Regeln beachtet und das E
 Die erste Zeile enthält die Anzahl $c$ der Space Usage Rules. Es folgen zeilenweise die Informationen
 über die $c$ Regeldefinitionen.
 Eine Zeile beginnt mit der ID der Space Usage Rule gefolgt von deren Position in geographischen
-Koordinaten in der Form $Breitengrad, Längengrad$. Als Eingabewerte sind für $Breitengrad$ und
-$Längengrad$ Fließkommazahlen mit einem ’.’ als Dezimaltrennzeichen erlaubt. Die einzelnen Informationen
+Koordinaten in der Form $Breitengrad, L"angengrad$. Als Eingabewerte sind für $Breitengrad$ und
+$L"angengrad$ Fließkommazahlen mit einem ’.’ als Dezimaltrennzeichen erlaubt. Die einzelnen Informationen
 sind durch Kommas und optionale Leerzeichen getrennt.
 \end{aquote}
 

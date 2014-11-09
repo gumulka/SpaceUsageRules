@@ -1,4 +1,5 @@
 \section{Regeln}
+\label{sec:Regeln}
 
 \subsection{Regelbeschreibung}
 Da in fast allen Fällen ein sehr nah gelegenes Polygon gemeint ist, wird zunächst auf den Abstand aller vorhandenen Polygone etwas aufaddiert,
@@ -66,19 +67,39 @@ Um die Güte des Regelsatzes für ein einzelnes Verbot vergleichbar zu anderen V
 die Anzahl der $ID$s welches es beeinflussen geteilt.\\
 \begin{equation}
 \label{eq:guete}
-Güte(R) := \sum_{v \in V} \frac{ f(v,R)}{\#S_v}
+G"ute(R) := \sum_{v \in V} \frac{ f(v,R)}{\#S_v}
 \end{equation}
 
-Wir suchen also einen Regelsatz $R$ für den $Güte(R)$ maximal ist.
+Wir suchen also einen Regelsatz $R$ für den $G"ute(R)$ maximal ist.
 
 
 \subsection{Visuelle Überprüfung}
 \label{sec:visuelle_ueberpruefung}
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{DataDrawer.png}
+\caption{Beispielhafte Ausgabe für Nummer 27}
+\label{fig:DataDrawerOrginal}
+\end{figure}
 Um die KML-Dateien nicht immer manuell in Google-Earth laden zu müssen, wurde eine weitere Klasse geschrieben, welche zur Visualisierung der Daten gedacht ist.
 Dabei werden Bilder erstellt, in welchen die Daten aus OSM als schwarze Linien, bzw Polygone eingezeichnet werden. Zusätzlich werden die Tags,
 welche die Objekte enthalten zu jedem Objekt eingezeichnet um schnell eine Übersicht zu haben, was wozu gehört.
 Um die Güte des Regeldatensatzes, bzw des Algorithmus subjektiv beurteilen zu können, werden die truth, bzw. die von unserem Algorithmus erdachten Polygone
 farblich eingezeichnet. So ist eine schnelle Beurteilung, ob man das richtige Poylgon gewählt hat, bzw welche Tags man evtl. noch beachten sollte, möglich.
+
+In \fref{fig:DataDrawerOrginal} ist beispielhaft eine Ausgabe gezeigt. Das Bild hat eine Größe von mehreren Megapixeln, da es sonst zu Überlappungen der Tags kommen
+würde wenn man sie größer schreibt. Auch wenn man jetzt noch reinzoomen muss um diese zu lesen, so ist es doch wesentlich bequemer,
+als die Überprüfung anhand der OpenStreetMap XML-Dateien. Wie in \fref{fig:DataDrawerZoom} zu erkennen ist, ist das Lösungspolygon in Grün,
+das Ergebnispolygon unseres Algorithmus in Pink und die Geocoordinate als schwarzer Punkt eingezeichnet.
+
+Als weiterer Hinweis wird zusätzlich zu jedem Polygon die reale und die gewichtete Distanz zur Geocoordinate, an welcher das Bild gemacht wurde, angegeben.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.8\textwidth]{DataDrawerZoom.png}
+ \caption{Reingezoomte Ausgabe für Nummer 27}
+ \label{fig:DataDrawerZoom}
+\end{figure}
 
 \subsection{Incrementelle Regelerstellung}
 Aus dem Testdatensatz werden zunächst alle Datensätze herausgefiltert, welche nicht einfach lösbar sind.
@@ -87,12 +108,35 @@ Es wird mit einem leeren Regelsatz angefangen und dieser anschließend inkrement
 \begin{enumerate}
 \item Definiere für jeden Datensatz ein optimales Polygon, bzw einen Overlap-Wert, welcher erreicht werden muss.
 \item Der Regelsatz wird auf alle Testdatensätze angewendet. \label{start_inc_alg}
-\item Für jeden Datensatz, bei welchem die Regeln nicht das optimale Polygon finden, wird ein Bild wie in \fref{sec:visuelle_ueberpruefung} erstellt.
+\item Für jeden Datensatz, bei welchem die Regeln nicht das optimale Polygon finden, wird ein Bild wie in \fref{sec:visuelle_ueberpruefung} erstellt. \label{Inc_Image}
 \item Dem Benutzer werden alle Bilder, angezeigt und dieser kann nun weitere Regeln hinzufügen oder bestehende ändern.
 \item gehe zu \ref{start_inc_alg}
 \end{enumerate}
 
-Nachdem abdecken der einfachen Fälle kann mit den schwierigeren genauso vorgegangen werden.
+Nach dem Abdecken der einfachen Fälle kann mit den schwierigeren genauso vorgegangen werden.
+
+\subsubsection{Beispiel 1}
+Nachdem der Algorithmus mit einem leerem Regelsatz durchgelaufen ist zeigt
+\fref{fig:DataDrawerZoom} einen Ausschnitt des Bildes, wie es in Schritt \ref{Inc_Image} erstellt wurde. Wir können nun einfach sehen,
+dass es offensichtlich nicht das richtige Polygon ist. Der einzige Unterschied der bestmöglichen Lösung im Vergleich zu dem nächstbesten Polygon ist,
+dass das Lösungspolygon noch den Namen Fotokado hat. Desweiteren sehen wir, dass kein weiteres Polygon in der Nähe einen Namen hat.
+Fotokado an sich ist jetzt etwas, dass man verwenden könnte, sinnvoller ist es aber, generell zu sagen, dass wenn Namen vorkommen, diese Gebäude
+bevorzugt werden sollen. Für Nr. 27 gilt nur: parking="no". Es ist also wahrscheinlich sinnvoll folgende Regel zu erstellen\footnote{0.8 ist willkürlich gewählt.
+0.0 oder 0.5 würden für genau dieses Datensatz auch zum richtigen Ergebnis führen, können aber wiederrum bei anderen ID's hinderlich sein,
+da sie eine wesentlich größere Veränderung bewirken.}:
+\begin{equation*}
+R_{parking=''no''} = [r('name') = 0.8]
+\end{equation*}
+
+\subsubsection{Beispiel 2}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.8\textwidth]{DataFailZoom.png}
+ \caption{Reingezoomte Ausgabe für Nummer 31}
+ \label{fig:DataFailZoom}
+\end{figure}
+In \fref{fig:DataFailZoom} ist zu erkennen, dass es keinen Unterschied bei den Tags für das richtige und das nächstgelegene Polygon gibt.
+Hier kann man nicht mehr viel machen und wird wahrscheinlich immer das falsche Polygon ausgeben.
 
 
 \subsection{Erweiterung}

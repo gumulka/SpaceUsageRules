@@ -1,11 +1,12 @@
 \section{Softwareimplementierung zur Testdatensatzerweiterung}
-Um die Testdatensätze zu erweitern soll eine Android App geschrieben werden, welche es dem
-Benutzer erlaubt weitere SpaceUsageRules einzugeben anhand seines aktuellen Standorts.
+\label{sec:HelferApp}
+Um die Testdatensätze zu erweitern wird eine Android App geschrieben, welche es dem
+Benutzer erlaubt weitere SpaceUsageRules anhand seines aktuellen Standorts einzugeben.
 
 \subsection{Nutzerbasis}
 Am Anfang wurde noch geplant, die App nur an Freunde zu verteilen und auf deren Mitarbeit zu hoffen.
 Da wir in Freundeskreis einige Sonder- und Sozialpädagogen haben wurde überlegt für diese einen Mehrwert zu bieten,
-indem wir die Möglichkeit geben, die App in den Einstellungen umzukonfigurieren, dass nur Daten zu barrierefreiheit angezeigt und bearbeitet werden können.
+indem wir die Möglichkeit geben, die App in den Einstellungen umzukonfigurieren, dass nur Daten zu Barrierefreiheit angezeigt und bearbeitet werden können.
 
 Dies sorgt dafür, dass einige Klicks weniger notwendig sind und auch weniger Daten von den OSM-Servern heruntergeladen werden müssen
 und sorgt hoffentlich dafür, dass die Nutzer einen Sinn für sich in der App sehen und diese nicht nur aus Freundlichkeit benutzen.
@@ -18,14 +19,14 @@ Also wurde sie noch einmal verändert, sodass sie einem in den Einstellungen erl
 Da Android Geräte generell eine Möglichkeit bieten zur Standortbestimmung, z.B. Anhand von GPS oder Netzwerkdaten,
 wird diese ausgenutzt und als Startwert benutzt.
 In einer späteren Phase des Projekts wurde dem Nutzer die Möglichkeit gegeben, sich Informationen zu einem beliebigen Punkt auf der Karte geben zu lassen,
-indem er einfach länger auf die Karte drückt. In diesem Fall wird auch der Standort auf die Kartenposition gesetzt.
+indem er einfach länger auf die Karte drückt. In diesem Fall wird auch der Standort auf die gewählte Kartenposition gesetzt.
 
 \subsection{OpenStreetMap}
 Es werden Daten von OSM genutzt um den Nutzer bereits bekannte Nutzungsregeln anzuzeigen.
 Damit dieser bei Änderungen keinen eigenen Account anlegen muss, wird von uns ein Account für die Nutzung mit der App angelegt,
 in welchem alle Änderungen, welche in Zusammenhang mit der App stehen gemacht werden.
-In einer späteren Version der App kann das evtl geändert werden, aber aktuell erscheint es uns als die beste Möglichkeit
-um nicht zu viele Leute vom hinzufügen abzuschrecken, dadurch, dass sie sich irgendwo anmelden müssen,
+In einer späteren Version der App kann das evtl. geändert werden, aber aktuell erscheint es uns als die beste Möglichkeit
+um nicht zu viele Leute vom hinzufügen dadurch abzuschrecken, dass sie sich irgendwo anmelden müssen,
 oder aber ihre Nutzerdaten an uns weiter geben zu müssen um etwas hinzuzufügen.
 Nach Beendigung des Wettbewerbs soll die App auf OAuth umgestellt werden und den Nutzern auch weiterhin zur Verfügung stehen.
 
@@ -45,8 +46,9 @@ Um genau zu sein, bekommen wir folgende Daten:
 Sollte der Wettbewerb vorbei sein, oder wir genug Daten gesammelt haben wird die
 Datenübertragung an uns durch ein Update der App beendet.
 
-
-
-\subsubsection{Hinderlichkeiten}
+\subsection{Hinderlichkeiten}
 Durch diese Vorgehensweise haben wir leider keine Bilder, welche Helfen würden die Angaben der Benutzer zu verifizieren,
 also müssen wir davon ausgehen, dass alles richtig ist.
+
+\subsection{Veröffentlichung}
+Mitlerweile ist die App fertig und unter der URL \url{https://play.google.com/store/apps/details?id=de.uni_hannover.inma} im Google Play Store veröffentlicht.
