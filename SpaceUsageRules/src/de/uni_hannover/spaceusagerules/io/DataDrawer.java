@@ -21,28 +21,41 @@ import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Way;
 
 /**
- * @todo Javadoc schreiben.
+ * {@link DataDrawer} is a tool to visualize the polygons and their tags around any place.
+ * The two main purposes are to familiarize with the existing kinds of tags and to 
+ * see how good (or bad) the implementation works. 
  * @author Peter Zilz
  *
  */
 public class DataDrawer {
 	
-	private Color polygonFillColor = Color.white;
-	
+	/** width and height of the image */
 	private int width, height;
+	/** distance from content to frame */
 	private int margin = 5;
+	/** the format with which the picture is saved */
 	private String format = "png";
+	
+	/** Graphics of {@link #image} to draw on */
 	private Graphics gr;
+	/** to store the rendered picture */
 	private BufferedImage image;
 	
+	/** the center of the area that is to be rendered */ 
 	private Coordinate location;
 	
+	/**
+	 * Creates a DataDrawer for a specific location.
+	 * @param width width of the picture
+	 * @param height height of the picture
+	 * @param middle center of the area to be rendered
+	 */
 	public DataDrawer(int width, int height, Coordinate middle){
 		this.width = width;
 		this.height = height;
 		this.location = middle;
 		
-		//Bild erstellen
+		//create image
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		gr = image.getGraphics();
 		
@@ -50,19 +63,33 @@ public class DataDrawer {
 		Font font = gr.getFont();
 		gr.setFont(font.deriveFont(9f));
 		
-		//Hintergrungd zeichnen
+		//draw background; orange is easier on the eyes
 		gr.setColor(Color.orange);
 		gr.fillRect(0, 0, width, height);
 	}
 	
+	/**
+	 * Returns the rendered image. If it has not been rendered yet, it is blank.
+	 * @return rendered (or blank) image
+	 */
 	public BufferedImage getImage() {
 		return image;
 	}
 	
-	
+	/**
+	 * Draws a {@link Way} in the default Color {@link Color#black}.
+	 * Just calls {@link #drawWay(Way, Color)}.
+	 * @param w the Way to be drawn
+	 */
 	public void drawWay(Way w){
 		drawWay(w, Color.black);
 	}
+	
+	/**
+	 * Draws a {@link Way} with a specific outline color.
+	 * @param w the Way to be drawn
+	 * @param color color of the outline
+	 */
 	public void drawWay(Way w, Color color) {
 		
 		//create drawable polygon
@@ -73,9 +100,7 @@ public class DataDrawer {
 			polygon.addPoint(ints[0]+margin, ints[1]+margin);
 		}
 			
-		//draw and fill polygon
-//		gr.setColor(new Color(w.getFillColor()));
-//		gr.fillPolygon(polygon);
+		//draw polygon outline
 		gr.setColor(color);
 		gr.drawPolygon(polygon);
 		
@@ -107,6 +132,12 @@ public class DataDrawer {
 		
 	}
 	
+	/**
+	 * Filters the list of tags of one element. That way unnecessary text doesn't show up
+	 * on the picture. For example the tag "visible->true" is not very helpful. 
+	 * @param input list of tags to be filtered 
+	 * @return list of tags without unnecessary entries
+	 */
 	@SuppressWarnings("unused")
 	private List<String> filterTags(List<String> input){
 		
@@ -121,7 +152,10 @@ public class DataDrawer {
 		return output;
 	}
 	
-	
+	/**
+	 * Draws the list of tags as text at a specified location.
+	 * @param tags list of tags to be drawn
+	 */
 	private void drawTags(List<String> tags, int x, int y){
 		for(int i=0;i<tags.size();i++){
 			gr.drawString(tags.get(i), x, y+(i+1)*11);
@@ -147,7 +181,12 @@ public class DataDrawer {
 		return output;
 	}
 	
-	
+	/**
+	 * Downloads the needed data from OSM and removes all non polygons. 
+	 * @param p center of the area
+	 * @param radius radius of the area
+	 * @return List of Polygons
+	 */
 	private List<Way> retrieveData(Coordinate p, float radius){
 		List<Way> output = new LinkedList<Way>(); 
 		for(Way w : OSM.getObjectList(p, radius))
@@ -156,20 +195,27 @@ public class DataDrawer {
 		return output;
 	}
 	
-	
+	/**
+	 * Downloads and renders the area around the given {@link #location}.
+	 * @param radius radius of the area
+	 */
 	public void render(float radius){
 		List<Way> data = retrieveData(location, radius);
 		render(data);
 	}
 	
+	/**
+	 * Renders a specific set of data.
+	 * @param data List of Polygons with tags
+	 */
 	public void render(Collection<Way> data) {
 		
-		//polygone zeichnen
+		//draw polygons
 		for(Way w : data){
 			drawWay(w);
 		}
 		
-		//draw reference point p
+		//draw reference point p in special manner
 		int[] ref = transformToInt(location);
 		gr.setColor(Color.DARK_GRAY);
 		gr.drawOval(ref[0]-6, ref[1]-6, 12, 12);
@@ -177,7 +223,11 @@ public class DataDrawer {
 		
 	}
 	
-	
+	/**
+	 * Stores the rendered picture. The file extension is not automatically appended. 
+	 * @param name name of the file incl. file extension
+	 * @throws IOException
+	 */
 	public void saveImage(String name) throws IOException
 	{
 		
@@ -195,15 +245,5 @@ public class DataDrawer {
 		fos.close();
 		
 	}
-
-	public Color getPolygonFillColor() {
-		return polygonFillColor;
-	}
-
-
-
-	public void setPolygonFillColor(Color polygonFillColor) {
-		this.polygonFillColor = polygonFillColor;
-	}
-
+	
 }

@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 /**
- * Javadoc schreiben
+ * @todo Javadoc schreiben
  * @author Peter Zilz
  *
  */
@@ -175,15 +175,20 @@ public class Polyline  implements Serializable {
 	 */
 	public boolean inside(Coordinate p){
 		
-		if(!insideBoundingBox(p))
+		if(!insideBoundingBox(p)){
 			return false;
+		}
 		
 		List<Coordinate> zeroPoints = new LinkedList<Coordinate>();
 		//check if p is one of the points
-		for(Coordinate c : points){
-			if(c==p || p.equals(c)) return true;
-			zeroPoints.add(p.minus(c));
+		for(Coordinate corner : points){
+			if(corner==p || p.equals(corner)){
+				return true;
+			}
+			//translate everything to the origin to reduce rounding errors
+			zeroPoints.add(corner.minus(p));
 		}
+		
 		Coordinate zero = new Coordinate(0,0);
 		
 		//create lines and put them in a list
@@ -194,7 +199,14 @@ public class Polyline  implements Serializable {
 		
 		//check if p is on any of the lines
 		for(Line l : edges){
-			if(l.isOnLine(zero)) return true;
+			if(l.isOnLine(zero)){
+				return true;
+			}
+		}
+		
+		//if this is not an area and p doesn't lie on an edge, then p can't be inside
+		if(!isArea()){
+			return false;
 		}
 		
 		//do ray casting
@@ -238,9 +250,13 @@ public class Polyline  implements Serializable {
 		
 		//the lines left are those that cross ray.
 		//if their number is even p is outside the polygon
-		if(transformedEdges.size()%2 == 0) return false;
+		if(transformedEdges.size()%2 == 0){
+			return false;
+		}
 		//if their number is odd p is inside the polygon
-		else return true;
+		else{
+			return true;
+		}
 	}
 	
 	/**
@@ -303,7 +319,7 @@ public class Polyline  implements Serializable {
 	 * @param p2 the second Polyline
 	 * @return a new Polyline as the union of the two polylines or null
 	 */
-	public Polyline getMergingPolyline(Polyline p2) {
+	public Polyline getUnion(Polyline p2) {
 		return null;
 	}
 	

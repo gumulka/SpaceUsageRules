@@ -22,7 +22,8 @@ public class Line {
 	 * it's the d in ax+by = d */
 	public double normalDistance;
 	
-	/** vector from start to end. Used as normal vector for an orthogonal line through start. */
+	/** vector from start to end (= directional vector of the line). 
+	 * Used as normal vector for an orthogonal line through start. */
 	Coordinate lineVector;
 	/** distance from the origin to the orthogonal line. */
 	double inlineDistance;
@@ -31,7 +32,7 @@ public class Line {
 	double lineLength;
 	
 	/**
-	 * Creates a line with normal vector.
+	 * Creates a line ans its normal vector.
 	 */
 	public Line(Coordinate start, Coordinate end){
 		this.start = start;
@@ -42,7 +43,7 @@ public class Line {
 	
 	/**
 	 * Computes {@link #normalVector}, {@link #normalDistance}, {@link #lineVector} and 
-	 * {@link #inlineDistance} out of {@link #start} and {@link #end};
+	 * {@link #inlineDistance} from {@link #start} and {@link #end};
 	 */
 	private void updateValues(){
 		normalVector = computeNormalVector(start, end);
@@ -124,14 +125,21 @@ public class Line {
 		return orientedHNFDistance(c, normalVector, normalDistance);
 	}
 	
+	/**
+	 * Tests if a point is on this line section. p has to be between {@link #start} 
+	 * and {@link #end}. If p is on the line but outside of these two points, 
+	 * <code>false</code> is returned.
+	 * @param p point to be tested
+	 * @return <code>true</code> if p lies on the line section, <code>false</code> otherwise 
+	 */
 	public boolean isOnLine(Coordinate p){
 		
 		Coordinate transformed = basisChange(p);
 		//in the transformed state, p has to have latitude 0 
-		//and longitude between 0 and 1 to be on this line.
+		//and longitude between 0 and the length of the line to be on this line.
 		if(transformed.latitude != 0.) return false;
 		if(transformed.longitude < 0.) return false;
-		if(transformed.latitude > lineLength) return false;
+		if(transformed.longitude > lineLength) return false;
 		
 		return true;
 	}
@@ -255,10 +263,17 @@ public class Line {
 		return normalVector;
 	}
 	
+	/**
+	 * Returns the vector from {@link #start} to {@link #end}.
+	 * @return direction vector
+	 */
 	public Coordinate getLineVector() {
 		return lineVector;
 	}
-
+	
+	/**
+	 * Represents this line by printing {@link #start} and {@link #end} as Strings.
+	 */
 	@Override
 	public String toString(){
 		return start.toString() + "->" + end.toString();

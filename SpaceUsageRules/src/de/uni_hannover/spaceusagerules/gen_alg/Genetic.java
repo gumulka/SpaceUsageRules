@@ -175,7 +175,6 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 	/**
 	 * Vergleich um die Gentischen Algorithmen nach ihrer geschätzten Laufzeit zu sortieren.
 	 */
-	@Override
 	public int compareTo(Genetic o) {
 		return o.truths.size() - this.truths.size();
 	}

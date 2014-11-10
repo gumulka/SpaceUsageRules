@@ -64,7 +64,6 @@ public class InsideTest {
 		c = new Coordinate(25,10);
 		assertTrue(!line.inside(c));
 		 
-		
 		line = new Polyline(); // konvexes Polygon
 		line.add(new Coordinate(52.42934,9.72744));
 		line.add(new Coordinate(52.42951,9.72740)); // it looks like this. with bottom left as first, going clockwise

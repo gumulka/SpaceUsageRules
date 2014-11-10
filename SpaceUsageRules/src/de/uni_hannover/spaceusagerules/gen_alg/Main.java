@@ -255,7 +255,6 @@ public class Main extends Thread implements Comparable<Main>{
 		return ret;
 	}
 	
-	@Override
 	public int compareTo(Main o) {
 		int f = o.getFitness() - fitness;
 		if(f==0)

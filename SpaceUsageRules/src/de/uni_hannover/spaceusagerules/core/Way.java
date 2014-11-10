@@ -240,7 +240,7 @@ public class Way implements Serializable, Comparable<Way>{
 		return false;
 	}
 
-	@Override
+	
 	public int compareTo(Way o) {
 		return (int) (this.id - o.id);
 	}
