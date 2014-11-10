@@ -164,99 +164,77 @@ public class Polyline  implements Serializable {
 		return true;
 	}
 	
+	
 	/**
-	 * Determines it a point is in this polygon. Does not check if this object is 
-	 * actually a polygon or just a line.<BR>
-	 * The use of {@link #insideBoundingBox(Coordinate)} as a first approximation is encouraged,
-	 * because it works much faster.<BR>
+	 * Determins it the point is inside this polygon or lies on the lines.
 	 * Inspired by the <A HREF="https://en.wikipedia.org/wiki/Point_in_polygon#Ray_casting_algorithm">ray casting algorithm</A>
 	 * @param p point to check
 	 * @return <code>true</code> if the point is inside or on the outline - <code>false</code> otherwise.
 	 */
 	public boolean inside(Coordinate p){
 		
+		// this is really fast and gives an approximation.
 		if(!insideBoundingBox(p)){
 			return false;
 		}
 		
+		// move this polygon, so that the coordinate is the origin.
 		List<Coordinate> zeroPoints = new LinkedList<Coordinate>();
 		//check if p is one of the points
 		for(Coordinate corner : points){
 			if(corner==p || p.equals(corner)){
 				return true;
 			}
-			//translate everything to the origin to reduce rounding errors
+			//make the point to prove the origin.
 			zeroPoints.add(corner.minus(p));
 		}
+		// Counts the crosses with the positive range of the x-axis 
+		int crosses = 0;
 		
-		Coordinate zero = new Coordinate(0,0);
-		
-		//create lines and put them in a list
-		List<Line> edges = new LinkedList<Line>();
 		for(int i=0;i<zeroPoints.size()-1;i++){
-			edges.add(new Line(zeroPoints.get(i), zeroPoints.get(i+1)));
-		}
-		
-		//check if p is on any of the lines
-		for(Line l : edges){
-			if(l.isOnLine(zero)){
-				return true;
+			Coordinate c1,c2;
+			int c1Q, c2Q;
+			c1 = zeroPoints.get(i);
+			c2 = zeroPoints.get(i+1);
+			c1Q = c1.getQuadrant();
+			c2Q = c2.getQuadrant();
+			// sort by quadrant to have lesser ifs
+			if(c2Q<c1Q) {
+				Coordinate tmp = c1;
+				c1 = c2;
+				c2 = tmp;
+				c1Q = c1.getQuadrant();
+				c2Q = c2.getQuadrant();
+			}
+			// first to fourth quadrant always crosses.
+			if(c1Q==1 && c2Q==4)
+				crosses++;
+			// second to fourth only crosses if it also crosses the first quadrant
+			if(c1Q==2 && c2Q==4) {
+				double m = (c2.latitude - c1.latitude) / (c2.longitude - c1.longitude);
+				double s = -m*c1.longitude + c1.latitude;
+				if(s>0)
+					crosses++;
+				if(s==0) // the point lies on a line and is therefore inside.
+					return true;
+			}
+			// first to third only crosses, if it also crosses the fourth quadrant.
+			if(c1Q==1 && c2Q==3) {
+				double m = (c1.latitude - c2.latitude) / (c1.longitude - c2.longitude);
+				double s = -m*c2.longitude + c2.latitude;
+				if(s<0)
+					crosses++;
+				if(s==0) // the point lies on a line and is therefore inside.
+					return true;
 			}
 		}
-		
-		//if this is not an area and p doesn't lie on an edge, then p can't be inside
-		if(!isArea()){
-			return false;
+
+		// we know at this point, that the coordinate is not on any line,
+		// so if it is not an area, it is not inside the line.
+		if(!isArea()) {
+			return false;			
 		}
-		
-		//do ray casting
-		//create the ray
-		Line ray = new Line(zero, new Coordinate(0, 1.));
-		//if necessary rotate ray until no corner of this polyline is on it
-		while(Coordinate.pointsOnLine(zeroPoints, ray)){
-			Coordinate newEnd = ray.getEnd();
-			newEnd.longitude += ray.getNormalVector().longitude/10.;
-			newEnd.latitude += ray.getNormalVector().latitude/10.;
-			ray.setEnd(newEnd);
-		}
-		
-		//change basis of all edges
-		List<Line> transformedEdges = new LinkedList<Line>();
-		for(Line l: edges){
-			transformedEdges.add(
-					new Line(ray.basisChange(l.getStart()),
-							ray.basisChange(l.getEnd())));
-		}
-		
-		//delete all transformed edges where both points have longitude<0
-		//and delete all lines with both ends on the same side of ray
-		Coordinate start, end;
-		for(int i=0;i<transformedEdges.size();i++){
-			start = transformedEdges.get(i).getStart();
-			end = transformedEdges.get(i).getEnd();
-			
-			if(start.longitude<0. && end.longitude<0.){
-				transformedEdges.remove(i);
-				i--;
-				continue;
-			}
-			
-			if(Math.signum(start.latitude) == Math.signum(end.latitude)){
-				transformedEdges.remove(i);
-				i--;
-				continue;
-			}
-		}
-		
-		//the lines left are those that cross ray.
-		//if their number is even p is outside the polygon
-		if(transformedEdges.size()%2 == 0){
-			return false;
-		}
-		//if their number is odd p is inside the polygon
-		else{
-			return true;
-		}
+		return (crosses%2==1);
 	}
 	
 	/**

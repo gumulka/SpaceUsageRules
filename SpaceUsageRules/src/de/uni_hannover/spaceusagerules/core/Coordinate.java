@@ -174,6 +174,16 @@ public class Coordinate  implements Serializable {
 		}
 		return nearest;
 	}
+	
+	public int getQuadrant() {
+		if(latitude<0 && longitude<0)
+			return 3;
+		if(latitude<0)
+			return 4;
+		if(longitude<0)
+			return 2;
+		return 1;
+	}
 
 
 	public boolean equals(Object o) {

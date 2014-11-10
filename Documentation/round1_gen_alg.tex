@@ -20,7 +20,7 @@ haben wir beschlossen unser selbst definiertes Regelwerk abschließend gegen ein
 \subsection{Ausgabedaten}
 Das System ist so entworfen, dass es als Ausgabe Daten liefert wie in \fref{sec:Eingabedaten_Wir} von unserem Algortihmus verlangt werden.
 
-\section{Vorgehensweise}
+\subsection{Vorgehensweise}
 Es werden zunächst für alle Eingabedaten die Daten im Umkreis der Positionsdaten aus Openstreetmap heruntergeladen.
 Aus diesen werden alle möglichen Tags extrahiert. Tags, welche nur einmalig vorkommen, werden ignoriert, um zum einen die Menge zu verkleinern
 und zum anderen die Regeln allgemeiner zu halten und sie so einfacher und besser auf andere Datensätze übertragen zu können.
@@ -37,13 +37,13 @@ Nachdem alle Algorithmen durchgelaufen sind, werden die Optimalen eingesammelt u
 Alle Durchläufe fanden auf dem selben Rechner statt (Core i5-3570K - 16GB RAM)}
 \label{sec:Evaluation_genAlg}
 
-\begin{figure}[h]
-  \begin{subfigure}[b]{\textwidth}
+\begin{figure}
+  \begin{subfigure}{\textwidth}
   \includegraphics[width=\textwidth]{LaufzeitGen90Q.png}
   \caption{Qualität}
   \end{subfigure}
 
-  \begin{subfigure}[b]{\textwidth}
+  \begin{subfigure}{\textwidth}
   \includegraphics[width=16cm]{LaufzeitGen90T.png}
   \caption{Laufzeit}
   \end{subfigure}
@@ -55,14 +55,14 @@ Wie in \fref{fig:GenAlgAll} zu sehen ist, wird die Laufzeit und die Ergebnisse d
 wenn man den Merge-Wert möglichst hoch setzt. Kein anderer Faktor hat so einen positiven Einfluss auf das Ergebniss.
 (Bei höheren Populationsgrößen steigt zwar auch die Qualität, aber gleichzeitig auch die Laufzeit im Gegensatz zum Merge-Wert)
 
-\begin{figure}[h]
-  \begin{subfigure}[h]{\textwidth}
+\begin{figure}
+  \begin{subfigure}{\textwidth}
   \includegraphics[width=\textwidth]{LaufzeitMerge5Q.png}
   \caption{Qualität}
   \label{fig:QualitätMerge5}
   \end{subfigure}
 
-  \begin{subfigure}[h]{\textwidth}
+  \begin{subfigure}{\textwidth}
   \includegraphics[width=\textwidth]{LaufzeitMerge5T.png}
   \caption{Laufzeit}
   \label{fig:LaufzeitMerge5}

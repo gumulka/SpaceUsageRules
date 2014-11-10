@@ -46,4 +46,4 @@ clean:
 clean_all: clean
 	rm -f -r doc
 	rm -f ./Laufzeit*.png
-	rm -f ./class* ./dir* ./todo.tex ./doxyref.tex todo.tex
+	rm -f ./class* ./dir* ./todo.tex ./doxyref.tex todo.tex hierarchy.tex
