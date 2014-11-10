@@ -1,6 +1,7 @@
 package de.uni_hannover.spaceusagerules.core;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -88,7 +89,7 @@ public class Polyline  implements Serializable {
 	 * checks if an intersection between two polygons is possible by using bounding boxes.
 	 * 
 	 * it is much faster, than calculation the actual intersection. 
-	 * @param p2 the second Polygone
+	 * @param p2 the second polygon
 	 * @return true if the bounding boxes overlap.
 	 */
 	public boolean intersectionPossible(Polyline p2) {
@@ -314,24 +315,32 @@ public class Polyline  implements Serializable {
 	
 	
 	/**
-	 * @todo implementation
+	 * TODO implementation
 	 * return the union of this and the other polyline or null if they don't intersect/have no Point in common.
-	 * @param p2 the second Polyline
+	 * @param other the second Polyline
 	 * @return a new Polyline as the union of the two polylines or null
 	 */
-	public Polyline getUnion(Polyline p2) {
+	public Polyline getUnion(Polyline other) {
+		//if one or both are not polygons, then abort
+		if(!(isArea() && other.isArea())) return null;
+		
+		//if the bounding boxes are disjoint, then abort
+		if(!intersectionPossible(other)) return null;
+		
+		
+
 		return null;
 	}
 	
 	/**
 	 * Returns a list with the intersections of two polylines (or outlines of polygons).
 	 * If they don't meet, an empty list is returned.
-	 * @todo methode erstellen, welche ein Polygon erstellt, dass aus der Schnittmenge zweier Polygone besteht.
+	 * TODO methode erstellen, welche ein Polygon erstellt, dass aus der Schnittmenge zweier Polygone besteht.
 	 * Die hier sieht gerade noch so falsch aus...
 	 * @param other the other polyline to intersect with
 	 * @return list of intersections or empty list of there are no intersections.
 	 */
-	public List<Coordinate> getIntersections(Polyline other){
+	public List<Coordinate> getIntersectingPoints(Polyline other){
 		List<Coordinate> intersections = new Vector<Coordinate>();
 
 		for(Coordinate c1:points){
@@ -361,4 +370,47 @@ public class Polyline  implements Serializable {
 		return intersections;
 	}
 	
+	/**
+	 * TODO implement + javadoc
+	 * @param other
+	 * @return
+	 */
+	public Polyline getIntersectionPolygon(Polyline other){
+		
+		//if one or both are not polygons, then abort
+		if(!(isArea() && other.isArea())) return null;
+		
+		//if the bounding boxes are disjoint, then abort
+		if(!intersectionPossible(other)) return null;
+		
+		return null;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(boundingBox);
+		result = prime * result + ((points == null) ? 0 : points.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Polyline other = (Polyline) obj;
+		if (!Arrays.equals(boundingBox, other.boundingBox))
+			return false;
+		if (points == null) {
+			if (other.points != null)
+				return false;
+		} else if (!points.equals(other.points)) //TODO what if points are the same, but different order
+			return false;
+		return true;
+	}
 }
