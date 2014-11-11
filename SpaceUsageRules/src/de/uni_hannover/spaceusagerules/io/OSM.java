@@ -138,7 +138,7 @@ public class OSM {
 					+ ',' + (c.longitude + radius) + ","
 					+ (c.latitude + radius) + "][" + tagname + "=*]";
 		try {
-			/// @todo hier alles kommentieren.
+			/// TODO hier alles kommentieren.
 			Document doc = null;
 			if (buffer && f != null && f.exists() && f.canRead()) {
 				doc = Jsoup.parse(f, "UTF-8");
@@ -191,7 +191,8 @@ public class OSM {
 				}
 				if(best!= null)
 				for (Element x : el) {
-					best.addOriginalTag(x.attr("k"), x.attr("v"));
+					if(!best.getTags().containsKey(x.attr("k")))
+						best.addOriginalTag(x.attr("k"), x.attr("v"));
 				}
 			}
 			

@@ -15,7 +15,6 @@ import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Polyline;
 
 /**
- * @todo Javadoc ins englische umschreiben.
  * A class to read in and write out KML-data from files.
  * @author Fabian Pflug
  */
@@ -58,9 +57,9 @@ public class KML {
 
 
     /**
-     * Lies aus einer Datei die Coordinaten aus und gibt diese als Polyline zurück.
-     * @param kml ein Dateizeiger zu einer Datei, welche gültiges KML enthalten sollte.
-     * @return eine Polyline mit allen extrahierten Koordinaten.
+     * reads the coordinates from a kml-file an returns them in a polyline.
+     * @param kml a filepointer to a file, which should have valid kml
+     * @return a polyline containing all extracted coordinates.
      */
     public static Polyline loadKML(File kml) {
         Document doc = null;
@@ -68,10 +67,12 @@ public class KML {
         try {
 			doc = Jsoup.parse(kml, "UTF-8");
 	        Element e = doc.select("coordinates").first();
-	        for(String c : e.text().split(" ")) {
+	        for(String c : e.text().split(" ")) { // we can split by space, since it is not allowed to have spaces between coordinates and Jsoup makes a space from every newline
+	        	// see also <a href="https://developers.google.com/kml/documentation/kmlreference#coordinates">https://developers.google.com/kml/documentation/kmlreference#coordinates</a>
 	            String[] bla = c.split(",");
 	            double lon = Double.parseDouble(bla[0]);
 	            double lat = Double.parseDouble(bla[1]);
+	            // there can be an optional third parameter, which is the altitude, but we don't use it
 	            coordinates.add(new Coordinate(lat,lon));
 	        }
 		} catch (IOException e1) {
@@ -82,26 +83,24 @@ public class KML {
 
     
     /**
-     * Macht aus den Koordinaten gültiges KML und schreibt es in eine Datei raus.
-     * @param coordinates Liste von Koordinaten.
-     * @param f Die Datei in welche das KML geschrieben werden soll.
-     * @throws UnsupportedEncodingException
-     * @throws IOException Alle IO-Exceptions, welche beim schreiben geworfen werden.
+     * makes valid kml from the given coordinates and writes it to the given file 
+     * @param coordinates list of coordinates
+     * @param f the file to write to.
+     * @throws IOException all exceptions encountered on trying to write the file.
      */
     public static void writeKML(Polyline p, File f) throws UnsupportedEncodingException, IOException {
     	writeKML(p, "", f);
     }
     
     /**
-     * Macht aus den Koordinaten gültiges KML und schreibt es in eine Datei raus.
-     * @param coordinates Liste von Koordinaten.
-     * @param name Namen, welcher in Google Earth angezeigt werden soll.
-     * @param f Die Datei in welche das KML geschrieben werden soll.
-     * @throws UnsupportedEncodingException
-     * @throws IOException Alle IO-Exceptions, welche beim schreiben geworfen werden.
+     * makes valid kml from the given coordinates and writes it to the given file 
+     * @param coordinates list of coordinates
+     * @param name a name to be shown in google earth
+     * @param f the file to write to.
+     * @throws IOException all exceptions encountered on trying to write the file.
      */
     public static void writeKML(Polyline p, String name, File f) 
-    		throws UnsupportedEncodingException, IOException {
+    		throws IOException {
     	OutputStream os = new FileOutputStream(f);
     	BufferedOutputStream bos = new BufferedOutputStream(os);
     	String kml = writeKML(p, name);
@@ -111,15 +110,15 @@ public class KML {
     }
     
     /**
-     * Macht aus einer Liste von Coordinaten und einem Namen eine KML-Representation.
-     * @param coordinates Liste von Koordinaten.
-     * @param name Namen, welcher in Google Earth angezeigt werden soll.
-     * @return String mit einem gültigen KML-XML
+     * makes valid kml from the given coordinates and writes it to the given file 
+     * @param coordinates list of coordinates
+     * @param name a name to be shown in google earth
+     * @return String containing valid kml
      */
     public static String writeKML(Polyline p, String name) {
         String coords = "";
         for(Coordinate l : p.getPoints()) {
-            coords += l.latitude + "," + l.longitude + "\n";
+            coords += l.latitude + "," + l.longitude + " \n";
         }
         return first + name + second + coords + third;
     }

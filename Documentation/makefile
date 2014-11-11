@@ -7,8 +7,6 @@ doku: doxyref.tex
 doxyref.tex:
 	cd .. ; doxygen Doxyfile
 	cp doc/class* .
-	cp doc/dir* .
-	cp doc/todo.tex .
 	cd doc; sed -n '/input{/p; /chapter{/p' refman.tex > doxyref.tex
 	cp doc/doxyref.tex .
 
@@ -38,7 +36,7 @@ LaufzeitGen90Q.png:
 	rm tmp.txt
 
 show:
-	evince main.pdf
+	evince main.pdf &
 
 clean:
 	rm -f *.ps *.dvi *.aux *.toc *.idx *.ind *.ilg *.log *.out *.brf *.blg *.bbl main.pdf
@@ -46,4 +44,4 @@ clean:
 clean_all: clean
 	rm -f -r doc
 	rm -f ./Laufzeit*.png
-	rm -f ./class* ./dir* ./todo.tex ./doxyref.tex todo.tex hierarchy.tex
+	rm -f ./class* ./dir* ./doxyref.tex 

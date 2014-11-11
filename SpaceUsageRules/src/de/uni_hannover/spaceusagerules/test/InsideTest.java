@@ -81,6 +81,23 @@ public class InsideTest {
 		c = new Coordinate(52.42950,9.72761);
 		assertTrue(line.inside(c));
 		
+		// sehr starke Steigung, um zu gucken ob dies zu Problemen führt.
+		line = new Polyline();
+		line.add(new Coordinate(-6000,-0.0000001));
+		line.add(new Coordinate(4000,0.0000001));
+		line.add(new Coordinate(6000,-0.0000001));
+		line.add(new Coordinate(-6000,-0.0000001));
+		c= new Coordinate(0,0);
+		assertTrue(line.inside(c));
+		
+		// sehr starke Steigung, um zu gucken ob dies zu Problemen führt.
+		line = new Polyline();
+		line.add(new Coordinate(-6000,-0.0000001));
+		line.add(new Coordinate(6001,0.0000001));
+		line.add(new Coordinate(6000,-0.0000001));
+		line.add(new Coordinate(-6000,-0.0000001));
+		c= new Coordinate(0,0);
+		assertTrue(!line.inside(c));
 	}
 	
 

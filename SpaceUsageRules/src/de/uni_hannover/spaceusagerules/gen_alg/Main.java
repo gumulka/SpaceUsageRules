@@ -3,11 +3,9 @@ package de.uni_hannover.spaceusagerules.gen_alg;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -26,7 +24,7 @@ import de.uni_hannover.spaceusagerules.io.Image;
 import de.uni_hannover.spaceusagerules.io.OSM;
 
 /**
- * @todo die Javadoc schreiben.
+ * TODO die Javadoc schreiben.
  * Klasse, welche für jede SpaceUsageRule aus dem Testdatensatz einen genetischen Algorithmus erstellt und diesen durchlaufen lässt.
  */
 public class Main extends Thread implements Comparable<Main>{
@@ -69,8 +67,7 @@ public class Main extends Thread implements Comparable<Main>{
 			else {
 				// fügt der Liste aller möglichen möglichkeiten die in der Umgebung dieses Tags vorkommenden hinzu.
 				String filename = String.format(Locale.GERMAN,"../SpaceUsageRulesVis/assets/%s.jpg",bla[0]);
-				InputStream is = new FileInputStream(new File(filename));
-				for(Way w : OSM.getObjectList(Image.readCoordinates(is))) {
+				for(Way w : OSM.getObjectList(Image.readCoordinates(filename))) {
 					for(Entry<String,String> e : w.getTags().entrySet()) {
 						Integer value = possibilities.get(e.getKey());
 						if(value == null) 

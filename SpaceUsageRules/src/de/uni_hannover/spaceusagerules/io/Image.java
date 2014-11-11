@@ -16,8 +16,7 @@ import com.drew.metadata.Tag;
 import de.uni_hannover.spaceusagerules.core.Coordinate;
 
 /**
- * @todo Javadoc ins englische umschreiben.
- * Klasse zum Einlesen von Bild-Metadaten.
+ * Class to read in image-metadata and give the geocoordination, where the image was made.
  * 
  * @author Fabian Pflug
  *
@@ -25,36 +24,25 @@ import de.uni_hannover.spaceusagerules.core.Coordinate;
 public class Image {
 	
 	/**
-	 * List die Datei ein und extrahiert aus dem Metadaten die Coordinaten, an denen das Bild aufgenommen wurde, wenn vorhanden.
-	 * @param filename der Dateiname des Bildes.
-	 * @return Die GPS Position an der es aufgenommen wurde.
-	 * @throws ImageProcessingException
-	 * @throws IOException
+	 * reads in the file and extracts the geocoordination if possible.
+	 * @param filename the filename of the image
+	 * @return the gps position where the image was taken.
+	 * @throws ImageProcessingException if the metadata can't be read.
+	 * @throws IOException if the file can't be read.
 	 */
 	public static Coordinate readCoordinates(String filename) throws ImageProcessingException, IOException {
 		return readCoordinates(new File(filename));
 	}
 
 	/**
-	 * List die Datei ein und extrahiert aus dem Metadaten die Coordinaten, an denen das Bild aufgenommen wurde, wenn vorhanden.
-	 * @param f Der Dateizeiger zum Bild.
-	 * @return Die GPS Position an der es aufgenommen wurde.
-	 * @throws ImageProcessingException
-	 * @throws IOException
+	 * reads in the file and extracts the geocoordination if possible.
+	 * @param f filepointer to the image
+	 * @return the gps position where the image was taken.
+	 * @throws ImageProcessingException if the metadata can't be read.
+	 * @throws IOException if the file can't be read.
 	 */
 	public static Coordinate readCoordinates(File f) throws ImageProcessingException, IOException {
 		InputStream is = new FileInputStream(f);
-		return readCoordinates(is);
-	}
-	
-	/**
-	 * List die Datei ein und extrahiert aus dem Metadaten die Coordinaten, an denen das Bild aufgenommen wurde, wenn vorhanden.
-	 * @param is Ein Stream, aus welchem ein Bild gelesen werden kann.
-	 * @return Die GPS Position an der es aufgenommen wurde.
-	 * @throws ImageProcessingException
-	 * @throws IOException
-	 */
-	public static Coordinate readCoordinates(InputStream is) throws ImageProcessingException, IOException {
 		BufferedInputStream bis = new BufferedInputStream(is);
 		Metadata meta = ImageMetadataReader.readMetadata(bis, false);
 		double lat = 0, lon=0;

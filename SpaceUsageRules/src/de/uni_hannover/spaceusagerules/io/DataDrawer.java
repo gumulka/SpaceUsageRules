@@ -121,7 +121,6 @@ public class DataDrawer {
 		gr.drawLine(centerX, centerY-3, centerX, centerY+3);
 		
 		
-		//TODO draw Tags
 		List<String> tag = new Vector<String>();
 		for(String key : w.getTags().keySet()){
 			tag.add(key+"->"+w.getTags().get(key));
@@ -212,7 +211,8 @@ public class DataDrawer {
 		
 		//draw polygons
 		for(Way w : data){
-			drawWay(w);
+			if(w.isArea())
+				drawWay(w);
 		}
 		
 		//draw reference point p in special manner
@@ -231,7 +231,7 @@ public class DataDrawer {
 	public void saveImage(String name) throws IOException
 	{
 		
-		///@todo optional: create metadata
+		///XXX create metadata
 		
 		FileOutputStream fos = new FileOutputStream(name);
 		

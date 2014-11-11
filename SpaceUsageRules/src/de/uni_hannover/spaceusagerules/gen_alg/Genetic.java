@@ -1,9 +1,7 @@
 package de.uni_hannover.spaceusagerules.gen_alg;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,7 +18,7 @@ import de.uni_hannover.spaceusagerules.io.KML;
 import de.uni_hannover.spaceusagerules.io.OSM;
 
 /** 
- * @todo die javadoc ins englische umschreiben.
+ * TODO die javadoc ins englische umschreiben.
  * Klasse zum durchlaufen eines Genetischen Algorithmus.
  */
 public class Genetic extends Thread implements Comparable<Genetic>{
@@ -68,8 +66,7 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 		}
 		for(String s : IDs) {
 				String filename = String.format(Locale.GERMAN,"../SpaceUsageRulesVis/assets/%s.jpg",s);
-				InputStream is = new FileInputStream(new File(filename));
-				Coordinate c = Image.readCoordinates(is); 
+				Coordinate c = Image.readCoordinates(filename); 
 				starting.add(c);
 				filename = String.format(Locale.GERMAN,"../SpaceUsageRulesVis/assets/%s.truth.kml",s);
 				truths.add(KML.loadKML(new File(filename)));

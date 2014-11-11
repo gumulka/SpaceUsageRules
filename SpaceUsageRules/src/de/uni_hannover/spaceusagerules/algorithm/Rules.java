@@ -37,6 +37,26 @@ public class Rules{
 	}
 	
 	/**
+	 * parses a line into a valid representation of Rules.
+	 * @param line a string describing a line of rules.
+	 * \latexonly as defined in \fref{sec:Eingabedaten_Wir} \endlatexonly
+	 */
+	public Rules(String line) {
+		String verbote = line.substring(line.indexOf('[')+1, line.indexOf(']'));
+		String rules = line.substring(line.lastIndexOf('[')+1, line.lastIndexOf(']'));
+		String[] v = verbote.split(",");
+		restrictions = new TreeSet<String>();
+		for(String s : v)
+			restrictions.add(s.trim());
+		weights = new TreeMap<String, Double>();
+		for(String s : rules.split(",")) {
+			String[] bla = s.split("->");
+			weights.put(bla[0].trim(), Double.parseDouble(bla[1]));
+		}
+	}
+	
+	
+	/**
 	 *  Initializes with the given rules and restrictions.
 	 * @param restrictions a set of restrictions.
 	 * @param rules a set of rules as "osm-key - osm-value to [0..2]"
