@@ -6,13 +6,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Vector;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+
 import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
-import de.uni_hannover.spaceusagerules.core.Polyline;
+import de.uni_hannover.spaceusagerules.core.Way;
 
 /**
  * A class to read in and write out KML-data from files.
@@ -61,9 +66,9 @@ public class KML {
      * @param kml a filepointer to a file, which should have valid kml
      * @return a polyline containing all extracted coordinates.
      */
-    public static Polyline loadKML(File kml) {
+    public static Geometry loadKML(File kml) {
         Document doc = null;
-        Polyline coordinates = new Polyline();
+        List<Coordinate> coordinates = new Vector<Coordinate>();
         try {
 			doc = Jsoup.parse(kml, "UTF-8");
 	        Element e = doc.select("coordinates").first();
@@ -78,7 +83,11 @@ public class KML {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-        return coordinates;
+        
+        //create Geometry object from the list of points
+        Geometry output = Way.createGeometry(coordinates);
+        
+        return output;
     }
 
     
@@ -88,7 +97,7 @@ public class KML {
      * @param f the file to write to.
      * @throws IOException all exceptions encountered on trying to write the file.
      */
-    public static void writeKML(Polyline p, File f) throws UnsupportedEncodingException, IOException {
+    public static void writeKML(Geometry p, File f) throws UnsupportedEncodingException, IOException {
     	writeKML(p, "", f);
     }
     
@@ -99,7 +108,7 @@ public class KML {
      * @param f the file to write to.
      * @throws IOException all exceptions encountered on trying to write the file.
      */
-    public static void writeKML(Polyline p, String name, File f) 
+    public static void writeKML(Geometry p, String name, File f) 
     		throws IOException {
     	OutputStream os = new FileOutputStream(f);
     	BufferedOutputStream bos = new BufferedOutputStream(os);
@@ -115,9 +124,10 @@ public class KML {
      * @param name a name to be shown in google earth
      * @return String containing valid kml
      */
-    public static String writeKML(Polyline p, String name) {
+    public static String writeKML(Geometry p, String name) {
         String coords = "";
-        for(CoordinateInMa l : p.getPoints()) {
+        for(Coordinate l : p.getCoordinates()) {
+        	//y=latitude, x=longitude
             coords += l.y + "," + l.x + " \n";
         }
         return first + name + second + coords + third;

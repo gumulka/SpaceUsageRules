@@ -73,7 +73,7 @@ public class Rules{
 	 * @return the weighted distance by tag and rules
 	 */
 	public double calcDist(CoordinateInMa c, Way w) {
-		double distance = c.distanceTo(w.getPolyline());
+		double distance = w.distanceTo(c);
 		w.addOriginalTag("InMa_preDistance", "" + distance);
 		distance += OFFSET;
 		String combine;
@@ -104,13 +104,13 @@ public class Rules{
 		double d;
 		for(Way w : ways) {
 			// we only look at areas at the moment, because we want to have a polygon, no polyline.
-			if(!w.isArea())
+			if(!w.isPolygon())
 				continue;
 			d = calcDist(location, w);
 			// this is used later in DataDrawer to print out the distance to the user.
 			w.addOriginalTag("InMa_Distance", "" + d);
 			// get the Object with the lowest distance, or if equal, the smaller one.
-			if(d<distance || (d==distance && w.getPolyline().boundingBoxArea() < best.getPolyline().boundingBoxArea())) {
+			if(d<distance || (d==distance && w.getBoundingBoxArea() < best.getBoundingBoxArea())) {
 				best = w;
 				distance = d;
 			}

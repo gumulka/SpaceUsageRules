@@ -10,8 +10,9 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 
+import com.vividsolutions.jts.geom.Geometry;
+
 import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
-import de.uni_hannover.spaceusagerules.core.Polyline;
 import de.uni_hannover.spaceusagerules.core.Way;
 import de.uni_hannover.spaceusagerules.io.Image;
 import de.uni_hannover.spaceusagerules.io.KML;
@@ -37,7 +38,7 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 	public static  int mergeFrom = popsize/2;
 	
   	/** Die Liste der Polygone, welche das richtige Ergebnis representieren. */
-	private List<Polyline> truths;
+	private List<Geometry> truths;
   	/** die Liste der Coordinaten, von welchem aus die Lösungspolygone gesucht werden sollen */
 	private List<CoordinateInMa> starting;
   	/** Eine Liste von Listen, welche die Möglichen Lösungen Respresentieren. */
@@ -55,7 +56,7 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 	public Genetic(String signlist, Set<String> IDs, Collection<String> possible) throws Exception {
 		suche = signlist;
 		this.possible = possible;
-		truths = new ArrayList<Polyline>();
+		truths = new ArrayList<Geometry>();
 		starting = new ArrayList<CoordinateInMa>();
 		possebilities = new ArrayList<Set<Way>>();
 		pops = new ArrayList<Population>();

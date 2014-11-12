@@ -3,6 +3,7 @@ package de.uni_hannover.spaceusagerules.core;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -109,32 +110,38 @@ public class Way implements Serializable, Comparable<Way>{
         this.id = -1;
     }
 
-	/**
-     * erweitert die Polyline um einen weiteren Punkt.
-     */
-    public void addCoordinate(CoordinateInMa c) {
-        coordinates.add(c);
-    }
+//	/**
+//     * erweitert die Polyline um einen weiteren Punkt.
+//     */
+//    @Deprecated
+//    public void addCoordinateInMa(CoordinateInMa c) {
+//        coordinates.add(c);
+//    }
     
     /**
-     * Adds a {@link com.vividsolutions.jts.geom.Coordinate} to this shape.
-     * JTS version.
+     * Adds a {@link Coordinate} to this shape.
+     * May change the type of shape from Point do LineString or from
+     * LineString to Polygon. 
      * @param c point to append
      */
-    public void addCoordinate(com.vividsolutions.jts.geom.Coordinate c){
-    	//TODO is this really necessary ???
+    public void addCoordinate(Coordinate c){
+    	//if there is no point yet, create one
     	if(outline==null){
     		outline = new GeometryFactory().createPoint(c);
     	}
+    	//a point plus another point is a line
     	if(isPoint()){
-    		com.vividsolutions.jts.geom.Coordinate[] points = {outline.getCoordinates()[0], c};
+    		Coordinate[] points = {outline.getCoordinates()[0], c};
     		outline = new GeometryFactory().createLineString(points);
     	}
+    	//more than one point 
     	else{
-			com.vividsolutions.jts.geom.Coordinate[] points = new com.vividsolutions.jts.geom.Coordinate[outline.getNumPoints()+1];
+			Coordinate[] points = new Coordinate[outline.getNumPoints()+1];
 			System.arraycopy(outline.getCoordinates(), 0, points, 0, outline.getNumPoints());
 			points[points.length-1] = c;
-    		if(isPolygon()){
+			//if it is already a polygon or the first and the last points are the same
+			//create a polygon
+    		if(isPolygon() || points[0].equals(c)){
     			outline = new GeometryFactory().createPolygon(points);
     		}
     		else if(isLineString()){
@@ -254,6 +261,46 @@ public class Way implements Serializable, Comparable<Way>{
     	}
     	return output;
     }
+    
+    
+    public double distanceTo(Coordinate c){
+    	if(outline==null) return 0;
+    	return outline.distance(new GeometryFactory().createPoint(c));
+    }
+    
+    
+    
+    public static Geometry createGeometry(Coordinate[] coordinates){
+    	 Geometry output;
+         if(coordinates.length==1){
+         	output = new GeometryFactory().createPoint(coordinates[0]);
+         	return output;
+         }
+         
+         //if the first and the last point are the same, make a polygon
+         if(coordinates[0].equals(coordinates[coordinates.length-1])){
+         	output = new GeometryFactory().createPolygon(coordinates);
+         	return output;
+         }
+         else{
+          	output = new GeometryFactory().createLineString(coordinates);
+          	return output;
+         }
+         
+         
+    }
+    
+    public static Geometry createGeometry(List<Coordinate> coordinates){
+    	Coordinate[] newInput = new Coordinate[coordinates.size()];
+    	for(int i=0;i<newInput.length;i++){
+    		newInput[i] = coordinates.get(i);
+    	}
+    	return createGeometry(newInput);
+    }
+    
+    
+    
+    
     
     /**
      * Returns the area of the bounding box.
