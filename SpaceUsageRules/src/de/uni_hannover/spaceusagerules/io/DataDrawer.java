@@ -95,7 +95,7 @@ public class DataDrawer {
 		//create drawable polygon
 		int[] ints;
 		Polygon polygon = new Polygon();
-		for(CoordinateInMa c : w.getPolyline().getPoints()){
+		for(CoordinateInMa c : w.getPoints()){
 			ints = transformToInt(c);
 			polygon.addPoint(ints[0]+margin, ints[1]+margin);
 		}
@@ -119,7 +119,6 @@ public class DataDrawer {
 		gr.setColor(color);
 		gr.drawLine(centerX-3, centerY, centerX+3, centerY);
 		gr.drawLine(centerX, centerY-3, centerX, centerY+3);
-		
 		
 		List<String> tag = new Vector<String>();
 		for(String key : w.getTags().keySet()){
@@ -189,7 +188,7 @@ public class DataDrawer {
 	private List<Way> retrieveData(CoordinateInMa p, float radius){
 		List<Way> output = new LinkedList<Way>(); 
 		for(Way w : OSM.getObjectList(p, radius))
-			if(w.isArea())
+			if(w.isPolygon())
 				output.add(w);
 		return output;
 	}
@@ -211,7 +210,7 @@ public class DataDrawer {
 		
 		//draw polygons
 		for(Way w : data){
-			if(w.isArea())
+			if(w.isPolygon())
 				drawWay(w);
 		}
 		
