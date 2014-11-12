@@ -299,15 +299,13 @@ public class Polyline  implements Serializable {
 	 * @return a new Polyline as the union of the two polylines or null
 	 */
 	public Polyline getUnion(Polyline other) {
-		//if one or both are not polygons, then abort
-		if(!(isArea() && other.isArea())) return null;
+		
 		
 		//if the bounding boxes are disjoint, then abort
 		if(!intersectionPossible(other)) return null;
 		
+		return PolygonMerger.merge(this, other);
 		
-
-		return null;
 	}
 	
 	/**
