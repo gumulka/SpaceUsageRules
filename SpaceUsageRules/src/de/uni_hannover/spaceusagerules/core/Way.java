@@ -9,6 +9,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import com.vividsolutions.jts.geom.Polygon;
+
 /**
  * Representation of an OSM-Object
  * 
@@ -24,6 +26,9 @@ public class Way implements Serializable, Comparable<Way>{
 
     /** the polyline or polygon belonging to this object. */
 	Polyline coordinates;
+	
+	Polygon polygon;
+	
     /** map with key - value pairs for this object. (tags in OSM) */ 
     private Map<String,String> tags;
     /** an optional name. if set it is used for the toString Method */
