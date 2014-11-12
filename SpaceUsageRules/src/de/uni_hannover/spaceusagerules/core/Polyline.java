@@ -11,6 +11,7 @@ import java.util.Vector;
  * @author Peter Zilz
  *
  */
+@Deprecated
 public class Polyline  implements Serializable {
 	
 	/**
@@ -20,7 +21,7 @@ public class Polyline  implements Serializable {
 	/**
 	 * Eine Liste mit punkten, welche diese Polylinie ausmachen.
 	 */
-	List<Coordinate> points;
+	List<CoordinateInMa> points;
 	/**
 	 * die Bounding Box, welche sich um diese Polyline spannt.
 	 */
@@ -30,7 +31,7 @@ public class Polyline  implements Serializable {
 	 * Konstruktor, welche die BoundingBox mit maximalen Werten Initialisiert, sodass sie bei dem erstbesten Punkt richtig ist.
 	 */
 	public Polyline() {
-		points = new LinkedList<Coordinate>();
+		points = new LinkedList<CoordinateInMa>();
 		boundingBox[0] =  Double.MAX_VALUE;
 		boundingBox[1] =  Double.MIN_VALUE;
 		boundingBox[2] =  Double.MAX_VALUE;
@@ -41,47 +42,47 @@ public class Polyline  implements Serializable {
 	 * 
 	 * @return
 	 */
-	public List<Coordinate> getPoints() {
+	public List<CoordinateInMa> getPoints() {
 		return points;
 	}
 	
-	public Polyline(List<Coordinate> coords) {
-		points = new LinkedList<Coordinate>();
+	public Polyline(List<CoordinateInMa> coords) {
+		points = new LinkedList<CoordinateInMa>();
 		boundingBox[0] =  Double.MAX_VALUE;
 		boundingBox[1] =  Double.MIN_VALUE;
 		boundingBox[2] =  Double.MAX_VALUE;
 		boundingBox[3] =  Double.MIN_VALUE;
-		for(Coordinate c : coords) {
+		for(CoordinateInMa c : coords) {
 			add(c);
 		}
 	}
 	
-	public void add(Coordinate c) {
-		if(c.latitude < boundingBox[0])
-			boundingBox[0] = c.latitude;
-		if(c.latitude > boundingBox[1])
-			boundingBox[1] = c.latitude;
-		if(c.longitude < boundingBox[2])
-			boundingBox[2] = c.longitude;
-		if(c.longitude > boundingBox[3])
-			boundingBox[3] = c.longitude;
+	public void add(CoordinateInMa c) {
+		if(c.y < boundingBox[0])
+			boundingBox[0] = c.y;
+		if(c.y > boundingBox[1])
+			boundingBox[1] = c.y;
+		if(c.x < boundingBox[2])
+			boundingBox[2] = c.x;
+		if(c.x > boundingBox[3])
+			boundingBox[3] = c.x;
 		points.add(c);
 	}
 
 	
-	public void addAll(Collection<Coordinate> coords) {
-		for(Coordinate c : coords) {
+	public void addAll(Collection<CoordinateInMa> coords) {
+		for(CoordinateInMa c : coords) {
 			add(c);
 		}
 	}
 	
-	public List<Coordinate> getBoundingBoxPolygon() {
-		List<Coordinate> back = new LinkedList<Coordinate>();
-		back.add(new Coordinate(boundingBox[0],boundingBox[2]));
-		back.add(new Coordinate(boundingBox[1],boundingBox[2]));
-		back.add(new Coordinate(boundingBox[1],boundingBox[3]));
-		back.add(new Coordinate(boundingBox[0],boundingBox[3]));
-		back.add(new Coordinate(boundingBox[0],boundingBox[2]));
+	public List<CoordinateInMa> getBoundingBoxPolygon() {
+		List<CoordinateInMa> back = new LinkedList<CoordinateInMa>();
+		back.add(new CoordinateInMa(boundingBox[0],boundingBox[2]));
+		back.add(new CoordinateInMa(boundingBox[1],boundingBox[2]));
+		back.add(new CoordinateInMa(boundingBox[1],boundingBox[3]));
+		back.add(new CoordinateInMa(boundingBox[0],boundingBox[3]));
+		back.add(new CoordinateInMa(boundingBox[0],boundingBox[2]));
 		return back;
 	}
 	
@@ -157,10 +158,10 @@ public class Polyline  implements Serializable {
 		return (boundingBox[1] - boundingBox[0])*(boundingBox[3]-boundingBox[2]);
 	}
 	
-	public boolean insideBoundingBox(Coordinate c) {
-		if(c.latitude<boundingBox[0] || c.latitude>boundingBox[1])
+	public boolean insideBoundingBox(CoordinateInMa c) {
+		if(c.y<boundingBox[0] || c.y>boundingBox[1])
 			return false;
-		if(c.longitude<boundingBox[2] || c.longitude>boundingBox[3])
+		if(c.x<boundingBox[2] || c.x>boundingBox[3])
 			return false;
 		return true;
 	}
@@ -172,7 +173,7 @@ public class Polyline  implements Serializable {
 	 * @param p point to check
 	 * @return <code>true</code> if the point is inside or on the outline - <code>false</code> otherwise.
 	 */
-	public boolean inside(Coordinate p){
+	public boolean inside(CoordinateInMa p){
 		
 		// this is really fast and gives an approximation.
 		if(!insideBoundingBox(p)){
@@ -180,9 +181,9 @@ public class Polyline  implements Serializable {
 		}
 		
 		// move this polygon, so that the coordinate is the origin.
-		List<Coordinate> zeroPoints = new LinkedList<Coordinate>();
+		List<CoordinateInMa> zeroPoints = new LinkedList<CoordinateInMa>();
 		//check if p is one of the points
-		for(Coordinate corner : points){
+		for(CoordinateInMa corner : points){
 			if(corner==p || p.equals(corner)){
 				return true;
 			}
@@ -193,7 +194,7 @@ public class Polyline  implements Serializable {
 		int crosses = 0;
 		
 		for(int i=0;i<zeroPoints.size()-1;i++){
-			Coordinate c1,c2;
+			CoordinateInMa c1,c2;
 			int c1Q, c2Q;
 			c1 = zeroPoints.get(i);
 			c2 = zeroPoints.get(i+1);
@@ -201,7 +202,7 @@ public class Polyline  implements Serializable {
 			c2Q = c2.getQuadrant();
 			// sort by quadrant to have lesser ifs
 			if(c2Q<c1Q) {
-				Coordinate tmp = c1;
+				CoordinateInMa tmp = c1;
 				c1 = c2;
 				c2 = tmp;
 				c1Q = c1.getQuadrant();
@@ -212,8 +213,8 @@ public class Polyline  implements Serializable {
 				crosses++;
 			// second to fourth only crosses if it also crosses the first quadrant
 			if(c1Q==2 && c2Q==4) {
-				double m = (c2.latitude - c1.latitude) / (c2.longitude - c1.longitude);
-				double s = -m*c1.longitude + c1.latitude;
+				double m = (c2.y - c1.y) / (c2.x - c1.x);
+				double s = -m*c1.x + c1.y;
 				if(s>0)
 					crosses++;
 				if(s==0) // the point lies on a line and is therefore inside.
@@ -221,8 +222,8 @@ public class Polyline  implements Serializable {
 			}
 			// first to third only crosses, if it also crosses the fourth quadrant.
 			if(c1Q==1 && c2Q==3) {
-				double m = (c1.latitude - c2.latitude) / (c1.longitude - c2.longitude);
-				double s = -m*c2.longitude + c2.latitude;
+				double m = (c1.y - c2.y) / (c1.x - c2.x);
+				double s = -m*c2.x + c2.y;
 				if(s<0)
 					crosses++;
 				if(s==0) // the point lies on a line and is therefore inside.
@@ -249,19 +250,19 @@ public class Polyline  implements Serializable {
 	public boolean isOverlapping(Polyline other){
 		
 		//check if they share a corner
-		for(Coordinate c1 : points){
-			for(Coordinate c2: other.points){
+		for(CoordinateInMa c1 : points){
+			for(CoordinateInMa c2: other.points){
 				if(c1.equals(c2)) return true;
 			}
 		}
 		
 		//check if a corner of this is in other
-		for(Coordinate c1 : points){
+		for(CoordinateInMa c1 : points){
 			if(other.inside(c1)) return true;
 		}
 		
 		//check if a corner of other is in this
-		for(Coordinate c2 : other.points){
+		for(CoordinateInMa c2 : other.points){
 			if(inside(c2)) return true;
 		}
 		
@@ -280,11 +281,11 @@ public class Polyline  implements Serializable {
 		if(!isArea()) return 0.;
 		
 		double area=0.;
-		Coordinate c1, c2;
+		CoordinateInMa c1, c2;
 		for(int i=0;i<points.size();i++){
 			c1 = points.get(i);
 			c2 = points.get((i+1)%points.size());
-			area += (c1.longitude+c2.longitude)*(c2.latitude-c1.latitude);
+			area += (c1.x+c2.x)*(c2.y-c1.y);
 		}
 		area /= 2.;
 		
@@ -316,11 +317,11 @@ public class Polyline  implements Serializable {
 	 * @param other the other polyline to intersect with
 	 * @return list of intersections or empty list of there are no intersections.
 	 */
-	public List<Coordinate> getIntersectingPoints(Polyline other){
-		List<Coordinate> intersections = new Vector<Coordinate>();
+	public List<CoordinateInMa> getIntersectingPoints(Polyline other){
+		List<CoordinateInMa> intersections = new Vector<CoordinateInMa>();
 
-		for(Coordinate c1:points){
-			for(Coordinate c2 : other.points){
+		for(CoordinateInMa c1:points){
+			for(CoordinateInMa c2 : other.points){
 				if(c1.equals(c2)) intersections.add(c1); 
 			}
 		}
@@ -335,7 +336,7 @@ public class Polyline  implements Serializable {
 			edges2.add(new Line(other.points.get(i), other.points.get(i+1)));
 		}
 		
-		Coordinate cross;
+		CoordinateInMa cross;
 		for(Line l1 : edges1){
 			for(Line l2: edges2){
 				cross = l1.getIntersection(l2);

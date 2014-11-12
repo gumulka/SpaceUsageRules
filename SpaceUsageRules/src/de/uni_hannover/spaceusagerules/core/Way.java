@@ -3,12 +3,16 @@ package de.uni_hannover.spaceusagerules.core;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import com.vividsolutions.jts.geom.Envelope;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
 /**
@@ -19,15 +23,17 @@ import com.vividsolutions.jts.geom.Polygon;
  */
 public class Way implements Serializable, Comparable<Way>{
 
-    /**
-	 * 
-	 */
+    /**	 */
 	private static final long serialVersionUID = 4356641146890722134L;
 
     /** the polyline or polygon belonging to this object. */
+	@Deprecated
 	Polyline coordinates;
 	
-	Polygon polygon;
+	/** the shape of this way object, can be a {@link Polygon}, {@link LineString},
+	 * or even a {@link Point}.
+	 */
+	private Geometry outline;
 	
     /** map with key - value pairs for this object. (tags in OSM) */ 
     private Map<String,String> tags;
@@ -47,16 +53,6 @@ public class Way implements Serializable, Comparable<Way>{
     private Set<String> removed;
     
 	/**
-     * return a fillColor depending on tags.
-     */
-    @Deprecated
-    public int getFillColor() {
-    	if(tags.containsKey("building"))
-    		return 0x4FAAAA00;
-        return 0x7F999999;
-    }
-
-	/**
      * returns a fillColor depending of the value of a given key.
      */
     public int getFillColor(String key) {
@@ -73,14 +69,6 @@ public class Way implements Serializable, Comparable<Way>{
     }
 
 	/**
-     * return a stroke color depending on tags.
-     */
-    @Deprecated
-    public int getStrokeColor() {
-        return getFillColor() + 0x30000000;
-    }
-
-	/**
      * returns a stroke color depending of the value of a given key.
      */
     public int getStrokeColor(String key) {
@@ -88,10 +76,12 @@ public class Way implements Serializable, Comparable<Way>{
     }
 
     /**
-     * Eine Methode um zu überprüfen ob es sich um eine gültige Polyline handelt.
+     * Checks if the shape of this object is valid.
+     * @return <code>true</code> if valid, <code>false</code> if not
      */
     public boolean isValid() {
-        return coordinates.getPoints().size()>1;
+    	if(outline==null) return false;
+    	return outline.isValid();
     }
 
     /**
@@ -121,14 +111,42 @@ public class Way implements Serializable, Comparable<Way>{
 	/**
      * erweitert die Polyline um einen weiteren Punkt.
      */
-    public void addCoordinate(Coordinate c) {
+    public void addCoordinate(CoordinateInMa c) {
         coordinates.add(c);
     }
-
+    
+    /**
+     * Adds a {@link com.vividsolutions.jts.geom.Coordinate} to this shape.
+     * JTS version.
+     * @param c point to append
+     */
+    public void addCoordinate(com.vividsolutions.jts.geom.Coordinate c){
+    	//TODO is this really necessary ???
+    	if(outline==null){
+    		outline = new GeometryFactory().createPoint(c);
+    	}
+    	if(isPoint()){
+    		com.vividsolutions.jts.geom.Coordinate[] points = {outline.getCoordinates()[0], c};
+    		outline = new GeometryFactory().createLineString(points);
+    	}
+    	else{
+			com.vividsolutions.jts.geom.Coordinate[] points = new com.vividsolutions.jts.geom.Coordinate[outline.getNumPoints()+1];
+			System.arraycopy(outline.getCoordinates(), 0, points, 0, outline.getNumPoints());
+			points[points.length-1] = c;
+    		if(isPolygon()){
+    			outline = new GeometryFactory().createPolygon(points);
+    		}
+    		else if(isLineString()){
+    			outline = new GeometryFactory().createLineString(points);
+    		}
+    	}
+    	
+    }
+    
 	/**
      * erweitert die Polyline um eine Liste von Punkten 
      */
-    public void addAllCoordinates(Collection<Coordinate> coords) {
+    public void addAllCoordinates(Collection<CoordinateInMa> coords) {
         coordinates.addAll(coords);
     }
 
@@ -164,14 +182,6 @@ public class Way implements Serializable, Comparable<Way>{
     	return removed;
     }
 
-	/**
-     * Gibt die Liste der Coordinaten zurück, aus welcher diese Polyline besteht.
-     */
-    @Deprecated
-    public List<Coordinate> getCoordinates() {
-        return coordinates.getPoints();
-    }
-
     /**
      * gibt eine Map mit allen Key-Value paaren zurück.
      */
@@ -197,19 +207,53 @@ public class Way implements Serializable, Comparable<Way>{
 	/**
      * gibt an, ob es sich um eine Polyline oder ein Polygon handelt.
      */
+    @Deprecated
     public boolean isArea() {
         return coordinates.isArea();
     }
-
+    
     /**
-     * gibt die Fläche der Coordinaten zurück.
+     * Checks if the shape of this way is closed polygon
+     * @return <code>true</code> if polygon, <code>false</code> if not
      */
-    public double getArea() {
-    	return coordinates.boundingBoxArea();
+    public boolean isPolygon(){
+    	return outline instanceof Polygon;
+    }
+    
+    /**
+     * Checks if the shape of this is a series of lines (e.g. {@link LineString})
+     * and not a closed polygon.
+     * @return <code>true</code> if sequence of lines, <code>false</code> otherwise
+     */
+    public boolean isLineString(){
+    	return outline instanceof LineString;
+    }
+    
+    /**
+     * Checks if the shape of this object is just a single point
+     * @return <code>true</code> if point, <code>false</code> otherwise
+     */
+    public boolean isPoint(){
+    	return outline instanceof Point;
+    }
+    
+    
+    /**
+     * Returns the area of the bounding box.
+     * @return area of the bounding box
+     */
+    public double getBoundingBoxArea() {
+    	if(outline == null) return 0;
+    	Envelope boundingBox = outline.getEnvelopeInternal();
+    	if(boundingBox.isNull())
+    		return 0;
+    	else return boundingBox.getArea();
+    	//return coordinates.boundingBoxArea();
     }
 
 	/**
-     * Gibt eine String-representation des Objekts zurück.
+     * Returns the name of this object.
+     * @return name
      */
     public String toString() {
         return name;
@@ -218,10 +262,11 @@ public class Way implements Serializable, Comparable<Way>{
     /**
      * gibt die Polylinie zurück.
      */
+    @Deprecated
     public Polyline getPolyline() {
     	return coordinates;
     }
-
+    
     /**
      * gibt die OSM-ID des Objektes zurück.
      * @return OSM-ID
@@ -237,6 +282,26 @@ public class Way implements Serializable, Comparable<Way>{
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+	/**
+	 * Sets the new shape of this object. Should be one of these three:
+	 * <ul><li>{@link Polygon}</li>
+	 * 		<li> {@link LineString} </li>
+	 * 		<li> {@link Point} </li> <ul>
+	 * @param shape new shape
+	 */
+	public void setGeometry(Geometry shape){
+		outline = shape;
+	}
+	
+	/**
+	 * Returns the current shape.
+	 * @return current shape.
+	 */
+	public Geometry getGeometry(){
+		return outline;
+	}
+	
 	
 	@Override
 	public boolean equals(Object obj) {

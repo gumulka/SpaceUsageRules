@@ -13,7 +13,8 @@ import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 
-import de.uni_hannover.spaceusagerules.core.Coordinate;
+import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
+
 
 /**
  * Class to read in image-metadata and give the geocoordination, where the image was made.
@@ -30,7 +31,7 @@ public class Image {
 	 * @throws ImageProcessingException if the metadata can't be read.
 	 * @throws IOException if the file can't be read.
 	 */
-	public static Coordinate readCoordinates(String filename) throws ImageProcessingException, IOException {
+	public static CoordinateInMa readCoordinates(String filename) throws ImageProcessingException, IOException {
 		return readCoordinates(new File(filename));
 	}
 
@@ -41,7 +42,7 @@ public class Image {
 	 * @throws ImageProcessingException if the metadata can't be read.
 	 * @throws IOException if the file can't be read.
 	 */
-	public static Coordinate readCoordinates(File f) throws ImageProcessingException, IOException {
+	public static CoordinateInMa readCoordinates(File f) throws ImageProcessingException, IOException {
 		InputStream is = new FileInputStream(f);
 		BufferedInputStream bis = new BufferedInputStream(is);
 		Metadata meta = ImageMetadataReader.readMetadata(bis, false);
@@ -75,7 +76,8 @@ public class Image {
 				}
 			}
 		}
-		return new Coordinate(lat*lat_dir, lon*lon_dir);
+		
+		return new CoordinateInMa(lat*lat_dir, lon*lon_dir);
 
 	}
 }

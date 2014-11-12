@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 
-import de.uni_hannover.spaceusagerules.core.Coordinate;
+import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
 import de.uni_hannover.spaceusagerules.core.Polyline;
 import de.uni_hannover.spaceusagerules.core.Way;
 import de.uni_hannover.spaceusagerules.io.Image;
@@ -39,7 +39,7 @@ public class Genetic extends Thread implements Comparable<Genetic>{
   	/** Die Liste der Polygone, welche das richtige Ergebnis representieren. */
 	private List<Polyline> truths;
   	/** die Liste der Coordinaten, von welchem aus die Lösungspolygone gesucht werden sollen */
-	private List<Coordinate> starting;
+	private List<CoordinateInMa> starting;
   	/** Eine Liste von Listen, welche die Möglichen Lösungen Respresentieren. */
 	private List<Set<Way>> possebilities;
   	/** Die Liste der Populationen, welche aktuell bearbeitet werden. */ 
@@ -56,7 +56,7 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 		suche = signlist;
 		this.possible = possible;
 		truths = new ArrayList<Polyline>();
-		starting = new ArrayList<Coordinate>();
+		starting = new ArrayList<CoordinateInMa>();
 		possebilities = new ArrayList<Set<Way>>();
 		pops = new ArrayList<Population>();
 		nextGen = new ArrayList<Population>();
@@ -66,7 +66,7 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 		}
 		for(String s : IDs) {
 				String filename = String.format(Locale.GERMAN,"../SpaceUsageRulesVis/assets/%s.jpg",s);
-				Coordinate c = Image.readCoordinates(filename); 
+				CoordinateInMa c = Image.readCoordinates(filename); 
 				starting.add(c);
 				filename = String.format(Locale.GERMAN,"../SpaceUsageRulesVis/assets/%s.truth.kml",s);
 				truths.add(KML.loadKML(new File(filename)));

@@ -17,7 +17,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
 
-import de.uni_hannover.spaceusagerules.core.Coordinate;
+import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
 import de.uni_hannover.spaceusagerules.core.Way;
 
 /**
@@ -42,7 +42,7 @@ public class DataDrawer {
 	private BufferedImage image;
 	
 	/** the center of the area that is to be rendered */ 
-	private Coordinate location;
+	private CoordinateInMa location;
 	
 	/**
 	 * Creates a DataDrawer for a specific location.
@@ -50,7 +50,7 @@ public class DataDrawer {
 	 * @param height height of the picture
 	 * @param middle center of the area to be rendered
 	 */
-	public DataDrawer(int width, int height, Coordinate middle){
+	public DataDrawer(int width, int height, CoordinateInMa middle){
 		this.width = width;
 		this.height = height;
 		this.location = middle;
@@ -95,7 +95,7 @@ public class DataDrawer {
 		//create drawable polygon
 		int[] ints;
 		Polygon polygon = new Polygon();
-		for(Coordinate c : w.getPolyline().getPoints()){
+		for(CoordinateInMa c : w.getPolyline().getPoints()){
 			ints = transformToInt(c);
 			polygon.addPoint(ints[0]+margin, ints[1]+margin);
 		}
@@ -169,11 +169,11 @@ public class DataDrawer {
 	 * @param p GPS coordinates
 	 * @return array of length two. First is <code>x</code> position, second is <code>y</code> position.
 	 */
-	private int[] transformToInt(Coordinate p){
+	private int[] transformToInt(CoordinateInMa p){
 		
 		int[] output = new int[2];
-		output[0] = (int)((p.longitude-location.longitude)/(0.002)*(double)(width-2*margin)) + width/2;
-		output[1] = height/2 - (int)((p.latitude-location.latitude)/(0.002)*(double)(width-2*margin));
+		output[0] = (int)((p.x-location.x)/(0.002)*(double)(width-2*margin)) + width/2;
+		output[1] = height/2 - (int)((p.y-location.y)/(0.002)*(double)(width-2*margin));
 //		output[0] = (int)((p.longitude-minX)/(maxX-minX)*(double)(width-2*margin));
 //		output[1] = (int)((-p.latitude+maxY)/(maxX-minX)*(double)(height-2*margin));
 		
@@ -186,7 +186,7 @@ public class DataDrawer {
 	 * @param radius radius of the area
 	 * @return List of Polygons
 	 */
-	private List<Way> retrieveData(Coordinate p, float radius){
+	private List<Way> retrieveData(CoordinateInMa p, float radius){
 		List<Way> output = new LinkedList<Way>(); 
 		for(Way w : OSM.getObjectList(p, radius))
 			if(w.isArea())

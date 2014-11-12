@@ -10,25 +10,25 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.uni_hannover.spaceusagerules.core.Coordinate;
+import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
 import de.uni_hannover.spaceusagerules.core.Polyline;
 
 @RunWith(Parameterized.class)
 public class PolylineTest {
 	
 	private Polyline square;
-	private Coordinate position;
+	private CoordinateInMa position;
 	private static double schrittweite = 0.01;
 	
 	public PolylineTest(double x, double y){
-		position = new Coordinate(y,x);
+		position = new CoordinateInMa(y,x);
 		
 		square = new Polyline();
-		square.add(new Coordinate(1,1));
-		square.add(new Coordinate(-1,1));
-		square.add(new Coordinate(-1,-1));
-		square.add(new Coordinate(1,-1));
-		square.add(new Coordinate(1,1));
+		square.add(new CoordinateInMa(1,1));
+		square.add(new CoordinateInMa(-1,1));
+		square.add(new CoordinateInMa(-1,-1));
+		square.add(new CoordinateInMa(1,-1));
+		square.add(new CoordinateInMa(1,1));
 	}
 	
 	
@@ -56,8 +56,8 @@ public class PolylineTest {
 	@Test
 	public void testInside() {
 		
-		boolean inX = position.longitude<=1. && position.longitude>=-1;
-		boolean inY = position.latitude<=1. && position.latitude>=-1;
+		boolean inX = position.x<=1. && position.x>=-1;
+		boolean inY = position.y<=1. && position.y>=-1;
 		boolean manuellInside = inX && inY;
 		
 		String message = position.toString()+" must ";

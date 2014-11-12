@@ -30,7 +30,7 @@ import org.scribe.model.Token;
 import org.scribe.model.Verb;
 import org.scribe.oauth.OAuthService;
 
-import de.uni_hannover.spaceusagerules.core.Coordinate;
+import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
 import de.uni_hannover.spaceusagerules.core.Way;
 
 /**
@@ -55,7 +55,7 @@ public class OSM {
 	 * @param c the coordinate where data should be fetched around.
 	 * @return a collection of OSM-Objects.
 	 */
-	public static Set<Way> getObjectList(Coordinate c) {
+	public static Set<Way> getObjectList(CoordinateInMa c) {
 		return getObjectList(c, (float) 0.0005);
 	}
 
@@ -65,10 +65,10 @@ public class OSM {
 	 * @param radius a radius around this point.
 	 * @return a collection of OSM-Objects.
 	 */
-	public static Set<Way> getObjectList(Coordinate c, float radius) {
+	public static Set<Way> getObjectList(CoordinateInMa c, float radius) {
 		if (buffer) {
 			String filename = String.format(Locale.GERMAN,
-					"buffer/%02.4f_%02.4f_%02.4f.xml", c.latitude, c.longitude,
+					"buffer/%02.4f_%02.4f_%02.4f.xml", c.y, c.x,
 					radius);
 			return getObjectList(c, radius, new File(filename));
 		}
@@ -81,7 +81,7 @@ public class OSM {
 	 * @param f the file to read or save data to
 	 * @return a collection of OSM-Objects.
 	 */
-	public static Set<Way> getObjectList(Coordinate c, File f) {
+	public static Set<Way> getObjectList(CoordinateInMa c, File f) {
 		boolean b = buffer;
 		buffer = true;
 		Set<Way> back = getObjectList(c, (float) 0.0005, f);
@@ -96,7 +96,7 @@ public class OSM {
 	 * @param f the file to read or save data to
 	 * @return a collection of OSM-Objects.
 	 */
-	public static Set<Way> getObjectList(Coordinate c, float radius, File f) {
+	public static Set<Way> getObjectList(CoordinateInMa c, float radius, File f) {
 		return getObjectList(c, radius, f, null);
 	}
 
@@ -108,7 +108,7 @@ public class OSM {
 	 * @param tagname a tagname to reduce the Output to.
 	 * @return a collection of OSM-Objects.
 	 */
-	public static Set<Way> getObjectList(Coordinate c, float radius,
+	public static Set<Way> getObjectList(CoordinateInMa c, float radius,
 			String tagname) {
 		return getObjectList(c, radius, null, tagname);
 	}
@@ -122,21 +122,21 @@ public class OSM {
 	 * @param tagname a tagname to reduce the Output to.
 	 * @return a collection of OSM-Objects.
 	 */
-	public static Set<Way> getObjectList(Coordinate c, float radius, File f,
+	public static Set<Way> getObjectList(CoordinateInMa c, float radius, File f,
 			String tagname) {
 		Set<Way> newObjects = new TreeSet<Way>();
-		Map<Long, Coordinate> coords = new TreeMap<Long, Coordinate>();
+		Map<Long, CoordinateInMa> coords = new TreeMap<Long, CoordinateInMa>();
 		String connection = null;
 		if (tagname == null) // there is no single Tag given. Fetch all the Data!
 			connection = "http://api.openstreetmap.org/api/0.6/map?bbox="
-					+ (c.longitude - radius) + "," + (c.latitude - radius)
-					+ ',' + (c.longitude + radius) + ","
-					+ (c.latitude + radius);
+					+ (c.x - radius) + "," + (c.y - radius)
+					+ ',' + (c.x + radius) + ","
+					+ (c.y + radius);
 		else
 			connection = "http://www.overpass-api.de/api/xapi?way[bbox="
-					+ (c.longitude - radius) + "," + (c.latitude - radius)
-					+ ',' + (c.longitude + radius) + ","
-					+ (c.latitude + radius) + "][" + tagname + "=*]";
+					+ (c.x - radius) + "," + (c.y - radius)
+					+ ',' + (c.x + radius) + ","
+					+ (c.y + radius) + "][" + tagname + "=*]";
 		try {
 			/// TODO hier alles kommentieren.
 			Document doc = null;
@@ -159,7 +159,7 @@ public class OSM {
 				long id = Long.parseLong(e.attr("id"));
 				float lon = Float.parseFloat(e.attr("lon"));
 				float lat = Float.parseFloat(e.attr("lat"));
-				coords.put(id, new Coordinate(lat, lon));
+				coords.put(id, new CoordinateInMa(lat, lon));
 			}
 			for (Element e : doc.select("way")) {
 				Way w = new Way();
@@ -181,11 +181,11 @@ public class OSM {
 					continue;
 				float lon = Float.parseFloat(e.attr("lon"));
 				float lat = Float.parseFloat(e.attr("lat"));
-				Coordinate coord =  new Coordinate(lat, lon);
+				CoordinateInMa coord =  new CoordinateInMa(lat, lon);
 				Way best = null;
 				for(Way w : newObjects) {
 					if(w.getPolyline().inside(coord)) {
-						if(best == null || best.getArea()>w.getArea())
+						if(best == null || best.getBoundingBoxArea()>w.getBoundingBoxArea())
 							best = w;
 					}
 				}
@@ -209,7 +209,7 @@ public class OSM {
 	 * @param location the coordinate of the user.
 	 * @return 1 on success. a negative Value otherwise.
 	 */
-	public static int alterContent(Collection<Way> ways, Coordinate location) {
+	public static int alterContent(Collection<Way> ways, CoordinateInMa location) {
 		int status = 0;
 		Set<String> concerned = new TreeSet<String>();
 		for (Way w : ways) {
@@ -222,7 +222,7 @@ public class OSM {
 			Connection con = Jsoup.connect("http://www.sur.gummu.de/add.php")
 					.method(Method.POST);
 			String coords = "";
-			for (Coordinate c : w.getPolyline().getPoints()) {
+			for (CoordinateInMa c : w.getPolyline().getPoints()) {
 				coords += c.toString() + ";";
 			}
 			con.data("coords", coords);
@@ -267,9 +267,9 @@ public class OSM {
 				continue;
 			if (w.getId() == -1) {
 				List<String> nodeIDs = new LinkedList<String>();
-				for(Coordinate c : w.getPolyline().getPoints()) {
+				for(CoordinateInMa c : w.getPolyline().getPoints()) {
 					String payload = "<osm>" +
-							"<node changeset=\"" + changesetID + "\" lat=\"" + c.latitude + "\" lon=\"" + c.longitude + "\">" +
+							"<node changeset=\"" + changesetID + "\" lat=\"" + c.y + "\" lon=\"" + c.x + "\">" +
 							"</node>" +
 							"</osm>";
 					request = new OAuthRequest(Verb.PUT,

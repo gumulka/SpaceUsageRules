@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import de.uni_hannover.spaceusagerules.core.Coordinate;
+import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
 import de.uni_hannover.spaceusagerules.core.Way;
 /**
  * represents our rules and the related restrictions.
@@ -72,7 +72,7 @@ public class Rules{
 	 * @param w the OSM-object to calculate the distance to
 	 * @return the weighted distance by tag and rules
 	 */
-	public double calcDist(Coordinate c, Way w) {
+	public double calcDist(CoordinateInMa c, Way w) {
 		double distance = c.distanceTo(w.getPolyline());
 		w.addOriginalTag("InMa_preDistance", "" + distance);
 		distance += OFFSET;
@@ -98,7 +98,7 @@ public class Rules{
 	 * @param location the starting location
 	 * @return a way from ways
 	 */
-	public Way calculateBest(Collection<Way> ways, Coordinate location) {
+	public Way calculateBest(Collection<Way> ways, CoordinateInMa location) {
 		Way best = null;
 		double distance = Double.MAX_VALUE;
 		double d;

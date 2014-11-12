@@ -11,7 +11,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import de.uni_hannover.spaceusagerules.core.Coordinate;
+import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
 import de.uni_hannover.spaceusagerules.core.Polyline;
 
 /**
@@ -73,7 +73,7 @@ public class KML {
 	            double lon = Double.parseDouble(bla[0]);
 	            double lat = Double.parseDouble(bla[1]);
 	            // there can be an optional third parameter, which is the altitude, but we don't use it
-	            coordinates.add(new Coordinate(lat,lon));
+	            coordinates.add(new CoordinateInMa(lat,lon));
 	        }
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -117,8 +117,8 @@ public class KML {
      */
     public static String writeKML(Polyline p, String name) {
         String coords = "";
-        for(Coordinate l : p.getPoints()) {
-            coords += l.latitude + "," + l.longitude + " \n";
+        for(CoordinateInMa l : p.getPoints()) {
+            coords += l.y + "," + l.x + " \n";
         }
         return first + name + second + coords + third;
     }

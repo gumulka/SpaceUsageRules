@@ -9,22 +9,23 @@ package de.uni_hannover.spaceusagerules.core;
  * @author Peter Zilz
  *
  */
+@Deprecated
 public class Line {
 	
 	/** starting point of the line section */
-	private Coordinate start;
+	private CoordinateInMa start;
 	/** ending point of the line section */
-	private Coordinate end;
+	private CoordinateInMa end;
 	
 	/** normal vector of the line */
-	private Coordinate normalVector;
+	private CoordinateInMa normalVector;
 	/** distance from the origin to the line <BR>
 	 * it's the d in ax+by = d */
 	public double normalDistance;
 	
 	/** vector from start to end (= directional vector of the line). 
 	 * Used as normal vector for an orthogonal line through start. */
-	Coordinate lineVector;
+	CoordinateInMa lineVector;
 	/** distance from the origin to the orthogonal line. */
 	double inlineDistance;
 	
@@ -34,7 +35,7 @@ public class Line {
 	/**
 	 * Creates a line ans its normal vector.
 	 */
-	public Line(Coordinate start, Coordinate end){
+	public Line(CoordinateInMa start, CoordinateInMa end){
 		this.start = start;
 		this.end = end;
 		
@@ -51,11 +52,11 @@ public class Line {
 		//computes the scalar product: start*normal 
 		normalDistance = orientedDistanceTo(start);
 		
-		lineVector = new Coordinate(end.latitude-start.latitude, end.longitude-start.longitude);
+		lineVector = new CoordinateInMa(end.y-start.y, end.x-start.x);
 		lineLength = start.distanceTo(end);
-		lineVector.longitude /= lineLength;
-		lineVector.latitude /= lineLength;
-		inlineDistance = start.longitude*lineVector.longitude + start.latitude*lineVector.latitude;
+		lineVector.x /= lineLength;
+		lineVector.y /= lineLength;
+		inlineDistance = start.x*lineVector.x + start.y*lineVector.y;
 
 	}
 	
@@ -65,13 +66,13 @@ public class Line {
 	 * @param end second point of the line, has to have different Coordinates
 	 * @return normal vector of the line with length 1.
 	 */
-	private static Coordinate computeNormalVector(Coordinate start, Coordinate end){
+	private static CoordinateInMa computeNormalVector(CoordinateInMa start, CoordinateInMa end){
 		//create vector from start to end.
-		Coordinate normalVector = new Coordinate(end.latitude-start.latitude, end.longitude-start.longitude);
+		CoordinateInMa normalVector = new CoordinateInMa(end.y-start.y, end.x-start.x);
 		
 		//rotate 90°: (-y,x)
-		double newX = -normalVector.latitude;
-		double newY = normalVector.longitude;
+		double newX = -normalVector.y;
+		double newY = normalVector.x;
 		
 		//scale to length 1
 		double length = newX*newX + newY*newY;
@@ -79,8 +80,8 @@ public class Line {
 		newX /= length;
 		newY /= length;
 		
-		normalVector.longitude = newX;
-		normalVector.latitude = newY;
+		normalVector.x = newX;
+		normalVector.y = newY;
 		
 		return normalVector;
 	}
@@ -92,7 +93,7 @@ public class Line {
 	 * @param p point to transformed.
 	 * @return translated and transformed point.
 	 */
-	public Coordinate basisChange(Coordinate p){
+	public CoordinateInMa basisChange(CoordinateInMa p){
 		
 		//new x is the distance to the line perpendicular to this line through start.
 		double newX = orientedHNFDistance(p, lineVector, inlineDistance);
@@ -101,7 +102,7 @@ public class Line {
 		double newY = orientedHNFDistance(p, normalVector, normalDistance);
 		
 		//swap x and y since x is longitude and y is latitude
-		return new Coordinate(newY, newX);
+		return new CoordinateInMa(newY, newX);
 	}
 	
 	
@@ -112,16 +113,16 @@ public class Line {
 	 * @param d distance from the origin to the line
 	 * @return oriented distance using HNF, may be negative
 	 */
-	private static double orientedHNFDistance(Coordinate c, Coordinate normal, double d){
-		return c.longitude*normal.longitude + c.latitude*normal.latitude - d;
+	private static double orientedHNFDistance(CoordinateInMa c, CoordinateInMa normal, double d){
+		return c.x*normal.x + c.y*normal.y - d;
 	}
 	
 	/**
-	 * Computes the distance form this INFINITE line to a {@link Coordinate} using HNF.
+	 * Computes the distance form this INFINITE line to a {@link CoordinateInMa} using HNF.
 	 * @param c point 
 	 * @return oriented distance to the point. May be negative. The sign determines on which side of the line the point lies. 
 	 */
-	public double orientedDistanceTo(Coordinate c){
+	public double orientedDistanceTo(CoordinateInMa c){
 		return orientedHNFDistance(c, normalVector, normalDistance);
 	}
 	
@@ -132,26 +133,26 @@ public class Line {
 	 * @param p point to be tested
 	 * @return <code>true</code> if p lies on the line section, <code>false</code> otherwise 
 	 */
-	public boolean isOnLine(Coordinate p){
+	public boolean isOnLine(CoordinateInMa p){
 		
-		Coordinate transformed = basisChange(p);
+		CoordinateInMa transformed = basisChange(p);
 		//in the transformed state, p has to have latitude 0 
 		//and longitude between 0 and the length of the line to be on this line.
-		if(transformed.latitude != 0.) return false;
-		if(transformed.longitude < 0.) return false;
-		if(transformed.longitude > lineLength) return false;
+		if(transformed.y != 0.) return false;
+		if(transformed.x < 0.) return false;
+		if(transformed.x > lineLength) return false;
 		
 		return true;
 	}
 	
 	/**
-	 * Computes the distance form a given {@link Coordinate} to this line section bounded by the start 
+	 * Computes the distance form a given {@link CoordinateInMa} to this line section bounded by the start 
 	 * and end points. Hence it is likely, that the distance to one of the boundary points is given,
-	 * using {@link Coordinate#distanceTo(Coordinate)}.
+	 * using {@link CoordinateInMa#distanceTo(CoordinateInMa)}.
 	 * @param c point to measure the distance to
 	 * @return distance from this line section to the point. Always >= 0.
 	 */
-	public double distanceTo(Coordinate c){
+	public double distanceTo(CoordinateInMa c){
 		
 		//test if c it "between" the two bounding points.
 		double inline = orientedHNFDistance(c, lineVector, inlineDistance);
@@ -170,7 +171,7 @@ public class Line {
 	/**
 	 * Checks if two line sections intersect.<BR>
 	 * Tip: If you want to work with the intersection, if there is one, use 
-	 * {@link #getIntersection(Line)} and {@link Coordinate#isNaN()} and avoid computing the
+	 * {@link #getIntersection(Line)} and {@link CoordinateInMa#isNaN()} and avoid computing the
 	 * same intersection twice.
 	 * @param other the line to intersect with
 	 * @return <code>true</code> if the two line sections meet - <code>false</code> otherwise
@@ -182,20 +183,20 @@ public class Line {
 	/**
 	 * Computes the intersection of two line sections. Returns ({@link Double#NaN},{@link Double#NaN})
 	 * if the lines are parallel or the sections simply don't meet.<BR>
-	 * Tip: Use {@link Coordinate#isNaN()} to check if this is a valid intersection. That way 
+	 * Tip: Use {@link CoordinateInMa#isNaN()} to check if this is a valid intersection. That way 
 	 * {@link #isIntersecting(Line)} doesn't have to compute the intersection a second time.
 	 * @param other the line to intersect with.
 	 * @return intersections of two line sections or (NaN,NaN) if there is no intersection
 	 */
-	public Coordinate getIntersection(Line other){
-		Coordinate intersection = getCrossingPoint(other);
+	public CoordinateInMa getIntersection(Line other){
+		CoordinateInMa intersection = getCrossingPoint(other);
 		if(intersection.isNaN()) return intersection;
 		
 		//check if other is part of both lines.
 		if(isOnLine(intersection) && other.isOnLine(intersection)){
 			return intersection;
 		}
-		else return new Coordinate(Double.NaN, Double.NaN);
+		else return new CoordinateInMa(Double.NaN, Double.NaN);
 	}
 	
 	/**
@@ -206,32 +207,32 @@ public class Line {
 	 * @param other the line to intersect with
 	 * @return the intersection or (NaN,NaN) if parallel
 	 */
-	private Coordinate getCrossingPoint(Line other){
+	private CoordinateInMa getCrossingPoint(Line other){
 		
-		double a1 = normalVector.longitude;
-		double b1 = normalVector.latitude;
+		double a1 = normalVector.x;
+		double b1 = normalVector.y;
 		double c1 = normalDistance;
 		
-		double a2 = other.getNormalVector().longitude;
-		double b2 = other.getNormalVector().latitude;
+		double a2 = other.getNormalVector().x;
+		double b2 = other.getNormalVector().y;
 		double c2 = other.normalDistance;
 		
 		double denom = a1*b2 - a2*b1;
 		
 		//if the denominator is 0 then the two lines are parallel or they are the same
 		if(denom==0.){
-			return new Coordinate(Double.NaN, Double.NaN);
+			return new CoordinateInMa(Double.NaN, Double.NaN);
 		}
 		
 		double xs = (c1*b2 - c2*b1)/denom;
 		double ys = (a1*c2 - a2*c1)/denom;
 		
-		return new Coordinate(xs,ys);
+		return new CoordinateInMa(xs,ys);
 	}
 	
 	
 	/** Returns the start point of the line section */
-	public Coordinate getStart() {
+	public CoordinateInMa getStart() {
 		return start;
 	}
 	
@@ -239,13 +240,13 @@ public class Line {
 	 * Sets a new start point and updates the normal vector.
 	 * @param start new start point
 	 */
-	public void setStart(Coordinate start) {
+	public void setStart(CoordinateInMa start) {
 		this.start = start;
 		updateValues();
 	}
 	
 	/** returns the end point */
-	public Coordinate getEnd() {
+	public CoordinateInMa getEnd() {
 		return end;
 	}
 	
@@ -253,13 +254,13 @@ public class Line {
 	 * Sets a new end point and updates the normal vector.
 	 * @param end new end point
 	 */
-	public void setEnd(Coordinate end) {
+	public void setEnd(CoordinateInMa end) {
 		this.end = end;
 		updateValues();
 	}
 
 	/** returns the normal vector */
-	public Coordinate getNormalVector() {
+	public CoordinateInMa getNormalVector() {
 		return normalVector;
 	}
 	
@@ -267,7 +268,7 @@ public class Line {
 	 * Returns the vector from {@link #start} to {@link #end}.
 	 * @return direction vector
 	 */
-	public Coordinate getLineVector() {
+	public CoordinateInMa getLineVector() {
 		return lineVector;
 	}
 	

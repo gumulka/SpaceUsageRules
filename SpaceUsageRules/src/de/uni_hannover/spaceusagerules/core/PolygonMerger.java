@@ -6,32 +6,33 @@ import java.util.Map;
 import java.util.Vector;
 
 //https://stackoverflow.com/questions/2667748/how-do-i-combine-complex-polygons
+@Deprecated
 public class PolygonMerger {
 	
 	private Polyline A,B;
-	private List<Coordinate> newA, newB;
+	private List<CoordinateInMa> newA, newB;
 	
-	private List<Coordinate> intersections;
+	private List<CoordinateInMa> intersections;
 	
-	private Map<Coordinate,Boolean> isInside;
+	private Map<CoordinateInMa,Boolean> isInside;
 	
 	
 	private PolygonMerger(Polyline A, Polyline B){
 		this.A = A;
 		this.B = B;
 		
-		isInside = new HashMap<Coordinate,Boolean>();
+		isInside = new HashMap<CoordinateInMa,Boolean>();
 		
-		newA = new Vector<Coordinate>();
-		newB = new Vector<Coordinate>();
-		intersections = new Vector<Coordinate>();
+		newA = new Vector<CoordinateInMa>();
+		newB = new Vector<CoordinateInMa>();
+		intersections = new Vector<CoordinateInMa>();
 	}
 	
 	private void prepare(){
 		
 		//TODO compute intersections and insert them
-		List<Coordinate> aPoints = A.getPoints();
-		List<Coordinate> bPoints = new Vector<Coordinate>(B.getPoints());
+		List<CoordinateInMa> aPoints = A.getPoints();
+		List<CoordinateInMa> bPoints = new Vector<CoordinateInMa>(B.getPoints());
 		Line a,b;
 		for(int i=0;i<aPoints.size()-1;i++){
 			//add starting point of a line
@@ -81,25 +82,25 @@ public class PolygonMerger {
 		return null;
 	}
 	
-	private boolean isIntersection(Coordinate p){
+	private boolean isIntersection(CoordinateInMa p){
 		if(intersections.contains(p)) return true;
 		//TODO is this loop really necessary? 
-		for(Coordinate q : intersections){
+		for(CoordinateInMa q : intersections){
 			if(p.equals(q)) return true;
 		}
 		return false;
 	}
 	
-	private boolean isInsideTheOther(Coordinate p){
+	private boolean isInsideTheOther(CoordinateInMa p){
 		if(!isInside.containsKey(p)) return false;
 		return isInside.get(p);
 	}
 
-	private List<Coordinate> getNewA() {
+	private List<CoordinateInMa> getNewA() {
 		return newA;
 	}
 
-	private List<Coordinate> getNewB() {
+	private List<CoordinateInMa> getNewB() {
 		return newB;
 	}
 	

@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import de.uni_hannover.spaceusagerules.core.Coordinate;
+import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
 import de.uni_hannover.spaceusagerules.core.Way;
 import de.uni_hannover.spaceusagerules.io.DataDrawer;
 import de.uni_hannover.spaceusagerules.io.KML;
@@ -47,7 +47,7 @@ public class Start extends DatasetEntry {
 	 * @param backup
 	 * @param id
 	 */
-	public Start(Coordinate backup, String id) {
+	public Start(CoordinateInMa backup, String id) {
 		super(backup,id);
 		this.truth = new Way();
 		this.minOverlap = globalMinOverlap;
@@ -122,7 +122,7 @@ public class Start extends DatasetEntry {
 				a.addVerbot(bla[3].trim());
 			}
 			else {
-				Coordinate backup = new Coordinate(Double.parseDouble(bla[1]), Double.parseDouble(bla[2]));
+				CoordinateInMa backup = new CoordinateInMa(Double.parseDouble(bla[1]), Double.parseDouble(bla[2]));
 				Start s = new Start(backup, id);
 				s.addVerbot(bla[3].trim());
 				instances.put(id, s);

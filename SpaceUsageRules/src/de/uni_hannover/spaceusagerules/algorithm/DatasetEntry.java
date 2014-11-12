@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import de.uni_hannover.spaceusagerules.core.Coordinate;
+import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
 import de.uni_hannover.spaceusagerules.core.Way;
 import de.uni_hannover.spaceusagerules.io.Image;
 import de.uni_hannover.spaceusagerules.io.OSM;
@@ -32,7 +32,7 @@ public class DatasetEntry extends Thread{
 	private Set<String> restrictions;
 	
 	/**	the location if the dataset */
-	private Coordinate location;
+	private CoordinateInMa location;
 	
 	/** the ID of the dataset. */
 	private String id;
@@ -48,7 +48,7 @@ public class DatasetEntry extends Thread{
 	 * @param backup the location in the entry
 	 * @param id the ID of the entry
 	 */
-	public DatasetEntry(Coordinate backup, String id) {
+	public DatasetEntry(CoordinateInMa backup, String id) {
 		this.restrictions = new TreeSet<String>();
 		this.location = backup;
 		this.id = id;
@@ -71,7 +71,7 @@ public class DatasetEntry extends Thread{
 	 * the location of this dataset
 	 * @return the location.
 	 */
-	public Coordinate getLocation() {
+	public CoordinateInMa getLocation() {
 		return location;
 	}
 	

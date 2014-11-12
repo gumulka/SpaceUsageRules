@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import de.uni_hannover.spaceusagerules.algorithm.Rules;
-import de.uni_hannover.spaceusagerules.core.Coordinate;
+import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
 import de.uni_hannover.spaceusagerules.core.Polyline;
 import de.uni_hannover.spaceusagerules.core.Way;
 
@@ -130,11 +130,11 @@ public class Population extends Rules implements Comparable<Population>{
 	 * @param possiblities a list of a collection of possible polygons
 	 * @param locations a list of locations where to start from.
 	 */
-	public void calcFitness(List<Polyline> truths, List<Set<Way>> possiblities, List<Coordinate> locations) {
+	public void calcFitness(List<Polyline> truths, List<Set<Way>> possiblities, List<CoordinateInMa> locations) {
 		Way best = null;
 		fitness = 0;
 		for(int i = 0; i<truths.size(); i++) {
-			Coordinate l = locations.get(i);
+			CoordinateInMa l = locations.get(i);
 			best = calculateBest(possiblities.get(i),l);
 			double overlapArea = best.getPolyline().boundingBoxOverlapArea(truths.get(i));
 			overlapArea = Math.min(overlapArea/best.getPolyline().boundingBoxArea(), overlapArea/truths.get(i).boundingBoxArea());
