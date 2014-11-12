@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
 
+import com.vividsolutions.jts.geom.Coordinate;
+
 /**
  * This class represents a coordinate on the world map.
  *
@@ -26,7 +28,12 @@ public class CoordinateInMa extends com.vividsolutions.jts.geom.Coordinate imple
 	public CoordinateInMa(double latitude, double longitude) {
 		super(longitude,latitude);
 	}
-
+	
+	public CoordinateInMa(Coordinate c){
+		super(c.x,c.y);
+	}
+	
+	
 	/** 
 	 * substracts another coordinate from this.
 	 * @param c the other coordinate

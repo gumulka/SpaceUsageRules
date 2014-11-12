@@ -138,7 +138,7 @@ public class OSM {
 					+ ',' + (c.x + radius) + ","
 					+ (c.y + radius) + "][" + tagname + "=*]";
 		try {
-			/// TODO hier alles kommentieren.
+			/// TODO hier alles kommentieren. Ja das wäre nett :D
 			Document doc = null;
 			if (buffer && f != null && f.exists() && f.canRead()) {
 				doc = Jsoup.parse(f, "UTF-8");
@@ -174,7 +174,7 @@ public class OSM {
 				}
 				newObjects.add(w);
 			}
-			// Adding tags from Points, wich are inside a Polygon.
+			// Adding tags from Points, which are inside a Polygon.
 			for (Element e : doc.select("node")) {
 				Elements el = e.select("tag");
 				if(el.size()==0)
@@ -184,7 +184,7 @@ public class OSM {
 				CoordinateInMa coord =  new CoordinateInMa(lat, lon);
 				Way best = null;
 				for(Way w : newObjects) {
-					if(w.getPolyline().inside(coord)) {
+					if(w.isInside(coord)) {
 						if(best == null || best.getBoundingBoxArea()>w.getBoundingBoxArea())
 							best = w;
 					}
@@ -222,7 +222,7 @@ public class OSM {
 			Connection con = Jsoup.connect("http://www.sur.gummu.de/add.php")
 					.method(Method.POST);
 			String coords = "";
-			for (CoordinateInMa c : w.getPolyline().getPoints()) {
+			for (CoordinateInMa c : w.getPoints()) {
 				coords += c.toString() + ";";
 			}
 			con.data("coords", coords);
@@ -267,7 +267,7 @@ public class OSM {
 				continue;
 			if (w.getId() == -1) {
 				List<String> nodeIDs = new LinkedList<String>();
-				for(CoordinateInMa c : w.getPolyline().getPoints()) {
+				for(CoordinateInMa c : w.getPoints()) {
 					String payload = "<osm>" +
 							"<node changeset=\"" + changesetID + "\" lat=\"" + c.y + "\" lon=\"" + c.x + "\">" +
 							"</node>" +

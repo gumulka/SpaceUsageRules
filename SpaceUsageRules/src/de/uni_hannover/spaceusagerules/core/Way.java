@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -237,6 +238,22 @@ public class Way implements Serializable, Comparable<Way>{
     	return outline instanceof Point;
     }
     
+    
+    public boolean isInside(CoordinateInMa c){
+    	return outline.contains(new GeometryFactory().createPoint(c));
+    }
+    
+    
+    public CoordinateInMa[] getPoints(){
+    	
+    	CoordinateInMa[] output = new CoordinateInMa[outline.getNumPoints()];
+    	int i=0;
+    	for(Coordinate c : outline.getCoordinates()){
+    		output[i] = new CoordinateInMa(c);
+    		i++;
+    	}
+    	return output;
+    }
     
     /**
      * Returns the area of the bounding box.
