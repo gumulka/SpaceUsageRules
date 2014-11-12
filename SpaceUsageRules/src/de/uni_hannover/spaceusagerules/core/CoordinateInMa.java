@@ -1,8 +1,6 @@
 package de.uni_hannover.spaceusagerules.core;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Vector;
 
 import com.vividsolutions.jts.geom.Coordinate;
 
@@ -65,36 +63,6 @@ public class CoordinateInMa extends com.vividsolutions.jts.geom.Coordinate imple
 	}
 
 	/**
-	 * Computes the distance to a polygon. If the last point in the list doesn't equal the first
-	 * point, it isn't treated as a closed polygon, but as a series of lines.
-	 * @param polygon closed polygon or open polyline
-	 * @return distance to a polygon, <code>0</code> if the point lies inside.
-	 */
-	public double distanceTo(Polyline polygon) {
-
-		List<CoordinateInMa> points = polygon.getPoints();
-		
-		List<Line> edges = new Vector<Line>();
-		for(int i=0;i<points.size()-1;i++){
-			edges.add(new Line(points.get(i), points.get(i+1)));
-		}
-
-		if(polygon.isArea()){
-			// wenn es ein polygon ist.
-			//if the point is inside, then distance is 0
-			if(polygon.inside(this)) return 0;
-			//otherwise compute the distance to the polygon line
-			else return distanceToNearestLine(edges);
-		}
-		else
-		{
-			// ansonsten ist es eine Linie mit mehreren Punkten.
-			// -> get the distance to the nearest line.
-			return distanceToNearestLine(edges);
-		}
-	}
-
-	/**
 	 * Checks if one or both components are {@link Double#NaN}.
 	 * @return <code>true</code> if one or both components are NaN - <code>false</code> otherwise
 	 */
@@ -104,23 +72,6 @@ public class CoordinateInMa extends com.vividsolutions.jts.geom.Coordinate imple
 		return false;
 	}
 
-
-	/**
-	 * Computes the distance to the nearest line. Can be used for both open and closed polygons. 
-	 * @param edges list of lines
-	 * @return distance to the nearest line, always >= 0.
-	 */
-	@Deprecated
-	public double distanceToNearestLine(List<Line> edges){
-		double nearest = edges.get(0).distanceTo(this);
-		double testdist;
-		for(int i=1;i<edges.size();i++){
-			testdist = edges.get(i).distanceTo(this);
-			if(testdist<nearest)
-				nearest = testdist;
-		}
-		return nearest;
-	}
 	
 	public int getQuadrant() {
 		if(y<0 && x<0)

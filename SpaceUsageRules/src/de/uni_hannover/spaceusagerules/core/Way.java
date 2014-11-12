@@ -2,7 +2,6 @@ package de.uni_hannover.spaceusagerules.core;
 
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -28,10 +27,6 @@ public class Way implements Serializable, Comparable<Way>{
     /**	 */
 	private static final long serialVersionUID = 4356641146890722134L;
 
-    /** the polyline or polygon belonging to this object. */
-	@Deprecated
-	Polyline coordinates;
-	
 	/** the shape of this way object, can be a {@link Polygon}, {@link LineString},
 	 * or even a {@link Point}.
 	 */
@@ -90,7 +85,6 @@ public class Way implements Serializable, Comparable<Way>{
      * Konstruktor, welcher es erlaubt direkt einen Namen für dieses Objekt zu definieren.
      */
     public Way(String name) {
-        coordinates = new Polyline();
         tags = new TreeMap<String, String>();
         changedTags = new TreeMap<String, String>();
         removed = new TreeSet<String>();
@@ -102,7 +96,6 @@ public class Way implements Serializable, Comparable<Way>{
      * Standartkonstruktor, welcher alle nötigen Werte initialisiert.
      */
     public Way() {
-        coordinates = new Polyline();
         tags = new TreeMap<String, String>();
         changedTags = new TreeMap<String, String>();
         removed = new TreeSet<String>();
@@ -151,13 +144,6 @@ public class Way implements Serializable, Comparable<Way>{
     	
     }
     
-	/**
-     * erweitert die Polyline um eine Liste von Punkten 
-     */
-    public void addAllCoordinates(Collection<CoordinateInMa> coords) {
-        coordinates.addAll(coords);
-    }
-
 	/**
      * fügt der Map ein weiteres key-Value pair hinzu.
      * sollte der Key schon vorhanden sein, dann wird dieser überschrieben.
@@ -212,14 +198,6 @@ public class Way implements Serializable, Comparable<Way>{
         return tags.get(key);
     }
 
-	/**
-     * gibt an, ob es sich um eine Polyline oder ein Polygon handelt.
-     */
-    @Deprecated
-    public boolean isArea() {
-        return coordinates.isArea();
-    }
-    
     /**
      * Checks if the shape of this way is closed polygon
      * @return <code>true</code> if polygon, <code>false</code> if not
@@ -323,14 +301,6 @@ public class Way implements Serializable, Comparable<Way>{
         return name;
     }
 
-    /**
-     * gibt die Polylinie zurück.
-     */
-    @Deprecated
-    public Polyline getPolyline() {
-    	return coordinates;
-    }
-    
     /**
      * gibt die OSM-ID des Objektes zurück.
      * @return OSM-ID
