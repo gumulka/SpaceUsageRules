@@ -15,7 +15,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
+
 import de.uni_hannover.spaceusagerules.core.Way;
 import de.uni_hannover.spaceusagerules.io.DataDrawer;
 import de.uni_hannover.spaceusagerules.io.KML;
@@ -34,7 +37,7 @@ public class Start extends DatasetEntry {
 	private static final double globalMinOverlap = 0.85;
 	
 	/** number of maximal running Threads in parallel */
-	private static final int MAXRUNNING = 20;
+	private static final int MAXRUNNING = 1;
 	
 	/** the truth polygon */
 	private Way truth;
@@ -47,9 +50,8 @@ public class Start extends DatasetEntry {
 	 * @param backup
 	 * @param id
 	 */
-	public Start(CoordinateInMa backup, String id) {
+	public Start(Point backup, String id) {
 		super(backup,id);
-		this.truth = new Way();
 		this.minOverlap = globalMinOverlap;
 	}
 
@@ -70,11 +72,11 @@ public class Start extends DatasetEntry {
 		
 		super.run();
 		
-		truth.setGeometry(KML.loadKML(new File(path + getID() + ".truth.kml")));
+		this.truth = new Way(KML.loadKML(new File(path + getID() + ".truth.kml")));
 		
 //		double overlapArea = getGuess().getPolyline().boundingBoxOverlapArea(truth.getPolyline());
 		double overlapArea = getGuess().getGeometry().getEnvelopeInternal().intersection(truth.getGeometry().getEnvelopeInternal()).getArea();
-		overlapArea = Math.min(overlapArea/truth.getBoundingBoxArea(), overlapArea/getGuess().getBoundingBoxArea());
+		overlapArea = Math.min(overlapArea/truth.getArea(), overlapArea/getGuess().getArea());
 		if(overlapArea>minOverlap)
 			return;
 		getGuess().addOriginalTag("InMa_Overlap", "" + overlapArea);
@@ -88,7 +90,7 @@ public class Start extends DatasetEntry {
 	 * @param ways
 	 */
 	public void generateImage(Collection<Way> ways) {
-		DataDrawer drawer = new DataDrawer(IMAGEWIDTH,IMAGEHEIGTH,getLocation());
+		DataDrawer drawer = new DataDrawer(IMAGEWIDTH,IMAGEHEIGTH,getLocation().getCoordinate());
 		drawer.render(ways);
 		drawer.drawWay(truth,Color.green);
 		drawer.drawWay(getGuess(),Color.pink);
@@ -112,6 +114,7 @@ public class Start extends DatasetEntry {
 		String line;
 		line = br.readLine();
 		int max = 90; // Integer.parseInt(line);
+		GeometryFactory gf = new GeometryFactory();
 		for(int i = 0; i<max;i++) {
 			line = br.readLine();
 			if(line == null)
@@ -123,8 +126,8 @@ public class Start extends DatasetEntry {
 				a.addVerbot(bla[3].trim());
 			}
 			else {
-				CoordinateInMa backup = new CoordinateInMa(Double.parseDouble(bla[1]), Double.parseDouble(bla[2]));
-				Start s = new Start(backup, id);
+				Coordinate backup = new Coordinate(Double.parseDouble(bla[2]), Double.parseDouble(bla[1]));
+				Start s = new Start(gf.createPoint(backup), id);
 				s.addVerbot(bla[3].trim());
 				instances.put(id, s);
 			}			

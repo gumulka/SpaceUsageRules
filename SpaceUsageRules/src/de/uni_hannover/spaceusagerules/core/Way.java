@@ -2,16 +2,13 @@ package de.uni_hannover.spaceusagerules.core;
 
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
 import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
@@ -34,8 +31,7 @@ public class Way implements Serializable, Comparable<Way>{
 	
     /** map with key - value pairs for this object. (tags in OSM) */ 
     private Map<String,String> tags;
-    /** an optional name. if set it is used for the toString Method */
-    private String name;
+
     /** the OSM-ID of this object or -1 */
     private long id;
 
@@ -81,67 +77,15 @@ public class Way implements Serializable, Comparable<Way>{
     	return outline.isValid();
     }
 
-    /**
-     * Konstruktor, welcher es erlaubt direkt einen Namen für dieses Objekt zu definieren.
-     */
-    public Way(String name) {
-        tags = new TreeMap<String, String>();
-        changedTags = new TreeMap<String, String>();
-        removed = new TreeSet<String>();
-        this.name = name;
-        this.id = -1;
-    }
-
 	/**
      * Standartkonstruktor, welcher alle nötigen Werte initialisiert.
      */
-    public Way() {
+    public Way(Geometry g) {
         tags = new TreeMap<String, String>();
         changedTags = new TreeMap<String, String>();
         removed = new TreeSet<String>();
-        this.name = "";
+        outline = g;
         this.id = -1;
-    }
-
-//	/**
-//     * erweitert die Polyline um einen weiteren Punkt.
-//     */
-//    @Deprecated
-//    public void addCoordinateInMa(CoordinateInMa c) {
-//        coordinates.add(c);
-//    }
-    
-    /**
-     * Adds a {@link Coordinate} to this shape.
-     * May change the type of shape from Point do LineString or from
-     * LineString to Polygon. 
-     * @param c point to append
-     */
-    public void addCoordinate(Coordinate c){
-    	//if there is no point yet, create one
-    	if(outline==null){
-    		outline = new GeometryFactory().createPoint(c);
-    	}
-    	//a point plus another point is a line
-    	if(isPoint()){
-    		Coordinate[] points = {outline.getCoordinates()[0], c};
-    		outline = new GeometryFactory().createLineString(points);
-    	}
-    	//more than one point 
-    	else{
-			Coordinate[] points = new Coordinate[outline.getNumPoints()+1];
-			System.arraycopy(outline.getCoordinates(), 0, points, 0, outline.getNumPoints());
-			points[points.length-1] = c;
-			//if it is already a polygon or the first and the last points are the same
-			//create a polygon
-    		if(isPolygon() || points[0].equals(c)){
-    			outline = new GeometryFactory().createPolygon(points);
-    		}
-    		else if(isLineString()){
-    			outline = new GeometryFactory().createLineString(points);
-    		}
-    	}
-    	
     }
     
 	/**
@@ -151,7 +95,6 @@ public class Way implements Serializable, Comparable<Way>{
     @Deprecated
     public void addTag(String key, String value) {
         tags.put(key,value);
-        name = key + " -> " + value;
     }
     
     public void addOriginalTag(String key, String value) {
@@ -223,84 +166,26 @@ public class Way implements Serializable, Comparable<Way>{
     	return outline instanceof Point;
     }
     
-    
-    public boolean isInside(CoordinateInMa c){
-    	return outline.contains(new GeometryFactory().createPoint(c));
+    public Coordinate[] getPoints(){
+    	return outline.getCoordinates();
     }
     
-    
-    public CoordinateInMa[] getPoints(){
-    	
-    	CoordinateInMa[] output = new CoordinateInMa[outline.getNumPoints()];
-    	int i=0;
-    	for(Coordinate c : outline.getCoordinates()){
-    		output[i] = new CoordinateInMa(c);
-    		i++;
-    	}
-    	return output;
-    }
-    
-    
-    public double distanceTo(Coordinate c){
+    public double distanceTo(Geometry d) {
     	if(outline==null) return 0;
-    	return outline.distance(new GeometryFactory().createPoint(c));
+    	return outline.distance(d);
     }
-    
-    
-    
-    public static Geometry createGeometry(Coordinate[] coordinates){
-    	 Geometry output;
-         if(coordinates.length==1){
-         	output = new GeometryFactory().createPoint(coordinates[0]);
-         	return output;
-         }
-         
-         //if the first and the last point are the same, make a polygon
-         if(coordinates[0].equals(coordinates[coordinates.length-1])){
-         	output = new GeometryFactory().createPolygon(coordinates);
-         	return output;
-         }
-         else{
-          	output = new GeometryFactory().createLineString(coordinates);
-          	return output;
-         }
-         
-         
-    }
-    
-    public static Geometry createGeometry(List<Coordinate> coordinates){
-    	Coordinate[] newInput = new Coordinate[coordinates.size()];
-    	for(int i=0;i<newInput.length;i++){
-    		newInput[i] = coordinates.get(i);
-    	}
-    	return createGeometry(newInput);
-    }
-    
-    
-    
-    
-    
+
+
     /**
      * Returns the area of the bounding box.
      * @return area of the bounding box
      */
-    public double getBoundingBoxArea() {
+    public double getArea() {
     	if(outline == null) return 0;
-    	Envelope boundingBox = outline.getEnvelopeInternal();
-    	if(boundingBox.isNull())
-    		return 0;
-    	else return boundingBox.getArea();
-    	//return coordinates.boundingBoxArea();
+    	return outline.getArea();
     }
-
-	/**
-     * Returns the name of this object.
-     * @return name
-     */
-    public String toString() {
-        return name;
-    }
-
+    
+    
     /**
      * gibt die OSM-ID des Objektes zurück.
      * @return OSM-ID
@@ -315,17 +200,6 @@ public class Way implements Serializable, Comparable<Way>{
 	 */
 	public void setId(long id) {
 		this.id = id;
-	}
-	
-	/**
-	 * Sets the new shape of this object. Should be one of these three:
-	 * <ul><li>{@link Polygon}</li>
-	 * 		<li> {@link LineString} </li>
-	 * 		<li> {@link Point} </li> <ul>
-	 * @param shape new shape
-	 */
-	public void setGeometry(Geometry shape){
-		outline = shape;
 	}
 	
 	/**

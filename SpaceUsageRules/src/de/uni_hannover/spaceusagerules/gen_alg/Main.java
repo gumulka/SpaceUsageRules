@@ -29,7 +29,7 @@ import de.uni_hannover.spaceusagerules.io.OSM;
  */
 public class Main extends Thread implements Comparable<Main>{
 
-	public static final int MAXTHREADS = 2;
+	public static final int MAXTHREADS = 4;
 	
 	private static List<String> possibla = null;
 	private static Map<String,Set<String>> tags = null;
@@ -206,13 +206,13 @@ public class Main extends Thread implements Comparable<Main>{
 		 
 		 
 		 
-		 int[] maxis = {90};
-		 int[] popsizes = {100,200,350,500};
-		 int[] withouts = { 500};
-		 int[] mutates =  {1, 3, 5};
-		 int[] merges = {1, 3, 5, 6, 7};
+		 int[] maxis = {90,90,90};
+		 int[] popsizes = {50, 100,200,350,500};
+		 int[] withouts = {50,100,200,350,500};
+		 int[] mutates =  {5, 3, 1};
+		 int[] merges = {7, 6, 5, 3, 1};
 		 for(int m : maxis) {
-			 List<Main> all = new LinkedList<Main>();
+			 Main best = null;
 			 Main.max = m;
 			 Main.prepare();
 			 for(int p : popsizes) {
@@ -221,13 +221,13 @@ public class Main extends Thread implements Comparable<Main>{
 						 for(int me : merges) {
 							 Main test = new Main(p,w,mu,me);
 							 test.run();
-							 all.add(test);
+							 if(best == null || best.compareTo(test)>0)
+								 best = test;
 						 }
 					 }
 				 }
 			 }
-			 Collections.sort(all);
-			 all.get(0).writeout();
+			 best.writeout();
 		 } // */ 
 	}
 	

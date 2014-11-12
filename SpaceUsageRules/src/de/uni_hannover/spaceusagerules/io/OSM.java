@@ -30,7 +30,10 @@ import org.scribe.model.Token;
 import org.scribe.model.Verb;
 import org.scribe.oauth.OAuthService;
 
-import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
+
 import de.uni_hannover.spaceusagerules.core.Way;
 
 /**
@@ -41,6 +44,8 @@ public class OSM {
 
 	/** if the local filebuffer is to be used. Deactivated by default */
 	private static boolean buffer = false;
+	
+	private static GeometryFactory gf = new GeometryFactory();
 
 	/** to reduce the load on the OSM-Server, it is possible to use a local filebuffer 
 	 * 
@@ -55,7 +60,7 @@ public class OSM {
 	 * @param c the coordinate where data should be fetched around.
 	 * @return a collection of OSM-Objects.
 	 */
-	public static Set<Way> getObjectList(CoordinateInMa c) {
+	public static Collection<Way> getObjectList(Coordinate c) {
 		return getObjectList(c, (float) 0.0005);
 	}
 
@@ -65,7 +70,7 @@ public class OSM {
 	 * @param radius a radius around this point.
 	 * @return a collection of OSM-Objects.
 	 */
-	public static Set<Way> getObjectList(CoordinateInMa c, float radius) {
+	public static Collection<Way> getObjectList(Coordinate c, float radius) {
 		if (buffer) {
 			String filename = String.format(Locale.GERMAN,
 					"buffer/%02.4f_%02.4f_%02.4f.xml", c.y, c.x,
@@ -81,10 +86,10 @@ public class OSM {
 	 * @param f the file to read or save data to
 	 * @return a collection of OSM-Objects.
 	 */
-	public static Set<Way> getObjectList(CoordinateInMa c, File f) {
+	public static Collection<Way> getObjectList(Coordinate c, File f) {
 		boolean b = buffer;
 		buffer = true;
-		Set<Way> back = getObjectList(c, (float) 0.0005, f);
+		Collection<Way> back = getObjectList(c, (float) 0.0005, f);
 		buffer = b;
 		return back;
 	}
@@ -96,7 +101,7 @@ public class OSM {
 	 * @param f the file to read or save data to
 	 * @return a collection of OSM-Objects.
 	 */
-	public static Set<Way> getObjectList(CoordinateInMa c, float radius, File f) {
+	public static Collection<Way> getObjectList(Coordinate c, float radius, File f) {
 		return getObjectList(c, radius, f, null);
 	}
 
@@ -108,7 +113,7 @@ public class OSM {
 	 * @param tagname a tagname to reduce the Output to.
 	 * @return a collection of OSM-Objects.
 	 */
-	public static Set<Way> getObjectList(CoordinateInMa c, float radius,
+	public static Collection<Way> getObjectList(Coordinate c, float radius,
 			String tagname) {
 		return getObjectList(c, radius, null, tagname);
 	}
@@ -122,32 +127,34 @@ public class OSM {
 	 * @param tagname a tagname to reduce the Output to.
 	 * @return a collection of OSM-Objects.
 	 */
-	public static Set<Way> getObjectList(CoordinateInMa c, float radius, File f,
+	public static Collection<Way> getObjectList(Coordinate c, float radius, File f,
 			String tagname) {
-		Set<Way> newObjects = new TreeSet<Way>();
-		Map<Long, CoordinateInMa> coords = new TreeMap<Long, CoordinateInMa>();
+		Map<Long,Way> newObjects = new TreeMap<Long,Way>();
+		Map<Long, Coordinate> coords = new TreeMap<Long, Coordinate>();
 		String connection = null;
 		if (tagname == null) // there is no single Tag given. Fetch all the Data!
 			connection = "http://api.openstreetmap.org/api/0.6/map?bbox="
 					+ (c.x - radius) + "," + (c.y - radius)
 					+ ',' + (c.x + radius) + ","
 					+ (c.y + radius);
-		else
+		else // the overpass API is only useful, when we have only one tag.
 			connection = "http://www.overpass-api.de/api/xapi?way[bbox="
 					+ (c.x - radius) + "," + (c.y - radius)
 					+ ',' + (c.x + radius) + ","
 					+ (c.y + radius) + "][" + tagname + "=*]";
 		try {
-			/// TODO hier alles kommentieren. Ja das wäre nett :D
 			Document doc = null;
 			if (buffer && f != null && f.exists() && f.canRead()) {
+				// if the file is readable and we use a buffer, read it.
 				doc = Jsoup.parse(f, "UTF-8");
 			} else {
+				// else fetch new.
 				Connection.Response res = Jsoup.connect(connection).timeout(10000)
 						.userAgent("InMa")
 						.followRedirects(true).execute();
 				doc = res.parse();
-				if (buffer && f != null) {
+				// write it to buffer if enabled and possible
+				if (buffer && f != null && f.canWrite()) {
 					FileWriter fw = new FileWriter(f);
 					BufferedWriter bfw = new BufferedWriter(fw);
 					bfw.write(res.body());
@@ -155,25 +162,38 @@ public class OSM {
 					fw.close();
 				}
 			}
+			// extract all nodes and their Values
 			for (Element e : doc.select("node")) {
 				long id = Long.parseLong(e.attr("id"));
 				float lon = Float.parseFloat(e.attr("lon"));
 				float lat = Float.parseFloat(e.attr("lat"));
-				coords.put(id, new CoordinateInMa(lat, lon));
+				coords.put(id, new Coordinate(lon, lat));
 			}
+			// extract all ways
 			for (Element e : doc.select("way")) {
-				Way w = new Way();
+				Elements el = e.select("nd");
+				Coordinate[] penis = new Coordinate[el.size()];
 				long wayID = Long.parseLong(e.attr("id"));
-				w.setId(wayID);
-				for (Element x : e.select("nd")) {
+				// dereference the previously extracted nodes to have the coordinates
+				int i = 0;
+				for (Element x : el) {
 					long id = Long.parseLong(x.attr("ref"));
-					w.addCoordinate(coords.get(id));
+					penis[i++] = coords.get(id);
 				}
+				try {
+				Way w = new Way(gf.createPolygon(penis));
+				// add metadata like tags and ID
+				w.setId(wayID);
 				for (Element x : e.select("tag")) {
 					w.addOriginalTag(x.attr("k"), x.attr("v"));
 				}
-				newObjects.add(w);
+				newObjects.put(wayID,w);
+				} catch (IllegalArgumentException ex) {
+					//XXX maybe look add it and chance if we want to have lines in it
+					// we do nothing, because this happens, if there is a way.
+				}
 			}
+			
 			// Adding tags from Points, which are inside a Polygon.
 			for (Element e : doc.select("node")) {
 				Elements el = e.select("tag");
@@ -181,14 +201,17 @@ public class OSM {
 					continue;
 				float lon = Float.parseFloat(e.attr("lon"));
 				float lat = Float.parseFloat(e.attr("lat"));
-				CoordinateInMa coord =  new CoordinateInMa(lat, lon);
+				Coordinate coord =  new Coordinate(lon, lat);
+				Point p = gf.createPoint(coord);
+				// select the smallest object where we are inside
 				Way best = null;
-				for(Way w : newObjects) {
-					if(w.isInside(coord)) {
-						if(best == null || best.getBoundingBoxArea()>w.getBoundingBoxArea())
+				for(Way w : newObjects.values()) {
+					if(w.getGeometry().contains(p)) {
+						if(best == null || best.getArea()>w.getArea())
 							best = w;
 					}
 				}
+				// and add the tags if it does exist.
 				if(best!= null)
 				for (Element x : el) {
 					if(!best.getTags().containsKey(x.attr("k")))
@@ -199,7 +222,7 @@ public class OSM {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return newObjects;
+		return newObjects.values();
 	}
 
 	/**
@@ -209,7 +232,7 @@ public class OSM {
 	 * @param location the coordinate of the user.
 	 * @return 1 on success. a negative Value otherwise.
 	 */
-	public static int alterContent(Collection<Way> ways, CoordinateInMa location) {
+	public static int alterContent(Collection<Way> ways, Coordinate location) {
 		int status = 0;
 		Set<String> concerned = new TreeSet<String>();
 		for (Way w : ways) {
@@ -222,13 +245,13 @@ public class OSM {
 			Connection con = Jsoup.connect("http://www.sur.gummu.de/add.php")
 					.method(Method.POST);
 			String coords = "";
-			for (CoordinateInMa c : w.getPoints()) {
-				coords += c.toString() + ";";
+			for (Coordinate c : w.getPoints()) {
+				coords += c.y + "," + c.x + ";";
 			}
 			con.data("coords", coords);
 			con.data("id", "" + w.getId());
 			con.data("tag", tagid);
-			con.data("standort", location.toString());
+			con.data("standort", location.y + "," + location.x);
 
 			try {
 				con.execute();
@@ -267,7 +290,7 @@ public class OSM {
 				continue;
 			if (w.getId() == -1) {
 				List<String> nodeIDs = new LinkedList<String>();
-				for(CoordinateInMa c : w.getPoints()) {
+				for(Coordinate c : w.getPoints()) {
 					String payload = "<osm>" +
 							"<node changeset=\"" + changesetID + "\" lat=\"" + c.y + "\" lon=\"" + c.x + "\">" +
 							"</node>" +

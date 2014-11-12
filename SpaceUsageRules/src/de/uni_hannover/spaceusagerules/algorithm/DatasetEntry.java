@@ -7,7 +7,9 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
+
 import de.uni_hannover.spaceusagerules.core.Way;
 import de.uni_hannover.spaceusagerules.io.Image;
 import de.uni_hannover.spaceusagerules.io.OSM;
@@ -32,7 +34,7 @@ public class DatasetEntry extends Thread{
 	private Set<String> restrictions;
 	
 	/**	the location if the dataset */
-	private CoordinateInMa location;
+	private Point location;
 	
 	/** the ID of the dataset. */
 	private String id;
@@ -43,18 +45,21 @@ public class DatasetEntry extends Thread{
 	/** the OSM objects in the area of this dataset */
 	private Collection<Way> ways;
 	
+
+	private static GeometryFactory gf = new GeometryFactory();
+	
 	/**
 	 * Initialises a datasetentry. has to provide a coordinate for the location and the ID of the Entry
 	 * @param backup the location in the entry
 	 * @param id the ID of the entry
 	 */
-	public DatasetEntry(CoordinateInMa backup, String id) {
+	public DatasetEntry(Point backup, String id) {
 		this.restrictions = new TreeSet<String>();
 		this.location = backup;
 		this.id = id;
 		try {
 			// try to get better coordinates from the image, because the Data.txt is rounded
-			location = Image.readCoordinates(new File(path + id + ".jpg"));
+			location = gf.createPoint(Image.readCoordinates(new File(path + id + ".jpg")));
 		} catch (Exception e) {
 		}
 	}
@@ -71,7 +76,7 @@ public class DatasetEntry extends Thread{
 	 * the location of this dataset
 	 * @return the location.
 	 */
-	public CoordinateInMa getLocation() {
+	public Point getLocation() {
 		return location;
 	}
 	
@@ -111,7 +116,7 @@ public class DatasetEntry extends Thread{
 		System.out.println(id + " benutzt Regelset: " + best);
 		
 		// compute the best way using the ruleset.
-		ways = OSM.getObjectList(location);
+		ways = OSM.getObjectList(location.getCoordinate());
 		guess = best.calculateBest(ways, location);
 		ways.remove(guess);
 	}

@@ -5,7 +5,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
+import com.vividsolutions.jts.geom.Point;
+
 import de.uni_hannover.spaceusagerules.core.Way;
 /**
  * represents our rules and the related restrictions.
@@ -72,7 +73,7 @@ public class Rules{
 	 * @param w the OSM-object to calculate the distance to
 	 * @return the weighted distance by tag and rules
 	 */
-	public double calcDist(CoordinateInMa c, Way w) {
+	public double calcDist(Point c, Way w) {
 		double distance = w.distanceTo(c);
 		w.addOriginalTag("InMa_preDistance", "" + distance);
 		distance += OFFSET;
@@ -98,7 +99,7 @@ public class Rules{
 	 * @param location the starting location
 	 * @return a way from ways
 	 */
-	public Way calculateBest(Collection<Way> ways, CoordinateInMa location) {
+	public Way calculateBest(Collection<Way> ways, Point location) {
 		Way best = null;
 		double distance = Double.MAX_VALUE;
 		double d;
@@ -110,7 +111,7 @@ public class Rules{
 			// this is used later in DataDrawer to print out the distance to the user.
 			w.addOriginalTag("InMa_Distance", "" + d);
 			// get the Object with the lowest distance, or if equal, the smaller one.
-			if(d<distance || (d==distance && w.getBoundingBoxArea() < best.getBoundingBoxArea())) {
+			if(d<distance || (d==distance && w.getArea() < best.getArea())) {
 				best = w;
 				distance = d;
 			}

@@ -6,8 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,9 +14,7 @@ import org.jsoup.nodes.Element;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
-
-import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
-import de.uni_hannover.spaceusagerules.core.Way;
+import com.vividsolutions.jts.geom.GeometryFactory;
 
 /**
  * A class to read in and write out KML-data from files.
@@ -68,26 +65,27 @@ public class KML {
      */
     public static Geometry loadKML(File kml) {
         Document doc = null;
-        List<Coordinate> coordinates = new Vector<Coordinate>();
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
         try {
 			doc = Jsoup.parse(kml, "UTF-8");
 	        Element e = doc.select("coordinates").first();
-	        for(String c : e.text().split(" ")) { // we can split by space, since it is not allowed to have spaces between coordinates and Jsoup makes a space from every newline
+	        for(String c : e.text().split(" ")) { // we can split by space, since it is not allowed to have spaces between coordinates and Jsoup makes a space for every newline
 	        	// see also <a href="https://developers.google.com/kml/documentation/kmlreference#coordinates">https://developers.google.com/kml/documentation/kmlreference#coordinates</a>
 	            String[] bla = c.split(",");
 	            double lon = Double.parseDouble(bla[0]);
 	            double lat = Double.parseDouble(bla[1]);
 	            // there can be an optional third parameter, which is the altitude, but we don't use it
-	            coordinates.add(new CoordinateInMa(lat,lon));
+	            coordinates.add(new Coordinate(lon,lat));
 	        }
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-        
-        //create Geometry object from the list of points
-        Geometry output = Way.createGeometry(coordinates);
-        
-        return output;
+        // TODO make clear it is always a polygon
+        Coordinate[] coords = new Coordinate[coordinates.size()];
+        int i = 0;
+        for(Coordinate c : coordinates)
+        	coords[i++] = c;
+        return new GeometryFactory().createPolygon(coords);
     }
 
     

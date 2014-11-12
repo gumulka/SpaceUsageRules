@@ -17,7 +17,8 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
 
-import de.uni_hannover.spaceusagerules.core.CoordinateInMa;
+import com.vividsolutions.jts.geom.Coordinate;
+
 import de.uni_hannover.spaceusagerules.core.Way;
 
 /**
@@ -42,7 +43,7 @@ public class DataDrawer {
 	private BufferedImage image;
 	
 	/** the center of the area that is to be rendered */ 
-	private CoordinateInMa location;
+	private Coordinate location;
 	
 	/**
 	 * Creates a DataDrawer for a specific location.
@@ -50,7 +51,7 @@ public class DataDrawer {
 	 * @param height height of the picture
 	 * @param middle center of the area to be rendered
 	 */
-	public DataDrawer(int width, int height, CoordinateInMa middle){
+	public DataDrawer(int width, int height, Coordinate middle){
 		this.width = width;
 		this.height = height;
 		this.location = middle;
@@ -95,7 +96,7 @@ public class DataDrawer {
 		//create drawable polygon
 		int[] ints;
 		Polygon polygon = new Polygon();
-		for(CoordinateInMa c : w.getPoints()){
+		for(Coordinate c : w.getPoints()){
 			ints = transformToInt(c);
 			polygon.addPoint(ints[0]+margin, ints[1]+margin);
 		}
@@ -168,7 +169,7 @@ public class DataDrawer {
 	 * @param p GPS coordinates
 	 * @return array of length two. First is <code>x</code> position, second is <code>y</code> position.
 	 */
-	private int[] transformToInt(CoordinateInMa p){
+	private int[] transformToInt(Coordinate p){
 		
 		int[] output = new int[2];
 		output[0] = (int)((p.x-location.x)/(0.002)*(double)(width-2*margin)) + width/2;
@@ -185,7 +186,7 @@ public class DataDrawer {
 	 * @param radius radius of the area
 	 * @return List of Polygons
 	 */
-	private List<Way> retrieveData(CoordinateInMa p, float radius){
+	private List<Way> retrieveData(Coordinate p, float radius){
 		List<Way> output = new LinkedList<Way>(); 
 		for(Way w : OSM.getObjectList(p, radius))
 			if(w.isPolygon())
