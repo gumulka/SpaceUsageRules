@@ -70,10 +70,11 @@ public class Start extends DatasetEntry {
 		
 		super.run();
 		
-		truth.addAllCoordinates(KML.loadKML(new File(path + getID() + ".truth.kml")).getPoints());
+		truth.setGeometry(KML.loadKML(new File(path + getID() + ".truth.kml")));
 		
-		double overlapArea = getGuess().getPolyline().boundingBoxOverlapArea(truth.getPolyline());
-		overlapArea = Math.min(overlapArea/truth.getPolyline().boundingBoxArea(), overlapArea/getGuess().getPolyline().boundingBoxArea());
+//		double overlapArea = getGuess().getPolyline().boundingBoxOverlapArea(truth.getPolyline());
+		double overlapArea = getGuess().getGeometry().getEnvelopeInternal().intersection(truth.getGeometry().getEnvelopeInternal()).getArea();
+		overlapArea = Math.min(overlapArea/truth.getBoundingBoxArea(), overlapArea/getGuess().getBoundingBoxArea());
 		if(overlapArea>minOverlap)
 			return;
 		getGuess().addOriginalTag("InMa_Overlap", "" + overlapArea);
@@ -176,7 +177,7 @@ public class Start extends DatasetEntry {
 			
 		for(Entry<String,Start> id : instances.entrySet()) {
 			f = new File(path + id.getKey() + ".computed.kml");
-			KML.writeKML(id.getValue().getGuess().getPolyline(), id.getKey(), f);
+			KML.writeKML(id.getValue().getGuess().getGeometry(), id.getKey(), f);
 			
 		}
 		
