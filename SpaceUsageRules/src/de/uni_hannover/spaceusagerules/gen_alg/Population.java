@@ -135,10 +135,8 @@ public class Population extends Rules implements Comparable<Population>{
 		for(int i = 0; i<truths.size(); i++) {
 			Point l = locations.get(i);
 			best = calculateBest(possiblities.get(i),l);
-//			double overlapArea = best.getPolyline().boundingBoxOverlapArea(truths.get(i));
-			//Envelope is the bounding box
-			double overlapArea = best.getGeometry().getEnvelopeInternal().intersection(truths.get(i).getEnvelopeInternal()).getArea();
-			overlapArea = Math.min(overlapArea/best.getArea(), overlapArea/truths.get(i).getEnvelopeInternal().getArea());
+			double overlapArea = best.getGeometry().intersection(truths.get(i)).getArea();
+			overlapArea = Math.min(overlapArea/best.getArea(), overlapArea/truths.get(i).getArea());
 			fitness += maxFitness * (overlapArea);
 		}
 		fitness /= truths.size();

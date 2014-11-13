@@ -15,7 +15,7 @@ import de.uni_hannover.spaceusagerules.io.Image;
 import de.uni_hannover.spaceusagerules.io.OSM;
 
 /**
- * 
+ * TODO Javadoc
  * @author Fabian Pflug
  *
  */

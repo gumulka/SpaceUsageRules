@@ -365,7 +365,7 @@ public class OSM {
 	 * @param tagname a tagname to reduce the Output to.
 	 * @return a collection of OSM-Objects.
 	 */
-	public static Collection<Way> getObjectList(Coordinate c, float radius, File f,
+	public static synchronized Collection<Way> getObjectList(Coordinate c, float radius, File f,
 			String tagname) {
 		wayList = new TreeMap<Long,Way>();
 		coordList = new TreeMap<Long, Coordinate>();
@@ -416,13 +416,10 @@ public class OSM {
 						// we are connectet to another object which is also a part, so maybe, we belong together.
 						if(tagset.containsKey("building:part")) {
 							if(other.getGeometry().touches(w.getGeometry())) {
-								System.err.println("TOUCH");
 								Geometry intersection = other.getGeometry().intersection(w.getGeometry());
 								other.setGeometry(intersection);
 								w.setGeometry(intersection);
 							}
-							else
-								System.err.println("nothing....");
 						}
 					}
 				}

@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -19,6 +20,7 @@ import java.util.TreeSet;
 
 import com.drew.imaging.ImageProcessingException;
 
+import de.uni_hannover.spaceusagerules.core.ThreadScheduler;
 import de.uni_hannover.spaceusagerules.core.Way;
 import de.uni_hannover.spaceusagerules.io.Image;
 import de.uni_hannover.spaceusagerules.io.OSM;
@@ -29,7 +31,10 @@ import de.uni_hannover.spaceusagerules.io.OSM;
  */
 public class Main extends Thread implements Comparable<Main>{
 
-	public static final int MAXTHREADS = 4;
+	public static final int MAXTHREADS = 2;
+	public static final int CPUCORES = 4;
+	public static final double AUSLASTUNG = 1.0 - (1.0/(CPUCORES-MAXTHREADS));
+	
 	
 	private static List<String> possibla = null;
 	private static Map<String,Set<String>> tags = null;
@@ -119,37 +124,15 @@ public class Main extends Thread implements Comparable<Main>{
 		allGens = new ArrayList<Genetic>();
 		for(Entry<String,Set<String>> e: tags.entrySet())
 			try {
-				allGens.add(new Genetic(e.getKey(),e.getValue(), possibla));
+				allGens.add(new Genetic(e.getKey(),e.getValue(), possibla,p,w,p/10,mu,me,p/5));
 			} catch (Exception e1) {
+				e1.printStackTrace();
 				System.err.println("Fehler beim erstellen der Genetics");
 				return;
 			}
 		Collections.sort(allGens);
-		List<Genetic> gens = new LinkedList<Genetic>();
-		for(Genetic g : allGens) {
-			while(true) {
-				if(gens.size()<MAXTHREADS) {
-					g.start();
-					gens.add(g);
-					break;
-				} else
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException ex) {
-					}
-				for(Thread r : gens)
-					if(!r.isAlive()) {
-						gens.remove(r);
-						break;
-					}
-			}
-		}
-		for(Genetic g : gens) {
-			try {
-				g.join();
-			} catch (InterruptedException e1) {
-			}
-		}
+		
+		ThreadScheduler.schedule(allGens, MAXTHREADS);
 
 		for(Genetic g : allGens) {
 			fitness += g.getBest().getFitness();
@@ -206,7 +189,7 @@ public class Main extends Thread implements Comparable<Main>{
 		 
 		 
 		 
-		 int[] maxis = {90,90,90};
+		 int[] maxis = {90, 90, 90};
 		 int[] popsizes = {50, 100,200,350,500};
 		 int[] withouts = {50,100,200,350,500};
 		 int[] mutates =  {5, 3, 1};
@@ -215,19 +198,23 @@ public class Main extends Thread implements Comparable<Main>{
 			 Main best = null;
 			 Main.max = m;
 			 Main.prepare();
+			 List<Main> mains = new LinkedList<Main>();
 			 for(int p : popsizes) {
 				 for(int w: withouts) {
 					 for(int mu : mutates) {
 						 for(int me : merges) {
-							 Main test = new Main(p,w,mu,me);
-							 test.run();
-							 if(best == null || best.compareTo(test)>0)
-								 best = test;
+							 mains.add(new Main(p,w,mu,me));
 						 }
 					 }
 				 }
 			 }
+			 ThreadScheduler.schedule(mains, AUSLASTUNG);
+			 for(Main test : mains)
+				 if(best == null || best.compareTo(test)>0)
+					 best = test;
 			 best.writeout();
+			 System.out.println(new Date());
+			 System.err.println("Runde fertig!");
 		 } // */ 
 	}
 	
@@ -237,12 +224,6 @@ public class Main extends Thread implements Comparable<Main>{
 		this.w = w;
 		this.mu = mu;
 		this.me = me;
-		 Genetic.popsize = p;
-		 Genetic.withoutOtimization = w;
-		 Genetic.mutate = p*mu/10;
-		 Genetic.merge = p*me/10;
-		 Genetic.copyBest = p/10;
-		 Genetic.mergeFrom = p/2;
 	}
 
 	

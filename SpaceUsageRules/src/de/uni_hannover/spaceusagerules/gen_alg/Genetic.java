@@ -26,17 +26,17 @@ import de.uni_hannover.spaceusagerules.io.OSM;
 public class Genetic extends Thread implements Comparable<Genetic>{
 
   	/** Die Anzahl der Populationen, welche den Algorithmus durchlaufen sollen */
-	public static  int popsize = 200;
+	public int popsize = 200;
 	/** Dei Anzahl der Runden, die ohne Optimierung durchlaufen werden, bevor der Algorithmus stoppt. */
-	public static  int withoutOtimization = 300;
+	public int withoutOtimization = 300;
   	/** Die Anzahl der Populationen, welche unbearbeitet in die nächste generation übernommen werden sollen */
-	public static  int copyBest = popsize*1/10;
+	public int copyBest = popsize*1/10;
   	/** Die Anzahl der Populationen, welche mutiert in die nächste Generation übernommen werden solllen. */
-	public static  int mutate = popsize*4/10;
+	public int mutate = popsize*4/10;
   	/** Die Anzahl der Populationen pro Generation, welche aus anderen zusammen gesetzt werden sollen */
-	public static  int merge = popsize*3/10;
+	public int merge = popsize*3/10;
   	/** Die Menge der Poplationen, aus denen die Populationen zusammen gesetzt werden sollen. */
-	public static  int mergeFrom = popsize/2;
+	public int mergeFrom = popsize/2;
 	
   	/** Die Liste der Polygone, welche das richtige Ergebnis representieren. */
 	private List<Geometry> truths;
@@ -56,7 +56,14 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 
 	private static GeometryFactory gf = new GeometryFactory();
 	
-	public Genetic(String signlist, Set<String> IDs, Collection<String> possible) throws Exception {
+	public Genetic(String signlist, Set<String> IDs, Collection<String> possible, int popsize, int without, int copyBest, int mutate, int merge, int mergeFrom) throws Exception {
+		this.popsize = popsize;
+		this.withoutOtimization = without;
+		this.copyBest = copyBest;
+		this.mutate = mutate;
+		this.merge = merge;
+		this.mergeFrom = mergeFrom;
+		
 		suche = signlist;
 		this.possible = possible;
 		truths = new ArrayList<Geometry>();

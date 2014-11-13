@@ -25,6 +25,7 @@ import de.uni_hannover.spaceusagerules.io.KML;
 import de.uni_hannover.spaceusagerules.io.OSM;
 
 /**
+ * TODO Javadoc
  * @author Fabian Pflug
  *
  */
@@ -77,7 +78,6 @@ public class Start extends DatasetEntry {
 		
 		this.truth = new Way(KML.loadKML(new File(path + getID() + ".truth.kml")));
 		
-//		double overlapArea = getGuess().getPolyline().boundingBoxOverlapArea(truth.getPolyline());
 		double overlapArea = getGuess().getGeometry().intersection(truth.getGeometry()).getArea();
 		overlapArea = Math.min(overlapArea/truth.getArea(), overlapArea/getGuess().getArea());
 		if(overlapArea>minOverlap)
