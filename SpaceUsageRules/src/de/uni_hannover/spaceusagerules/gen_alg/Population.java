@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
-import java.util.Set;
 import java.util.TreeMap;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -130,7 +129,7 @@ public class Population extends Rules implements Comparable<Population>{
 	 * @param possiblities a list of a collection of possible polygons
 	 * @param locations a list of locations where to start from.
 	 */
-	public void calcFitness(List<Geometry> truths, List<Set<Way>> possiblities, List<Point> locations) {
+	public void calcFitness(List<Geometry> truths, List<Collection<Way>> possiblities, List<Point> locations) {
 		Way best = null;
 		fitness = 0;
 		for(int i = 0; i<truths.size(); i++) {

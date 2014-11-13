@@ -31,7 +31,9 @@ import org.scribe.model.Verb;
 import org.scribe.oauth.OAuthService;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.Point;
 
 import de.uni_hannover.spaceusagerules.core.Way;
@@ -117,20 +119,16 @@ public class OSM {
 			String tagname) {
 		return getObjectList(c, radius, null, tagname);
 	}
-
+	
 	/**
-	 * fetches data from OpenStreetMap.
-	 * 
+	 * fetches the data from the OpenStreetMap servers or the local files if available and indicated by buffer.
 	 * @param c the coordinate where data should be fetched around.
 	 * @param radius a radius around this point.
 	 * @param f the file to read or save data to
 	 * @param tagname a tagname to reduce the Output to.
-	 * @return a collection of OSM-Objects.
+	 * @return a document containing the Data.
 	 */
-	public static Collection<Way> getObjectList(Coordinate c, float radius, File f,
-			String tagname) {
-		Map<Long,Way> newObjects = new TreeMap<Long,Way>();
-		Map<Long, Coordinate> coords = new TreeMap<Long, Coordinate>();
+	private static Document fetchData(Coordinate c, float radius, File f, String tagname) {
 		String connection = null;
 		if (tagname == null) // there is no single Tag given. Fetch all the Data!
 			connection = "http://api.openstreetmap.org/api/0.6/map?bbox="
@@ -142,8 +140,8 @@ public class OSM {
 					+ (c.x - radius) + "," + (c.y - radius)
 					+ ',' + (c.x + radius) + ","
 					+ (c.y + radius) + "][" + tagname + "=*]";
+		Document doc = null;
 		try {
-			Document doc = null;
 			if (buffer && f != null && f.exists() && f.canRead()) {
 				// if the file is readable and we use a buffer, read it.
 				doc = Jsoup.parse(f, "UTF-8");
@@ -154,7 +152,7 @@ public class OSM {
 						.followRedirects(true).execute();
 				doc = res.parse();
 				// write it to buffer if enabled and possible
-				if (buffer && f != null && f.canWrite()) {
+				if (buffer && f != null && f.getParentFile().canWrite()) {
 					FileWriter fw = new FileWriter(f);
 					BufferedWriter bfw = new BufferedWriter(fw);
 					bfw.write(res.body());
@@ -162,35 +160,233 @@ public class OSM {
 					fw.close();
 				}
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return doc;
+	}
+	
+	/**
+	 * parses a Node and puts the result in the static nodeMap
+	 * @param e an element containing a valid OSM node object
+	 * @return the parsed element.
+	 */
+	private static Coordinate parseNode(Element e) {
+		long id = Long.parseLong(e.attr("id"));
+		float lon = Float.parseFloat(e.attr("lon"));
+		float lat = Float.parseFloat(e.attr("lat"));
+		Coordinate c = new Coordinate(lon, lat);
+		coordList.put(id, c);
+		return c;
+	}
+	
+	/**
+	 * parses a way and puts the result in the static wayMap
+	 * @param e an element containing a valid OSM node object
+	 * @return the parsed element
+	 */
+	private static Way parseWay(Element e) {
+		Elements el = e.select("nd");
+		Coordinate[] penis = new Coordinate[el.size()];
+		long wayID = Long.parseLong(e.attr("id"));
+		// dereference the previously extracted nodes to have the coordinates
+		int i = 0;
+		for (Element x : el) {
+			long id = Long.parseLong(x.attr("ref"));
+			Coordinate c = coordList.get(id);
+			if(c == null) {
+				String filename = String.format(Locale.GERMAN,
+						"buffer/Node_%d.xml",id);
+				File f = new File(filename);
+				Document doc = null;
+				try {
+					if (buffer && f != null && f.exists() && f.canRead()) {
+						// if the file is readable and we use a buffer, read it.
+						doc = Jsoup.parse(f, "UTF-8");
+					} else {
+						String connection = "http://api.openstreetmap.org/api/0.6/node/" + id;
+						org.jsoup.Connection.Response res = Jsoup.connect(connection).timeout(10000)
+							.userAgent("InMa")
+							.followRedirects(true).execute();
+						doc = res.parse();
+						// write it to buffer if enabled and possible
+						if (buffer && f != null && f.getParentFile().canWrite()) {
+							FileWriter fw = new FileWriter(f);
+							BufferedWriter bfw = new BufferedWriter(fw);
+							bfw.write(res.body());
+							bfw.close();
+							fw.close();
+						}
+					}
+					Element node = doc.select("node").first();
+					c  = parseNode(node);
+				} catch (IOException exc) {
+					exc.printStackTrace();
+				}
+			}
+	//		if(c != null)
+				penis[i++] = c;
+		}
+		Way w = null;
+		Geometry geo = null;
+		try {
+			geo = gf.createPolygon(penis);
+		} catch (IllegalArgumentException ex) {
+			geo = gf.createLineString(penis);
+		}
+		w = new Way(geo);
+		// add metadata like tags and ID
+		w.setId(wayID);
+		for (Element x : e.select("tag")) {
+			w.addOriginalTag(x.attr("k"), x.attr("v"));
+		}
+		wayList.put(wayID,w);
+		return w;
+	}
+	
+	/**
+	 * gets a way from the static wayList, or if it is not there, retrieves it from the OSM-servers.
+	 * after getting it, it is deleted from the static wayList
+	 * @param id the id of the way.
+	 * @return the way object
+	 */
+	private static Way getAndDeleteWay(long id) {
+		if(wayList.containsKey(id)) {
+			return wayList.remove(id);
+		}
+		String filename = String.format(Locale.GERMAN,
+				"buffer/Way_%d.xml",id);
+		File f = new File(filename);
+		Document doc = null;
+		try {
+			if (buffer && f != null && f.exists() && f.canRead()) {
+				// if the file is readable and we use a buffer, read it.
+				doc = Jsoup.parse(f, "UTF-8");
+			} else {
+				String connection = "http://api.openstreetmap.org/api/0.6/way/" + id;
+				org.jsoup.Connection.Response res = Jsoup.connect(connection).timeout(10000)
+					.userAgent("InMa")
+					.followRedirects(true).execute();
+				doc = res.parse();
+				// write it to buffer if enabled and possible
+				if (buffer && f != null && f.getParentFile().canWrite()) {
+					FileWriter fw = new FileWriter(f);
+					BufferedWriter bfw = new BufferedWriter(fw);
+					bfw.write(res.body());
+					bfw.close();
+					fw.close();
+				}
+			}
+			Element e = doc.select("way").first();
+			Way w  = parseWay(e);
+			if(w==null)
+				System.err.println("NNAAAAIIIINNNNN!!! " + id);
+			wayList.remove(id);
+			return w;
+		} catch (IOException e) {
+		}
+
+		return null;
+	}
+	
+	/**
+	 * creates a multipolygon from a relation.
+	 * a multipolygon has an outer shell and inner holes.
+	 * @param e an element containing a valid OSM-relation with tag: type->multipolygon
+	 * @return returns a new Way containing the multipolygon and all tags of its children.
+	 */
+	private static Way createMultipoligon(Element e) {
+		Elements members = e.select("member[type=way]");
+		LinearRing outer = null;
+		Map<String,String> tags = new TreeMap<String,String>();
+		Elements outerElements =members.select("member[role=outer]");
+		if(outerElements.size()>1) {
+			List<Way> outerList = new LinkedList<Way>();
+			for(Element out : outerElements){
+				Way w = getAndDeleteWay(Long.parseLong(out.attr("ref")));
+				outerList.add(w);
+			}
+			int size = 0;
+			for(Way w : outerList)
+				size += w.getPoints().length;
+			Coordinate[] allOuterPoints = new Coordinate[size];
+			int i = 0;
+			for(Way w : outerList)
+				for(Coordinate c : w.getPoints())
+					allOuterPoints[i++] = c;
+			outer = gf.createLinearRing(allOuterPoints);
+		} else if (outerElements.size() == 1) {
+			long memberID = Long.parseLong(outerElements.first().attr("ref"));
+			Way w = getAndDeleteWay(memberID);
+			outer = gf.createLinearRing(w.getPoints());
+			for(Entry<String,String> entry : w.getTags().entrySet())
+				tags.put(entry.getKey(), entry.getValue());
+		}
+		Elements innerElements = members.select("member[role=inner]");
+		LinearRing[] inner = new LinearRing[innerElements.size()];
+		int i = 0;
+		for(Element mem : innerElements) {
+			long memberID = Long.parseLong(mem.attr("ref"));
+			Way w = getAndDeleteWay(memberID);
+			if(w==null) {
+				System.err.println("BLALLAA");
+				return null;
+			}
+			inner[i++] = gf.createLinearRing(w.getPoints());
+			for(Entry<String,String> entry : w.getTags().entrySet())
+				tags.put(entry.getKey(), entry.getValue());
+		}
+		Way w = new Way(gf.createPolygon(outer, inner));
+		for(Entry<String,String> entry : tags.entrySet())
+			w.addOriginalTag(entry.getKey(), entry.getValue());
+		wayList.put((long) wayList.size(), w);
+		for(Element el : e.select("tag")) {
+			if(!el.attr("k").equalsIgnoreCase("type"))
+				w.addOriginalTag(el.attr("k"), el.attr("v"));
+		}
+		return w;
+	}
+	
+	/**
+	 * a list of all Way's fetched in this call.
+	 */
+	private static Map<Long,Way> wayList;
+	/**
+	 * a list of all Node's fetched in this call.
+	 */
+	private static Map<Long, Coordinate> coordList;
+	
+	/**
+	 * fetches and parses data from OpenStreetMap.
+	 * 
+	 * @param c the coordinate where data should be fetched around.
+	 * @param radius a radius around this point.
+	 * @param f the file to read or save data to
+	 * @param tagname a tagname to reduce the Output to.
+	 * @return a collection of OSM-Objects.
+	 */
+	public static Collection<Way> getObjectList(Coordinate c, float radius, File f,
+			String tagname) {
+		wayList = new TreeMap<Long,Way>();
+		coordList = new TreeMap<Long, Coordinate>();
+		Document doc = fetchData(c, radius, f, tagname);
+
 			// extract all nodes and their Values
 			for (Element e : doc.select("node")) {
-				long id = Long.parseLong(e.attr("id"));
-				float lon = Float.parseFloat(e.attr("lon"));
-				float lat = Float.parseFloat(e.attr("lat"));
-				coords.put(id, new Coordinate(lon, lat));
+				parseNode(e);
 			}
 			// extract all ways
 			for (Element e : doc.select("way")) {
-				Elements el = e.select("nd");
-				Coordinate[] penis = new Coordinate[el.size()];
-				long wayID = Long.parseLong(e.attr("id"));
-				// dereference the previously extracted nodes to have the coordinates
-				int i = 0;
-				for (Element x : el) {
-					long id = Long.parseLong(x.attr("ref"));
-					penis[i++] = coords.get(id);
-				}
-				try {
-				Way w = new Way(gf.createPolygon(penis));
-				// add metadata like tags and ID
-				w.setId(wayID);
-				for (Element x : e.select("tag")) {
-					w.addOriginalTag(x.attr("k"), x.attr("v"));
-				}
-				newObjects.put(wayID,w);
-				} catch (IllegalArgumentException ex) {
-					//XXX maybe look add it and chance if we want to have lines in it
-					// we do nothing, because this happens, if there is a way.
+				parseWay(e);
+			}
+			
+			// handling relations
+			for(Element e : doc.select("relation")) {
+				Elements typeE = e.select("tag[k=type]");
+				if(typeE.size()==1) {
+					if(typeE.first().attr("v").equalsIgnoreCase("multipolygon")) {
+						createMultipoligon(e);
+					}
 				}
 			}
 			
@@ -205,7 +401,7 @@ public class OSM {
 				Point p = gf.createPoint(coord);
 				// select the smallest object where we are inside
 				Way best = null;
-				for(Way w : newObjects.values()) {
+				for(Way w : wayList.values()) {
 					if(w.getGeometry().contains(p)) {
 						if(best == null || best.getArea()>w.getArea())
 							best = w;
@@ -219,10 +415,7 @@ public class OSM {
 				}
 			}
 			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return newObjects.values();
+		return wayList.values();
 	}
 
 	/**

@@ -34,7 +34,7 @@ public class Start extends DatasetEntry {
 	private static final int IMAGEHEIGTH = 2160;
 	
 	/** a target overlap value for all ID's */
-	private static final double globalMinOverlap = 0.85;
+	private static final double globalMinOverlap = 0.95;
 	
 	/** number of maximal running Threads in parallel */
 	private static final int MAXRUNNING = 1;
@@ -69,13 +69,16 @@ public class Start extends DatasetEntry {
 		File f = new File(imagePath + getID() + ".png");
 		if(f.exists() && !f.delete())
 			System.err.println("Konnte das Bild zu " + getID() + " nicht löschen.");
+		f = new File(imagePath + getID() + ".big.png");
+		if(f.exists() && !f.delete())
+			System.err.println("Konnte das Bild zu " + getID() + " nicht löschen.");
 		
 		super.run();
 		
 		this.truth = new Way(KML.loadKML(new File(path + getID() + ".truth.kml")));
 		
 //		double overlapArea = getGuess().getPolyline().boundingBoxOverlapArea(truth.getPolyline());
-		double overlapArea = getGuess().getGeometry().getEnvelopeInternal().intersection(truth.getGeometry().getEnvelopeInternal()).getArea();
+		double overlapArea = getGuess().getGeometry().intersection(truth.getGeometry()).getArea();
 		overlapArea = Math.min(overlapArea/truth.getArea(), overlapArea/getGuess().getArea());
 		if(overlapArea>minOverlap)
 			return;
@@ -90,12 +93,21 @@ public class Start extends DatasetEntry {
 	 * @param ways
 	 */
 	public void generateImage(Collection<Way> ways) {
-		DataDrawer drawer = new DataDrawer(IMAGEWIDTH,IMAGEHEIGTH,getLocation().getCoordinate());
+		DataDrawer drawer = new DataDrawer(IMAGEWIDTH,IMAGEHEIGTH,getLocation().getCoordinate(),0.002);
 		drawer.render(ways);
 		drawer.drawWay(truth,Color.green);
 		drawer.drawWay(getGuess(),Color.pink);
 		try {
 			drawer.saveImage(imagePath + getID() + ".png");
+		} catch (IOException e) {
+			System.err.println("Konnte das Bild zu " + getID() + " nicht speichern.\n" + imagePath + getID() + ".png");
+		}
+		drawer = new DataDrawer(IMAGEWIDTH,IMAGEHEIGTH,getLocation().getCoordinate(),0.006);
+		drawer.render(ways);
+		drawer.drawWay(truth,Color.green);
+		drawer.drawWay(getGuess(),Color.pink);
+		try {
+			drawer.saveImage(imagePath + getID() + ".big.png");
 		} catch (IOException e) {
 			System.err.println("Konnte das Bild zu " + getID() + " nicht speichern.\n" + imagePath + getID() + ".png");
 		}
@@ -113,7 +125,7 @@ public class Start extends DatasetEntry {
 		Map<String,Start> instances = new TreeMap<String,Start>();
 		String line;
 		line = br.readLine();
-		int max = 90; // Integer.parseInt(line);
+		int max = 90; //Integer.parseInt(line); // 90 for easy
 		GeometryFactory gf = new GeometryFactory();
 		for(int i = 0; i<max;i++) {
 			line = br.readLine();

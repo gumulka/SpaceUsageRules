@@ -45,16 +45,19 @@ public class DataDrawer {
 	/** the center of the area that is to be rendered */ 
 	private Coordinate location;
 	
+	double scale;
+	
 	/**
 	 * Creates a DataDrawer for a specific location.
 	 * @param width width of the picture
 	 * @param height height of the picture
 	 * @param middle center of the area to be rendered
 	 */
-	public DataDrawer(int width, int height, Coordinate middle){
+	public DataDrawer(int width, int height, Coordinate middle, double scale){
 		this.width = width;
 		this.height = height;
 		this.location = middle;
+		this.scale = scale;
 		
 		//create image
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -172,10 +175,8 @@ public class DataDrawer {
 	private int[] transformToInt(Coordinate p){
 		
 		int[] output = new int[2];
-		output[0] = (int)((p.x-location.x)/(0.002)*(double)(width-2*margin)) + width/2;
-		output[1] = height/2 - (int)((p.y-location.y)/(0.002)*(double)(width-2*margin));
-//		output[0] = (int)((p.longitude-minX)/(maxX-minX)*(double)(width-2*margin));
-//		output[1] = (int)((-p.latitude+maxY)/(maxX-minX)*(double)(height-2*margin));
+		output[0] = (int)((p.x-location.x)/(scale)*(double)(width-2*margin)) + width/2;
+		output[1] = height/2 - (int)((p.y-location.y)/(scale)*(double)(width-2*margin));
 		
 		return output;
 	}

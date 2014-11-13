@@ -43,7 +43,7 @@ public class Genetic extends Thread implements Comparable<Genetic>{
   	/** die Liste der Coordinaten, von welchem aus die Lösungspolygone gesucht werden sollen */
 	private List<Point> starting;
   	/** Eine Liste von Listen, welche die Möglichen Lösungen Respresentieren. */
-	private List<Set<Way>> possebilities;
+	private List<Collection<Way>> possebilities;
   	/** Die Liste der Populationen, welche aktuell bearbeitet werden. */ 
 	private List<Population> pops, nextGen;
   	/** der Name der SpaceUsageRule, nach der Optimiert werden soll. */
@@ -61,7 +61,7 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 		this.possible = possible;
 		truths = new ArrayList<Geometry>();
 		starting = new ArrayList<Point>();
-		possebilities = new ArrayList<Set<Way>>();
+		possebilities = new ArrayList<Collection<Way>>();
 		pops = new ArrayList<Population>();
 		nextGen = new ArrayList<Population>();
 
