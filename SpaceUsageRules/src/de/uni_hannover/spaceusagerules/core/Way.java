@@ -88,6 +88,10 @@ public class Way implements Serializable, Comparable<Way>{
         this.id = -1;
     }
     
+    public void setGeometry(Geometry g) {
+    	this.outline = g;
+    }
+    
 	/**
      * fügt der Map ein weiteres key-Value pair hinzu.
      * sollte der Key schon vorhanden sein, dann wird dieser überschrieben.

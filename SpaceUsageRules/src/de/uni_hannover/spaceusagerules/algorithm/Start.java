@@ -85,7 +85,6 @@ public class Start extends DatasetEntry {
 		getGuess().addOriginalTag("InMa_Overlap", "" + overlapArea);
 		System.err.println("Anforderungen an " + getID() + " nicht geschafft.");
 		generateImage(getWays());
-
 	}
 	
 	/**
@@ -125,7 +124,7 @@ public class Start extends DatasetEntry {
 		Map<String,Start> instances = new TreeMap<String,Start>();
 		String line;
 		line = br.readLine();
-		int max = 90; //Integer.parseInt(line); // 90 for easy
+		int max = Integer.parseInt(line); // 90 for easy
 		GeometryFactory gf = new GeometryFactory();
 		for(int i = 0; i<max;i++) {
 			line = br.readLine();

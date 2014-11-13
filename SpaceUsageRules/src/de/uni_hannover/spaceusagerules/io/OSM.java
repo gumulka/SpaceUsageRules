@@ -389,6 +389,47 @@ public class OSM {
 					}
 				}
 			}
+			/*
+			for(Element e : doc.select("relation")) {
+				System.out.println("----------");
+				for(Element t : e.select("tag"))
+					System.out.println(t);
+			} */
+			List<Long> delete = new LinkedList<Long>();
+			for(Way w : wayList.values()) {
+				if(w.getTags().containsKey("building:part")) {
+					for(Way other : wayList.values()) {
+						if(w.equals(other))
+							continue;
+						Map<String,String> tagset = other.getTags();
+						// if we are part of a building and the other part covers us.
+						if(tagset.containsKey("building")) {
+							if(other.getGeometry().contains(w.getGeometry())) {
+								for(String key : w.getTags().keySet()) {
+									if(!tagset.containsKey(key))
+										tagset.put(key, w.getValue(key));
+								}
+								delete.add(w.getId());
+								break;
+							}
+						} else
+						// we are connectet to another object which is also a part, so maybe, we belong together.
+						if(tagset.containsKey("building:part")) {
+							if(other.getGeometry().touches(w.getGeometry())) {
+								System.err.println("TOUCH");
+								Geometry intersection = other.getGeometry().intersection(w.getGeometry());
+								other.setGeometry(intersection);
+								w.setGeometry(intersection);
+							}
+							else
+								System.err.println("nothing....");
+						}
+					}
+				}
+			}
+			for(Long l : delete) {
+				wayList.remove(l);
+			}
 			
 			// Adding tags from Points, which are inside a Polygon.
 			for (Element e : doc.select("node")) {
