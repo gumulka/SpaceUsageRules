@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Polygon;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,6 +17,8 @@ import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.Point;
 
 import de.uni_hannover.spaceusagerules.core.Way;
 
@@ -89,12 +90,46 @@ public class DataDrawer {
 		drawWay(w, Color.black);
 	}
 	
+	/**
+	 * draws the given string in with a bigger font then usual on top of the image.
+	 * @param rules
+	 */
 	public void drawRules(String rules) {
+		int startoffset = 0;
 		Font f = gr.getFont();
 		Font big = f.deriveFont((float) f.getSize()+20);
 		gr.setFont(big);
-		gr.drawString(rules, width/10 , height/20);
+		do { // this is to clip overlength rules to a next line
+			int last = rules.length();
+			if(last>200) // if longer then 200 charakters, then clip
+				last = rules.lastIndexOf(' ',200);
+			String print = rules.substring(0, last);
+			if(rules.length()>last+1)
+				rules = rules.substring(last+1);
+			else
+				rules = "";
+			gr.drawString(print, width/10 , height/20+startoffset);
+			startoffset += 30;
+		}while(rules.length() != 0);
 		gr.setFont(f);
+	}
+	
+	/**
+	 * draws a single Ring or a single Polygon into the image.
+	 * @param lr Polygon to draw
+	 */
+	private void drawRing(LineString lr) {
+		//create drawable polygon
+		int[] ints;
+		Polygon polygon = new Polygon();
+		
+		for(Coordinate c : lr.getCoordinates()){
+			ints = transformToInt(c);
+			polygon.addPoint(ints[0]+margin, ints[1]+margin);
+		}
+			
+		//draw polygon outline
+		gr.drawPolygon(polygon);
 	}
 	
 	/**
@@ -103,34 +138,31 @@ public class DataDrawer {
 	 * @param color color of the outline
 	 */
 	public void drawWay(Way w, Color color) {
+		gr.setColor(color);
 		
-		//create drawable polygon
-		int[] ints;
-		Polygon polygon = new Polygon();
-		for(Coordinate c : w.getPoints()){
-			ints = transformToInt(c);
-			polygon.addPoint(ints[0]+margin, ints[1]+margin);
+		if(w.getGeometry() instanceof com.vividsolutions.jts.geom.Polygon) {
+			com.vividsolutions.jts.geom.Polygon pol = (com.vividsolutions.jts.geom.Polygon) w.getGeometry();
+			drawRing(pol.getExteriorRing());
+			// XXX vielleicht noch eine gestrichelte Linie hinzufügen um zu zeigen, dass wir eine inner Linie sind.
+			for(int i = 0; i<pol.getNumInteriorRing();i++)
+				drawRing(pol.getInteriorRingN(i));
 		}
-			
-		//draw polygon outline
-		gr.setColor(color);
-		gr.drawPolygon(polygon);
 		
-		//draw center (of bounding box)
-		Rectangle boundingBox = polygon.getBounds();
-		int centerX = boundingBox.width/2 + boundingBox.x;
-		int centerY = boundingBox.height/2 + boundingBox.y;
-		if(centerY>height)
-			centerY = height *95 / 100;
-		if(centerX>width)
-			centerX = width *95 / 100;
-		if(centerY<0)
-			centerY = height *5 / 100;
-		if(centerX<0)
-			centerX = width *5 / 100;
+		
+		//draw center
+		Point p = w.getGeometry().getCentroid();
+		int[] center = transformToInt(p.getCoordinate());
+		if(center[1]>height)
+			center[1] = height *95 / 100;
+		if(center[0]>width)
+			center[0] = width *95 / 100;
+		if(center[1]<0)
+			center[1] = height *5 / 100;
+		if(center[0]<0)
+			center[0] = width *5 / 100;
 		gr.setColor(color);
-		gr.drawLine(centerX-3, centerY, centerX+3, centerY);
-		gr.drawLine(centerX, centerY-3, centerX, centerY+3);
+		gr.drawLine(center[0]-3, center[1], center[0]+3, center[1]);
+		gr.drawLine(center[0], center[1]-3, center[0], center[1]+3);
 		
 		List<String> tag = new Vector<String>();
 		for(String key : w.getTags().keySet()){
@@ -138,7 +170,7 @@ public class DataDrawer {
 		}
 //		tag = filterTags(tag);
 		gr.setColor(Color.BLACK);
-		drawTags(tag,centerX,centerY);
+		drawTags(tag,center[0],center[1]);
 		
 	}
 	

@@ -95,8 +95,8 @@ public class Start extends DatasetEntry {
 		DataDrawer drawer = new DataDrawer(IMAGEWIDTH,IMAGEHEIGTH,getLocation().getCoordinate(),0.002);
 		drawer.render(ways);
 		drawer.drawRules(getID() + " enthält " + getRestrictions()  + " und benutzt: " + getUsedRules());
+		drawer.drawWay(getGuess(),Color.red);
 		drawer.drawWay(truth,Color.green);
-		drawer.drawWay(getGuess(),Color.pink);
 		try {
 			drawer.saveImage(imagePath + getID() + ".png");
 		} catch (IOException e) {
@@ -106,7 +106,7 @@ public class Start extends DatasetEntry {
 		drawer.render(ways);
 		drawer.drawRules(getID() + " enthält " + getRestrictions()  + " und benutzt: " + getUsedRules());
 		drawer.drawWay(truth,Color.green);
-		drawer.drawWay(getGuess(),Color.pink);
+		drawer.drawWay(getGuess(),Color.red);
 		try {
 			drawer.saveImage(imagePath + getID() + ".big.png");
 		} catch (IOException e) {
@@ -120,6 +120,10 @@ public class Start extends DatasetEntry {
 	 */
 	public static void main(String[] args) throws IOException {
 		OSM.useBuffer(true);
+		
+		// FIXME Kommandozeilenparameter parsen
+		// Siehe auch: https://github.com/arenn/java-getopt
+		
 		
 		File f = new File(path + "Data.txt");
 		BufferedReader br = new BufferedReader(new FileReader(f));
