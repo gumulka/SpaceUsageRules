@@ -76,10 +76,10 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 			pops.add(new Population(possible));
 		}
 		for(String s : IDs) {
-				String filename = String.format(Locale.GERMAN,"../SpaceUsageRulesVis/assets/%s.jpg",s);
+				String filename = String.format(Locale.GERMAN,Main.path + "/%s.jpg",s);
 				Point c = gf.createPoint(Image.readCoordinates(filename)); 
 				starting.add(c);
-				filename = String.format(Locale.GERMAN,"../SpaceUsageRulesVis/assets/%s.truth.kml",s);
+				filename = String.format(Locale.GERMAN,Main.path + "/%s.truth.kml",s);
 				truths.add(KML.loadKML(new File(filename)));
 				possebilities.add(OSM.getObjectList(c.getCoordinate()));
 		}

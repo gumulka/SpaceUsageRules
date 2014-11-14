@@ -22,7 +22,7 @@ import de.uni_hannover.spaceusagerules.io.OSM;
 public class DatasetEntry extends Thread{
 
 	/** The base path, where the input-data is located.	 */
-	public static String path = "../SpaceUsageRulesVis/assets/";
+	public static String path = "../Testdatensatz/";
 	
 	/** the output path, to save the images to */
 	public static String imagePath = "images/";

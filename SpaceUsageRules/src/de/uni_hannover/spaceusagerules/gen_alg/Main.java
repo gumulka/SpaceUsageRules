@@ -46,13 +46,15 @@ public class Main extends Thread implements Comparable<Main>{
 	private int diff = Integer.MAX_VALUE;
 	private int fitness = 0;
 	
+	public static final String path = "../Testdatensatz/";
+	
 	
 	public static void prepare() throws IOException, ImageProcessingException {
 		OSM.useBuffer(true);
 		
 		Map<String,Integer> possibilities = new TreeMap<String,Integer>();
 		tags = new TreeMap<String,Set<String>>();
-		File f = new File("../SpaceUsageRulesVis/assets/Data.txt");
+		File f = new File( path + "Data.txt");
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		String lastID = null;
 		String tag = "";
@@ -71,7 +73,7 @@ public class Main extends Thread implements Comparable<Main>{
 			}
 			else {
 				// fügt der Liste aller möglichen möglichkeiten die in der Umgebung dieses Tags vorkommenden hinzu.
-				String filename = String.format(Locale.GERMAN,"../SpaceUsageRulesVis/assets/%s.jpg",bla[0]);
+				String filename = String.format(Locale.GERMAN,path + "%s.jpg",bla[0]);
 				for(Way w : OSM.getObjectList(Image.readCoordinates(filename))) {
 					for(Entry<String,String> e : w.getTags().entrySet()) {
 						Integer value = possibilities.get(e.getKey());
@@ -144,7 +146,7 @@ public class Main extends Thread implements Comparable<Main>{
 	}
 	
 	public void writeout() throws IOException {
-		File f = new File("../SpaceUsageRulesVis/assets/Rules.gen." + max + ".txt");
+		File f = new File(path + "Rules.gen." + max + ".txt");
 		BufferedWriter bw = new BufferedWriter(new FileWriter(f));
 		for(Genetic g : allGens) {
 			bw.write("[ " + g.getRule());
