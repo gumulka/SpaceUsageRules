@@ -5,7 +5,12 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.Polygon;
 
 import de.uni_hannover.spaceusagerules.core.Way;
 /**
@@ -119,6 +124,40 @@ public class Rules{
 		return best;
 	}
 	
+	/**
+	 * Creates a regular polygon with n vertices. Is is created by rotating, starting at
+	 * (radius,0) relative to the given center.
+	 * @param n number of vertices
+	 * @param radius distance from the vertices to the center
+	 * @param center center around which the polygon is created
+	 * @return regular polygon
+	 */
+	public static Geometry createNgon(int n, double radius, Point center){
+		
+		Coordinate[] cList = new Coordinate[n+1];
+		
+		Coordinate c = center.getCoordinate();
+		
+		//create the N-gon by rotating around center.
+		double x,y;
+		for(int i=0;i<n;i++){
+			x = radius*Math.cos(i*2./n*Math.PI)+c.x;
+			y = radius*Math.sin(i*2./n*Math.PI)+c.y;
+			cList[i] = new Coordinate(x,y);
+		}
+		
+		//first and last point have to be the same, to get a closed line.
+		//but not the same object
+		cList[n] = new Coordinate(cList[0].x, cList[0].y);
+		
+		//create the outline of the polygon
+		LinearRing ring = new GeometryFactory().createLinearRing(cList);
+		
+		//second argument contains the holes in this polygon. There are none.
+		Geometry out = new Polygon(ring, null, new GeometryFactory());
+		
+		return out;
+	}
 	
 	/**
 	 * calculates the overlap of this collection of restrictions with another. 
