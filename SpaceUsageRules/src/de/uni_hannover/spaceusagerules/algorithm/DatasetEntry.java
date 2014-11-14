@@ -45,6 +45,11 @@ public class DatasetEntry extends Thread{
 	/** the OSM objects in the area of this dataset */
 	private Collection<Way> ways;
 	
+	/**
+	 * the rules used by this Entry to calculate the result.
+	 */
+	private Rules usedRules = null;
+	
 
 	private static GeometryFactory gf = new GeometryFactory();
 	
@@ -92,6 +97,14 @@ public class DatasetEntry extends Thread{
 		this.restrictions.add(restriction);
 	}
 	
+	public Collection<String> getRestrictions() {
+		return restrictions;
+	}
+	
+	public Rules getUsedRules() {
+		return usedRules;
+	}
+	
 	/**
 	 * computes the best ruleset to use and with it
 	 * the best OSM-object to choose for the restrictions.
@@ -99,25 +112,24 @@ public class DatasetEntry extends Thread{
 	public void run() {
 		
 		// compute the best ruleset as defined by the greatest overlap value
-		Rules best = null;
 		float minRulesOverlap = 0.1f;
 		for(Rules r : allRules) {
 			float o = r.overlap(restrictions);
 			if(o>minRulesOverlap) {
 				minRulesOverlap = o;
-				best = r;
+				usedRules = r;
 			}
 		}
 		// backup. if there is no ruleset applicable, then create the empty ruleset.
-		if(best == null) {
-			best = new Rules(new TreeSet<String>(), new TreeMap<String,Double>());
+		if(usedRules == null) {
+			usedRules = new Rules(new TreeSet<String>(), new TreeMap<String,Double>());
 		}
 		
-		System.out.println(id + " benutzt Regelset: " + best);
+		System.out.println(id + " benutzt Regelset: " + usedRules);
 		
 		// compute the best way using the ruleset.
 		ways = OSM.getObjectList(location.getCoordinate());
-		guess = best.calculateBest(ways, location);
+		guess = usedRules.calculateBest(ways, location);
 		ways.remove(guess);
 	}
 	

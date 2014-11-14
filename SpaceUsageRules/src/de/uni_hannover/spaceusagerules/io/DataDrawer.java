@@ -89,6 +89,14 @@ public class DataDrawer {
 		drawWay(w, Color.black);
 	}
 	
+	public void drawRules(String rules) {
+		Font f = gr.getFont();
+		Font big = f.deriveFont((float) f.getSize()+20);
+		gr.setFont(big);
+		gr.drawString(rules, width/10 , height/20);
+		gr.setFont(f);
+	}
+	
 	/**
 	 * Draws a {@link Way} with a specific outline color.
 	 * @param w the Way to be drawn

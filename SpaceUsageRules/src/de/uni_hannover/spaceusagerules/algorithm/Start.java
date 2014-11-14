@@ -94,6 +94,7 @@ public class Start extends DatasetEntry {
 	public void generateImage(Collection<Way> ways) {
 		DataDrawer drawer = new DataDrawer(IMAGEWIDTH,IMAGEHEIGTH,getLocation().getCoordinate(),0.002);
 		drawer.render(ways);
+		drawer.drawRules(getID() + " enthält " + getRestrictions()  + " und benutzt: " + getUsedRules());
 		drawer.drawWay(truth,Color.green);
 		drawer.drawWay(getGuess(),Color.pink);
 		try {
@@ -103,12 +104,13 @@ public class Start extends DatasetEntry {
 		}
 		drawer = new DataDrawer(IMAGEWIDTH,IMAGEHEIGTH,getLocation().getCoordinate(),0.006);
 		drawer.render(ways);
+		drawer.drawRules(getID() + " enthält " + getRestrictions()  + " und benutzt: " + getUsedRules());
 		drawer.drawWay(truth,Color.green);
 		drawer.drawWay(getGuess(),Color.pink);
 		try {
 			drawer.saveImage(imagePath + getID() + ".big.png");
 		} catch (IOException e) {
-			System.err.println("Konnte das Bild zu " + getID() + " nicht speichern.\n" + imagePath + getID() + ".png");
+			System.err.println("Konnte das Bild zu " + getID() + " nicht speichern.\n" + imagePath + getID() + ".big.png");
 		}
 	}
 	

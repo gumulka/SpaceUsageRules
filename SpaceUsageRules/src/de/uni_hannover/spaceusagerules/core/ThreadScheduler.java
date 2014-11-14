@@ -21,6 +21,17 @@ public class ThreadScheduler {
 	 * @param maxparralel the maximal number of threads to run in parallel
 	 */
 	public static void schedule(Collection<? extends Thread> threads, int maxparallel) {
+		if(maxparallel<=1) {
+			for(Thread t : threads) {
+				t.start();
+				try {
+					t.join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			return;
+		}
 		List<Thread> gens = new LinkedList<Thread>();
 		for(Thread g : threads) {
 			while(true) {
@@ -44,6 +55,7 @@ public class ThreadScheduler {
 			try {
 				g.join();
 			} catch (InterruptedException e1) {
+				e1.printStackTrace();
 			}
 		}
 	}
@@ -57,6 +69,9 @@ public class ThreadScheduler {
 	 * @param minLoad a minimum number of CPU Load which should be reached.
 	 */
 	public static void schedule(Collection<? extends Thread> threads, double minLoad) {
+		if(minLoad<=0.1) {
+			minLoad = 0.1;
+		}
 		OperatingSystemMXBean bean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 		for(Thread g : threads) {
 			while(true) {
