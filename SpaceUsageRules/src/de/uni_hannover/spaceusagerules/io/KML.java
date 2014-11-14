@@ -126,7 +126,7 @@ public class KML {
         String coords = "";
         for(Coordinate l : p.getCoordinates()) {
         	//y=latitude, x=longitude
-            coords += l.y + "," + l.x + " \n";
+            coords += l.x + "," + l.y + " \n";
         }
         return first + name + second + coords + third;
     }
