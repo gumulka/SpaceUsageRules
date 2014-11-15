@@ -1,17 +1,14 @@
 package de.uni_hannover.spaceusagerules.algorithm;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 
 import de.uni_hannover.spaceusagerules.core.Way;
-import de.uni_hannover.spaceusagerules.io.Image;
 import de.uni_hannover.spaceusagerules.io.OSM;
 
 /**
@@ -20,12 +17,6 @@ import de.uni_hannover.spaceusagerules.io.OSM;
  *
  */
 public class DatasetEntry extends Thread{
-
-	/** The base path, where the input-data is located.	 */
-	public static String path = "../Testdatensatz/";
-	
-	/** the output path, to save the images to */
-	public static String imagePath = "images/";
 	
 	/** a the parsed rules from the input File */
 	public static Set<Rules> allRules = new HashSet<Rules>();
@@ -50,23 +41,16 @@ public class DatasetEntry extends Thread{
 	 */
 	private Rules usedRules = null;
 	
-
-	private static GeometryFactory gf = new GeometryFactory();
 	
 	/**
 	 * Initialises a datasetentry. has to provide a coordinate for the location and the ID of the Entry
-	 * @param backup the location in the entry
+	 * @param location the location in the entry
 	 * @param id the ID of the entry
 	 */
-	public DatasetEntry(Point backup, String id) {
+	public DatasetEntry(Point location, String id) {
 		this.restrictions = new TreeSet<String>();
-		this.location = backup;
+		this.location = location;
 		this.id = id;
-		try {
-			// try to get better coordinates from the image, because the Data.txt is rounded
-			location = gf.createPoint(Image.readCoordinates(new File(path + id + ".jpg")));
-		} catch (Exception e) {
-		}
 	}
 	
 	/**
@@ -83,6 +67,11 @@ public class DatasetEntry extends Thread{
 	 */
 	public Point getLocation() {
 		return location;
+	}
+	
+
+	public void setLocation(Point p) {
+		this.location = p;
 	}
 	
 	public Collection<Way> getWays(){
