@@ -143,6 +143,27 @@ public class Start extends DatasetEntry {
 			System.err.println("Konnte das Bild zu " + getID() + " nicht speichern.\n" + imagePath + getID() + ".big.png");
 		}
 	}
+
+	public static void printhelp() {
+		System.out.println("usage: name <parameter [arg]> ");
+		System.out.println("");
+		System.out.println("Mögliche Parameter sind:");
+		System.out.println("  -h  --help      gibt diese Hilfe aus.");
+		System.out.println("  -d  --data      Pfad zur Datei mit Verboten und Coordinaten");
+		System.out.println("  -r  --rules     Pfad zur Datei mit den Regeln");
+		System.out.println("  -t  --threads   Anzahl der Threads in Parallel");
+		System.out.println("  -u  --overlap   Pfad zur Datei mit Overlap-Werten welche erreicht werden sollen.");
+		System.out.println("  -o  --outputDir Pfad zu einem Ordner, in welchem die Ausgabedateien gespeichert werden sollen.\n" +
+		 		"\t\t  Die *.computet.kml Datein\n" + 
+			 	"\t\t  Die Bilddateien (Wird von -i überschrieben)");
+		System.out.println("  -p  --path      Pfad zu einem Ordner auf dem Dateisystem, in welchem die folgenden Dateien liegen:\n" +
+		 		"\t\t  Data.txt (wird von -d überschrieben)\n" +
+		 		"\t\t  Rules.txt (wird von -r überschrieben)\n" +
+		 		"\t\t  Overlap.txt (Optional, wird von -u überschrieben)");
+		System.out.println("  -i  --image     Gibt an, dass Bilder erstellt werden sollen und ein optinales Ausgabeverzeichnis.");
+		System.out.println("  -l  --height    Die Höhe des zu erstellenden Bildes (" + IMAGEHEIGTH + ") ist default.");
+		System.out.println("  -w  --width     Die Breite des zu erstellenden Bildes (" + IMAGEWIDTH + ") ist default.");
+	}
 	
 	/**
 	 * @param args
@@ -152,7 +173,6 @@ public class Start extends DatasetEntry {
 		OSM.useBuffer(true);
 		
 		// Siehe auch: https://github.com/arenn/java-getopt/blob/master/gnu/getopt/GetoptDemo.java
-
 		LongOpt[] longopts = new LongOpt[10];
 
 		longopts[0] = new LongOpt("help", LongOpt.NO_ARGUMENT, null, 'h');
@@ -167,6 +187,7 @@ public class Start extends DatasetEntry {
 		longopts[9] = new LongOpt("height", LongOpt.REQUIRED_ARGUMENT,null,'l');
 
 		Getopt g = new Getopt("testprog", args, "hi:d:r:u:o:p:t:w:l:", longopts);
+		g.setOpterr(false); // We'll do our own error handling
 		int c;
 		String data = null;
 		String rules = null;
@@ -174,51 +195,62 @@ public class Start extends DatasetEntry {
 		while ((c = g.getopt()) != -1) {
 			 switch (c) {
 			 case 'h':
-				 System.out.println("Es wurde hilfe Angefordert!");
+				 printhelp();
 				 return; // nach der Hilfe beenden wir das Program.
-			 case 'i':
+			 case 'i': // --image
 				 images = true;
-				 imagePath = g.getOptarg();
-				 if(imagePath!=null) {
-					 if(imagePath.charAt(imagePath.length()-1) != '/')
-						 imagePath += "/";
-					 File f = new File(imagePath);
+				 String ipath = g.getOptarg();
+				 if(ipath!=null) {
+					 if(ipath.charAt(ipath.length()-1) != '/')
+						 ipath += "/";
+					 File f = new File(ipath);
 					 f.mkdirs();
+					 imagePath = ipath;
 				 }
 				 break;
-			 case 'd':
+			 case 'd': // --data
 				 data = g.getOptarg();
 				 break;
-			 case 'u':
+			 case 'u': // --overlap
 				 overlap = g.getOptarg();
 				 images = true;
 				 break;
-			 case 'o':
+			 case 'o': // --outputDir
 				 outputDir = g.getOptarg();
+				 if(outputDir!=null) {
+					 if(outputDir.charAt(outputDir.length()-1) != '/')
+						 outputDir += "/";
+					 File f = new File(outputDir);
+					 f.mkdirs();
+				 }
+				 if(imagePath == null)
+					 imagePath = outputDir;
 				 break;
-			 case 'r':
+			 case 'r': // --rules
 				 rules = g.getOptarg();
 				 break;
-			 case 'p':
+			 case 'p': // --path
 				 path = g.getOptarg();
 				 break;
-			 case 't':
+			 case 't': // --threads
 				 MAXRUNNING = Integer.parseInt(g.getOptarg());
 				 break;
-			 case 'l':
+			 case 'l': // --height
 				 IMAGEHEIGTH = Integer.parseInt(g.getOptarg());
 				 break;
-			 case 'w':
+			 case 'w': // --width
 				 IMAGEWIDTH = Integer.parseInt(g.getOptarg());
 				 break;
-			default:
-				 System.out.println("Sorry, I don't understand.");
-				 break;
+			default: // error
+				 System.err.println("Falscher Parameter: " + (char) g.getOptopt());
+				 printhelp();
+				 return;
 			 }
 		}
 		if(path==null) {
 			if(rules==null || data == null) {
 				System.err.println("Es muss ein Pfad oder eine Rules und Data-Datei angegeben werden!");
+				printhelp();
 				return;
 			}
 			path = new File(data).getParentFile().getAbsolutePath();
@@ -278,5 +310,6 @@ public class Start extends DatasetEntry {
 			br.close();
 		}
 		ThreadScheduler.schedule(instances.values(), MAXRUNNING);
+		// */
 	}
 }
