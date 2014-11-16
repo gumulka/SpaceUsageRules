@@ -28,6 +28,19 @@ public class Rules{
 	/** the rules as "osm-key - osm-value to [0..2]"	 */
 	protected Map<String,Double> weights;
 	
+	/**
+	 * Threshold for this particular set of SURs. If the guessed area
+	 * is larger than this, it is intersected. 
+	 */
+	protected double areaThreshold;
+	
+	/**
+	 * Radius for the regular polygon that is created as neighborhood of the
+	 * location, if the guessed area is to big.
+	 */
+	protected double neighborhoodRadius=Double.MAX_VALUE;
+	
+	
 	/** a offset to add to the distance of all polygons before weighting them.
 	 * 
 	 * the value is found using some test with different magic numbers. from 0.1 to 0.00001.
@@ -35,30 +48,67 @@ public class Rules{
 	private static final double OFFSET = 0.0002;
 	
 	/**
-	 * initializes with an empty set of rules and restictions.
+	 * Initializes with an empty set of rules, restictions and thresholds.
 	 */
 	public Rules() {
 		this.restrictions = new TreeSet<String>();
 		this.weights = new TreeMap<String,Double>();
+		areaThreshold = Double.MAX_VALUE;
 	}
 	
 	/**
 	 * parses a line into a valid representation of Rules.
+	 * The input string must have the following form:<BR>
+	 * [SUR,SUR,...] -> [rules how to weight, ...] -> [threshold:42] -> [radius:10]
 	 * @param line a string describing a line of rules.
 	 * \latexonly as defined in \fref{sec:Eingabedaten_Wir} \endlatexonly
 	 */
 	public Rules(String line) {
-		String verbote = line.substring(line.indexOf('[')+1, line.indexOf(']'));
-		String rules = line.substring(line.lastIndexOf('[')+1, line.lastIndexOf(']'));
+		//first block contains the list of SURs
+		int blockstart = line.indexOf('['); //begin of the block incl. '['
+		int blockend = line.indexOf(']'); //end of the block excl. ']'
+		String verbote = line.substring(blockstart+1, blockend);
 		String[] v = verbote.split(",");
 		restrictions = new TreeSet<String>();
 		for(String s : v)
 			restrictions.add(s.trim());
+		
+		//second block contains the list of weighing rules
+		blockstart = line.indexOf('[', blockend+1);
+		blockend = line.indexOf(']', blockstart);
+		String rules = line.substring(blockstart+1, blockend);
 		weights = new TreeMap<String, Double>();
 		for(String s : rules.split(",")) {
 			String[] bla = s.split("->");
 			weights.put(bla[0].trim(), Double.parseDouble(bla[1]));
 		}
+		
+		//check if there are any more blocks
+		if(blockstart == line.lastIndexOf('[')){
+			areaThreshold = Double.MAX_VALUE;
+			return;
+		}
+		
+		//third block contains the threshold for the guessed area
+		blockstart = line.indexOf('[', blockend+1);
+		blockend = line.indexOf(']', blockstart);
+		String threshold = line.substring(blockstart+1, blockend);
+		threshold = threshold.substring(line.indexOf(":", blockstart)+1, blockend);
+		areaThreshold = Double.parseDouble(threshold.trim());
+		
+		//check if there are any more blocks
+		if(blockstart == line.lastIndexOf('[')){
+			areaThreshold = Double.MAX_VALUE;
+			return;
+		}
+		
+		//the forth block contains the radius for the neighborhood
+		blockstart = line.indexOf('[', blockend+1);
+		blockend = line.indexOf(']', blockstart);
+		String neigh = line.substring(blockstart+1, blockend);
+		neigh = neigh.substring(line.indexOf(":", blockstart)+1, blockend);
+		areaThreshold = Double.parseDouble(neigh.trim());
+		
 	}
 	
 	
@@ -67,10 +117,27 @@ public class Rules{
 	 * @param restrictions a set of restrictions.
 	 * @param rules a set of rules as "osm-key - osm-value to [0..2]"
 	 */
+	@Deprecated
 	public Rules(Collection<String> restrictions, Map<String,Double> rules) {
 		this.restrictions = restrictions;
 		this.weights = rules;
+		areaThreshold = Double.MAX_VALUE;
 	}
+	
+	/**
+	 *  Initializes with the given rules and restrictions.
+	 * @param restrictions a set of restrictions.
+	 * @param rules a set of rules as "osm-key - osm-value to [0..2]"
+	 * @param threshold for the guessed area
+	 * @param radius radius to limit the application of the SURs, may or may not be used 
+	 */
+	public Rules(Collection<String> restrictions, Map<String,Double> rules, double threshold, double radius) {
+		this.restrictions = restrictions;
+		this.weights = rules;
+		this.areaThreshold = threshold;
+		this.neighborhoodRadius = radius;
+	}
+	
 
 	/**
 	 * calculates the weighted distance from a given coordinate to the given way. 
@@ -121,6 +188,20 @@ public class Rules{
 				distance = d;
 			}
 		}
+		
+		//compare guessed area and threshold
+		if(best.getGeometry().getArea() > areaThreshold){
+			//intersect with regular polygon around location, to limit 
+			//the area of application of this particular set of SURs
+			
+			Geometry neighborhood = Rules.createNgon(8, neighborhoodRadius, location);
+			Geometry newBestArea = neighborhood.intersection(best.getGeometry());
+			
+			//change the area and keep the tags
+			best.setGeometry(newBestArea);
+			//TODO keep the tags or filter them somehow?
+		}
+		
 		return best;
 	}
 	
