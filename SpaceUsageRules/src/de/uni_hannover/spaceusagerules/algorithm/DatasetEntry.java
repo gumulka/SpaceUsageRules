@@ -12,7 +12,8 @@ import de.uni_hannover.spaceusagerules.core.Way;
 import de.uni_hannover.spaceusagerules.io.OSM;
 
 /**
- * TODO Javadoc
+ * An entry in the dataset. this is used to compute the rules belonging to it 
+ * and using this rules to compute the best polygon in the area around the given location. 
  * @author Fabian Pflug
  *
  */
@@ -36,9 +37,7 @@ public class DatasetEntry extends Thread{
 	/** the OSM objects in the area of this dataset */
 	private Collection<Way> ways;
 	
-	/**
-	 * the rules used by this Entry to calculate the result.
-	 */
+	/** the rules used by this Entry to calculate the result. */
 	private Rules usedRules = null;
 	
 	
@@ -69,11 +68,19 @@ public class DatasetEntry extends Thread{
 		return location;
 	}
 	
-
+	/**
+	 * Sets the location for this dataset, so where to search from.
+	 * @param p the location where the picture is taken.
+	 */
 	public void setLocation(Point p) {
 		this.location = p;
 	}
 	
+	/**
+	 * returns a collection of ways around the given Location
+	 * (this is only valid after the thread runs)
+	 * @return OSM-objects around the given Location or null
+	 */
 	public Collection<Way> getWays(){
 		return ways;
 	}
@@ -86,10 +93,19 @@ public class DatasetEntry extends Thread{
 		this.restrictions.add(restriction);
 	}
 	
+	/**
+	 * retuns a Collection of restrictions which belong to this dataset
+	 * @return restrictions belonging to this dataset.
+	 */
 	public Collection<String> getRestrictions() {
 		return restrictions;
 	}
 	
+	/**
+	 * returns the rules used by this dataset to compute the best polygon.
+	 * (this is only valid after the thread run)
+	 * @return a set of rules.
+	 */
 	public Rules getUsedRules() {
 		return usedRules;
 	}

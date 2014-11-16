@@ -11,7 +11,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -27,20 +26,23 @@ import de.uni_hannover.spaceusagerules.io.KML;
 import de.uni_hannover.spaceusagerules.io.OSM;
 
 /**
- * TODO Javadoc
+ * The main class for our application. An instance is responsible for one ID in the read in dataset.
+ * 
  * @author Fabian Pflug
  *
  */
 public class Start extends DatasetEntry {
 
-	private static int IMAGEWIDTH = 3840;
-	private static int IMAGEHEIGTH = 2160;
+	/** the width of the image to create */
+	private static int imageWidth = 3840;
+	/** the height of the image to create */
+	private static int imageHeight = 2160;
 	
 	/** a target overlap value for all ID's */
-	private static final double globalMinOverlap = 0.95;
+	private static final double GLOBALMINOVERLAP = 0.95;
 	
 	/** number of maximal running Threads in parallel */
-	private static int MAXRUNNING = 1;
+	private static int maxRunning = 1;
 	
 	/** the truth polygon */
 	private Way truth;
@@ -51,21 +53,23 @@ public class Start extends DatasetEntry {
 	/** the output path, to save the images to */
 	private static String imagePath = null;
 	
+	/** of it is set, then images will be created */
 	private static boolean images = false;
 	
+	/** the directory to write the generated files to */
 	private static String outputDir = null;
 
 	/** The base path, where the input-data is located.	 */
 	public static String path = null;
 	
 	/**
-	 * 
-	 * @param backup
-	 * @param id
+	 * creates an entry in the dataset and tries to read in the coordinates from the image belonging to it.
+	 * @param backup a backup coordinate if it is not possible to read metadata from the image.
+	 * @param id the id of this dataset.
 	 */
 	public Start(Point backup, String id) {
 		super(backup,id);
-		this.minOverlap = globalMinOverlap;
+		this.minOverlap = GLOBALMINOVERLAP;
 		try {
 			GeometryFactory gf = new GeometryFactory();
 			// try to get better coordinates from the image, because the Data.txt is rounded
@@ -84,6 +88,9 @@ public class Start extends DatasetEntry {
 	}
 	
 	
+	/**
+	 * the worker method, which handels the IO and calculations for this datasetEntry 
+	 */
 	public void run() {
 		File f = new File(imagePath + getID() + ".png");
 		if(f.exists() && !f.delete())
@@ -104,26 +111,30 @@ public class Start extends DatasetEntry {
 			System.err.println("Konnte das Lösungspolygon nicht speichern.");
 		}
 
-		if(!images)
+		if(!images) //if no images are wanted, we can stop here.
 			return;
-		
-		this.truth = new Way(KML.loadKML(new File(path + getID() + ".truth.kml")));
+		File t = new File(path + getID() + ".truth.kml");
+		if(!t.exists() ||!t.canRead()) {
+			System.err.println("Fehler beim einlesen der truth datei.\n" + t.getAbsolutePath());
+			return;
+		}
+		this.truth = new Way(KML.loadKML(t));
 		double overlapArea = getGuess().getGeometry().intersection(truth.getGeometry()).getArea();
 		overlapArea = Math.min(overlapArea/truth.getArea(), overlapArea/getGuess().getArea());
 		if(overlapArea>minOverlap)
 			return;
 		getGuess().addOriginalTag("InMa_Overlap", "" + overlapArea);
 		System.err.println("Anforderungen an " + getID() + " nicht geschafft.");
-		generateImage(getWays());
+		generateImage();
 	}
 	
 	/**
-	 * generates an Image 
-	 * @param ways
+	 * generates two images for this entry with colored lines for the truth and guess polygon.
+	 * one is zoomed in, the other one shows a wider perspective
 	 */
-	public void generateImage(Collection<Way> ways) {
-		DataDrawer drawer = new DataDrawer(IMAGEWIDTH,IMAGEHEIGTH,getLocation().getCoordinate(),0.002);
-		drawer.render(ways);
+	public void generateImage() {
+		DataDrawer drawer = new DataDrawer(imageWidth,imageHeight,getLocation().getCoordinate(),0.002);
+		drawer.render(getWays());
 		drawer.drawRules(getID() + " enthält " + getRestrictions()  + " und benutzt: " + getUsedRules());
 		drawer.drawWay(getGuess(),Color.red);
 		drawer.drawWay(truth,Color.green);
@@ -132,8 +143,8 @@ public class Start extends DatasetEntry {
 		} catch (IOException e) {
 			System.err.println("Konnte das Bild zu " + getID() + " nicht speichern.\n" + imagePath + getID() + ".png");
 		}
-		drawer = new DataDrawer(IMAGEWIDTH,IMAGEHEIGTH,getLocation().getCoordinate(),0.006);
-		drawer.render(ways);
+		drawer = new DataDrawer(imageWidth,imageHeight,getLocation().getCoordinate(),0.006);
+		drawer.render(getWays());
 		drawer.drawRules(getID() + " enthält " + getRestrictions()  + " und benutzt: " + getUsedRules());
 		drawer.drawWay(truth,Color.green);
 		drawer.drawWay(getGuess(),Color.red);
@@ -144,6 +155,9 @@ public class Start extends DatasetEntry {
 		}
 	}
 
+	/**
+	 * prints out a help message
+	 */
 	public static void printhelp() {
 		System.out.println("usage: name <parameter [arg]> ");
 		System.out.println("");
@@ -161,13 +175,15 @@ public class Start extends DatasetEntry {
 		 		"\t\t  Rules.txt (wird von -r überschrieben)\n" +
 		 		"\t\t  Overlap.txt (Optional, wird von -u überschrieben)");
 		System.out.println("  -i  --image     Gibt an, dass Bilder erstellt werden sollen und ein optinales Ausgabeverzeichnis.");
-		System.out.println("  -l  --height    Die Höhe des zu erstellenden Bildes (" + IMAGEHEIGTH + ") ist default.");
-		System.out.println("  -w  --width     Die Breite des zu erstellenden Bildes (" + IMAGEWIDTH + ") ist default.");
+		System.out.println("  -l  --height    Die Höhe des zu erstellenden Bildes (" + imageHeight + ") ist default.");
+		System.out.println("  -w  --width     Die Breite des zu erstellenden Bildes (" + imageWidth + ") ist default.");
 	}
 	
 	/**
-	 * @param args
-	 * @throws IOException 
+	 * the main starting point for our application.
+	 * 
+	 * @param args the command line parameters.
+	 * @throws IOException the error thrown if there are problems reading the nesessary files.
 	 */
 	public static void main(String[] args) throws IOException {
 		OSM.useBuffer(true);
@@ -233,13 +249,13 @@ public class Start extends DatasetEntry {
 				 path = g.getOptarg();
 				 break;
 			 case 't': // --threads
-				 MAXRUNNING = Integer.parseInt(g.getOptarg());
+				 maxRunning = Integer.parseInt(g.getOptarg());
 				 break;
 			 case 'l': // --height
-				 IMAGEHEIGTH = Integer.parseInt(g.getOptarg());
+				 imageHeight = Integer.parseInt(g.getOptarg());
 				 break;
 			 case 'w': // --width
-				 IMAGEWIDTH = Integer.parseInt(g.getOptarg());
+				 imageWidth = Integer.parseInt(g.getOptarg());
 				 break;
 			default: // error
 				 System.err.println("Falscher Parameter: " + (char) g.getOptopt());
@@ -298,8 +314,11 @@ public class Start extends DatasetEntry {
 		}
 		br.close();
 
-		if(overlap!=null) {
-			f = new File(overlap);
+		if(overlap==null)
+			f = new File(path + "Overlap.txt");
+		else
+			f= new File(overlap);
+		if(f.exists() && f.canRead()) {
 			br = new BufferedReader(new FileReader(f));
 			while((line = br.readLine()) != null) {
 				String[] bla = line.split(",");
@@ -309,7 +328,7 @@ public class Start extends DatasetEntry {
 				}
 			br.close();
 		}
-		ThreadScheduler.schedule(instances.values(), MAXRUNNING);
+		ThreadScheduler.schedule(instances.values(), maxRunning);
 		// */
 	}
 }

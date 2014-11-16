@@ -44,6 +44,8 @@ import de.uni_hannover.spaceusagerules.core.Way;
  */
 public class OSM {
 
+	public static final int minWays = 30;
+	
 	/** if the local filebuffer is to be used. Deactivated by default */
 	private static boolean buffer = false;
 	
@@ -73,51 +75,7 @@ public class OSM {
 	 * @return a collection of OSM-Objects.
 	 */
 	public static Collection<Way> getObjectList(Coordinate c, float radius) {
-		if (buffer) {
-			String filename = String.format(Locale.GERMAN,
-					"buffer/%02.4f_%02.4f_%02.4f.xml", c.y, c.x,
-					radius);
-			return getObjectList(c, radius, new File(filename));
-		}
-		return getObjectList(c, radius, null, null);
-	}
-
-	/**
-	 * retrieving Data from the File or saving to it if not existing.
-	 * @param c the coordinate where data should be fetched around.
-	 * @param f the file to read or save data to
-	 * @return a collection of OSM-Objects.
-	 */
-	public static Collection<Way> getObjectList(Coordinate c, File f) {
-		boolean b = buffer;
-		buffer = true;
-		Collection<Way> back = getObjectList(c, (float) 0.0005, f);
-		buffer = b;
-		return back;
-	}
-	/**
-	 * retrieving Data from the File or saving to it if not existing.
-	 * if it does not exist, the data ist fetched with the given radius
-	 * @param c the coordinate where data should be fetched around.
-	 * @param radius a radius around this point.
-	 * @param f the file to read or save data to
-	 * @return a collection of OSM-Objects.
-	 */
-	public static Collection<Way> getObjectList(Coordinate c, float radius, File f) {
-		return getObjectList(c, radius, f, null);
-	}
-
-	/**
-	 * you can provide a tagname to reduce the output to. Then the OverpassApi server are used.
-	 * 
-	 * @param c the coordinate where data should be fetched around.
-	 * @param radius a radius around this point.
-	 * @param tagname a tagname to reduce the Output to.
-	 * @return a collection of OSM-Objects.
-	 */
-	public static Collection<Way> getObjectList(Coordinate c, float radius,
-			String tagname) {
-		return getObjectList(c, radius, null, tagname);
+		return getObjectList(c, radius, null);
 	}
 	
 	/**
@@ -128,7 +86,7 @@ public class OSM {
 	 * @param tagname a tagname to reduce the Output to.
 	 * @return a document containing the Data.
 	 */
-	private static Document fetchData(Coordinate c, float radius, File f, String tagname) {
+	private static Document fetchData(Coordinate c, float radius, String tagname) {
 		String connection = null;
 		if (tagname == null) // there is no single Tag given. Fetch all the Data!
 			connection = "http://api.openstreetmap.org/api/0.6/map?bbox="
@@ -142,6 +100,10 @@ public class OSM {
 					+ (c.y + radius) + "][" + tagname + "=*]";
 		Document doc = null;
 		try {
+			String filename = String.format(Locale.GERMAN,
+					"buffer/%02.4f_%02.4f_%02.4f.xml", c.y, c.x,
+					radius);
+			File f = new File(filename);
 			if (buffer && f != null && f.exists() && f.canRead()) {
 				// if the file is readable and we use a buffer, read it.
 				doc = Jsoup.parse(f, "UTF-8");
@@ -358,6 +320,7 @@ public class OSM {
 	
 	/**
 	 * fetches and parses data from OpenStreetMap.
+	 * you can provide a tagname to reduce the output to. Then the OverpassApi server are used.
 	 * 
 	 * @param c the coordinate where data should be fetched around.
 	 * @param radius a radius around this point.
@@ -365,12 +328,11 @@ public class OSM {
 	 * @param tagname a tagname to reduce the Output to.
 	 * @return a collection of OSM-Objects.
 	 */
-	public static synchronized Collection<Way> getObjectList(Coordinate c, float radius, File f,
-			String tagname) {
+	public static synchronized Collection<Way> getObjectList(Coordinate c, float radius, String tagname) {
 		wayList = new TreeMap<Long,Way>();
 		coordList = new TreeMap<Long, Coordinate>();
-		Document doc = fetchData(c, radius, f, tagname);
-
+		do {
+			Document doc = fetchData(c, radius, tagname);
 			// extract all nodes and their Values
 			for (Element e : doc.select("node")) {
 				parseNode(e);
@@ -389,12 +351,7 @@ public class OSM {
 					}
 				}
 			}
-			/*
-			for(Element e : doc.select("relation")) {
-				System.out.println("----------");
-				for(Element t : e.select("tag"))
-					System.out.println(t);
-			} */
+
 			List<Long> delete = new LinkedList<Long>();
 			for(Way w : wayList.values()) {
 				if(w.getTags().containsKey("building:part")) {
@@ -452,7 +409,8 @@ public class OSM {
 						best.addOriginalTag(x.attr("k"), x.attr("v"));
 				}
 			}
-			
+			radius *= 2;
+		}while(wayList.size()<minWays);
 		return wayList.values();
 	}
 
