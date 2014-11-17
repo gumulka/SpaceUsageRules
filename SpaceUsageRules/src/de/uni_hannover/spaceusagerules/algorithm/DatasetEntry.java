@@ -2,9 +2,7 @@ package de.uni_hannover.spaceusagerules.algorithm;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import com.vividsolutions.jts.geom.Point;
@@ -111,7 +109,7 @@ public class DatasetEntry extends Thread{
 		}
 		// backup. if there is no ruleset applicable, then create the empty ruleset.
 		if(usedRules == null) {
-			usedRules = new Rules(new TreeSet<String>(), new TreeMap<String,Double>(), Double.MAX_VALUE, 10.);
+			usedRules = new Rules();
 		}
 		
 		System.out.println(id + " benutzt Regelset: " + usedRules);

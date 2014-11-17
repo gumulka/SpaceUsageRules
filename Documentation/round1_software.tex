@@ -8,20 +8,22 @@ verschiedenen Anwendungen als Bibliothek nutzen zu lassen.
 
 \subsection{Eingabeformat}
 \subsubsection{Regeln}
+Wird derzeit auf XML umgestellt.\\
 \label{sec:Eingabedaten_Wir}
-Regeln werden aus einer Textdatei eingelesen, in welcher zeilenweise die Regeln zu je einem Verbot stehen.
-Die Datei besteht aus zwei Spalten, in der Ersten steht der Name des Verbotes in der Zweiten die Menge der Regeln.
-Die Menge wird durch eckige Klammern verdeutlicht und die einzelnen Regeln durch Kommata getrennt.
+Regeln werden aus einer Textdatei eingelesen, in welcher zeilenweise die Regeln zu je einer Verbotsmenge stehen.
+Die Datei besteht aus vier Spalten. In der Ersten sind die Namen der Verbote aufgelistet. In der Zweiten befinden sich die Regeln.
+In der Dritten steht ein Schwellwert. In der Vierten steht ein Radius, der Anwendung findet, falls der Schwellwert überschritten wird.
+Die Spalten werden durch eckige Klammern verdeutlicht und die einzelnen Regeln durch Kommata getrennt.
 Die Trennung von Key und Value erfolgt durch einen Bindestrich.
 Soll eine Regel generell für alle Values eines Keys gelten, so kann die Value weggelassen und nur der Key angegeben werden.
 
 Eine Gültige Eingabe kann also folgendermaßen sein:
 \begin{lstlisting}[frame=single]
-[smoking="no"] -> [addr:housenumber -> 0.5, landuse - forest -> 1.5]
-[fishing="no", smoking="no"] -> []
+[smoking="no"] -> [addr:housenumber -> 0.5, landuse - forest -> 1.5] -> [threshold:100.5] -> [radius:0.5]
+[fishing="no", smoking="no"] -> [] -> [threshold:1000] -> [radius:2.1]
 \end{lstlisting}
 Dieses Regelwerk sagt aus, dass ein Nichtrauchen Verbot wahrscheinlich in Flächen gilt, welche eine Hausnummer zugewiesen haben
-und sehr unwahrscheinlich in Gebieten, die als Waldgebiete ausgeschildert sind.
+und sehr unwahrscheinlich in Gebieten, die als Waldgebiete ausgeschildert sind. 
 Für das Angel- und Rauchverbot sind keine Regeln definiert. Unser Algorithmus wird sich also nur die nächstegelegene Fläche als wahrscheinlich nehmen,
 oder sollten der Punkt innerhalb von 2 Flächen liegen\footnote{Es könnte z.B. eine Fläche 'Niedersachsen' und eine Fläche 'Waldgebiet' definiert sein.},
 so wird die kleinere von beiden ausgewählt.

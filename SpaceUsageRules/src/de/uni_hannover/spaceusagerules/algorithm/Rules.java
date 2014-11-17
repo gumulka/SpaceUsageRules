@@ -1,9 +1,11 @@
 package de.uni_hannover.spaceusagerules.algorithm;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.Vector;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -29,17 +31,9 @@ public class Rules{
 	protected Map<String,Double> weights;
 	
 	/**
-	 * Threshold for this particular set of SURs. If the guessed area
-	 * is larger than this, it is intersected. 
+	 * maps names of single SURs to pairs of threshold and radius
 	 */
-	protected double areaThreshold;
-	
-	/**
-	 * Radius for the regular polygon that is created as neighborhood of the
-	 * location, if the guessed area is to big.
-	 */
-	protected double neighborhoodRadius=Double.MAX_VALUE;
-	
+	protected Map<String,double[]> thresholds;
 	
 	/** a offset to add to the distance of all polygons before weighting them.
 	 * 
@@ -53,7 +47,7 @@ public class Rules{
 	public Rules() {
 		this.restrictions = new TreeSet<String>();
 		this.weights = new TreeMap<String,Double>();
-		areaThreshold = Double.MAX_VALUE;
+		this.thresholds = new TreeMap<String,double[]>();
 	}
 	
 	/**
@@ -64,12 +58,13 @@ public class Rules{
 	 * \latexonly as defined in \fref{sec:Eingabedaten_Wir} \endlatexonly
 	 */
 	public Rules(String line) {
+		this();
+		// FIXME auf xml umstellen
 		//first block contains the list of SURs
 		int blockstart = line.indexOf('['); //begin of the block incl. '['
 		int blockend = line.indexOf(']'); //end of the block excl. ']'
 		String verbote = line.substring(blockstart+1, blockend);
 		String[] v = verbote.split(",");
-		restrictions = new TreeSet<String>();
 		for(String s : v)
 			restrictions.add(s.trim());
 		
@@ -77,65 +72,23 @@ public class Rules{
 		blockstart = line.indexOf('[', blockend+1);
 		blockend = line.indexOf(']', blockstart);
 		String rules = line.substring(blockstart+1, blockend);
-		weights = new TreeMap<String, Double>();
 		for(String s : rules.split(",")) {
 			String[] bla = s.split("->");
 			weights.put(bla[0].trim(), Double.parseDouble(bla[1]));
 		}
 		
-		//check if there are any more blocks
-		if(blockstart == line.lastIndexOf('[')){
-			areaThreshold = Double.MAX_VALUE;
-			return;
-		}
-		
-		//third block contains the threshold for the guessed area
-		blockstart = line.indexOf('[', blockend+1);
-		blockend = line.indexOf(']', blockstart);
-		String threshold = line.substring(blockstart+1, blockend);
-		threshold = threshold.substring(line.indexOf(":", blockstart)+1, blockend);
-		areaThreshold = Double.parseDouble(threshold.trim());
-		
-		//check if there are any more blocks
-		if(blockstart == line.lastIndexOf('[')){
-			areaThreshold = Double.MAX_VALUE;
-			return;
-		}
-		
-		//the forth block contains the radius for the neighborhood
-		blockstart = line.indexOf('[', blockend+1);
-		blockend = line.indexOf(']', blockstart);
-		String neigh = line.substring(blockstart+1, blockend);
-		neigh = neigh.substring(line.indexOf(":", blockstart)+1, blockend);
-		areaThreshold = Double.parseDouble(neigh.trim());
-		
-	}
-	
-	
-	/**
-	 *  Initializes with the given rules and restrictions.
-	 * @param restrictions a set of restrictions.
-	 * @param rules a set of rules as "osm-key - osm-value to [0..2]"
-	 */
-	@Deprecated
-	public Rules(Collection<String> restrictions, Map<String,Double> rules) {
-		this.restrictions = restrictions;
-		this.weights = rules;
-		areaThreshold = Double.MAX_VALUE;
 	}
 	
 	/**
 	 *  Initializes with the given rules and restrictions.
-	 * @param restrictions a set of restrictions.
+	 * @param restrictions a set of restrictions. 
 	 * @param rules a set of rules as "osm-key - osm-value to [0..2]"
-	 * @param threshold for the guessed area
-	 * @param radius radius to limit the application of the SURs, may or may not be used 
+	 * @param thresholds map from singel SUR names to pairs of threshold and radius 
 	 */
-	public Rules(Collection<String> restrictions, Map<String,Double> rules, double threshold, double radius) {
+	public Rules(Collection<String> restrictions, Map<String,Double> rules, Map<String,double[]> thresholds) {
 		this.restrictions = restrictions;
 		this.weights = rules;
-		this.areaThreshold = threshold;
-		this.neighborhoodRadius = radius;
+		this.thresholds = thresholds;
 	}
 	
 
@@ -189,20 +142,57 @@ public class Rules{
 			}
 		}
 		
-		//compare guessed area and threshold
-		if(best.getGeometry().getArea() > areaThreshold){
-			//intersect with regular polygon around location, to limit 
-			//the area of application of this particular set of SURs
-			
-			Geometry neighborhood = Rules.createNgon(8, neighborhoodRadius, location);
-			Geometry newBestArea = neighborhood.intersection(best.getGeometry());
-			
-			//change the area and keep the tags
-			best.setGeometry(newBestArea);
-			//TODO keep the tags or filter them somehow?
-		}
+		//check if any thresholds are exceeded and shrink if necessary
+		best = considerThresholds(best, location);
 		
 		return best;
+	}
+	
+	/**
+	 * Tests if any thresholds were exceeded and shrinks the geometry if necessary.
+	 * From the set of all exceeded thresholds, the lowest radius is selected. Then the
+	 * polygon is intersected with a regular octagon. If no thresholds were exceeded the
+	 * geometry remains unchanged.
+	 * @param best contains the guessed polygon
+	 * @param location where it all takes place
+	 * @return either the same object or a new one with smaller size
+	 */
+	private Way considerThresholds(Way best, Point location){
+		
+		Geometry guessed = best.getGeometry();
+		
+		double area = guessed.getArea();
+		
+		double thr;
+		List<String> consider = new Vector<String>();
+		//iterate over all given SURs
+		for(String sur : thresholds.keySet()){
+			thr = thresholds.get(sur)[0];
+			//if the area is greater than a threshold, keep that SUR in mind
+			if(thr < area )
+				consider.add(sur);
+		}
+		
+		//if no threshold was exceeded, return the geometry unchanged
+		if(consider.isEmpty())
+			return best;
+		
+		//search for the minimal radius of those SURs, whose thresholds were exceeded
+		double minimalRadius = Double.MAX_VALUE;
+		for(String sur : consider){
+			//thr is now a radius
+			thr = thresholds.get(sur)[1];
+			if(thr < minimalRadius){
+				minimalRadius = thr;
+			}
+		}
+		
+		//intersect with regular neighborhood
+		Geometry neighborhood = Rules.createNgon(8, minimalRadius, location);
+		Geometry intersected = neighborhood.intersection(guessed);
+
+		Way output = new Way(intersected);
+		return output;
 	}
 	
 	/**
