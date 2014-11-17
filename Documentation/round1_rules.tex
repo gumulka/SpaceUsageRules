@@ -1,6 +1,7 @@
 \section{Regeln}
 \label{sec:Regeln}
-
+Um ``Space Usage Rules'' und ``Gewichtungsregeln'' nicht zu verwechseln, benutzen wir den Begriff ``Verbot'', wenn wir von 
+Space Usage Rules reden, und den Begriff ``Regel'', wenn wir Gewichtungsregeln meinen.
 \subsection{Regelbeschreibung}
 Da in fast allen Fällen ein sehr nah gelegenes Polygon gemeint ist, wird zunächst auf den Abstand aller vorhandenen Polygone etwas aufaddiert,
 um den Abstand 0 zu vermeiden, und diese danach nach unseren Regeln zu gewichten um anschließend das Polygon auszuwählen,
@@ -9,32 +10,32 @@ welches nach der Gewichtung den kürzesten Abstand hat.
 
 
 \subsection{Formale Beschreibung}
-Sei $ID$ die die Bezeichnung eines Bildes.\\
+Sei $ID$ die die Bezeichnung eines Testdatensatzes.\\
 Sei $t$ ein Tag $(key \to value)$ aus OpenStreetMap.\\
-Sei $r(t)$ eine Regel $t \to [0..2]$ \\
-Sei $Z_{X}$ die Menge der Tag $t$ für die Gilt: $t$ kommt in X vor. \\
+Sei $r(t)$ eine Regel $t \mapsto [0..2]$, die einem Tag $t$ ein Gewicht zuordnet. \\
+Sei $Z_{X}$ die Menge der Tags $t$, die in $X$ vorkommen.\\
 Sei $V$ eine Menge von Verboten $v$.\\
-Sei $V_{ID}$ die Menge der Verbote für die gilt: $v$ wird auf dem Bild zu $ID$ abgebildet.\\
-Sei $R_V$ eine Menge von Funktionen $r$ für die Verbote $V$\\
-Sei $C_{ID}$ die Geocoordinate, an welcher das Bild zu $ID$ aufgenommen wurde. \\
-Sei $D_{X,ID}$ der Abstand eines Polygons $X$ zu $C_{ID}$ \\
-Sei $O_{ID}$ eine Menge von Polygonen aus OpenStreetMap in der Umgebung zu $C_{ID}$\\
-Sei $A_{X}$ die Fläche des Polygons $X$\\
-Sei $s(V) : v \to r(t)$  Eine Abbildung von Verbote zu einer Menge von Regeln\\
+Sei $V_{ID}$ die Menge der Verbote $v$, die im Testdatensatz $ID$ gelten.\\
+Sei $R_V$ eine Menge von Funktionen $r$ für die Verbote $V$.\\
+Sei $C_{ID}$ die Geokoordinate, an welcher das Bild zu $ID$ aufgenommen wurde. \\
+Sei $D_{X,ID}$ der Abstand eines Polygons $X$ zu $C_{ID}$. \\
+Sei $O_{ID}$ die Menge der Polygone aus OpenStreetMap in der Umgebung von $C_{ID}$.\\
+Sei $A_{X}$ die Fläche eines Polygons $X$.\\
+Sei $s(V) : V \mapsto \{r(\cdot)\}$  eine Abbildung von einer Menge von Verboten $V$ auf eine Menge von Regeln $\{r(\cdot)\}$.\\
 Sei $P_{ID}$ das gegebene Lösungspolygon zu $ID$.\\
-Sei $I(X,Y)$ das Schnittpolygon der Polygone X und Y\\
-Sei $o$ ein Offset $\in \mathbb{R}$
-\\
-Sollte es für ein $t$ kein $r(t)$ geben, so wird die Standartregel:
-$r(t) = 1$ angewendet.
-
+Sei $I(X,Y)$ das Schnittpolygon der Polygone $X$ und $Y$.\\
+Sei $o \in \mathbb R _{>0}$ ein Offset.\\
+Sollte es für ein $t$ keine Regel $r(t)$ geben, so wird die Standartregel:
+$r(t) = 1$ angewendet.\\
+Sei $\Gew$ die Gewichtungsfunktion für ein Polygon $X$ aus dem Testdatensatz $ID$, die definiert ist durch
 \begin{equation}
-Gew(ID,X) := (D_{X,ID} + o) * \prod_{r \in s(V_{ID})} \prod_{t \in Z_{ID}} r(t);
+\Gew(ID,X) := (D_{X,ID} + o) * \prod_{r \in s(V_{ID})} \prod_{t \in Z_{ID}} r(t).
 \end{equation}
-
+$\Guess$ sei die Funktion, die aus einem Testdatensatz $ID$ das Polygon $X$ mit der kleinsten gewichteten Ditanz und dem 
+kleinsten Flächeninhalt als Lösungspolygon auswählt. 
 \begin{align}
-G(ID) := \{X \in O_{ID} | & Gew(ID,X) < Gew(ID,Y)\\
-& \lor \Big(Gew(ID,X)=Gew(ID,Y) \land A_X < A_Y\Big) \forall Y \in O_{ID}\} \notag
+\Guess(ID) := X \text{ wobei } X \in O_{ID} \text{ mit } & \Gew(ID,X) < \Gew(ID,Y)\\
+& \lor \Big(\Gew(ID,X)=\Gew(ID,Y) \land A_X < A_Y\Big) \forall Y \in O_{ID} \notag
 \end{align}
 
 \subsection{Beispiel}
@@ -43,28 +44,30 @@ Für das Verbot Nichtrauchen: wenn ein Tag den Key 'building' enhält dann halbi
 $R_{nichtrauchen} = [r('building') = 0.5]$\\
 \newline
 Sei der Offset als 1 angenommen und in der Umgebung zu $ID$ nur zwei
-Flächen A,B in OpenStreetMap vorhanden.
+Flächen $A,B$ in OpenStreetMap vorhanden.
 \begin{itemize}
-\item A enthält die Tags: 'building -> yes', 'addr:housenumber -> 34' und hat den Abstand 0.2;
-\item B enthält die Tags: 'landuse->residential' und hat den Abstand 0;
+\item $A$ enthält die Tags: 'building -> yes', 'addr:housenumber -> 34' und hat den Abstand 0.2;
+\item $B$ enthält die Tags: 'landuse->residential' und hat den Abstand 0;
 \end{itemize}
 Daraus errechnet sich:
 \begin{itemize}
-\item $Gew(ID,A) = (0.2 + 1) * 0.5 * 1 = 0.6$
-\item $Gew(ID,B) = (0.0 + 1) * 1 = 1$
+\item $\Gew(ID,A) = (0.2 + 1) * 0.5 * 1 = 0.6$
+\item $\Gew(ID,B) = (0.0 + 1) * 1 = 1$
 \end{itemize}
 
-$G(ID) = A$
+$\Guess(ID) = A$
 
 \subsection{Maschinelle Überprüfung der Regelsätze}
-Um die Güte der verschiedenen Regeln zu überprüfen wird ein Programm geschrieben, welche für jede Regel die die Schnittpolygone von unseren Polygonen mit
-den Musterlösungen bildet und anschließen durch je die Fläche unseres Polygons, sowie des Musterlösungspolygons teilt.
-Von beiden Zahlen wird das Minimun genommen und als Indicator der Lösungsgüte angesehen.\\
+Um die Güte der verschiedenen Regeln zu überprüfen wird ein Programm geschrieben, welche für jede Regel die Schnittpolygone von unseren Lösungspolygonen mit
+den Musterlösungen bildet und anschließend jeweils durch die Fläche unseres Polygons, sowie die des Musterlösungspolygons teilt.
+Von beiden Zahlen wird das Minimun genommen und als Indikator der Lösungsgüte angesehen. Die folgende Funktion $f$ berechnet diese Güte.
+Dabei sind $R$ ein Regelsatz, $v$ ein Verbot (oder eine Verbotsmenge?), $S_v$ die Menge der Datensätze, in denen $v$ gilt, 
+$q\in S_v$ ein Datensatz, $P_q$ die Musterlösung des Datensatzes $q$, $I$ ? und $G(q,R):=\Guess(q)$ abhängig vom Regelsatz $R$.\\
 \begin{equation}
-f(v,R) := \sum_{q\in S_v} min(\frac{I(P_q,G(q,R))}{P_q},\frac{I(P_q,G(q,R))}{G(q,R)})
+f(v,R) := \sum_{q\in S_v} \min \left(\frac{I(P_q,G(q,R))}{P_q},\frac{I(P_q,G(q,R))}{G(q,R)}\right)
 \end{equation}
-Um die Güte des Regelsatzes für ein einzelnes Verbot vergleichbar zu anderen Verboten zu machen wird abschließend der Indicator durch
-die Anzahl der $ID$s welches es beeinflussen geteilt.\\
+Um die Güte des Regelsatzes für ein einzelnes Verbot vergleichbar zu anderen Verboten zu machen, wird abschließend der Indikator durch
+die Anzahl der $ID$s, welche ihn beeinflussen, geteilt.\\
 \begin{equation}
 \label{eq:guete}
 G"ute(R) := \sum_{v \in V} \frac{ f(v,R)}{\#S_v}
@@ -82,17 +85,17 @@ Wir suchen also einen Regelsatz $R$ für den $G"ute(R)$ maximal ist.
 \label{fig:DataDrawerOrginal}
 \end{figure}
 Um die KML-Dateien nicht immer manuell in Google-Earth laden zu müssen, wurde eine weitere Klasse geschrieben, welche zur Visualisierung der Daten gedacht ist.
-Dabei werden Bilder erstellt, in welchen die Daten aus OSM als schwarze Linien, bzw Polygone eingezeichnet werden. Zusätzlich werden die Tags,
-welche die Objekte enthalten zu jedem Objekt eingezeichnet um schnell eine Übersicht zu haben, was wozu gehört.
-Um die Güte des Regeldatensatzes, bzw des Algorithmus subjektiv beurteilen zu können, werden die truth, bzw. die von unserem Algorithmus erdachten Polygone
-farblich eingezeichnet. So ist eine schnelle Beurteilung, ob man das richtige Poylgon gewählt hat, bzw welche Tags man evtl. noch beachten sollte, möglich.
+Dabei werden Bilder erstellt, in welchen die Daten aus OSM als schwarze Linien bzw. Polygone eingezeichnet werden. Zusätzlich werden die Tags,
+welche die Objekte enthalten zu jedem Objekt eingezeichnet, um schnell eine Übersicht zu bekommen, was wozu gehört.
+Um die Güte des Regeldatensatzes bzw. des Algorithmus subjektiv beurteilen zu können, werden die truth bzw. die von unserem Algorithmus gefundenen Polygone
+farblich eingezeichnet. So ist eine schnelle Beurteilung, ob man das richtige Poylgon gewählt hat bzw. welche Tags man evtl. noch beachten sollte, möglich.
 
 In \fref{fig:DataDrawerOrginal} ist beispielhaft eine Ausgabe gezeigt. Das Bild hat eine Größe von mehreren Megapixeln, da es sonst zu Überlappungen der Tags kommen
 würde wenn man sie größer schreibt. Auch wenn man jetzt noch reinzoomen muss um diese zu lesen, so ist es doch wesentlich bequemer,
 als die Überprüfung anhand der OpenStreetMap XML-Dateien. Wie in \fref{fig:DataDrawerZoom} zu erkennen ist, ist das Lösungspolygon in Grün,
-das Ergebnispolygon unseres Algorithmus in Pink und die Geocoordinate als schwarzer Punkt eingezeichnet.
+das Ergebnispolygon unseres Algorithmus in Pink und die Geokoordinate als schwarzer Punkt eingezeichnet.
 
-Als weiterer Hinweis wird zusätzlich zu jedem Polygon die reale und die gewichtete Distanz zur Geocoordinate, an welcher das Bild gemacht wurde, angegeben.
+Als weiterer Hinweis wird zusätzlich zu jedem Polygon die reale und die gewichtete Distanz zur Geokoordinate, an welcher das Bild gemacht wurde, angegeben.
 
 \begin{figure}
  \centering
@@ -101,10 +104,10 @@ Als weiterer Hinweis wird zusätzlich zu jedem Polygon die reale und die gewicht
  \label{fig:DataDrawerZoom}
 \end{figure}
 
-\subsection{Incrementelle Regelerstellung}
+\subsection{Inkrementelle Regelerstellung}
 Aus dem Testdatensatz werden zunächst alle Datensätze herausgefiltert, welche nicht einfach lösbar sind.
 (Vgl. \fref{sec:Testdatensatz})
-Es wird mit einem leeren Regelsatz angefangen und dieser anschließend inkrementel erweitert. Dazu wird wie folgt vorgegangen:
+Es wird mit einem leeren Regelsatz angefangen und dieser anschließend inkrementell erweitert. Dazu wird wie folgt vorgegangen:
 \begin{enumerate}
 \itemsep-2pt
 \item Definiere für jeden Datensatz ein optimales Polygon, bzw einen Overlap-Wert, welcher erreicht werden muss.
@@ -120,10 +123,10 @@ Nach dem Abdecken der einfachen Fälle kann mit den schwierigeren genauso vorgeg
 Nachdem der Algorithmus mit einem leerem Regelsatz durchgelaufen ist zeigt
 \fref{fig:DataDrawerZoom} einen Ausschnitt des Bildes, wie es in Schritt \ref{Inc_Image} erstellt wurde. Wir können nun einfach sehen,
 dass es offensichtlich nicht das richtige Polygon ist. Der einzige Unterschied der bestmöglichen Lösung im Vergleich zu dem nächstbesten Polygon ist,
-dass das Lösungspolygon noch den Namen Fotokado hat. Desweiteren sehen wir, dass kein weiteres Polygon in der Nähe einen Namen hat.
-Fotokado an sich ist jetzt etwas, dass man verwenden könnte, sinnvoller ist es aber, generell zu sagen, dass wenn Namen vorkommen, diese Gebäude
+dass das Lösungspolygon noch den Namen ``Fotokado'' hat. Desweiteren sehen wir, dass kein weiteres Polygon in der Nähe einen Namen hat.
+``Fotokado'' an sich ist jetzt etwas, dass man verwenden könnte, sinnvoller ist es aber, generell zu sagen, dass, wenn Namen vorkommen, diese Gebäude
 bevorzugt werden sollen. Für Nr. 27 gilt nur: parking="no". Es ist also wahrscheinlich sinnvoll, folgende Regel zu erstellen\footnote{0.8 ist willkürlich gewählt.
-0.0 oder 0.5 würden für genau dieses Datensatz auch zum richtigen Ergebnis führen, können aber wiederrum bei anderen ID's hinderlich sein,
+0.0 oder 0.5 würden für genau dieses Datensatz auch zum richtigen Ergebnis führen, können aber wiederrum in anderen Datensätzen hinderlich sein,
 da sie eine wesentlich größere Veränderung bewirken.}:
 \begin{equation*}
 R_{parking=''no''} = [r('name') = 0.8]
@@ -144,6 +147,6 @@ Hier kann man nicht mehr viel machen und wird wahrscheinlich immer das falsche P
 Um den Fall abzudecken, in welchem in OpenStreetMap keine ausreichenden Daten vorhanden sind, wird um den Punkt $C_{ID}$ ein
 Achteck\footnote{Relativ geringer Rechenaufwand bei gleichzeitig bester Annäherung an einen Kreis.} mit Radius $b$ gelegt
 und dieses mit der gewichtet nächsten Großfläche geschnitten.
-Eine Großfläche X definiert sich dadurch, dass ihre Fläche $A_X$ einen schwellwert $u$ überschreitet.
-Es ist zu prüfen ob es sinnvoll ist dieses generell zu tun oder für bestimmte Regel ausser Kraft zu setzen wie
+Eine Großfläche $X$ definiert sich dadurch, dass ihre Fläche $A_X$ einen Schwellwert $u$ überschreitet.
+Es ist zu prüfen, ob es sinnvoll ist, dieses generell zu tun oder für bestimmte Regeln außer Kraft zu setzen, wie
 z.B. ein Verbot nach offenem Feuer, welches in einem ganzen Parkgebiet gelten wird.
