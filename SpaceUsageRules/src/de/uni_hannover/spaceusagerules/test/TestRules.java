@@ -9,6 +9,10 @@ import java.util.TreeMap;
 
 import org.junit.Test;
 
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
+
 import de.uni_hannover.spaceusagerules.algorithm.Rules;
 
 public class TestRules {
@@ -47,6 +51,14 @@ public class TestRules {
 		
 		assertEquals(oneRule.overlap(two),0.75,0); // because 100% of oneRule are covered by the other rules, but only 50% are covered otherwise.
 		
+	}
+	
+	@Test
+	public void testNgon() {
+		GeometryFactory gf = new GeometryFactory();
+		Point p = gf.createPoint(new Coordinate());
+		//FIXME hier gibt es einen Fehler!
+		Rules.createNgon(0, Double.POSITIVE_INFINITY, p);
 	}
 	
 }
