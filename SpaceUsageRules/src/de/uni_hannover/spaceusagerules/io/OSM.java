@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
@@ -58,6 +59,8 @@ public class OSM {
 	public static void useBuffer(boolean use) {
 		buffer = use;
 	}
+	
+	public static List<Double> size = new ArrayList<Double>();
 
 	/**
 	 * the simplest way to get a Set of OSM-objects is by just giving a coordinate.
@@ -193,6 +196,7 @@ public class OSM {
 		Geometry geo = null;
 		try {
 			geo = gf.createPolygon(penis);
+			size.add(geo.getArea());
 		} catch (IllegalArgumentException ex) {
 			geo = gf.createLineString(penis);
 		}

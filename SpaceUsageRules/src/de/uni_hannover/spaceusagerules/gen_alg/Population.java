@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
@@ -51,6 +52,17 @@ public class Population extends Rules implements Comparable<Population>{
 					weights.put(line, d);
 			}
 		}
+		for(String line : possible) {
+			if(r.nextBoolean() && r.nextBoolean() && r.nextBoolean()) {
+				double d [] = new double[2];
+				d[0] = r.nextDouble()/1024;
+				d[1] = r.nextDouble()/1024;
+				if(thresholds.keySet().contains(line) && r.nextBoolean())
+					thresholds.remove(line);
+				else
+					thresholds.put(line, d);
+			}
+		}
 	}
 	
 	/**
@@ -58,8 +70,16 @@ public class Population extends Rules implements Comparable<Population>{
 	 * @param possible a list of all possible tags.
 	 */
 	public Population(Collection<String> possible) {
-		weights = new TreeMap<String,Double>();
+		super();
 		Random r = new Random();
+		for(String p : possible) {
+			if(r.nextBoolean() && r.nextBoolean() && r.nextBoolean()) {
+				double d [] = new double[2];
+				d[0] = r.nextDouble()/1024;
+				d[1] = r.nextDouble()/1024;
+				thresholds.put(p, d);
+			}
+		}
 		for(String p : possible) {
 			if(r.nextBoolean() && r.nextBoolean() && r.nextBoolean()) {
 				double d = r.nextDouble();
@@ -67,6 +87,12 @@ public class Population extends Rules implements Comparable<Population>{
 				weights.put(p, d);
 			}
 		}
+	}
+	
+	public void addRestriction(String res) {
+		if(restrictions==null)
+			restrictions = new TreeSet<String>();
+		restrictions.add(res);
 	}
 
 	/**
@@ -110,6 +136,23 @@ public class Population extends Rules implements Comparable<Population>{
 				n.addEntry(e);
 			}
 		}
+		for(Entry<String,Double> e : weights.entrySet()) {
+			if(r.nextBoolean())
+				n.addEntry(e);
+		}
+		double x[] = new double[2];
+		for(Entry<String,double[]> e : p.thresholds.entrySet()) {
+			if(r.nextBoolean()) {
+				x = n.thresholds.get(e.getKey());
+				if(x!=null){
+					double[] combine = e.getValue();
+					combine[0] = (combine[0] + x[0])/2;
+					combine[1] = (combine[1] + x[1])/2;
+					e.setValue(combine);
+				}
+				n.thresholds.put(e.getKey(), e.getValue());
+			}
+		}
 		return n;
 	}
 	
@@ -151,12 +194,23 @@ public class Population extends Rules implements Comparable<Population>{
 	}
 	
 	/**
+	 * returns the number of thresholds defined for this population.
+	 * @return number of thresholds
+	 */
+	public int getNumberOfThresholds() {
+		return thresholds.size();
+	}
+	
+	/**
 	 * compares this population to another, by comparing their fitness values, and on equality their number of rules.
 	 * a best population would have the highest fitness and the lowest number of rules.
 	 */
 	public int compareTo(Population o) {
-		if(o.fitness==this.fitness)
+		if(o.fitness==this.fitness) {
+			if(this.weights.size()==o.weights.size())
+				return this.thresholds.size()-o.thresholds.size();
 			return this.weights.size()-o.weights.size();
+		}
 		return o.fitness-this.fitness;
 	}
 
@@ -165,13 +219,6 @@ public class Population extends Rules implements Comparable<Population>{
 	 * \latexonly which is basically a line as described in \fref{sec:Eingabedaten_Wir} \endlatexonly
 	 */
 	public String toString() {
-		String ret = "[";
-		for(Entry<String,Double> e: weights.entrySet()) {
-			if(ret.length()!=1)
-				ret += ", ";
-			ret += e.getKey() + " -> " + e.getValue();
-		}
-		ret += "] " + fitness;
-		return ret;
+		return super.toString() + " " + fitness;
 	}
 }

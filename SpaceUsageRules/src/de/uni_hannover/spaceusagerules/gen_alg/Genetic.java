@@ -135,6 +135,7 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 		int letzteOptimierung = 0;
 		int optimierungen = 0;
 		int rules = 0;
+		int threshold = 0;
 		int fitness;
 		while(true) {
 			if(kill)
@@ -151,6 +152,7 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 				letzteVerbesserung = i;
 				verbesserungen++;
 				rules = pops.get(0).getNumberOfRules();
+				threshold = pops.get(0).getNumberOfThresholds();
 				optimierungen = 0;
 			}
 			else if(pops.get(0).getNumberOfRules()<rules){
@@ -158,12 +160,17 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 				optimierungen++;
 				letzteOptimierung = i;
 			}
+			else if(pops.get(0).getNumberOfThresholds()<threshold){
+				threshold = pops.get(0).getNumberOfThresholds();
+				optimierungen++;
+				letzteOptimierung = i;
+			}
 			if(i-letzteVerbesserung > withoutOtimization && i-letzteOptimierung > withoutOtimization)
 				break;
 			i++;
 		}
-//		System.out.println(i + suche + " -> " + pops.get(0));
-//		System.out.println(verbesserungen + " Verbesserungen (" + letzteVerbesserung + ") und " + optimierungen + " Optimierungen (" + letzteOptimierung + ") seitdem");
+		System.out.println(i + suche + " -> " + pops.get(0));
+		System.out.println(verbesserungen + " Verbesserungen (" + letzteVerbesserung + ") und " + optimierungen + " Optimierungen (" + letzteOptimierung + ") seitdem");
 	}
 
   	/**

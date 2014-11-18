@@ -68,27 +68,39 @@ public class ThreadScheduler {
 	 * @param threads a collections of runnable threads
 	 * @param minLoad a minimum number of CPU Load which should be reached.
 	 */
-	public static void schedule(Collection<? extends Thread> threads, double minLoad) {
+	public static void schedule(Collection<? extends Thread> threads, double minLoad, int maxparallel) {
 		if(minLoad<=0.1) {
 			minLoad = 0.1;
 		}
 		OperatingSystemMXBean bean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+		List<Thread> gens = new LinkedList<Thread>();
 		for(Thread g : threads) {
 			while(true) {
+				for(Thread r : gens)
+					if(!r.isAlive()) {
+						gens.remove(r);
+						break;
+					}
+				if(gens.size()<maxparallel && bean.getSystemCpuLoad()<minLoad) {
+					g.start();
+					gens.add(g);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+					}
+					break;
+				} 
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException ex) {
 				}
-				if(bean.getSystemCpuLoad()<minLoad) {
-					g.start();
-					break;
-				}
 			}
 		}
-		for(Thread g : threads) {
+		for(Thread g : gens) {
 			try {
 				g.join();
 			} catch (InterruptedException e1) {
+				e1.printStackTrace();
 			}
 		}
 	}

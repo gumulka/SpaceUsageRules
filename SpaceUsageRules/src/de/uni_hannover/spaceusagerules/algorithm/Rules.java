@@ -20,7 +20,7 @@ import de.uni_hannover.spaceusagerules.core.Way;
  * 
  * \latexonly (see also \fref{sec:Regeln}) \endlatexonly
  * 
- * @author Fabian Pflug
+ * @author Fabian Pflug and Peter Zilz
  *
  */
 public class Rules{
@@ -258,7 +258,7 @@ public class Rules{
 	 * \latexonly as defined in \fref{sec:Eingabedaten_Wir} \endlatexonly
 	 */
 	public String toString() {
-		return restrictions.toString() + " -> " + weights.toString();
+		return restrictions.toString() + " -> " + weights.toString() + " -> " + thresholds.toString();
 	}
 
 }

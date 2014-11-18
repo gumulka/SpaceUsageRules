@@ -42,7 +42,7 @@ public class Main extends Thread implements Comparable<Main>{
 	private static boolean prepared = false;
 	
 	
-	private List<Genetic> allGens;
+	protected List<Genetic> allGens;
 	private int diff = Integer.MAX_VALUE;
 	private int fitness = 0;
 	
@@ -191,11 +191,11 @@ public class Main extends Thread implements Comparable<Main>{
 		 
 		 
 		 
-		 int[] maxis = {90, 90, 90};
-		 int[] popsizes = {50, 100,200,350,500};
-		 int[] withouts = {50,100,200,350,500};
-		 int[] mutates =  {5, 3, 1};
-		 int[] merges = {7, 6, 5, 3, 1};
+		 int[] maxis = {128,128};
+		 int[] popsizes = {100,350,500};
+		 int[] withouts = {100,350,500};
+		 int[] mutates =  {5,3};
+		 int[] merges = {1,3,5};
 		 for(int m : maxis) {
 			 Main best = null;
 			 Main.max = m;
@@ -210,7 +210,7 @@ public class Main extends Thread implements Comparable<Main>{
 					 }
 				 }
 			 }
-			 ThreadScheduler.schedule(mains, AUSLASTUNG);
+			 ThreadScheduler.schedule(mains, AUSLASTUNG,2);
 			 for(Main test : mains)
 				 if(best == null || best.compareTo(test)>0)
 					 best = test;

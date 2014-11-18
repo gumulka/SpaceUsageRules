@@ -11,6 +11,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -51,10 +53,10 @@ public class Start extends DatasetEntry {
 	private double minOverlap;
 
 	/** the output path, to save the images to */
-	private static String imagePath = null;
+	public static String imagePath = null; // XXX private machen.
 	
 	/** of it is set, then images will be created */
-	private static boolean images = false;
+	public static boolean images = false; // XXX private machen.
 	
 	/** the directory to write the generated files to */
 	private static String outputDir = null;
@@ -175,8 +177,8 @@ public class Start extends DatasetEntry {
 		 		"\t\t  Rules.txt (wird von -r überschrieben)\n" +
 		 		"\t\t  Overlap.txt (Optional, wird von -u überschrieben)");
 		System.out.println("  -i  --image     Gibt an, dass Bilder erstellt werden sollen und ein optinales Ausgabeverzeichnis.");
-		System.out.println("  -l  --height    Die Höhe des zu erstellenden Bildes (" + imageHeight + ") ist default.");
-		System.out.println("  -w  --width     Die Breite des zu erstellenden Bildes (" + imageWidth + ") ist default.");
+		System.out.println("  -l  --height    Die Höhe des zu erstellenden Bildes (" + imageHeight + " ist default.)");
+		System.out.println("  -w  --width     Die Breite des zu erstellenden Bildes (" + imageWidth + " ist default.)");
 	}
 	
 	/**
@@ -328,7 +330,33 @@ public class Start extends DatasetEntry {
 				}
 			br.close();
 		}
+		
+		
 		ThreadScheduler.schedule(instances.values(), maxRunning);
+		
+		
+		List<Double> bla = OSM.size;
+		Collections.sort(bla);
+		buckets(10, bla.get(0), bla.get(bla.size()*6/10), bla);
 		// */
+	}
+	
+	public static void buckets(int n,double min, double max, List<Double> list) {
+		int[] buckets = new int[n];
+		for(int i = 0; i<n; i++){
+			buckets[i] = 0;
+		}
+		double section = (max-min)/n;
+		for(double d : list) {
+			for(int i = 0; i<n;i++) {
+				if(d < (min + (i+1)*section)) {
+					buckets[i]++;
+					break;
+				}
+			}
+		}
+		for(int i = 0; i<n;i++) {
+			System.out.println("" + (min+i*section) + " - " + buckets[i]);
+		}
 	}
 }
