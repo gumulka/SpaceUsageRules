@@ -10,20 +10,33 @@ verschiedenen Anwendungen als Bibliothek nutzen zu lassen.
 \subsubsection{Regeln}
 Wird derzeit auf XML umgestellt.\\
 \label{sec:Eingabedaten_Wir}
-Regeln werden aus einer Textdatei eingelesen, in welcher zeilenweise die Regeln zu je einer Verbotsmenge stehen.
-Die Datei besteht aus vier Spalten. In der Ersten sind die Namen der Verbote aufgelistet. In der Zweiten befinden sich die Regeln.
-In der Dritten steht ein Schwellwert. In der Vierten steht ein Radius, der Anwendung findet, falls der Schwellwert überschritten wird.
-Die Spalten werden durch eckige Klammern verdeutlicht und die einzelnen Regeln durch Kommata getrennt.
-Die Trennung von Key und Value erfolgt durch einen Bindestrich.
-Soll eine Regel generell für alle Values eines Keys gelten, so kann die Value weggelassen und nur der Key angegeben werden.
-
-Eine Gültige Eingabe kann also folgendermaßen sein:
+Die benutzten Regeln liegen in einer Datei im XML-Format vor. Darin werden vier von uns definierte Tags benutzt: 'ruleset', 'rule',
+'restriction' und 'OSMTag'. Gewicht, Schwellwert und Radius sind Attribute des Tags 'OSMTag'.\\
+'ruleset' umfasst die Gesamtheit aller Regeln. Eine Regel wird durch 'rule' repräsentiert. 'rule' enthält wiederum beliebig viele 
+restrictions und OSMTags. 'restriction' stellt eine Space Usage Rule dar. Der Name dieser SUR wird als Inhalt (nicht als Attribut) 
+von 'restriction' gepeichert. Der Inhalt von 'OSMTag' ist der Name eines Tags, der in OSM einem Objekt zugeordnet ist. Key und Value
+dieses Tags werden dabei nicht getrennt. Das Gewicht, der Schwellwert und der Radius, die diesem Tag zugeordnet werden, werden in XML
+in den Attributen 'weight', 'threshold' und 'radius' gespeichert.\\
+Da wir zur Handhabung dieses Formats die Bibliothek jsoup\footnote{jsoup.org} benutzen, die hauptsächlich zum Parsen von html-Dateien
+gedacht ist, wird der Tag 'ruleset' noch von 'body' und 'html' umklammert.\\
+Eine Gültige Eingabe kann folgendermaßen aussehen:
 \begin{lstlisting}[frame=single]
-[smoking="no"] -> [addr:housenumber -> 0.5, landuse - forest -> 1.5] -> [threshold:100.5] -> [radius:0.5]
-[fishing="no", smoking="no"] -> [] -> [threshold:1000] -> [radius:2.1]
+<html><body><ruleset>
+  <rule>
+    <restriction>smoking="no"</restriction>
+    <OSMTag weight="0.5" threshold="1e-5" radius="3.5e-5">addr:housenumber</OSMTag>
+    <OSMTag weight="1.5" threshold="3e-4" radius="5.7e-3">landuse-forest</OSMTag>
+  </rule>
+  <rule>
+    <restriction>fishing="no"</restriction>
+    <restriction>smoking="no"</restriction>
+  </rule>
+</ruleset></body></html>
 \end{lstlisting}
 Dieses Regelwerk sagt aus, dass ein Nichtrauchen Verbot wahrscheinlich in Flächen gilt, welche eine Hausnummer zugewiesen haben
-und sehr unwahrscheinlich in Gebieten, die als Waldgebiete ausgeschildert sind. 
+und sehr unwahrscheinlich in Gebieten, die als Waldgebiete ausgeschildert sind. Sollte die so ermittelte Fläche größer sein als 
+einer der Schwellwerte, so wird aus allen Radien der überschrittenen Schwellwerte ein neuer Radius berechnet. Ein reguläres Polygon
+wird erzeugt und mit der ermittelten Fläche geschnitten.\\
 Für das Angel- und Rauchverbot sind keine Regeln definiert. Unser Algorithmus wird sich also nur die nächstegelegene Fläche als wahrscheinlich nehmen,
 oder sollten der Punkt innerhalb von 2 Flächen liegen\footnote{Es könnte z.B. eine Fläche 'Niedersachsen' und eine Fläche 'Waldgebiet' definiert sein.},
 so wird die kleinere von beiden ausgewählt.

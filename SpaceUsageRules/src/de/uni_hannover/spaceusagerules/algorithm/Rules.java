@@ -52,36 +52,6 @@ public class Rules{
 	}
 	
 	/**
-	 * parses a line into a valid representation of Rules.
-	 * The input string must have the following form:<BR>
-	 * [SUR,SUR,...] -> [rules how to weight, ...] -> [threshold:42] -> [radius:10]<BR>
-	 * Better use {@link RulesetIO#readRules(String)} to parse.
-	 * @param line a string describing a line of rules.
-	 * \latexonly as defined in \fref{sec:Eingabedaten_Wir} \endlatexonly
-	 */
-	@Deprecated
-	public Rules(String line) {
-		this();
-		//first block contains the list of SURs
-		int blockstart = line.indexOf('['); //begin of the block incl. '['
-		int blockend = line.indexOf(']'); //end of the block excl. ']'
-		String verbote = line.substring(blockstart+1, blockend);
-		String[] v = verbote.split(",");
-		for(String s : v)
-			restrictions.add(s.trim());
-		
-		//second block contains the list of weighing rules
-		blockstart = line.indexOf('[', blockend+1);
-		blockend = line.indexOf(']', blockstart);
-		String rules = line.substring(blockstart+1, blockend);
-		for(String s : rules.split(",")) {
-			String[] bla = s.split("->");
-			weights.put(bla[0].trim(), Double.parseDouble(bla[1]));
-		}
-		
-	}
-	
-	/**
 	 *  Initializes with the given rules and restrictions.
 	 * @param restrictions a set of restrictions. 
 	 * @param rules a set of rules as "osm-key - osm-value to [0..2]"

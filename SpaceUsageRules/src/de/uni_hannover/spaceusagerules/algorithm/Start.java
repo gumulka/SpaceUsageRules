@@ -311,6 +311,7 @@ public class Start extends DatasetEntry {
 			f = new File(path + "Rules.txt");
 		else
 			f= new File(rules);
+		//reading and parsing is done in RulesetIO
 		allRules = new HashSet<Rules>(RulesetIO.readRules(f));
 		
 		

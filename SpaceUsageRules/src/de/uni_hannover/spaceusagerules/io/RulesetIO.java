@@ -17,31 +17,62 @@ import org.jsoup.select.Elements;
 
 import de.uni_hannover.spaceusagerules.algorithm.Rules;
 
+/**
+ * This class handles the storing of the ruleset. All rules are stored together in 
+ * an XML file. For more information on the structure of this XML file, see the 
+ * documentation.<BR>
+ * The core functions of this class are {@link #readRules(File)} and 
+ * {@link #toXMLString(List)}. The first one reads the file and parses it via Jsoup.
+ * The second one parses a list of rules into an xml string, that can be written to a file.<BR>
+ * To avoid typos, the names of the used rules are defined as static and final fields.
+ * @author Peter Zilz
+ *
+ */
 public class RulesetIO {
 	
+	/** Name of the xml tag that represents  a whole rule */
 	private static final String RULE_TAG = "rule";
+	/** Name of the xml tag that contains all the rules */
 	private static final String RULESET_TAG="ruleset";
+	/** Name of the xml tag that represents a restriction (or space usage rule) */
 	private static final String RESTRICTION_TAG="restriction";
+	/** Name of the xml tag that represents a tag of a polygon in OSM */
 	private static final String OSM_TAG="OSMTag";
+	/** Name of the xml attribute of the weight an OSM tag is mapped to */
 	private static final String WEIGHT_ATTRIB="weight";
+	/** Name of the xml attribute of the threshold an OSM tag is mapped to */
 	private static final String THRESHOLD_ATTRIB="threshold";
+	/** Name of the xml attribute of the radius an OSM tag is mapped to */
 	private static final String RADIUS_ATTRIB="radius";	
 	
-	//TODO javadoc
+	/**
+	 * Reads and parses an xml file that contains a set of rules.
+	 * @param filename name of the file to read and parse
+	 * @return list of rules, or <code>null</code> if the file doesn't exist
+	 * @throws IOException
+	 */
 	public static List<Rules> readRules(String filename) throws IOException{
 		File f = new File(filename);
 		return readRules(f);
 	}
 	
+	/**
+	 * Reads and parses an xml file that contains a set of rules.
+	 * @param filename the file to read and parse
+	 * @return list of rules, or <code>null</code> if the file doesn't exist
+	 * @throws IOException
+	 */
 	public static List<Rules> readRules(File filename) throws IOException{
 		
 		if(!filename.exists())
 			return null;
 		
+		//read the file and parse from html string to Jsoup objects
 		Document doc = readDocument(filename);
 		
 		List<Rules> outputList = new Vector<Rules>();
 		
+		//parse Jsoup elements to instances of Rules
 		Elements ruleList = doc.getElementsByTag(RULE_TAG);
 		for(Element singleRule : ruleList){
 			outputList.add(createRules(singleRule));
@@ -50,10 +81,11 @@ public class RulesetIO {
 		return outputList;
 	}
 	
-	
-	
-	
-	//TODO javadoc
+	/**
+	 * Parses a Jsoup Element into an instance of Rules. 
+	 * @param ruleElement Jsoup representation of the rule-tag with subtags
+	 * @return new Rules object
+	 */
 	public static Rules createRules(Element ruleElement){
 		
 		//create empty datafields
@@ -85,9 +117,15 @@ public class RulesetIO {
 		return new Rules(restrictions,weights,thresholds);
 	}
 	
-	//TODO javadoc
+	/**
+	 * Reads text from a file and parses it using Jsoup.
+	 * @param f the file to read and parse
+	 * @return parsed Document
+	 * @throws IOException
+	 */
 	private static Document readDocument(File f) throws IOException{
 		
+		//read the file line by line
 		String xmlText="";
 		BufferedReader br = new BufferedReader(new FileReader(f));		
 		String line;
@@ -97,15 +135,21 @@ public class RulesetIO {
 		
 		br.close();
 		
+		//parse and return
 		return Jsoup.parse(xmlText);
 	}
 	
-	
-	//TODO javadoc
+	/**
+	 * Parses a list of Rules into an XML string, that can be stored in a file. 
+	 * @param ruleList list of rules to be stored.
+	 * @return xml string "human readable"
+	 */
 	public static String toXMLString(List<Rules> ruleList){
 		
+		//the single rules are surrounded by html-, body-, and rulset-tags
 		String output = "<html><body>\n<"+RULESET_TAG+">\n";
 		
+		//parse each rule to xml and append
 		for(Rules rule: ruleList){
 			output += ruleToString(rule);
 		}
@@ -115,18 +159,29 @@ public class RulesetIO {
 		return output;
 	}
 	
-	//TODO javadoc
+	/**
+	 * Parses a single rule into xml format. To get a bit of human readability, tabs are
+	 * inserted and line breaks are used.
+	 * @param rule the rule to parse
+	 * @return several lines of xml representing the rule
+	 */
 	private static String ruleToString(Rules rule){
 		
+		//read the data from the rule
 		Collection<String> surs = rule.getRestrictions();
 		Map<String,Double> weights = rule.getWeights();
 		Map<String,double[]> thresholds = rule.getThresholds();
 		
+		//begin xml code
 		String ruleXml = "\t<"+RULE_TAG+">\n";
 		
+		//first append all restrictions (=SURs)
 		for(String restriction : surs)
 				ruleXml += "\t\t<"+RESTRICTION_TAG+">"+restriction+"</"+RESTRICTION_TAG+">\n";
 		
+		//append all used osm tags. One tag maps to the three values weight, threshold and
+		//radius. Those are attributes in this tag. The name of the OSM-tag is the text of
+		//this xml tag.
 		for(String osmTag : weights.keySet()){
 			ruleXml += "\t\t<"+OSM_TAG+" "+WEIGHT_ATTRIB+"=\""+weights.get(osmTag)+"\"";
 			if(thresholds.containsKey(osmTag)){
@@ -135,6 +190,7 @@ public class RulesetIO {
 			}
 			ruleXml += ">"+osmTag+"</"+OSM_TAG+">\n";
 		}
+		//close the rule-tag
 		ruleXml += "\t</"+RULE_TAG+">\n";
 		
 		return ruleXml;
