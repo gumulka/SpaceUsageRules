@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -26,6 +27,7 @@ import de.uni_hannover.spaceusagerules.io.DataDrawer;
 import de.uni_hannover.spaceusagerules.io.Image;
 import de.uni_hannover.spaceusagerules.io.KML;
 import de.uni_hannover.spaceusagerules.io.OSM;
+import de.uni_hannover.spaceusagerules.io.RulesetIO;
 
 /**
  * The main class for our application. An instance is responsible for one ID in the read in dataset.
@@ -303,19 +305,15 @@ public class Start extends DatasetEntry {
 			}			
 		}
 		br.close();
-
-		// read in the Rules
+		
+		// read the ruleset from file and parse from XML format
 		if(rules==null)
 			f = new File(path + "Rules.txt");
 		else
 			f= new File(rules);
-		br = new BufferedReader(new FileReader(f));
-		while((line = br.readLine()) != null) {
-			// Rules can parse the line.
-			allRules.add(new Rules(line));
-		}
-		br.close();
-
+		allRules = new HashSet<Rules>(RulesetIO.readRules(f));
+		
+		
 		if(overlap==null)
 			f = new File(path + "Overlap.txt");
 		else

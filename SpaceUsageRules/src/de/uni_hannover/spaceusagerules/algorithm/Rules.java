@@ -15,6 +15,7 @@ import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
 import de.uni_hannover.spaceusagerules.core.Way;
+import de.uni_hannover.spaceusagerules.io.RulesetIO;
 /**
  * represents our rules and the related restrictions.
  * 
@@ -31,7 +32,7 @@ public class Rules{
 	protected Map<String,Double> weights;
 	
 	/**
-	 * maps names of single SURs to pairs of threshold and radius
+	 * maps names of single OSM-tags to pairs of threshold and radius
 	 */
 	protected Map<String,double[]> thresholds;
 	
@@ -53,13 +54,14 @@ public class Rules{
 	/**
 	 * parses a line into a valid representation of Rules.
 	 * The input string must have the following form:<BR>
-	 * [SUR,SUR,...] -> [rules how to weight, ...] -> [threshold:42] -> [radius:10]
+	 * [SUR,SUR,...] -> [rules how to weight, ...] -> [threshold:42] -> [radius:10]<BR>
+	 * Better use {@link RulesetIO#readRules(String)} to parse.
 	 * @param line a string describing a line of rules.
 	 * \latexonly as defined in \fref{sec:Eingabedaten_Wir} \endlatexonly
 	 */
+	@Deprecated
 	public Rules(String line) {
 		this();
-		// FIXME auf xml umstellen
 		//first block contains the list of SURs
 		int blockstart = line.indexOf('['); //begin of the block incl. '['
 		int blockend = line.indexOf(']'); //end of the block excl. ']'
@@ -259,6 +261,18 @@ public class Rules{
 	 */
 	public String toString() {
 		return restrictions.toString() + " -> " + weights.toString() + " -> " + thresholds.toString();
+	}
+
+	public Collection<String> getRestrictions() {
+		return restrictions;
+	}
+
+	public Map<String, Double> getWeights() {
+		return weights;
+	}
+
+	public Map<String, double[]> getThresholds() {
+		return thresholds;
 	}
 
 }
