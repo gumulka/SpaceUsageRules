@@ -68,7 +68,7 @@ public class RulesetIO {
 			return null;
 		
 		//read the file and parse from html string to Jsoup objects
-		Document doc = readDocument(filename);
+		Document doc = Jsoup.parse(filename, "UTF-8");
 		
 		List<Rules> outputList = new Vector<Rules>();
 		
@@ -118,28 +118,6 @@ public class RulesetIO {
 	}
 	
 	/**
-	 * Reads text from a file and parses it using Jsoup.
-	 * @param f the file to read and parse
-	 * @return parsed Document
-	 * @throws IOException
-	 */
-	private static Document readDocument(File f) throws IOException{
-		
-		//read the file line by line
-		String xmlText="";
-		BufferedReader br = new BufferedReader(new FileReader(f));		
-		String line;
-		while((line=br.readLine()) != null){
-			xmlText+=line;
-		}
-		
-		br.close();
-		
-		//parse and return
-		return Jsoup.parse(xmlText);
-	}
-	
-	/**
 	 * Parses a list of Rules into an XML string, that can be stored in a file. 
 	 * @param ruleList list of rules to be stored.
 	 * @return xml string "human readable"
@@ -147,14 +125,14 @@ public class RulesetIO {
 	public static String toXMLString(List<Rules> ruleList){
 		
 		//the single rules are surrounded by html-, body-, and rulset-tags
-		String output = "<html><body>\n<"+RULESET_TAG+">\n";
+		String output = "<"+RULESET_TAG+">\n";
 		
 		//parse each rule to xml and append
 		for(Rules rule: ruleList){
 			output += ruleToString(rule);
 		}
 		
-		output += "</"+RULESET_TAG+">\n</body></html>";
+		output += "</"+RULESET_TAG+">";
 		
 		return output;
 	}

@@ -15,7 +15,6 @@ import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
 import de.uni_hannover.spaceusagerules.core.Way;
-import de.uni_hannover.spaceusagerules.io.RulesetIO;
 /**
  * represents our rules and the related restrictions.
  * 
@@ -176,6 +175,14 @@ public class Rules{
 	 * @return regular polygon
 	 */
 	public static Geometry createNgon(int n, double radius, Point center){
+		
+		if(n<3){
+			return null;
+		}
+		
+		if(radius == Double.POSITIVE_INFINITY || radius==Double.NEGATIVE_INFINITY){
+			return null;
+		}
 		
 		Coordinate[] cList = new Coordinate[n+1];
 		

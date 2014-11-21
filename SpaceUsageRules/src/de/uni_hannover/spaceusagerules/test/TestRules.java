@@ -31,8 +31,8 @@ public class TestRules {
 		two.add("fishing=\"no\"");
 		
 		Rules emptyRules = new Rules();
-		Rules twoRules = new Rules(two,trash);
-		Rules oneRule = new Rules(one,trash);
+		Rules twoRules = new Rules(two,trash,null);
+		Rules oneRule = new Rules(one,trash,null);
 		
 		// Test for empty ruleSet
 		assertEquals(emptyRules.overlap(empty),0.1f,0.0f);
@@ -57,7 +57,6 @@ public class TestRules {
 	public void testNgon() {
 		GeometryFactory gf = new GeometryFactory();
 		Point p = gf.createPoint(new Coordinate());
-		//FIXME hier gibt es einen Fehler!
 		Rules.createNgon(0, Double.POSITIVE_INFINITY, p);
 	}
 	

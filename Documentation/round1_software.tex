@@ -17,11 +17,9 @@ restrictions und OSMTags. 'restriction' stellt eine Space Usage Rule dar. Der Na
 von 'restriction' gepeichert. Der Inhalt von 'OSMTag' ist der Name eines Tags, der in OSM einem Objekt zugeordnet ist. Key und Value
 dieses Tags werden dabei nicht getrennt. Das Gewicht, der Schwellwert und der Radius, die diesem Tag zugeordnet werden, werden in XML
 in den Attributen 'weight', 'threshold' und 'radius' gespeichert.\\
-Da wir zur Handhabung dieses Formats die Bibliothek jsoup\footnote{jsoup.org} benutzen, die hauptsächlich zum Parsen von html-Dateien
-gedacht ist, wird der Tag 'ruleset' noch von 'body' und 'html' umklammert.\\
 Eine Gültige Eingabe kann folgendermaßen aussehen:
 \begin{lstlisting}[frame=single]
-<html><body><ruleset>
+<ruleset>
   <rule>
     <restriction>smoking="no"</restriction>
     <OSMTag weight="0.5" threshold="1e-5" radius="3.5e-5">addr:housenumber</OSMTag>
@@ -31,7 +29,7 @@ Eine Gültige Eingabe kann folgendermaßen aussehen:
     <restriction>fishing="no"</restriction>
     <restriction>smoking="no"</restriction>
   </rule>
-</ruleset></body></html>
+</ruleset>
 \end{lstlisting}
 Dieses Regelwerk sagt aus, dass ein Nichtrauchen Verbot wahrscheinlich in Flächen gilt, welche eine Hausnummer zugewiesen haben
 und sehr unwahrscheinlich in Gebieten, die als Waldgebiete ausgeschildert sind. Sollte die so ermittelte Fläche größer sein als 
@@ -67,5 +65,6 @@ schreiben um bei den Test unvoreingenommen zu sein und engagiert möglichst viel
 
 \subsection{Probleme}
 Da die Berechnung der Schnittpolygone sehr aufwändig ist und wir nur eine Näherung benötigen,
-wird die Berechnung der Schnittpolygone und deren Flächen vereinfach durch erstellen von Bounding Boxes.
+wird die Berechnung der Schnittpolygone und deren Flächen vereinfacht durch Erstellen von Bounding Boxes.
 Es wird also nicht das wirkliche Schnittpolygon berechnet, sondern die Schnitt Bounding Box, sowie die Fläche der Bounding Box.
+\\Immer noch? Oder wurde das durch den Einbau von JTS geändert?

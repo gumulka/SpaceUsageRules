@@ -1,6 +1,6 @@
 \section{Automatisierte Regelerstellung}
 Da uns die Grundaufgabe nicht informatiklastig genug ist
-haben wir beschlossen unser selbst definiertes Regelwerk abschließend gegen ein Learning Classifier System antreten zu lassen.
+haben wir beschlossen unser selbst definiertes Regelwerk abschließend gegen ein Learning Classifier System antreten zu lassen. (out of date?)
 
 \subsection{Eingabedaten}
 \begin{itemize}
@@ -18,7 +18,7 @@ haben wir beschlossen unser selbst definiertes Regelwerk abschließend gegen ein
 \end{itemize}
 
 \subsection{Ausgabedaten}
-Das System ist so entworfen, dass es als Ausgabe Daten liefert wie in \fref{sec:Eingabedaten_Wir} von unserem Algortihmus verlangt werden.
+Das System ist so entworfen, dass es als Ausgabe Daten liefert wie sie in \fref{sec:Eingabedaten_Wir} von unserem Algortihmus verlangt werden.
 
 \subsection{Vorgehensweise}
 Es werden zunächst für alle Eingabedaten die Daten im Umkreis der Positionsdaten aus Openstreetmap heruntergeladen.
@@ -28,7 +28,7 @@ Anschließend für jede Verbotsmenge ein Genetischer Algorithmus erstellt, welch
 Nachdem alle Algorithmen durchgelaufen sind, werden die Optimalen eingesammelt und aus ihnen ein Regelwerk erstellt und in eine Datei geschrieben.
 
 \subsection{Fitnessfunktion}
-
+TODO
 
 
 
@@ -53,7 +53,7 @@ Alle Durchläufe fanden auf dem selben Rechner statt (Core i5-3570K - 16GB RAM)}
 
 Wie in \fref{fig:GenAlgAll} zu sehen ist, wird die Laufzeit und die Ergebnisse des Genetischen Algorithmus positiv beeinflusst,
 wenn man den Merge-Wert möglichst hoch setzt. Kein anderer Faktor hat so einen positiven Einfluss auf das Ergebniss.
-(Bei höheren Populationsgrößen steigt zwar auch die Qualität, aber gleichzeitig auch die Laufzeit im Gegensatz zum Merge-Wert)
+(Bei höheren Populationsgrößen steigt zwar auch die Qualität, aber gleichzeitig auch die Laufzeit im Gegensatz zum Merge-Wert.)
 
 \begin{figure}
   \begin{subfigure}{\textwidth}
