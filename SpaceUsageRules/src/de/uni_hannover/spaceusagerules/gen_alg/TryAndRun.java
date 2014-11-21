@@ -17,11 +17,7 @@ import de.uni_hannover.spaceusagerules.algorithm.Start;
 import de.uni_hannover.spaceusagerules.core.ThreadScheduler;
 import de.uni_hannover.spaceusagerules.io.OSM;
 
-public class TryAndRun extends Main {
-
-	public TryAndRun(int p, int w, int mu, int me) {
-		super(p, w, mu, me);
-	}
+public class TryAndRun {
 
 	public static void main(String[] args) throws Exception, IOException {
 		OSM.useBuffer(true);
@@ -30,7 +26,7 @@ public class TryAndRun extends Main {
 		Start.imagePath = "images/";
 
 		File f;
-		f = new File("../Testdatensatz/Data.txt");
+		f = new File(Start.path + "Data.txt");
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		Map<String, Start> instances = new TreeMap<String, Start>();
 		String line;
@@ -56,11 +52,25 @@ public class TryAndRun extends Main {
 		}
 		br.close();
 
-		Main test = new Main(100, 100, 5, 3);
-		Main.prepare();
-		test.run();
-		test.writeout(); // */
 
+		f = new File(Start.path + "Overlap.txt");
+		if(f.exists() && f.canRead()) {
+			br = new BufferedReader(new FileReader(f));
+			while((line = br.readLine()) != null) {
+				String[] bla = line.split(",");
+				Start s  = instances.get(bla[0].trim());
+				if(s != null) 
+					s.setMinOverlap(Double.parseDouble(bla[1]));
+				}
+			br.close();
+		}
+
+		Population.GENERATOR = 8;
+		Main test = new Main(200, 100, 5, 3, 8);
+		Main.prepare();
+		startTime = System.currentTimeMillis();
+		test.run();
+		test.writeout();
 		DatasetEntry.allRules = new TreeSet<Rules>();
 		for (Genetic g : test.allGens) {
 			Population r = g.getBest();
@@ -72,5 +82,7 @@ public class TryAndRun extends Main {
 		ThreadScheduler.schedule(instances.values(), 1);
 
 	}
+	
+	static long startTime;
 
 }

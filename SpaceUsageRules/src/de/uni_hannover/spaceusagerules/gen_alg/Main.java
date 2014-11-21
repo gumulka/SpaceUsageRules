@@ -31,7 +31,8 @@ import de.uni_hannover.spaceusagerules.io.OSM;
  */
 public class Main extends Thread implements Comparable<Main>{
 
-	public static final int MAXTHREADS = 2;
+	public static final int MAXTHREADS = 1;
+	public static int DISSMISSED = 5;
 	public static final int CPUCORES = 4;
 	public static final double AUSLASTUNG = 1.0 - (1.0/(CPUCORES-MAXTHREADS));
 	
@@ -109,7 +110,7 @@ public class Main extends Thread implements Comparable<Main>{
 		possibla = new LinkedList<String>();
 		int kicked = 0;
 		for(Entry<String,Integer> e : possibilities.entrySet())
-			if(e.getValue()>1)
+			if(e.getValue()>DISSMISSED)
 				possibla.add(e.getKey());
 			else
 				kicked++;
@@ -124,6 +125,7 @@ public class Main extends Thread implements Comparable<Main>{
 			return;
 		long startTime = System.currentTimeMillis();
 		allGens = new ArrayList<Genetic>();
+		Population.GENERATOR = gen;
 		for(Entry<String,Set<String>> e: tags.entrySet())
 			try {
 				allGens.add(new Genetic(e.getKey(),e.getValue(), possibla,p,w,p/10,mu,me,p/5));
@@ -189,28 +191,31 @@ public class Main extends Thread implements Comparable<Main>{
 		 System.out.println(test);
 		 test.writeout(); // */
 		 
+		 Main.max = 90;
 		 
-		 
-		 int[] maxis = {128,128};
+		 int[] disses = {10,5,1};
+		 int[] generators =  {4,16,64};
 		 int[] popsizes = {100,350,500};
 		 int[] withouts = {100,350,500};
-		 int[] mutates =  {5,3};
+		 int[] mutates =  {1,3,5};
 		 int[] merges = {1,3,5};
-		 for(int m : maxis) {
+		 for(int m : disses) {
 			 Main best = null;
-			 Main.max = m;
+			 Main.DISSMISSED = m;
+			 System.out.println(m);
 			 Main.prepare();
 			 List<Main> mains = new LinkedList<Main>();
+			 for(int g: generators) 
 			 for(int p : popsizes) {
 				 for(int w: withouts) {
 					 for(int mu : mutates) {
 						 for(int me : merges) {
-							 mains.add(new Main(p,w,mu,me));
+							 mains.add(new Main(p,w,mu,me,g));
 						 }
 					 }
 				 }
 			 }
-			 ThreadScheduler.schedule(mains, AUSLASTUNG,2);
+			 ThreadScheduler.schedule(mains, AUSLASTUNG,3);
 			 for(Main test : mains)
 				 if(best == null || best.compareTo(test)>0)
 					 best = test;
@@ -220,18 +225,19 @@ public class Main extends Thread implements Comparable<Main>{
 		 } // */ 
 	}
 	
-	private int p,w,mu,me;
-	public Main(int p, int w, int mu, int me) {
+	private int p,w,mu,me,gen;
+	public Main(int p, int w, int mu, int me,int gen) {
 		this.p = p;
 		this.w = w;
 		this.mu = mu;
 		this.me = me;
+		this.gen = gen;
 	}
 
 	
 	public String toString() {
 		String ret = String.format("Fitness: %6d, Laufzeit: %d:%02d:%02d ",fitness, diff/3600, (diff/60)%60, diff%60);
-		ret += String.format("Pop: %d, Wi: %d, Mu: %d, Me: %d",p,w,mu,me);
+		ret += String.format("Pop: %d, Wi: %d, Mu: %d, Me: %d, Gen: %d",p,w,mu,me,gen);
 		return ret;
 	}
 	

@@ -14,6 +14,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 
+import de.uni_hannover.spaceusagerules.algorithm.Rules;
 import de.uni_hannover.spaceusagerules.core.Way;
 import de.uni_hannover.spaceusagerules.io.Image;
 import de.uni_hannover.spaceusagerules.io.KML;
@@ -94,7 +95,7 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 	/**
      * erzeugt die nächste generation, indem die alte sortiert und dann neue erzeugt werden.
      */
-  	private void nextGen() throws IOException {
+  	private void nextGen1() throws IOException {
 		Collections.sort(pops);
 		for(int i = 0; i<copyBest; i++) {
 			nextGen.add(pops.get(i));
@@ -103,11 +104,10 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 		for(int i = 0; i<merge; i++) {
 			int a = r.nextInt(mergeFrom);
 			int b = r.nextInt(mergeFrom);
-			nextGen.add(pops.get(a).recombine(pops.get(b)));
+			nextGen.add(Population.merge(pops.get(a),pops.get(b)));
 		}
 		for(int i = 0; i<mutate; i++) {
-			Population p = new Population(pops.get(i),possible);
-			nextGen.add(p);
+			nextGen.add(Population.mutate(pops.get(i),possible));
 		}
 		for(int i = 0; i<(popsize-merge-copyBest-mutate); i++) {
 			nextGen.add(new Population(possible));
@@ -119,6 +119,35 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 		nextGen = new ArrayList<Population>();
 	}
 	
+	/**
+     * erzeugt die nächste generation, indem die alte sortiert und dann neue erzeugt werden.
+     */
+  	private void nextGen2() throws IOException {
+		Collections.sort(pops);
+		for(int i = 0; i<copyBest; i++) {
+			nextGen.add(pops.get(i));
+		}
+		Random r = new Random();
+		for(int i = 0; i<merge; i++) {
+			int a = r.nextInt(mergeFrom);
+			int b = r.nextInt(mergeFrom);
+			nextGen.add(Population.merge2(pops.get(a),pops.get(b)));
+		}
+		for(int i = 0; i<mutate; i++) {
+			Population p = Population.mutate2(pops.get(i),possible);
+			nextGen.add(p);
+		}
+		for(int i = 0; i<(popsize-merge-copyBest-mutate); i++) {
+			nextGen.add(Population.generate2(pops.get(i),possible));
+		}
+		if(nextGen.size() != pops.size()) {
+			System.err.println("Unterschiedliche Längen!!!!");
+		}
+		pops = nextGen;
+		nextGen = new ArrayList<Population>();
+	}
+
+	static long f1=0,f2=0,g1=0,g2=0;
   	/**
      * die Methode zum durchlaufen des Genetischen algorithmus mit der Steuerung aus den statischen Variablen.
      */
@@ -135,24 +164,25 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 		int letzteOptimierung = 0;
 		int optimierungen = 0;
 		int rules = 0;
-		int threshold = 0;
 		int fitness;
-		while(true) {
-			if(kill)
-				break;
+		long current, old;
+		while(!kill) {
+			old = System.currentTimeMillis();
 			calcFitness();
+			current = System.currentTimeMillis();
 			try {
-				nextGen();
+				nextGen1();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			g1 += (System.currentTimeMillis()-current);
+			f1 += (current - old);
 			fitness = pops.get(0).getFitness();
 			if(oldFitness<fitness) {
 				oldFitness = fitness;
 				letzteVerbesserung = i;
 				verbesserungen++;
 				rules = pops.get(0).getNumberOfRules();
-				threshold = pops.get(0).getNumberOfThresholds();
 				optimierungen = 0;
 			}
 			else if(pops.get(0).getNumberOfRules()<rules){
@@ -160,8 +190,42 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 				optimierungen++;
 				letzteOptimierung = i;
 			}
-			else if(pops.get(0).getNumberOfThresholds()<threshold){
-				threshold = pops.get(0).getNumberOfThresholds();
+			if(i-letzteVerbesserung > withoutOtimization && i-letzteOptimierung > withoutOtimization)
+				break;
+			i++;
+		}
+//		System.out.println(suche + " -> " + pops.get(0));
+//		System.out.println(verbesserungen + " Verbesserungen (" + letzteVerbesserung + ") und " + optimierungen + " Optimierungen (" + letzteOptimierung + ") seitdem");
+
+		Population best = pops.get(0);
+		pops.clear();
+		for(int x = 0; x<popsize;x++) {
+			pops.add(best);
+		}
+		
+		i-=withoutOtimization;
+		rules = Integer.MAX_VALUE;
+		while(!kill) {
+			old = System.currentTimeMillis();
+			calcFitness();
+			current = System.currentTimeMillis();
+			try {
+				nextGen2();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			g2 += (System.currentTimeMillis()-current);
+			f2 += (current-old);
+			fitness = pops.get(0).getFitness();
+			if(oldFitness<fitness) {
+				oldFitness = fitness;
+				letzteVerbesserung = i;
+				verbesserungen++;
+				rules = pops.get(0).getNumberOfThresholds();
+				optimierungen = 0;
+			}
+			else if(pops.get(0).getNumberOfThresholds()<rules){
+				rules = pops.get(0).getNumberOfThresholds();
 				optimierungen++;
 				letzteOptimierung = i;
 			}
@@ -169,8 +233,15 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 				break;
 			i++;
 		}
-		System.out.println(i + suche + " -> " + pops.get(0));
-		System.out.println(verbesserungen + " Verbesserungen (" + letzteVerbesserung + ") und " + optimierungen + " Optimierungen (" + letzteOptimierung + ") seitdem");
+		long bla = (System.currentTimeMillis() - TryAndRun.startTime);
+		System.out.println("---------");
+		double part = 100.0/bla;
+//		System.out.printf("%2.1f %2.1f %.1f %.1f\n",part*f1,part*g1,part*f2,part*g2);
+		System.out.printf("%.1f %.1f %.1f\n",part*Population.cal, part*Population.inter, part*Population.over);
+		System.out.printf("%.1f %.1f %.1f\n",part*Rules.calcD,part*Rules.areas,part*Rules.thres);
+		System.out.printf("%.1f %.1f %.1f\n",part*Rules.dist,part*Rules.wei,part*Rules.tagAdd);
+//		System.out.println(suche + " -> " + pops.get(0));
+//		System.out.println(verbesserungen + " Verbesserungen (" + letzteVerbesserung + ") und " + optimierungen + " Optimierungen (" + letzteOptimierung + ") seitdem");
 	}
 
   	/**
@@ -191,7 +262,8 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 	 * Vergleich um die Gentischen Algorithmen nach ihrer geschätzten Laufzeit zu sortieren.
 	 */
 	public int compareTo(Genetic o) {
-		return o.truths.size() - this.truths.size();
+		// TODO wieder umdrehen.
+		return this.truths.size() - o.truths.size();
 	}
 	
 }

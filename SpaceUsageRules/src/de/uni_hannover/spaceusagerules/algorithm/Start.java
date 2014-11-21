@@ -85,7 +85,7 @@ public class Start extends DatasetEntry {
 	 * Sets the minimum overlap to reach so that no image is created.
 	 * @param overlap the overlap value
 	 */
-	private void setMinOverlap(double overlap) {
+	public void setMinOverlap(double overlap) {
 		this.minOverlap = overlap;
 	}
 	

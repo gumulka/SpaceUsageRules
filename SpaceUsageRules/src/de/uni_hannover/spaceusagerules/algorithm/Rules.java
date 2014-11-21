@@ -3,6 +3,8 @@ package de.uni_hannover.spaceusagerules.algorithm;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
@@ -91,6 +93,7 @@ public class Rules{
 		this.thresholds = thresholds;
 	}
 	
+	public static long dist=0,wei=0, thres = 0;
 
 	/**
 	 * calculates the weighted distance from a given coordinate to the given way. 
@@ -99,25 +102,35 @@ public class Rules{
 	 * @return the weighted distance by tag and rules
 	 */
 	public double calcDist(Point c, Way w) {
+		long a = System.currentTimeMillis();
 		double distance = w.distanceTo(c);
-		w.addOriginalTag("InMa_preDistance", "" + distance);
+		dist += (System.currentTimeMillis()-a);
+		a = System.currentTimeMillis();
+//		w.addOriginalTag("InMa_preDistance", "" + distance);
 		distance += OFFSET;
 		String combine;
+		long b = System.currentTimeMillis();
 		// iterate over all Tags in the OSM object
-		for(String s : w.getTags().keySet()) {
-			combine = s.trim() + " - " + w.getValue(s).trim();
+		Set<String> keySet = weights.keySet();
+		for(Entry<String,String> s : w.getTags().entrySet()) {
+			combine = s.getKey().trim() + " - " + s.getValue().trim();
+			
 			// check for key + value
-			if(weights.keySet().contains(combine)) {
+			if(keySet.contains(combine)) {
 				distance *= weights.get(combine);
 			}
+			
 			// and just key
-			if(weights.keySet().contains(s)) {
-				distance *= weights.get(s);
+			if(keySet.contains(s.getKey())) {
+				distance *= weights.get(s.getKey());
 			}
+			
 		}
+		wei += (System.currentTimeMillis()-b);
+		tagAdd += (b-a);
 		return distance;
 	}
-	
+	public static long tagAdd = 0;
 	/**
 	 * calculates the way with the nearest weighted distance to the given location.
 	 * @param ways a collection of ways to check.
@@ -132,21 +145,28 @@ public class Rules{
 			// we only look at areas at the moment, because we want to have a polygon, no polyline.
 			if(!w.isPolygon())
 				continue;
+			long b = System.currentTimeMillis();
 			d = calcDist(location, w);
+			long c = System.currentTimeMillis();
 			// this is used later in DataDrawer to print out the distance to the user.
-			w.addOriginalTag("InMa_Distance", "" + d);
+//			w.addOriginalTag("InMa_Distance", "" + d);
 			// get the Object with the lowest distance, or if equal, the smaller one.
 			if(d<distance || (d==distance && w.getArea() < best.getArea())) {
 				best = w;
 				distance = d;
 			}
+			areas += (System.currentTimeMillis() - c);
+			calcD += (c-b);
 		}
 		
+		long a = System.currentTimeMillis();
 		//check if any thresholds are exceeded and shrink if necessary
-		best = considerThresholds(best, location);
-		
+		best = considerThresholds2(best, location);
+		thres += (System.currentTimeMillis()-a);
 		return best;
 	}
+	
+	public static long calcD = 0, areas = 0;
 	
 	/**
 	 * Tests if any thresholds were exceeded and shrinks the geometry if necessary.
@@ -189,6 +209,53 @@ public class Rules{
 		
 		//intersect with regular neighborhood
 		Geometry neighborhood = Rules.createNgon(8, minimalRadius, location);
+		Geometry intersected = neighborhood.intersection(guessed);
+
+		Way output = new Way(intersected);
+		return output;
+	}
+	
+	/**
+	 * Tests if any thresholds were exceeded and shrinks the geometry if necessary.
+	 * From the set of all exceeded thresholds, the lowest radius is selected. Then the
+	 * polygon is intersected with a regular octagon. If no thresholds were exceeded the
+	 * geometry remains unchanged.
+	 * @param best contains the guessed polygon
+	 * @param location where it all takes place
+	 * @return either the same object or a new one with smaller size
+	 */
+	private Way considerThresholds2(Way best, Point location){
+		
+		Geometry guessed = best.getGeometry();
+		
+		double area = guessed.getArea();
+
+		double radius = Double.MAX_VALUE;
+		double d[];
+		String combine;
+		for(Entry<String,String> s : best.getTags().entrySet()) {
+			combine = s.getKey().trim() + " - " + s.getValue().trim();
+			// check for key + value
+			d = thresholds.get(combine);
+			if(d!=null) {
+				if(d[0]>area && d[1]<radius)
+					radius = d[1];
+			} else {
+			// and just key
+			d = thresholds.get(s.getKey());
+			if(d!=null) {
+				if(d[0]>area && d[1]<radius)
+					radius = d[1];
+			}
+			}
+		}
+
+		//if no threshold was exceeded, return the geometry unchanged
+		if(radius == Double.MAX_VALUE)
+			return best;
+		
+		//intersect with regular neighborhood
+		Geometry neighborhood = Rules.createNgon(8, radius, location);
 		Geometry intersected = neighborhood.intersection(guessed);
 
 		Way output = new Way(intersected);
