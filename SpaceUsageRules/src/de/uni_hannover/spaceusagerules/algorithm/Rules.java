@@ -33,7 +33,7 @@ public class Rules{
 	protected Map<String,Double> weights;
 	
 	/**
-	 * maps names of single SURs to pairs of threshold and radius
+	 * maps names of single OSM-tags to pairs of threshold and radius
 	 */
 	protected Map<String,double[]> thresholds;
 	
@@ -50,35 +50,6 @@ public class Rules{
 		this.restrictions = new TreeSet<String>();
 		this.weights = new TreeMap<String,Double>();
 		this.thresholds = new TreeMap<String,double[]>();
-	}
-	
-	/**
-	 * parses a line into a valid representation of Rules.
-	 * The input string must have the following form:<BR>
-	 * [SUR,SUR,...] -> [rules how to weight, ...] -> [threshold:42] -> [radius:10]
-	 * @param line a string describing a line of rules.
-	 * \latexonly as defined in \fref{sec:Eingabedaten_Wir} \endlatexonly
-	 */
-	public Rules(String line) {
-		this();
-		// FIXME auf xml umstellen
-		//first block contains the list of SURs
-		int blockstart = line.indexOf('['); //begin of the block incl. '['
-		int blockend = line.indexOf(']'); //end of the block excl. ']'
-		String verbote = line.substring(blockstart+1, blockend);
-		String[] v = verbote.split(",");
-		for(String s : v)
-			restrictions.add(s.trim());
-		
-		//second block contains the list of weighing rules
-		blockstart = line.indexOf('[', blockend+1);
-		blockend = line.indexOf(']', blockstart);
-		String rules = line.substring(blockstart+1, blockend);
-		for(String s : rules.split(",")) {
-			String[] bla = s.split("->");
-			weights.put(bla[0].trim(), Double.parseDouble(bla[1]));
-		}
-		
 	}
 	
 	/**
@@ -272,6 +243,14 @@ public class Rules{
 	 */
 	public static Geometry createNgon(int n, double radius, Point center){
 		
+		if(n<3){
+			return null;
+		}
+		
+		if(radius == Double.POSITIVE_INFINITY || radius==Double.NEGATIVE_INFINITY){
+			return null;
+		}
+		
 		Coordinate[] cList = new Coordinate[n+1];
 		
 		Coordinate c = center.getCoordinate();
@@ -326,6 +305,18 @@ public class Rules{
 	 */
 	public String toString() {
 		return restrictions.toString() + " -> " + weights.toString() + " -> " + thresholds.toString();
+	}
+
+	public Collection<String> getRestrictions() {
+		return restrictions;
+	}
+
+	public Map<String, Double> getWeights() {
+		return weights;
+	}
+
+	public Map<String, double[]> getThresholds() {
+		return thresholds;
 	}
 
 }
