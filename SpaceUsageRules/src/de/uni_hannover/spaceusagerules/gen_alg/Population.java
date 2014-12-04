@@ -234,7 +234,7 @@ public class Population extends Rules implements Comparable<Population>{
 			b = System.currentTimeMillis();
 			double overlapArea = best.getGeometry().getEnvelope().intersection(truths.get(i).getEnvelope()).getArea();
 			c = System.currentTimeMillis();
-			overlapArea = Math.min(overlapArea/best.getArea(), overlapArea/truths.get(i).getArea());
+			overlapArea = Math.min(overlapArea/best.getGeometry().getEnvelope().getArea(), overlapArea/truths.get(i).getEnvelope().getArea());
 			fitness += maxFitness * (overlapArea);
 			over += (System.currentTimeMillis()-c);
 			inter += (c-b);

@@ -115,7 +115,7 @@ public class DatasetEntry extends Thread{
 	public void run() {
 		
 		// compute the best ruleset as defined by the greatest overlap value
-		float minRulesOverlap = 0.1f;
+		float minRulesOverlap = 0.0f;
 		for(Rules r : allRules) {
 			float o = r.overlap(restrictions);
 			if(o>minRulesOverlap) {
@@ -134,6 +134,7 @@ public class DatasetEntry extends Thread{
 		ways = OSM.getObjectList(location.getCoordinate());
 		guess = usedRules.calculateBest(ways, location);
 		ways.remove(guess);
+		guess.addOriginalTag("area", "" + guess.getArea());
 
 		
 	}

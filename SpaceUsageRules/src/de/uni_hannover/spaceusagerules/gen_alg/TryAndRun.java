@@ -65,10 +65,9 @@ public class TryAndRun {
 			br.close();
 		}
 
-		Population.GENERATOR = 8;
-		Main test = new Main(200, 100, 5, 3, 8);
+		Population.GENERATOR = 16;
+		Main test = new Main(200, 100, 5, 3, 10);
 		Main.prepare();
-		startTime = System.currentTimeMillis();
 		test.run();
 		test.writeout();
 		DatasetEntry.allRules = new TreeSet<Rules>();
@@ -78,11 +77,8 @@ public class TryAndRun {
 				r.addRestriction(s.trim());
 			DatasetEntry.allRules.add(g.getBest());
 		}
-
 		ThreadScheduler.schedule(instances.values(), 1);
 
 	}
 	
-	static long startTime;
-
 }

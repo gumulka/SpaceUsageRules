@@ -176,7 +176,7 @@ public class Start extends DatasetEntry {
 			 	"\t\t  Die Bilddateien (Wird von -i überschrieben)");
 		System.out.println("  -p  --path      Pfad zu einem Ordner auf dem Dateisystem, in welchem die folgenden Dateien liegen:\n" +
 		 		"\t\t  Data.txt (wird von -d überschrieben)\n" +
-		 		"\t\t  Rules.txt (wird von -r überschrieben)\n" +
+		 		"\t\t  Rules.xml (wird von -r überschrieben)\n" +
 		 		"\t\t  Overlap.txt (Optional, wird von -u überschrieben)");
 		System.out.println("  -i  --image     Gibt an, dass Bilder erstellt werden sollen und ein optinales Ausgabeverzeichnis.");
 		System.out.println("  -l  --height    Die Höhe des zu erstellenden Bildes (" + imageHeight + " ist default.)");
@@ -281,6 +281,11 @@ public class Start extends DatasetEntry {
 			f = new File(path + "Data.txt");
 		else
 			f = new File(data);
+		if(!f.exists()) {
+			System.err.println("Rules-Datei existiert nicht.");
+			return;
+		}
+			
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		Map<String,Start> instances = new TreeMap<String,Start>();
 		String line;
@@ -308,7 +313,7 @@ public class Start extends DatasetEntry {
 		
 		// read the ruleset from file and parse from XML format
 		if(rules==null)
-			f = new File(path + "Rules.txt");
+			f = new File(path + "Rules.xml");
 		else
 			f= new File(rules);
 		//reading and parsing is done in RulesetIO

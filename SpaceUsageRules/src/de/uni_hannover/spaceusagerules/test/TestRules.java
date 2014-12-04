@@ -35,7 +35,7 @@ public class TestRules {
 		Rules oneRule = new Rules(one,trash,null);
 		
 		// Test for empty ruleSet
-		assertEquals(emptyRules.overlap(empty),0.1f,0.0f);
+		assertEquals(emptyRules.overlap(empty),1.0f,0.0f);
 		assertEquals(emptyRules.overlap(two),0.1f,0);
 		
 		// Test against another rule

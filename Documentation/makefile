@@ -24,16 +24,14 @@ main.pdf: clean main.tex doku graphics
 	makeindex main.idx
 	pdflatex main
 
-graphics: LaufzeitGen90Q.png DataDrawerZoom.png
+graphics: images/Laufzeit_10_16_Q.png images/DataDrawerZoom.png
 
-DataDrawerZoom.png:
-	convert DataDrawer.png -crop 1000x700+1450+700 DataDrawerZoom.png
+images/DataDrawerZoom.png:
+	convert images/DataDrawer.png -crop 1000x700+1450+700 images/DataDrawerZoom.png
 
-LaufzeitGen90Q.png:
-	gnuplot -e "load 'Laufzeit.plot'"
-	awk '$$12 ~ 5 && $$10 < 6 {print $$0}' LaufzeitGen90.txt > tmp.txt
-	gnuplot -e "load 'LaufzeitMerge5.plot'"
-	rm tmp.txt
+images/Laufzeit_10_16_Q.png:
+	./Laufzeit.plot
+#	gnuplot -e "load 'LaufzeitMerge5.plot'"
 
 show:
 	evince main.pdf &
@@ -43,5 +41,5 @@ clean:
 
 clean_all: clean
 	rm -f -r doc
-	rm -f ./Laufzeit*.png
-	rm -f ./class* ./dir* ./doxyref.tex 
+	rm -f ./images/Laufzeit*.png
+	rm -f ./class* ./dir* ./doxyref.tex

@@ -7,14 +7,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 
-import de.uni_hannover.spaceusagerules.algorithm.Rules;
 import de.uni_hannover.spaceusagerules.core.Way;
 import de.uni_hannover.spaceusagerules.io.Image;
 import de.uni_hannover.spaceusagerules.io.KML;
@@ -96,7 +97,6 @@ public class Genetic extends Thread implements Comparable<Genetic>{
      * erzeugt die nächste generation, indem die alte sortiert und dann neue erzeugt werden.
      */
   	private void nextGen1() throws IOException {
-		Collections.sort(pops);
 		for(int i = 0; i<copyBest; i++) {
 			nextGen.add(pops.get(i));
 		}
@@ -123,7 +123,6 @@ public class Genetic extends Thread implements Comparable<Genetic>{
      * erzeugt die nächste generation, indem die alte sortiert und dann neue erzeugt werden.
      */
   	private void nextGen2() throws IOException {
-		Collections.sort(pops);
 		for(int i = 0; i<copyBest; i++) {
 			nextGen.add(pops.get(i));
 		}
@@ -146,102 +145,85 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 		pops = nextGen;
 		nextGen = new ArrayList<Population>();
 	}
-
-	static long f1=0,f2=0,g1=0,g2=0;
-  	/**
-     * die Methode zum durchlaufen des Genetischen algorithmus mit der Steuerung aus den statischen Variablen.
-     */
-	@SuppressWarnings("unused")
-	public void run() {
-		if(mutate + merge + copyBest > popsize) {
-//			System.err.println("Population ist going to grow. Aborting.");
-			return; 
-		}
-		int i = 0;
-		int oldFitness = -1;
-		int verbesserungen = -1;
+  	
+  	public int roundsFind, roundsPolygon;
+  	
+  	private void krams(boolean first) {
+  		int i = 0;
+  		int fitness = 0;
+  		int oldFitness = 0;
 		int letzteVerbesserung = 0;
-		int letzteOptimierung = 0;
-		int optimierungen = 0;
-		int rules = 0;
-		int fitness;
-		long current, old;
 		while(!kill) {
-			old = System.currentTimeMillis();
 			calcFitness();
-			current = System.currentTimeMillis();
+			Collections.sort(pops);
 			try {
-				nextGen1();
+				if(first)
+					nextGen1();
+				else
+					nextGen2();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			g1 += (System.currentTimeMillis()-current);
-			f1 += (current - old);
 			fitness = pops.get(0).getFitness();
 			if(oldFitness<fitness) {
 				oldFitness = fitness;
 				letzteVerbesserung = i;
-				verbesserungen++;
-				rules = pops.get(0).getNumberOfRules();
-				optimierungen = 0;
 			}
-			else if(pops.get(0).getNumberOfRules()<rules){
-				rules = pops.get(0).getNumberOfRules();
-				optimierungen++;
-				letzteOptimierung = i;
-			}
-			if(i-letzteVerbesserung > withoutOtimization && i-letzteOptimierung > withoutOtimization)
+			if(i-letzteVerbesserung > withoutOtimization)
 				break;
 			i++;
 		}
-//		System.out.println(suche + " -> " + pops.get(0));
-//		System.out.println(verbesserungen + " Verbesserungen (" + letzteVerbesserung + ") und " + optimierungen + " Optimierungen (" + letzteOptimierung + ") seitdem");
+  		if(first)
+  			roundsFind = i;
+  		else
+  			roundsPolygon = i;
+  	}
+  	
+  	
+  	public void removeUnused() {
+  		Population p = pops.get(0);
+  		pops.clear();
+  		pops.add(p);
+  		int fitness = p.getFitness();
+  		Map<String,Double> weights = p.getWeights();
+  		Set<String> bla = new TreeSet<String>();
+  		for(String s : weights.keySet()) {
+  	  		bla.add(s);
+  		}
+  		for(String s : bla) {
+  	  		Double d = weights.remove(s);
+  			calcFitness();
+  			if(p.getFitness()!=fitness)
+  				weights.put(s, d);
+  		}
+  		Map<String,double[]> thres = p.getThresholds();
+  		bla.clear();
+  		for(String s : thres.keySet())
+  			bla.add(s);
+  		for(String s : bla) {
+  			double[] d = thres.remove(s);
+  			calcFitness();
+  			if(p.getFitness()!=fitness)
+  				thres.put(s, d);
+  		}
+  	}
 
+  	/**
+     * die Methode zum durchlaufen des Genetischen algorithmus mit der Steuerung aus den statischen Variablen.
+     */
+	public void run() {
+		if(mutate + merge + copyBest > popsize) {
+			return; 
+		}
+		
+		krams(true);
 		Population best = pops.get(0);
 		pops.clear();
 		for(int x = 0; x<popsize;x++) {
 			pops.add(best);
 		}
-		
-		i-=withoutOtimization;
-		rules = Integer.MAX_VALUE;
-		while(!kill) {
-			old = System.currentTimeMillis();
-			calcFitness();
-			current = System.currentTimeMillis();
-			try {
-				nextGen2();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			g2 += (System.currentTimeMillis()-current);
-			f2 += (current-old);
-			fitness = pops.get(0).getFitness();
-			if(oldFitness<fitness) {
-				oldFitness = fitness;
-				letzteVerbesserung = i;
-				verbesserungen++;
-				rules = pops.get(0).getNumberOfThresholds();
-				optimierungen = 0;
-			}
-			else if(pops.get(0).getNumberOfThresholds()<rules){
-				rules = pops.get(0).getNumberOfThresholds();
-				optimierungen++;
-				letzteOptimierung = i;
-			}
-			if(i-letzteVerbesserung > withoutOtimization && i-letzteOptimierung > withoutOtimization)
-				break;
-			i++;
-		}
-		long bla = (System.currentTimeMillis() - TryAndRun.startTime);
-		System.out.println("---------");
-		double part = 100.0/bla;
-//		System.out.printf("%2.1f %2.1f %.1f %.1f\n",part*f1,part*g1,part*f2,part*g2);
-		System.out.printf("%.1f %.1f %.1f\n",part*Population.cal, part*Population.inter, part*Population.over);
-		System.out.printf("%.1f %.1f %.1f\n",part*Rules.calcD,part*Rules.areas,part*Rules.thres);
-		System.out.printf("%.1f %.1f %.1f\n",part*Rules.dist,part*Rules.wei,part*Rules.tagAdd);
-//		System.out.println(suche + " -> " + pops.get(0));
-//		System.out.println(verbesserungen + " Verbesserungen (" + letzteVerbesserung + ") und " + optimierungen + " Optimierungen (" + letzteOptimierung + ") seitdem");
+		krams(false);
+		removeUnused();
 	}
 
   	/**
@@ -262,8 +244,7 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 	 * Vergleich um die Gentischen Algorithmen nach ihrer geschätzten Laufzeit zu sortieren.
 	 */
 	public int compareTo(Genetic o) {
-		// TODO wieder umdrehen.
-		return this.truths.size() - o.truths.size();
+		return o.truths.size() - this.truths.size();
 	}
 	
 }
