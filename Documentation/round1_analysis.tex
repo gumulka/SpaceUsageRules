@@ -1,0 +1,55 @@
+\section{Analyse}
+Gestartet wird das Programm mit \methodname{Start.main(String[])}. Die Kernmethode, die die für diesen Wettbewerb interessante Arbeit macht, ist 
+\methodname{Rules.calculateBest(Collection,Point)}.
+\subsection{Zeitkomplexität}
+Die Laufzeit der Methode calculateBest ist im wesentlichen Abhängig von der Anzahl an Polygonen, die heruntergeladen werden.
+Von dieser Eingabe abhängig ergibt sich eine lineare Laufzeit. Denn jedes Polygon wird einmal und unabhängig von den anderen bewertet.\\
+Daneben gibt es noch andere Eingabeparameter, deren größe variiert. Zum Beispiel hat die Anzahl der Space Usage Rules, die in einem Bereich 
+gelten soll, einfluss auf die Laufzeit. Die Anzahl der Ecken eines Polygons beeinflusst die Komplexität ebenso. Solche Faktoren verändern
+Laufzeit aber nicht so stark.\\
+Im folgenden eine tabellarische Übersicht über wichtige Methoden und deren Zeitkomplexität.\\
+\begin{center}
+\begin{tabular}{l | l | l}
+Methode  & Eingabe & Laufzeit\\
+\hline
+\methodname{calculateBest()} & n=Anz. der Ways & n+O(\methodname{considerThresholds()}) \\
+\methodname{considerThresholds()} & m=Anz. der SUR  & m+O(m)+O(\methodname{getArea()})+O(\methodname{createNgon()})+O(\methodname{intersection()})\\
+\methodname{createNgon()} & & konstante Zeit, da die Methode immer exakt gleich ausgeführt wird $\to$ O(1)\\
+\methodname{getArea()} & n=Anz. der Ecken & keine Angaben gefunden\\
+\methodname{intersection()} & n=Anz. der Ecken & keine Angaben gefunden
+\end{tabular}
+\end{center}
+Dabei wurde das Auslesen der Rules und das Herunterladen der Daten nicht beachtet.
+\subsection{Metriken}
+Die folgende Tablle listet ein paar Metriken auf, die unser Projekt beschreiben.
+\begin{center}
+\begin{tabular}{l | l}
+ Metrik & Wert \\
+ \hline
+ McCabe Cyclomatic Complexity & 30\\
+ Number of Classes & 16\\
+ Number of Packages & 5\\
+ Depth of Inheritance Tree (max.) & 3
+\end{tabular}
+
+\end{center}
+
+
+
+% \subsubsection{Genetischer Algorithmus}
+% main(): -> 2*3*3*2*3*Main() + O(schedule) + 2*3*3*2*3*O(compareTo) + O(writeout)\\
+% compareTo() -> 2*O(getDiff())\\
+% getDiff() -> O(1)\\
+% writeout(): Eingabe n=Größe der Population -> O(n)\\
+% schedule(): Eingabe n=Anz. an Threads (=Main Objekte) -> n*O(Main.run())\\
+% Main.run(): Eingabe n=Anz. der Einträge in Main.tags -> n*O(new Genetic()) + O(Collections.sort(n)) + n*O(Genetic.run()) + n\\
+% new Genetic() -> 13 + popsize*O(new Population()) + IDs.size*(3+O(Image.readCoordinates())+O(KML.loadML())+O(OSM.getObjectList()))\\
+% Collections.sort(): Eingabe n=Anz. der Elemnte -> O(n log n)\\
+% Genetic.run()\\
+% popsize\\
+% new Population()\\
+% IDs.size\\
+% Image.readCoordinates\\
+% KML.loadKML\\
+% OSM.getObjectList\\
+% Das wird mir zu blöd. Ich such nach nem Plugin oder so.
