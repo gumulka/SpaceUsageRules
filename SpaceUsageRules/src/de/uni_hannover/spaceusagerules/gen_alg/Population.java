@@ -22,8 +22,12 @@ public class Population extends Rules implements Comparable<Population>{
 	/** the maximum reachable fitness-value. the higher the better the results, to high an it might cause an overflow. */
 	public static final int maxFitness = 10000;
 	
+	public static int GENERATOR = 8;
+	
 	/** the fitness value of this population	 */
 	private int fitness = 0;
+	
+	public static long cal=0,inter=0;
 	
 	/**
 	 * return the actual fitness value
@@ -33,37 +37,54 @@ public class Population extends Rules implements Comparable<Population>{
 		return fitness;
 	}
 	
+	public Population(Population p) {
+		this.weights = p.weights;
+		this.restrictions = p.restrictions;
+		this.thresholds = p.thresholds;
+	}
+	
+	
 	/**
 	 * Initializes a population with another population, by mutating the parameter.
 	 * @param p another Population to mutate
 	 * @param possible a list of all possible tags.
 	 */
-	public Population(Population p, Collection<String> possible) {
-		weights = new TreeMap<String,Double>();
-		weights.putAll(p.weights);
+	public static Population mutate(Population p, Collection<String> possible) {
+		Population ret = new Population(p);
+		ret.weights = new TreeMap<String,Double>();
+		ret.weights.putAll(p.weights);
 		Random r = new Random();
 		for(String line : possible) {
-			if(r.nextBoolean() && r.nextBoolean() && r.nextBoolean()) {
+			if(r.nextInt(GENERATOR) == 0) {
 				double d = r.nextDouble();
 				d *=2;
-				if(weights.keySet().contains(line) && r.nextBoolean())
-					weights.remove(line);
+				if(ret.weights.keySet().contains(line) && r.nextBoolean())
+					ret.weights.remove(line);
 				else
-					weights.put(line, d);
+					ret.weights.put(line, d);
 			}
 		}
+		return ret;
+	}
+
+	public static Population mutate2(Population p, Collection<String> possible) {
+		Population ret = new Population(p);
+		Random r = new Random();
 		for(String line : possible) {
-			if(r.nextBoolean() && r.nextBoolean() && r.nextBoolean()) {
+			if(r.nextInt(GENERATOR) == 0) {
 				double d [] = new double[2];
 				d[0] = r.nextDouble()/1024;
 				d[1] = r.nextDouble()/1024;
-				if(thresholds.keySet().contains(line) && r.nextBoolean())
-					thresholds.remove(line);
+				if(ret.thresholds.keySet().contains(line) && r.nextBoolean())
+					ret.thresholds.remove(line);
 				else
-					thresholds.put(line, d);
+					ret.thresholds.put(line, d);
 			}
 		}
+		return ret;
 	}
+
+	
 	
 	/**
 	 * Initializes a population an puts random tags and values for the rules.
@@ -73,7 +94,7 @@ public class Population extends Rules implements Comparable<Population>{
 		super();
 		Random r = new Random();
 		for(String p : possible) {
-			if(r.nextBoolean() && r.nextBoolean() && r.nextBoolean()) {
+			if(r.nextInt(GENERATOR) == 0) {
 				double d [] = new double[2];
 				d[0] = r.nextDouble()/1024;
 				d[1] = r.nextDouble()/1024;
@@ -81,12 +102,31 @@ public class Population extends Rules implements Comparable<Population>{
 			}
 		}
 		for(String p : possible) {
-			if(r.nextBoolean() && r.nextBoolean() && r.nextBoolean()) {
+			if(r.nextInt(GENERATOR) == 0) {
 				double d = r.nextDouble();
 				d *=2;
 				weights.put(p, d);
 			}
 		}
+	}
+	
+	/**
+	 * Initializes a population an puts random tags and values for the rules.
+	 * @param possible a list of all possible tags.
+	 */
+	public static Population generate2(Population q,Collection<String> possible) {
+		Population ret = new Population(q);
+		Random r = new Random();
+		ret.thresholds = new TreeMap<String,double[]>();
+		for(String p : possible) {
+			if(r.nextInt(GENERATOR) == 0) {
+				double d [] = new double[2];
+				d[0] = r.nextDouble()/1024;
+				d[1] = r.nextDouble()/1024;
+				ret.thresholds.put(p, d);
+			}
+		}
+		return ret;
 	}
 	
 	public void addRestriction(String res) {
@@ -119,10 +159,10 @@ public class Population extends Rules implements Comparable<Population>{
 	 * @param p the other Population
 	 * @return a new Population as randomly merged.
 	 */
-	public Population recombine(Population p) {
+	public static Population merge(Population p, Population q) {
 		Random r = new Random();
 		Population n = new Population();
-		for(Entry<String,Double> e : weights.entrySet()) {
+		for(Entry<String,Double> e : q.weights.entrySet()) {
 			if(r.nextBoolean())
 				n.addEntry(e);
 		}
@@ -136,9 +176,20 @@ public class Population extends Rules implements Comparable<Population>{
 				n.addEntry(e);
 			}
 		}
-		for(Entry<String,Double> e : weights.entrySet()) {
+		return n;
+	}
+	
+	/**
+	 * combines this Population with another to form a new randomly merged population.
+	 * @param p the other Population
+	 * @return a new Population as randomly merged.
+	 */
+	public static Population merge2(Population p, Population q) {
+		Random r = new Random();
+		Population n = new Population();
+		for(Entry<String,double[]> e : q.thresholds.entrySet()) {
 			if(r.nextBoolean())
-				n.addEntry(e);
+				n.thresholds.put(e.getKey(), e.getValue());
 		}
 		double x[] = new double[2];
 		for(Entry<String,double[]> e : p.thresholds.entrySet()) {
@@ -175,15 +226,24 @@ public class Population extends Rules implements Comparable<Population>{
 	public void calcFitness(List<Geometry> truths, List<Collection<Way>> possiblities, List<Point> locations) {
 		Way best = null;
 		fitness = 0;
+		long a,b,c;
 		for(int i = 0; i<truths.size(); i++) {
 			Point l = locations.get(i);
+			a = System.currentTimeMillis();
 			best = calculateBest(possiblities.get(i),l);
-			double overlapArea = best.getGeometry().intersection(truths.get(i)).getArea();
-			overlapArea = Math.min(overlapArea/best.getArea(), overlapArea/truths.get(i).getArea());
+			b = System.currentTimeMillis();
+			double overlapArea = best.getGeometry().getEnvelope().intersection(truths.get(i).getEnvelope()).getArea();
+			c = System.currentTimeMillis();
+			overlapArea = Math.min(overlapArea/best.getGeometry().getEnvelope().getArea(), overlapArea/truths.get(i).getEnvelope().getArea());
 			fitness += maxFitness * (overlapArea);
+			over += (System.currentTimeMillis()-c);
+			inter += (c-b);
+			cal += (b-a);
 		}
 		fitness /= truths.size();
 	}
+	static long over = 0;
+	
 	
 	/**
 	 * Returns the number of rules used by this population

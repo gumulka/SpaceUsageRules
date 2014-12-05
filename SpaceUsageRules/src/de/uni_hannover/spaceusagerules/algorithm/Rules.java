@@ -1,11 +1,11 @@
 package de.uni_hannover.spaceusagerules.algorithm;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.Vector;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -62,7 +62,6 @@ public class Rules{
 		this.thresholds = thresholds;
 	}
 	
-
 	/**
 	 * calculates the weighted distance from a given coordinate to the given way. 
 	 * @param c the coordinate to calculate the distance from
@@ -75,20 +74,24 @@ public class Rules{
 		distance += OFFSET;
 		String combine;
 		// iterate over all Tags in the OSM object
-		for(String s : w.getTags().keySet()) {
-			combine = s.trim() + " - " + w.getValue(s).trim();
+		Set<String> keySet = weights.keySet();
+		for(Entry<String,String> s : w.getTags().entrySet()) {
+			combine = s.getKey().trim() + " - " + s.getValue().trim();
+			
 			// check for key + value
-			if(weights.keySet().contains(combine)) {
+			if(keySet.contains(combine)) {
 				distance *= weights.get(combine);
 			}
+			
 			// and just key
-			if(weights.keySet().contains(s)) {
-				distance *= weights.get(s);
+			if(keySet.contains(s.getKey())) {
+				distance *= weights.get(s.getKey());
 			}
+			
 		}
 		return distance;
 	}
-	
+
 	/**
 	 * calculates the way with the nearest weighted distance to the given location.
 	 * @param ways a collection of ways to check.
@@ -105,7 +108,7 @@ public class Rules{
 				continue;
 			d = calcDist(location, w);
 			// this is used later in DataDrawer to print out the distance to the user.
-			w.addOriginalTag("InMa_Distance", "" + d);
+//			w.addOriginalTag("InMa_Distance", "" + d);
 			// get the Object with the lowest distance, or if equal, the smaller one.
 			if(d<distance || (d==distance && w.getArea() < best.getArea())) {
 				best = w;
@@ -114,11 +117,10 @@ public class Rules{
 		}
 		
 		//check if any thresholds are exceeded and shrink if necessary
-		best = considerThresholds(best, location);
-		
+		best = considerThresholds2(best, location);
 		return best;
 	}
-	
+		
 	/**
 	 * Tests if any thresholds were exceeded and shrinks the geometry if necessary.
 	 * From the set of all exceeded thresholds, the lowest radius is selected. Then the
@@ -128,38 +130,37 @@ public class Rules{
 	 * @param location where it all takes place
 	 * @return either the same object or a new one with smaller size
 	 */
-	private Way considerThresholds(Way best, Point location){
+	private Way considerThresholds2(Way best, Point location){
 		
 		Geometry guessed = best.getGeometry();
 		
 		double area = guessed.getArea();
-		
-		double thr;
-		List<String> consider = new Vector<String>();
-		//iterate over all given SURs
-		for(String sur : thresholds.keySet()){
-			thr = thresholds.get(sur)[0];
-			//if the area is greater than a threshold, keep that SUR in mind
-			if(thr < area )
-				consider.add(sur);
-		}
-		
-		//if no threshold was exceeded, return the geometry unchanged
-		if(consider.isEmpty())
-			return best;
-		
-		//search for the minimal radius of those SURs, whose thresholds were exceeded
-		double minimalRadius = Double.MAX_VALUE;
-		for(String sur : consider){
-			//thr is now a radius
-			thr = thresholds.get(sur)[1];
-			if(thr < minimalRadius){
-				minimalRadius = thr;
+
+		double radius = Double.MAX_VALUE;
+		double d[];
+		String combine;
+		for(Entry<String,String> s : best.getTags().entrySet()) {
+			combine = s.getKey().trim() + " - " + s.getValue().trim();
+			// check for key + value
+			d = thresholds.get(combine);
+			if(d!=null) {
+				if(d[0]<area && d[1]<radius)
+					radius = d[1];
+			} else {
+				// and just key
+				d = thresholds.get(s.getKey());
+				if(d!=null) {
+					if(d[0]<area && d[1]<radius)
+						radius = d[1];
+				}
 			}
 		}
-		
+
+		//if no threshold was exceeded, return the geometry unchanged
+		if(radius == Double.MAX_VALUE)
+			return best;
 		//intersect with regular neighborhood
-		Geometry neighborhood = Rules.createNgon(8, minimalRadius, location);
+		Geometry neighborhood = Rules.createNgon(8, radius, location);
 		Geometry intersected = neighborhood.intersection(guessed);
 
 		Way output = new Way(intersected);
@@ -215,6 +216,8 @@ public class Rules{
 	 * @return a value between 0 and 1, defining the overlap or 0.1 if this Rules has no restrictions.
 	 */
 	public float overlap(Collection<String> v) {
+		if (restrictions.size()==0 && v.size()==0)
+			return 1.0f;
 		if(restrictions.size()==0)
 			return 0.1f;
 		if(v.size()==0)
@@ -237,7 +240,11 @@ public class Rules{
 	 * \latexonly as defined in \fref{sec:Eingabedaten_Wir} \endlatexonly
 	 */
 	public String toString() {
-		return restrictions.toString() + " -> " + weights.toString() + " -> " + thresholds.toString();
+		String ret = restrictions.toString() + " -> " + weights.toString() + " -> {";
+		for(Entry<String,double[]> e : thresholds.entrySet()) {
+			ret += e.getKey() + "=" + e.getValue()[0] + "," + e.getValue()[1] + ", ";
+		}
+		return ret;
 	}
 
 	public Collection<String> getRestrictions() {

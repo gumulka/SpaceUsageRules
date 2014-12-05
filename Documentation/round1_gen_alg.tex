@@ -30,21 +30,33 @@ Nachdem alle Algorithmen durchgelaufen sind, werden die Optimalen eingesammelt u
 \subsection{Fitnessfunktion}
 TODO
 
-
+\subsection[Laufzeitanalyse]{Laufzeitanalyse\protect\footnotemark}
+\footnotetext{Fehlende Angaben zu 100\% durch kleine Funktionsaufrufe}
+\begin{itemize}
+  \item calculate fitness 54\%
+  \begin{itemize}
+    \item calculate the weighted distance 33\%
+    \begin{itemize}
+      \item calculate the distance 16\%
+      \item apply our weights 14\%
+    \end{itemize}
+    \item consider a threshold value 18\%
+  \end{itemize}
+  \item generate next generation 39\%
+\end{itemize}
 
 \subsection[Evaluation]{Evaluation\protect\footnotemark}
-\footnotetext{Es wurden nur die einfachen Datensätze ausgewertet.
-Alle Durchläufe fanden auf dem selben Rechner statt (Core i5-3570K - 16GB RAM)}
+\footnotetext{Alle Durchläufe fanden mit einem Thread auf dem selben Rechner statt (Core i5-3570K - 16GB RAM)}
 \label{sec:Evaluation_genAlg}
 
 \begin{figure}
   \begin{subfigure}{\textwidth}
-  \includegraphics[width=\textwidth]{LaufzeitGen90Q.png}
+  \includegraphics[width=\textwidth]{Laufzeit-10-16-Q.png}
   \caption{Qualität}
   \end{subfigure}
 
   \begin{subfigure}{\textwidth}
-  \includegraphics[width=16cm]{LaufzeitGen90T.png}
+  \includegraphics[width=16cm]{Laufzeit-10-16-T.png}
   \caption{Laufzeit}
   \end{subfigure}
 \caption{in Abhängigkeit verschiedener Paramter.}
@@ -57,13 +69,13 @@ wenn man den Merge-Wert möglichst hoch setzt. Kein anderer Faktor hat so einen 
 
 \begin{figure}
   \begin{subfigure}{\textwidth}
-  \includegraphics[width=\textwidth]{LaufzeitMerge5Q.png}
+  \includegraphics[width=\textwidth]{Laufzeit-10-16-Q-5.png}
   \caption{Qualität}
   \label{fig:QualitätMerge5}
   \end{subfigure}
 
   \begin{subfigure}{\textwidth}
-  \includegraphics[width=\textwidth]{LaufzeitMerge5T.png}
+  \includegraphics[width=16cm]{Laufzeit-10-16-T-5.png}
   \caption{Laufzeit}
   \label{fig:LaufzeitMerge5}
   \end{subfigure}

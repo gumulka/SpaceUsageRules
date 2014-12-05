@@ -7,8 +7,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -94,8 +96,7 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 	/**
      * erzeugt die nächste generation, indem die alte sortiert und dann neue erzeugt werden.
      */
-  	private void nextGen() throws IOException {
-		Collections.sort(pops);
+  	private void nextGen1() throws IOException {
 		for(int i = 0; i<copyBest; i++) {
 			nextGen.add(pops.get(i));
 		}
@@ -103,11 +104,10 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 		for(int i = 0; i<merge; i++) {
 			int a = r.nextInt(mergeFrom);
 			int b = r.nextInt(mergeFrom);
-			nextGen.add(pops.get(a).recombine(pops.get(b)));
+			nextGen.add(Population.merge(pops.get(a),pops.get(b)));
 		}
 		for(int i = 0; i<mutate; i++) {
-			Population p = new Population(pops.get(i),possible);
-			nextGen.add(p);
+			nextGen.add(Population.mutate(pops.get(i),possible));
 		}
 		for(int i = 0; i<(popsize-merge-copyBest-mutate); i++) {
 			nextGen.add(new Population(possible));
@@ -119,30 +119,48 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 		nextGen = new ArrayList<Population>();
 	}
 	
-  	/**
-     * die Methode zum durchlaufen des Genetischen algorithmus mit der Steuerung aus den statischen Variablen.
+	/**
+     * erzeugt die nächste generation, indem die alte sortiert und dann neue erzeugt werden.
      */
-	@SuppressWarnings("unused")
-	public void run() {
-		if(mutate + merge + copyBest > popsize) {
-//			System.err.println("Population ist going to grow. Aborting.");
-			return; 
+  	private void nextGen2() throws IOException {
+		for(int i = 0; i<copyBest; i++) {
+			nextGen.add(pops.get(i));
 		}
-		int i = 0;
-		int oldFitness = -1;
-		int verbesserungen = -1;
+		Random r = new Random();
+		for(int i = 0; i<merge; i++) {
+			int a = r.nextInt(mergeFrom);
+			int b = r.nextInt(mergeFrom);
+			nextGen.add(Population.merge2(pops.get(a),pops.get(b)));
+		}
+		for(int i = 0; i<mutate; i++) {
+			Population p = Population.mutate2(pops.get(i),possible);
+			nextGen.add(p);
+		}
+		for(int i = 0; i<(popsize-merge-copyBest-mutate); i++) {
+			nextGen.add(Population.generate2(pops.get(i),possible));
+		}
+		if(nextGen.size() != pops.size()) {
+			System.err.println("Unterschiedliche Längen!!!!");
+		}
+		pops = nextGen;
+		nextGen = new ArrayList<Population>();
+	}
+  	
+  	public int roundsFind, roundsPolygon;
+  	
+  	private void krams(boolean first) {
+  		int i = 0;
+  		int fitness = 0;
+  		int oldFitness = 0;
 		int letzteVerbesserung = 0;
-		int letzteOptimierung = 0;
-		int optimierungen = 0;
-		int rules = 0;
-		int threshold = 0;
-		int fitness;
-		while(true) {
-			if(kill)
-				break;
+		while(!kill) {
 			calcFitness();
+			Collections.sort(pops);
 			try {
-				nextGen();
+				if(first)
+					nextGen1();
+				else
+					nextGen2();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -150,27 +168,62 @@ public class Genetic extends Thread implements Comparable<Genetic>{
 			if(oldFitness<fitness) {
 				oldFitness = fitness;
 				letzteVerbesserung = i;
-				verbesserungen++;
-				rules = pops.get(0).getNumberOfRules();
-				threshold = pops.get(0).getNumberOfThresholds();
-				optimierungen = 0;
 			}
-			else if(pops.get(0).getNumberOfRules()<rules){
-				rules = pops.get(0).getNumberOfRules();
-				optimierungen++;
-				letzteOptimierung = i;
-			}
-			else if(pops.get(0).getNumberOfThresholds()<threshold){
-				threshold = pops.get(0).getNumberOfThresholds();
-				optimierungen++;
-				letzteOptimierung = i;
-			}
-			if(i-letzteVerbesserung > withoutOtimization && i-letzteOptimierung > withoutOtimization)
+			if(i-letzteVerbesserung > withoutOtimization)
 				break;
 			i++;
 		}
-		System.out.println(i + suche + " -> " + pops.get(0));
-		System.out.println(verbesserungen + " Verbesserungen (" + letzteVerbesserung + ") und " + optimierungen + " Optimierungen (" + letzteOptimierung + ") seitdem");
+  		if(first)
+  			roundsFind = i;
+  		else
+  			roundsPolygon = i;
+  	}
+  	
+  	
+  	public void removeUnused() {
+  		Population p = pops.get(0);
+  		pops.clear();
+  		pops.add(p);
+  		int fitness = p.getFitness();
+  		Map<String,Double> weights = p.getWeights();
+  		Set<String> bla = new TreeSet<String>();
+  		for(String s : weights.keySet()) {
+  	  		bla.add(s);
+  		}
+  		for(String s : bla) {
+  	  		Double d = weights.remove(s);
+  			calcFitness();
+  			if(p.getFitness()!=fitness)
+  				weights.put(s, d);
+  		}
+  		Map<String,double[]> thres = p.getThresholds();
+  		bla.clear();
+  		for(String s : thres.keySet())
+  			bla.add(s);
+  		for(String s : bla) {
+  			double[] d = thres.remove(s);
+  			calcFitness();
+  			if(p.getFitness()!=fitness)
+  				thres.put(s, d);
+  		}
+  	}
+
+  	/**
+     * die Methode zum durchlaufen des Genetischen algorithmus mit der Steuerung aus den statischen Variablen.
+     */
+	public void run() {
+		if(mutate + merge + copyBest > popsize) {
+			return; 
+		}
+		
+		krams(true);
+		Population best = pops.get(0);
+		pops.clear();
+		for(int x = 0; x<popsize;x++) {
+			pops.add(best);
+		}
+		krams(false);
+		removeUnused();
 	}
 
   	/**

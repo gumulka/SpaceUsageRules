@@ -12,13 +12,13 @@ Wird derzeit auf XML umgestellt.\\
 \label{sec:Eingabedaten_Wir}
 Die benutzten Regeln liegen in einer Datei im XML-Format vor. Darin werden vier von uns definierte Tags benutzt: 'ruleset', 'rule',
 'restriction' und 'OSMTag'. Gewicht, Schwellwert und Radius sind Attribute des Tags 'OSMTag'.\\
-'ruleset' umfasst die Gesamtheit aller Regeln. Eine Regel wird durch 'rule' repräsentiert. 'rule' enthält wiederum beliebig viele 
-restrictions und OSMTags. 'restriction' stellt eine Space Usage Rule dar. Der Name dieser SUR wird als Inhalt (nicht als Attribut) 
+'ruleset' umfasst die Gesamtheit aller Regeln. Eine Regel wird durch 'rule' repräsentiert. 'rule' enthält wiederum beliebig viele
+restrictions und OSMTags. 'restriction' stellt eine Space Usage Rule dar. Der Name dieser SUR wird als Inhalt (nicht als Attribut)
 von 'restriction' gepeichert. Der Inhalt von 'OSMTag' ist der Name eines Tags, der in OSM einem Objekt zugeordnet ist. Key und Value
 dieses Tags werden dabei nicht getrennt. Das Gewicht, der Schwellwert und der Radius, die diesem Tag zugeordnet werden, werden in XML
 in den Attributen 'weight', 'threshold' und 'radius' gespeichert.\\
 Eine Gültige Eingabe kann folgendermaßen aussehen:
-\begin{lstlisting}[frame=single]
+\begin{lstlisting}[language=xml,frame=single]
 <ruleset>
   <rule>
     <restriction>smoking="no"</restriction>
@@ -32,7 +32,7 @@ Eine Gültige Eingabe kann folgendermaßen aussehen:
 </ruleset>
 \end{lstlisting}
 Dieses Regelwerk sagt aus, dass ein Nichtrauchen Verbot wahrscheinlich in Flächen gilt, welche eine Hausnummer zugewiesen haben
-und sehr unwahrscheinlich in Gebieten, die als Waldgebiete ausgeschildert sind. Sollte die so ermittelte Fläche größer sein als 
+und sehr unwahrscheinlich in Gebieten, die als Waldgebiete ausgeschildert sind. Sollte die so ermittelte Fläche größer sein als
 einer der Schwellwerte, so wird aus allen Radien der überschrittenen Schwellwerte ein neuer Radius berechnet. Ein reguläres Polygon
 wird erzeugt und mit der ermittelten Fläche geschnitten.\\
 Für das Angel- und Rauchverbot sind keine Regeln definiert. Unser Algorithmus wird sich also nur die nächstegelegene Fläche als wahrscheinlich nehmen,

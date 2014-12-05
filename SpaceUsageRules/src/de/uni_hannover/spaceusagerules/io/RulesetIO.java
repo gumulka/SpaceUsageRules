@@ -1,8 +1,6 @@
 package de.uni_hannover.spaceusagerules.io;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -105,12 +103,23 @@ public class RulesetIO {
 		double[] thr;
 		for(Element osmTag : osmList){
 			key = osmTag.text();
-			weights.put(key,Double.parseDouble(osmTag.attr(WEIGHT_ATTRIB)));
-			thr = new double[]{
-					Double.parseDouble(osmTag.attr(THRESHOLD_ATTRIB)),
-					Double.parseDouble(osmTag.attr(RADIUS_ATTRIB))
-			};
-			thresholds.put(key, thr);
+			int g = key.indexOf('-');
+			if(g>0) {
+				String a = key.substring(0,g).trim();
+				String b = key.substring(g+1).trim();
+				key = a + " - " + b;
+			}
+			String we = osmTag.attr(WEIGHT_ATTRIB);
+			if(we != null && we != "")
+				weights.put(key,Double.parseDouble(we));
+			String[] bla = new String[]{osmTag.attr(THRESHOLD_ATTRIB),osmTag.attr(RADIUS_ATTRIB)};
+			if(bla[0] != null && bla[0] != "" && bla[1] != null && bla[1] != "") {
+				thr = new double[]{
+						Double.parseDouble(bla[0]),
+						Double.parseDouble(bla[1])
+				};
+				thresholds.put(key, thr);
+			}
 		}
 		
 		//put it all together

@@ -31,7 +31,8 @@ import de.uni_hannover.spaceusagerules.io.OSM;
  */
 public class Main extends Thread implements Comparable<Main>{
 
-	public static final int MAXTHREADS = 2;
+	public static final int MAXTHREADS = 1;
+	public static int DISSMISSED = 5;
 	public static final int CPUCORES = 4;
 	public static final double AUSLASTUNG = 1.0 - (1.0/(CPUCORES-MAXTHREADS));
 	
@@ -107,26 +108,28 @@ public class Main extends Thread implements Comparable<Main>{
 		br.close();
 		
 		possibla = new LinkedList<String>();
-		int kicked = 0;
+//		int kicked = 0;
 		for(Entry<String,Integer> e : possibilities.entrySet())
-			if(e.getValue()>1)
+			if(e.getValue()>DISSMISSED)
 				possibla.add(e.getKey());
-			else
-				kicked++;
-		System.out.println("rauschgeschmissen: " +kicked + "/" + possibilities.size() + " möglichen Regeln");
+//			else
+//				kicked++;
+//		System.out.println("rauschgeschmissen: " +kicked + "/" + possibilities.size() + " möglichen Regeln");
 		
-		System.out.println(tags.size() + " verschiedene Tags.");
+//		System.out.println(tags.size() + " verschiedene Tags.");
 		prepared = true;
 	}
 	
 	public void run() {
 		if(!prepared)
 			return;
-		long startTime = System.currentTimeMillis();
+		if(mu+me>9)
+			return;
 		allGens = new ArrayList<Genetic>();
+		Population.GENERATOR = gen;
 		for(Entry<String,Set<String>> e: tags.entrySet())
 			try {
-				allGens.add(new Genetic(e.getKey(),e.getValue(), possibla,p,w,p/10,mu,me,p/5));
+				allGens.add(new Genetic(e.getKey(),e.getValue(), possibla,p,w,p/10,p*mu/10,p*me/10,p/5));
 			} catch (Exception e1) {
 				e1.printStackTrace();
 				System.err.println("Fehler beim erstellen der Genetics");
@@ -134,16 +137,29 @@ public class Main extends Thread implements Comparable<Main>{
 			}
 		Collections.sort(allGens);
 		
+		long startTime = System.currentTimeMillis();		
 		ThreadScheduler.schedule(allGens, MAXTHREADS);
+		diff = (int) ((System.currentTimeMillis() - startTime)/1000);
 
+		
 		for(Genetic g : allGens) {
 			fitness += g.getBest().getFitness();
 		}
+
 		
-		diff = (int) ((System.currentTimeMillis() - startTime)/1000);
+		for(Genetic g : allGens) {
+			r1 += g.roundsFind;
+		}
+		for(Genetic g : allGens) {
+			r2 += g.roundsPolygon;
+		}
+		
+		
 		if(fitness > 0 || diff>10)
 			System.out.println(this);
 	}
+	
+	int r1=0,r2=0;
 	
 	public void writeout() throws IOException {
 		File f = new File(path + "Rules.gen." + max + ".txt");
@@ -172,15 +188,6 @@ public class Main extends Thread implements Comparable<Main>{
 	 */
 	public static void main(String[] args) throws Exception,
 			IOException {
-		 Runtime.getRuntime().addShutdownHook(new Thread()
-	        {
-	            @Override
-	            public void run()
-	            {
-	            	Genetic.kill = true;
-	            	System.out.println("Shutdown hook ran!");
-	            }
-	        });
 		 OSM.useBuffer(true);
 		 
 		 /*
@@ -190,48 +197,61 @@ public class Main extends Thread implements Comparable<Main>{
 		 test.writeout(); // */
 		 
 		 
-		 
-		 int[] maxis = {128,128};
-		 int[] popsizes = {100,350,500};
-		 int[] withouts = {100,350,500};
-		 int[] mutates =  {5,3};
-		 int[] merges = {1,3,5};
-		 for(int m : maxis) {
-			 Main best = null;
-			 Main.max = m;
+		 int[] disses = {1,5,10,15}; // 1,5,10
+		 int[] generators =  {4,16,64}; // 4,16,64
+		 int[] popsizes = {10,30,60,100,200,500};
+		 int[] withouts = {0,1,3,6,10,20,50,100,200};
+		 int[] mutates =  {7,5,3,1}; 
+		 int[] merges = {7,5,3,1};
+		 for(int m : disses) {
+			 Main.DISSMISSED = m;
 			 Main.prepare();
-			 List<Main> mains = new LinkedList<Main>();
+			 List<Thread> gens = new LinkedList<Thread>();
+			 for(int g: generators) 
 			 for(int p : popsizes) {
 				 for(int w: withouts) {
 					 for(int mu : mutates) {
 						 for(int me : merges) {
-							 mains.add(new Main(p,w,mu,me));
+								while(true) {
+									if(gens.size()<3) {
+										Thread x = new Main(p,w,mu,me,g);
+										x.start();
+										gens.add(x);
+										break;
+									} else
+										try {
+											Thread.sleep(100);
+										} catch (InterruptedException ex) {
+										}
+									for(Thread r : gens)
+										if(!r.isAlive()) {
+											gens.remove(r);
+											break;
+										}
+								}
 						 }
 					 }
 				 }
 			 }
-			 ThreadScheduler.schedule(mains, AUSLASTUNG,2);
-			 for(Main test : mains)
-				 if(best == null || best.compareTo(test)>0)
-					 best = test;
-			 best.writeout();
-			 System.out.println(new Date());
+			 System.err.println(new Date());
 			 System.err.println("Runde fertig!");
-		 } // */ 
+		 } 
 	}
 	
-	private int p,w,mu,me;
-	public Main(int p, int w, int mu, int me) {
+	private int p,w,mu,me,gen;
+	public Main(int p, int w, int mu, int me,int gen) {
 		this.p = p;
 		this.w = w;
 		this.mu = mu;
 		this.me = me;
+		this.gen = gen;
 	}
 
 	
 	public String toString() {
 		String ret = String.format("Fitness: %6d, Laufzeit: %d:%02d:%02d ",fitness, diff/3600, (diff/60)%60, diff%60);
-		ret += String.format("Pop: %d, Wi: %d, Mu: %d, Me: %d",p,w,mu,me);
+		ret += String.format("Pop: %d, Wi: %d, Mu: %d, Me: %d, Gen: %d ",p,w,mu,me,gen);
+		ret += String.format("RoundsFind: %d, RoundsPolygon: %d Dissmissed: %d",r1/allGens.size(),r2/allGens.size(), DISSMISSED);
 		return ret;
 	}
 	

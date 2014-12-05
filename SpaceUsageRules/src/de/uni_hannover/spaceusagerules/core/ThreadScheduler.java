@@ -21,7 +21,7 @@ public class ThreadScheduler {
 	 * @param maxparralel the maximal number of threads to run in parallel
 	 */
 	public static void schedule(Collection<? extends Thread> threads, int maxparallel) {
-		if(maxparallel<=1) {
+		if(maxparallel==1) {
 			for(Thread t : threads) {
 				t.start();
 				try {
