@@ -1,0 +1,71 @@
+Was wir tun wollen, um den Kunden zufrieden zu stellen.
+\section{Ziel des Projekts}
+\subsection{Erläuterung des zu lösenden Problems}
+siehe abstract
+\subsection{Wünsche und Prioritäten des Kunden}
+soll toll sein
+\subsection{Domänenbeschreibung}
+unbekannt
+\subsection{Maßnahmen zur Anforderungsanalyse}
+Analyse des Testdatensatzes (siehe unten)
+\section{Rahmenbedingungen und Umfeld}
+\subsection{Einschränkungen und Vorgaben}
+Bei Eingabedaten ist das selbstdefinierte Format der GI zu übernehmen. Bei Ausgabedaten ist das KML-Format vorgeschrieben. 
+Nutzung von Open Street Map als Kartenmaterial und Java als primäre Programmiersprache.
+\subsection{Anwender}
+unbekannt
+\subsection{Schnittstellen und angrenzende Systeme}
+Zu Open Street Map.
+\section{Funktionale Anforderungen}
+\subsection{Use Case-Diagramm}
+TODO
+\subsection{Use Case-Beschreibungen}
+TODO
+\subsection{Technische Anforderungen}
+TODO
+\section{Qualitätsanforderungen}
+\subsection{Qualitätsziele des Projekts}
+\subsubsection{Funktionalität}
+Bedeutet hier, dass die funktionalen Anforderungen entsprechend der Aufgabenstellung vollständig und korrekt implementiert werden.
+
+\subsubsection{Zuverlässigkeit}
+Es wird garantiert, dass eine fehlende Internetverbindung, ein nicht vorhanden Sein der Eingabedateien oder fehlerhafte Eingabedateien
+nicht zu unbestimmtem Verhalten führen.
+
+\subsubsection{Benutzbarkeit}
+Das Programm soll für unerfahrene Benutzer durch wenige Komandozeilenparamenter bedienbar sein. Für erfahrene Benutzer soll es
+verschiedene Einstellmöglichkeiten bieten.\\
+Durch selbsterklärende Ausgaben und Hilfetexte soll das Programm leicht benutzbar sein.
+
+\subsubsection{Effizienz}
+Daten, welche von Open Street Map herunter geladen werden, können lokal zwischengespeichert werden, um so die Belastung der Server und 
+das Datenvolumen zu reduzieren.\\
+Die Laufzeit kann durch mehrere Threads reduziert werden.
+
+\subsubsection{Wartbarkeit}
+Designentscheidungen sollen dokumentiert, APIs zur Verfügung gestellt werden. 
+
+\subsubsection{Portabilität}
+Das Programm sollte auf verschiedenen Plattformen laufen, aber es ist nicht erforderlich, dass dies außergewöhnliche Plattformen einschließt.
+
+\subsubsection{Robustheit}
+Neue oder unerwartete Space Usage Rules führen nicht zum Absturz, da es einen Fallbackalgorithmus gibt. Wenn Kombinationen von 
+SURs nicht explizit behandelt werden, so wird die größtmögliche Teilmenge abgedeckt.
+
+\subsection{Qualitäts-Prioritäten des Kunden}
+Es wird Wert auf eine umfangreiche Dokumentation gelegt.
+\subsection{Wie Qualitätsziele erreicht werden sollen}
+Wir benutzen JUnit. TODO
+\section{Probleme und Risiken}
+Bei Zeitproblemen werden fehlerhafte Eingaben nicht mehr abgefangen. Oder ganz sein gelassen.
+\section{Optionen zur Aufwandsreduktion}
+\subsection{Inkrementelle Arbeit}
+Mögliche Erweiterungen werden nur bei genügend Zeit implementiert:
+\begin{itemize}
+ \item weitere Kartendienste außer Open Street Map
+ \item automatisierte Regelerstellung aus truth-Polygonen
+ \item visualisierung der Metadaten
+\end{itemize}
+
+\section{Tests}
+TODO
