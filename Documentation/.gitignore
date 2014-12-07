@@ -7,7 +7,7 @@ main.idx
 main.aux
 main.pdf
 main.toc
-*.png
+images/Laufzeit*.png
 *.pdf
 class*
 dir*
