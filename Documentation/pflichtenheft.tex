@@ -1,27 +1,152 @@
-Was wir tun wollen, um den Kunden zufrieden zu stellen.
+% Was wir tun wollen, um den Kunden zufrieden zu stellen.
 \section{Ziel des Projekts}
 \subsection{Erläuterung des zu lösenden Problems}
-siehe abstract
+Die Software wird zur Teilnahme am Wettbewerb ``Informaticup 2015'', der von der Gesellschaft für Informatik ausgreichtet wird, hergestellt.\\
+Die Hauptaufgabe der Software ist es, für eine Position, an der sich ein Informationsschild befindet, einen Geltungsbereich zu berechnen. 
+Hierzu können die öffentlich zugänglichen Daten aus Open Street Map benutzt werden.
 \subsection{Wünsche und Prioritäten des Kunden}
-soll toll sein
+Die Veranstalter des Wettbewerbs legen Wert auf eine gute Nachvollziehbarkeit und Dokumentation der Software. 
+Das abgegebene Programm muss funktionieren, d.h. nicht abstürzen. Es muss aber nicht zwingend eine Erfolgsquote von hundert Prozent einfahren.
+Die Dokumentation der Software und des Entstehungsprozesses sind von höherer Priorität.
 \subsection{Domänenbeschreibung}
-unbekannt
+Da es sich bei diesem Projekt um eine Teilnahme an einem Wettbewerb handelt, kann man keinen Einsatzbereich für die Software angeben.
+Insofern kommt das Programm hauptsächlich bei der Bewertung durch die Jury zum Einsatz.\\
+Ein denkbares Szenario für den Einsatz ist das Kartieren von Flächennutzungsregeln. So muss zum Beispiel ein Nutzer nicht per Hand
+den Geltungsbereich eines Rauchverbots in die Karte eintragen. Das Programm errechnet automatisch aus der einer Position einen Bereich, den
+der Nutzer bestätigen oder verbessern kann. 
 \subsection{Maßnahmen zur Anforderungsanalyse}
-Analyse des Testdatensatzes (siehe unten)
+Unser erster Schritt, um uns mit dem Problem vertraut zu machen, war es den bereitgestellten Testdatensatz zu betrachten. 
+(Genaueres siehe unten.)
 \section{Rahmenbedingungen und Umfeld}
 \subsection{Einschränkungen und Vorgaben}
 Bei Eingabedaten ist das selbstdefinierte Format der GI zu übernehmen. Bei Ausgabedaten ist das KML-Format vorgeschrieben. 
 Nutzung von Open Street Map als Kartenmaterial und Java als primäre Programmiersprache.
 \subsection{Anwender}
-unbekannt
+Die Jury ist nach derzeitigem Stand die einzige Anwendergruppe. Darüber hinaus könnte das Programm auf mobilen Geräten Anwendung finden.
 \subsection{Schnittstellen und angrenzende Systeme}
-Zu Open Street Map.
+Die Software baut auf dem Kartendienst Open Street Map auf.\\
+Die Kriterien zur Berechnung des Geltungsbereichs werden in einer Datei gespeichert. Diese ließe sich auch von anderer Software nutzen.
+Zum Beispiel, um die darin beschriebenen Regeln automatisch zu erzeugen.
 \section{Funktionale Anforderungen}
 \subsection{Use Case-Diagramm}
+Ein Diagramm, wie die verschiedenen Use Cases, Nutzer und Systeme zusammen arbeiten.\\
 TODO
 \subsection{Use Case-Beschreibungen}
-TODO
+TODO\\
+% Diese Numberierung, weil es im Prinzip immer der gleich Anwendungsfall ist, mit leichten Abänderungen.
+1: Einfaches Benutzen der Software in der Komandozeile, d.h. mit den Parametern --data, --rules und --outputDir.\\
+1.1: Zusätzlich mit dem Parameter --threads\\
+1.2: Zusätzlich mit dem Parameter --overlap\\
+1.3: Nur mit dem Parameter --path\\
+1.4: Zusätzlich mit dem Parameter --image\\
+1.5: Zusätzlich mit den Parametern --image, --height und --width\\
+1.6: Nur mit dem Parameter --help\\
+\begin{tabular}{| l | l |}
+ \hline
+ \textbf{Use Case Nr. 1} & Standardausführung\\
+ \hline
+ Umfeld & Komandozeile\\
+ \hline
+ Systemgrenzen & Komandozeile\\
+ \hline
+ Ebene & komplette Programmbenutzung\\
+ \hline
+ Hauptakteur & Benutzer\\
+ \hline
+ Stakeholder u. Interesse & Benutzer will einen Datensatz berechnen lassen.\\
+ \hline
+ Voraussetzung & Internetverbindung zu OSM. Angegebene Verzeichnisse existieren.\\
+	      & Data.txt und Rules.xml befinden sich an angegebener Stelle. \\
+ \hline
+ Garantien & Sind OSM-Daten unvollständig, wird ein kreisförmiger Geltungsbereich angegeben.\\
+	  & Sind SURs unbekannt, gibt es dennoch eine Ausgabe.\\
+ \hline
+ Erfolgsfall & Es wird eine kml-Datei mit dem berechneten Lösungspolygon im\\
+	    & angegebenen Verzeichnis erstellt.\\
+ \hline
+ Auslöser & Der Befehl wird abgeschickt.\\
+ \hline
+ Beschreibung & Ein normaler Programmablauf. Folgender Befehl wird abgeschickt.\\
+	    & \verb|java Start --data <file> --rules <file>|\\
+	    & \hspace{24pt} \verb|--ouputDir <path>|\\
+	    & Daten werden von OSM herunter geladen.\\
+	    & Regeln werden angewendet.\\
+	    & Lösungen werden im KML-Format gespeichert.\\
+ \hline
+ Erweiterungen & Mit zusätzlichen oder anderen Parametern. Siehe Use Cases 1.1 bis 1.6\\
+ \hline
+ Technologie & -\\
+ \hline
+\end{tabular}
+\\[12pt]
+\begin{tabular}{| l | l |}
+ \hline
+ \textbf{Use Case Nr. 1.1} & Multithreading\\
+ \hline
+ Umfeld & Komandozeile\\
+ \hline
+ Systemgrenzen & Komandozeile\\
+ \hline
+ Ebene & komplette Programmbenutzung\\
+ \hline
+ Hauptakteur & Benutzer\\
+ \hline
+ Stakeholder u. Interesse & Benutzer will einen Datensatz berechnen lassen und Zeit sparen,\\
+			  & indem die Arbeit auf mehrere Threads verteilt wird.\\
+ \hline
+ Voraussetzung & Internetverbindung zu OSM. Angegebene Verzeichnisse existieren.\\
+	      & Data.txt und Rules.xml befinden sich an angegebener Stelle. \\
+	      & Mindestens so viele Dateneinträge wie Threads. (?)\\
+ \hline
+ Garantien & Sind OSM-Daten unvollständig, wird ein kreisförmiger Geltungsbereich angegeben.\\
+	  & Sind SURs unbekannt, gibt es dennoch eine Ausgabe.\\
+ \hline
+ Erfolgsfall & Es wird eine kml-Datei mit dem berechneten Lösungspolygon im\\
+	    & angegebenen Verzeichnis erstellt. Alles in kürzerer Zeit.\\
+ \hline
+ Auslöser & Abschicken des Befehls\\
+ \hline
+ Beschreibung & \verb|java Start --data <file> --rules <file>|\\
+	      & \hspace{24pt}\verb|--ouputDir <path> --threads <int>|\\
+	      & Threads werden erstellt und arbeiten.\\
+ \hline
+ Erweiterungen & -\\
+ \hline
+ Technologie & -\\
+ \hline
+\end{tabular}
+% Beispieltabelle:\\
+% \begin{tabular}{| l | l |}
+%  \hline
+%  \textbf{Use Case Nr. 1} & Name des Use Cases\\
+%  \hline
+%  Umfeld & \\
+%  \hline
+%  Systemgrenzen & \\
+%  \hline
+%  Ebene & \\
+%  \hline
+%  Hauptakteur & \\
+%  \hline
+%  Stakeholder u. Interesse & \\
+%  \hline
+%  Voraussetzung & \\
+%  \hline
+%  Garantien & \\
+%  \hline
+%  Erfolgsfall & \\
+%  \hline
+%  Auslöser & \\
+%  \hline
+%  Beschreibung & \\
+%  \hline
+%  Erweiterungen & \\
+%  \hline
+%  Technologie & \\
+%  \hline
+% \end{tabular}
 \subsection{Technische Anforderungen}
+Besondere technische Anforderungen gibt es nicht.
 TODO
 \section{Qualitätsanforderungen}
 \subsection{Qualitätsziele des Projekts}
@@ -55,17 +180,19 @@ SURs nicht explizit behandelt werden, so wird die größtmögliche Teilmenge abg
 \subsection{Qualitäts-Prioritäten des Kunden}
 Es wird Wert auf eine umfangreiche Dokumentation gelegt.
 \subsection{Wie Qualitätsziele erreicht werden sollen}
-Wir benutzen JUnit. TODO
+Wir benutzen JUnit, um die Funktionalität zu gewährleisten.\\
+Um die Qualität der Dokumentation zu sichern, orientieren wir uns an anderen gut dokumentierten Softwareprojekten.
 \section{Probleme und Risiken}
-Bei Zeitproblemen werden fehlerhafte Eingaben nicht mehr abgefangen. Oder ganz sein gelassen.
+Bei Zeitproblemen werden fehlerhafte Eingaben nicht mehr abgefangen. Oder auf die Teilnahme am Wettbewerb wird verzichtet.
 \section{Optionen zur Aufwandsreduktion}
 \subsection{Inkrementelle Arbeit}
 Mögliche Erweiterungen werden nur bei genügend Zeit implementiert:
 \begin{itemize}
- \item weitere Kartendienste außer Open Street Map
- \item automatisierte Regelerstellung aus truth-Polygonen
  \item visualisierung der Metadaten
+ \item automatisierte Regelerstellung aus truth-Polygonen
+ \item weitere Kartendienste außer Open Street Map
 \end{itemize}
 
 \section{Tests}
+Testfälle, die bei der Abnahme durchgeführt werden können, aus den Use Cases erstellen.\\
 TODO
