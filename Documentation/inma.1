@@ -1,0 +1,53 @@
+.\ tutorial from http://liw.fi/manpages/
+.TH START 1
+.SH NAME
+Start \- computes areas in kml format
+.SH SYNOPSIS
+\fBjava Start \-\-data\fR \fIFILE\fR \fB\-\-rules\fR \fIFILE\fR
+[\fIOPTIONS\fR [\fIARGUMENT\fR]...]
+.SH DESCRIPTION
+.B Start
+computes areas where space usage rules apply.
+.SH OPTIONS
+.TP
+.BR \-h ", " \-\-help
+Shows the help text.
+.TP
+\fB\-d, \-\-data\fR \fIFILE\fR
+Specifies the file containing the space usage rules and their locations.
+.TP
+\fB\-r, \-\-rules\fR \fIFILE\fR
+Specifies the file containing rules for evaluating the environment of the location.
+.TP
+\fB\-t, \-\-threads\fR \fINUMBER\fR
+Specifies the number of threads.
+.TP
+\fB\-u, \-\-overlap\fR \fIFILE\fR
+Specifies the file containing overlap values, that should be reached to be successfull.
+.TP
+\fB\-o, \-\-outputDir\fR \fIPATH\fR
+Specifies the folder where output files will be stored. Can be overwritten for the images by \fB\-i\fR.
+.TP
+\fB\-p, \-\-path\fR \fIPATH\fR
+Specifies the folder where the following files are: Data.txt, Rules.xml and optional Overlap.txt.
+\fB\-d\fR, \fB\-r\fR and \fB\-u\fR are not needed and can overwrite \fB\-p\fR.
+.TP
+\fB\-i\fR, \fB\-\-image\fR [\fIPATH\fR]
+Images are created to visualise the processed data. An output directory is optional.
+.TP
+\fB\-l, \-\-height\fR \fINUMBER\fR
+Specifies the height of the images.
+.TP
+\fB\-w, \-\-width\fR \fINUMBER\fR
+Specifies the width of the images.
+.SH EXAMPLES
+Standard use:
+.PP
+.nf
+.RS
+\fBjava Start\fR --data \fIData.txt\fR --rules \fIRules.xml\fR
+.RE
+.fi
+.PP
+.SH AUTHOR
+Fabian Pflug, Peter Zilz 2015
