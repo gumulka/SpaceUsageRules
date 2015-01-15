@@ -44,15 +44,9 @@ public class KML {
             "<Polygon>\n" +
             "<altitudeMode>clampToGround</altitudeMode>\n" +
             "<extrude>1</extrude>\n" +
-            "<tessellate>1</tessellate>\n" +
-            "<outerBoundaryIs>\n" +
-            "<LinearRing>\n" +
-            "<coordinates>\n";
+            "<tessellate>1</tessellate>\n";
     /** the third part of the kml-data */
-    static final String third = "</coordinates>\n" +
-            "</LinearRing>\n" +
-            "</outerBoundaryIs>\n" +
-            "</Polygon>\n" +
+    static final String third ="</Polygon>\n" +
             "</Placemark>\n" +
             "</Document>\n" +
             "</kml>\n";
@@ -90,8 +84,8 @@ public class KML {
 
     
     /**
-     * makes valid kml from the given coordinates and writes it to the given file 
-     * @param coordinates list of coordinates
+     * Makes valid kml from the given Geometry and writes it to the given file. 
+     * @param p Geometry to write
      * @param f the file to write to.
      * @throws IOException all exceptions encountered on trying to write the file.
      */
@@ -100,8 +94,8 @@ public class KML {
     }
     
     /**
-     * makes valid kml from the given coordinates and writes it to the given file 
-     * @param coordinates list of coordinates
+     * Makes valid kml from the given Geometry and writes it to the given file. 
+     * @param p Geometry to write
      * @param name a name to be shown in google earth
      * @param f the file to write to.
      * @throws IOException all exceptions encountered on trying to write the file.
@@ -117,17 +111,59 @@ public class KML {
     }
     
     /**
-     * makes valid kml from the given coordinates and writes it to the given file 
-     * @param coordinates list of coordinates
+     * Makes valid kml from the given Geometry. 
+     * @param p Geometry-object to be converted to a kml string.
      * @param name a name to be shown in google earth
      * @return String containing valid kml
      */
     public static String writeKML(Geometry p, String name) {
-        String coords = "";
-        for(Coordinate l : p.getCoordinates()) {
-        	//y=latitude, x=longitude
-            coords += l.x + "," + l.y + " \n";
-        }
-        return first + name + second + coords + third;
+    	//if there is only one Geometry, it has to be the outline
+    	if(p.getNumGeometries()==1){
+	        return first + name + second + writeBoundaryKML(p,"outer") + third;
+    	}
+    	//if there are more than one Geometries, then one is the outer border 
+    	//and the others are the inner borders
+    	else{
+    		String output = first+name+second;
+    		//first write the outer border
+    		Geometry outline = p.getBoundary();
+    		output += writeBoundaryKML(outline, "outer");
+    		
+    		//then write the holes
+    		for(int i=0;i<p.getNumGeometries();i++){
+    			if(p.getGeometryN(i) == outline) continue;
+    			
+    			output += writeBoundaryKML(p.getGeometryN(i), "inner");
+    			
+    		}
+    		
+    		output += third;
+    		return output;
+    	}
     }
+    
+    /**
+     * Produces a String of KML format, that contains one ring of coordinates. 
+     * It can be either the outline of the Polygon or the outline of a hole in the polygon.
+     * @param r Geometry that consists only of one polygon
+     * @param inOrOut a String that determines if the polygon is an outer or inner border. It has to be either "outer" or "inner" to produce correct KML.
+     * @return piece of KML String containing one ring of coordinates
+     */
+    private static String writeBoundaryKML(Geometry r, String inOrOut){
+        String ring = "<"+inOrOut+"BoundaryIs>\n" +
+        		"<LinearRing>\n" +
+                "<coordinates>\n";
+        
+        for(Coordinate l : r.getCoordinates()) {
+        	//y=latitude, x=longitude
+            ring += l.x + "," + l.y + " \n";
+        }
+        
+        ring += "</coordinates>\n" +
+        "</LinearRing>\n"+
+        "</"+inOrOut+"BoundaryIs>\n";
+        return ring;
+    }
+    
+    
 }
