@@ -91,21 +91,6 @@ public class AddTagListFragment extends ListFragment {
 	        // Set the item as checked to be highlighted when in two-pane layout
 	        getListView().setItemChecked(lastClicked, true);
     }
-//
-//	@Override
-//	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//			Bundle savedInstanceState) {
-//		View rootView = inflater.inflate(R.layout.add_tag, container, false);
-//		if(savedInstanceState != null) {
-//			lastClicked = savedInstanceState.getInt(IDs.LAST_CLICKED, -1);
-//			possibilities = (List<String>) savedInstanceState.getSerializable(IDs.POSSIBILITIES);
-//		}
-//		if(lastClicked!=-1)
-//	        // Set the item as checked to be highlighted when in two-pane layout
-//	        getListView().setItemChecked(lastClicked, true);
-//		
-//		return rootView;
-//	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {

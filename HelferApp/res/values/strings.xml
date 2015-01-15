@@ -3,9 +3,9 @@
     <string name="app_name">Was gilt wo?</string>
     <string name="settings">Einstellungen</string>
     <string name="add_tag">Regel hinzufügen</string>
-    <string name="starttext1">Danke, dass du die App heruntergeladen hast. Im folgenden will ich dir kurz ein paar Tips geben:</string>
+    <string name="starttext1">Danke, dass du die App heruntergeladen hast. Im folgenden will ich dir kurz ein paar Tipps geben:</string>
     <string name="starttext3">Du kannst der App eigene Bereiche über das "+" hinzufügen. Wähle dazu eine Fläche an, oder zeichne(durch antippen der Eckpunkte) nach Klick auf den Stift einen eigenen Bereich.</string>
-    <string name="starttext4">In dieser App nutzt Daten aus OpenStreetMap und Google Maps.</string>
+    <string name="starttext4">In dieser App werden Daten aus OpenStreetMap und Google Maps kombiniert.</string>
     <string name="starttext2">Diese App ist dazu da, Bereiche auf der Karte zu markieren, in welchen bestimmte Verbote gelten. Welche genau das sein sollen, kannst du in den Einstellungen ändern, oder aber dir einfach alle anzeigen lassen.
         Da aktuell noch nicht so viele Verbote definiert sind, hilf uns doch, indem du weitere hinzufügst und es anderen so ermöglichst zu sehen ob sie hier z.B. rauchen dürfen, oder aber welche Teile der Stadt mit Rollstuhl zugänglich sind.</string>
     <string name="help">Hilfe</string>
@@ -66,7 +66,7 @@
     <string name="tag_default">wheelchair</string>
     <string name="pref_only">Einzelnutzung</string>
     <string name="pref_only_summ">Alle anderen Sachen werden ausgeblendet.</string>
-    <string name="pref_only_tag">Beschränkt auf:</string>
+    <string name="pref_only_tag">Beschränken auf:</string>
     <string name="pref_only_tag_dialog">Bitte wählen sie aus.</string>
     	<string name="slider_search_range">Suchradius</string>
 	<string-array name="slider_search_summary">

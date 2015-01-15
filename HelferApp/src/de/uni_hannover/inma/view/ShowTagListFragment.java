@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import de.uni_hannover.inma.IDs;
-import de.uni_hannover.spaceusagerules.core.Tag;
+import de.uni_hannover.inma.Tag;
 
 public class ShowTagListFragment extends ListFragment {
 

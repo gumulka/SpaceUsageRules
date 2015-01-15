@@ -20,10 +20,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.vividsolutions.jts.geom.Coordinate;
 
 import de.uni_hannover.inma.IDs;
 import de.uni_hannover.inma.R;
-import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Way;
 
 public class ShowMapFragment extends SupportMapFragment implements OnMapLongClickListener{
@@ -56,7 +56,7 @@ public class ShowMapFragment extends SupportMapFragment implements OnMapLongClic
 		mMap.getUiSettings().setZoomControlsEnabled(false);
 		redraw();
 		if(savedInstanceState==null) {
-			mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude,location.longitude), 19));
+			mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.y,location.x), 19));
 		}
 		return rootView;
 	}
@@ -105,11 +105,11 @@ public class ShowMapFragment extends SupportMapFragment implements OnMapLongClic
 	private void redraw() {
 		mMap.clear();
 		for (Way w : ways)
-			if(w.isArea())
+			if(w.isPolygon())
 				updateMapPart(w);
 		MarkerOptions mo = new MarkerOptions();
 		mo.title(getResources().getString(R.string.your_position));
-		mo.position(new LatLng(location.latitude,location.longitude));
+		mo.position(new LatLng(location.y,location.x));
 		mMap.addMarker(mo);
 	}
 
@@ -119,13 +119,13 @@ public class ShowMapFragment extends SupportMapFragment implements OnMapLongClic
 		PolygonOptions po = new PolygonOptions();
 		po.strokeWidth(2);
 		po.strokeColor(w.getStrokeColor(tagid)).fillColor(w.getFillColor(tagid));
-		for (Coordinate c : w.getPolyline().getPoints())
+		for (Coordinate c : w.getPoints())
 			po.add(toLatLon(c));
 		mMap.addPolygon(po);
 	}
 
 	private static LatLng toLatLon(Coordinate c) {
-		return new LatLng(c.latitude, c.longitude);
+		return new LatLng(c.y, c.x);
 	}
 
 	public void onPause() {

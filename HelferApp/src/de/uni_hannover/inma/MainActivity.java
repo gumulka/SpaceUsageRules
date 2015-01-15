@@ -1,6 +1,7 @@
 package de.uni_hannover.inma;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.vividsolutions.jts.geom.Coordinate;
 
 import de.uni_hannover.inma.view.AddMapFragment;
 import de.uni_hannover.inma.view.AddMapFragment.OnDataTransmitListener;
@@ -39,8 +41,6 @@ import de.uni_hannover.inma.view.ShowMapFragment.SearchFromHereInterface;
 import de.uni_hannover.inma.view.ShowTagListFragment;
 import de.uni_hannover.inma.view.ShowTagListFragment.OnShowTagSelectedListener;
 import de.uni_hannover.inma.view.StartFragment;
-import de.uni_hannover.spaceusagerules.core.Coordinate;
-import de.uni_hannover.spaceusagerules.core.Tag;
 import de.uni_hannover.spaceusagerules.core.Way;
 import de.uni_hannover.spaceusagerules.io.OSM;
 
@@ -146,7 +146,7 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 	
 	@Override
 	public void searchFromHere(LatLng l) {
-		this.location = new Coordinate(l.latitude, l.longitude);
+		this.location = new Coordinate(l.longitude, l.latitude);
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
@@ -283,7 +283,7 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 
 		public void onLocationChanged(Location loc) {
 			if(last_location==null || last_location.distanceTo(loc)>20) {
-			location = new Coordinate(loc.getLatitude(),loc.getLongitude());
+			location = new Coordinate(loc.getLongitude(),loc.getLatitude());
 			last_location = loc;
 			ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 			NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -314,7 +314,7 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 
 	}
 
-	public void order(Set<Way> ways) {
+	public void order(Collection<Way> ways) {
 		this.ways.addAll(ways);
 
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -367,7 +367,7 @@ public class MainActivity extends ActionBarActivity implements OnShowTagSelected
 			SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 			boolean pref_only = sharedPref.getBoolean("pref_only", false);
 			String prefOnly_string = sharedPref.getString("pref_only_tag", null);
-			Set<Way> ways = null;
+			Collection<Way> ways = null;
 			if(loc[0]) {
 				ways = OSM.getObjectList(location, getRadius());
 			}

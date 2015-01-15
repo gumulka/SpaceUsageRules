@@ -1,6 +1,8 @@
 package de.uni_hannover.inma.view;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -29,11 +31,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
 
 import de.uni_hannover.inma.IDs;
 import de.uni_hannover.inma.MainActivity;
 import de.uni_hannover.inma.R;
-import de.uni_hannover.spaceusagerules.core.Coordinate;
 import de.uni_hannover.spaceusagerules.core.Way;
 import de.uni_hannover.spaceusagerules.io.OSM;
 
@@ -49,9 +54,10 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 	private String tagname = null;
 	private String tagid = null;
 	private GoogleMap mMap = null;
-	private Way newlyInsertet = null;
+	private Collection<Coordinate> newlyInsertet = null;
 	private boolean edit = false;
 	private Menu menu = null;
+	private String choosenTag = null;
 	
 	
 	@SuppressWarnings("unchecked")
@@ -68,7 +74,7 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 		if(intent.containsKey(IDs.EDIT))
 			edit = intent.getBoolean(IDs.EDIT);
 		if(intent.containsKey(IDs.NEW_WAY))
-			newlyInsertet = (Way) intent.getSerializable(IDs.NEW_WAY);
+			newlyInsertet = (Collection<Coordinate>) intent.getSerializable(IDs.NEW_WAY);
 
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
@@ -89,7 +95,7 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
         intent.putString(IDs.TAGID, tagid);
         intent.putBoolean(IDs.EDIT, edit);
         if(newlyInsertet!= null) 
-        	intent.putSerializable(IDs.NEW_WAY, newlyInsertet);
+        	intent.putSerializable(IDs.NEW_WAY, (Serializable) newlyInsertet);
     }
 
 	@SuppressLint("NewApi")
@@ -102,7 +108,7 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 		mMap.getUiSettings().setZoomControlsEnabled(false);
 		mMap.setOnMapClickListener(this);
 		redraw();
-		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude,location.longitude), 19));
+		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.y,location.x), 19));
 
 	}
 	
@@ -142,11 +148,23 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 		return super.onOptionsItemSelected(item);
 	}
 	
+	public Way createNewly() {
+		GeometryFactory gf = new GeometryFactory();
+		Coordinate[] all = new Coordinate[newlyInsertet.size()];
+		int i = 0;
+		for(Coordinate c : newlyInsertet)
+			all[i++] = c;
+		Geometry g = gf.createLineString(all);
+		Way blub = new Way(g);
+		blub.alterTag(tagid, choosenTag);
+		return null;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public void addTagToOsm() {
-		if(newlyInsertet!=null && newlyInsertet.getPolyline().getPoints().size()>2) {
+		if(newlyInsertet!=null && newlyInsertet.size()>2) {
 			Set<Way> single = new TreeSet<Way>();
-			single.add(newlyInsertet);
+			single.add(createNewly());
 			new InformUsTask().execute(single);
 		}
 		else {
@@ -169,14 +187,15 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 	}
 
 	private void addCoordinate(Coordinate c) {
-		newlyInsertet.addCoordinate(c);
+		newlyInsertet.add(c);
 		redraw();
 	}
 
 	private void markBuilding(Coordinate c) {
 		Way clicked = null;
+		Point p = new GeometryFactory().createPoint(c);
 		for (Way w : ways) {
-			if (w.getPolyline().inside(c)) {
+			if (w.getGeometry().contains(p)) {
 				if(clicked == null || clicked.getArea() > w.getArea())
 					clicked = w;
 			}
@@ -199,31 +218,31 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 		mMap.clear();
 		if(edit) {
 			if(newlyInsertet!=null)
-				updateMapPart(newlyInsertet);
+				updateMapPart(createNewly());
 		} else {
 			for (Way w : ways)
-				if(w.isArea())
+				if(w.isPolygon())
 					updateMapPart(w);
 			MarkerOptions mo = new MarkerOptions();
 			mo.title(getResources().getString(R.string.your_position));
-			mo.position(new LatLng(location.latitude,location.longitude));
+			mo.position(new LatLng(location.y,location.x));
 			mMap.addMarker(mo);
 		}
 	}
-
+	
 	private void updateMapPart(Way w) {
 		if (!w.isValid())
 			return;
 		PolygonOptions po = new PolygonOptions();
 		po.strokeWidth(2);
 		po.strokeColor(w.getStrokeColor(tagid)).fillColor(w.getFillColor(tagid));
-		for (Coordinate c : w.getPolyline().getPoints())
+		for (Coordinate c : w.getPoints())
 			po.add(toLatLon(c));
 		mMap.addPolygon(po);
 	}
 
 	private static LatLng toLatLon(Coordinate c) {
-		return new LatLng(c.latitude, c.longitude);
+		return new LatLng(c.y, c.x);
 	}
 
 	public void onClick(MenuItem v) {
@@ -235,7 +254,7 @@ public class AddMapFragment extends SupportMapFragment implements OnMapClickList
 		else {
 			// zeichnen gedrückt.
 			v.setIcon(R.drawable.ic_action_cancel);
-			newlyInsertet = new Way();
+			newlyInsertet = new LinkedList<Coordinate>();
 			new ChooseDialogFragment().show(getActivity().getSupportFragmentManager(), "chooser");
 		}
 		edit = !edit;
@@ -304,13 +323,13 @@ public class ChooseDialogFragment extends DialogFragment {
 	               // of the selected item
 	            	   switch(which) {
 	            	   case 0:
-		            	   newlyInsertet.alterTag(tagid, "no");
+		            	   choosenTag =  "no";
 		            	   break;
 	            	   case 1:
-		            	   newlyInsertet.alterTag(tagid, "limited");
+		            	   choosenTag =  "limited";
 		            	   break;
 	            	   case 2:
-		            	   newlyInsertet.alterTag(tagid, "yes");
+		            	   choosenTag =  "yes";
 		            	   break;
 	            	   }
 	            	   
