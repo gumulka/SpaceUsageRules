@@ -10,6 +10,18 @@ Autoren
 * Peter Zilz
 
 
+Projektstruktur
+---------------
+Es gibt verschiedene Unterordner. jeder enthält ein Projekt.
+
+- Round2 enthält unsere Dateien zur zweiten Runde
+- Testdatensatz enthält den von der GI bereit gestellten Testdatensatz
+- SpaceUsageRules enthält unsere Implementierung der Aufgabenstellung
+- Documentation enthält eine Schriftliche Ausarbeitung unserer Ideen.
+- HelferApp enthält eine Android app, welche im Rahmen des Projektes entstanden ist.
+
+- die restlichen Ordner enhalten Bibliotheken, welche nicht von uns entwickelt wurden.
+
 Installation
 ------------
 

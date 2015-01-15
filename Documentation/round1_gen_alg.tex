@@ -25,11 +25,16 @@ Das System ist so entworfen, dass es als Ausgabe Daten liefert wie sie in \fref{
 Es werden zunächst für alle Eingabedaten die Daten im Umkreis der Positionsdaten aus Openstreetmap heruntergeladen.
 Aus diesen werden alle möglichen Tags extrahiert. Tags, welche nur einmalig vorkommen, werden ignoriert, um zum einen die Menge zu verkleinern
 und zum anderen die Regeln allgemeiner zu halten und sie so einfacher und besser auf andere Datensätze übertragen zu können.
-Anschließend für jede Verbotsmenge ein Genetischer Algorithmus erstellt, welcher die Verbote für diesen optimiert und in einem eigenem Thread läuft.
-Nachdem alle Algorithmen durchgelaufen sind, werden die Optimalen eingesammelt und aus ihnen ein Regelwerk erstellt und in eine Datei geschrieben.
+Anschließend wird für jede Verbotsmenge ein Genetischer Algorithmus erstellt,
+welcher die Verbote für diesen optimiert und in einem eigenem Thread läuft.
+Nachdem alle Algorithmen durchgelaufen sind, werden die Optimalen eingesammelt,
+alle Regeln, welche keinen Einfluss auf das Lösungspolygon haben entfernt,
+und aus ihnen ein Regelwerk erstellt und in eine Datei geschrieben.
 
 \subsection{Fitnessfunktion}
-TODO
+Die Fitness berechnet sich in erster Linie aus der Überlappung von Lösungspolygon
+und dem errechnetem Polygon. In zweiter Linie aus der Anzahl der dafür benutzen Regeln,
+da wir eine minimale Anzahl als optimal ansehen.
 
 \subsection[Laufzeitanalyse]{Laufzeitanalyse\protect\footnotemark}
 \footnotetext{Fehlende Angaben zu 100\% durch kleine Funktionsaufrufe}

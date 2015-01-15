@@ -4,11 +4,10 @@
 % Diese Nummerierung, weil es im Prinzip immer der gleich Anwendungsfall ist, mit leichten Abänderungen.
 1: Einfaches Benutzen der Software in der Komandozeile, d.h. mit den Parametern --data, --rules und --outputDir.\\
 1.1: Zusätzlich mit dem Parameter --threads\\
-1.2: Zusätzlich mit dem Parameter --overlap\\
-1.3: Nur mit dem Parameter --path\\
-1.4: Zusätzlich mit dem Parameter --image\\
-1.5: Zusätzlich mit den Parametern --image, --height und --width\\
-1.6: Nur mit dem Parameter --help\\
+1.2: Nur mit dem Parameter --path\\
+2: Einfaches Benutzen mit Fehlervisualisierung.
+2.1: Zusätzlich mit dem Parameter --overlap
+3: Nur mit dem Parameter --help\\
 
 
 \begin{tabular}{| l | l |}
@@ -68,7 +67,6 @@
  \hline
  Voraussetzung & Internetverbindung zu OSM. Angegebene Verzeichnisse existieren.\\
 	      & Data.txt und Rules.xml befinden sich an angegebener Stelle. \\
-	      & Mindestens so viele Dateneinträge wie Threads. (?)\\
  \hline
  Garantien & Sind OSM-Daten unvollständig, wird ein kreisförmiger Geltungsbereich angegeben.\\
 	  & Sind SURs unbekannt, gibt es dennoch eine Ausgabe.\\
@@ -89,55 +87,9 @@
 \end{tabular}
 
 
-
 \begin{tabular}{| l | l |}
  \hline
- \textbf{Use Case Nr. 1.2} & variierte Genauigkeit \\
- \hline
- Umfeld & Komandozeile\\
- \hline
- Systemgrenzen & Komandozeile\\
- \hline
- Ebene & komplette Programmbenutzung\\
- \hline
- Hauptakteur & Benutzer\\
- \hline
- Stakeholder u. Interesse & Benutzer will einen Datensatz berechnen lassen. Bei Unterschreitung\\
-			  & der angegeben Genauigkeit, sollen die Daten visualisiert werden.\\
- \hline
- Voraussetzung & Internetverbindung zu OSM. Angegebene Verzeichnisse existieren.\\
-	      & Data.txt und Rules.xml befinden sich an angegebener Stelle. \\
-	      & Die Datei mit den Overlap-Werten ist an angegebener Stelle. \\
- \hline
- Garantien & Sind OSM-Daten unvollständig, wird ein kreisförmiger Geltungsbereich angegeben.\\
-	  & Sind SURs unbekannt, gibt es dennoch eine Ausgabe.\\
- \hline
- Erfolgsfall & Es wird eine kml-Datei mit dem berechneten Lösungspolygon im\\
-	    & angegebenen Verzeichnis erstellt.\\
-	    & Es werden Bilder erstellt, die die Dateneinträge darstellen, die\\
-	    & die vorgegebene Genauigkeit nicht erreicht haben.\\
- \hline
- Auslöser & Der Befehl wird abgeschickt.\\
- \hline
- Beschreibung & Folgender Befehl wird abgeschickt.\\
-	    & \verb|java Start --data <file> --rules <file>|\\
-	    & \hspace{24pt} \verb|--ouputDir <path> --overlap <file>|\\
-	    & Daten werden von OSM herunter geladen.\\
-	    & Regeln werden angewendet.\\
-	    & Bilder zu den unzureichenden Lösungen werden gespeichert.\\
-	    & Lösungen werden im KML-Format gespeichert.\\
- \hline
- Erweiterungen & -\\
- \hline
- Technologie & -\\
- \hline
-\end{tabular}
-
-
-
-\begin{tabular}{| l | l |}
- \hline
- \textbf{Use Case Nr. 1.3} & verkürzte Standardausführung\\
+ \textbf{Use Case Nr. 1.2} & verkürzte Standardausführung\\
  \hline
  Umfeld & Komandozeile\\
  \hline
@@ -150,21 +102,21 @@
  Stakeholder u. Interesse & Benutzer will einen Datensatz berechnen lassen.\\
  \hline
  Voraussetzung & Internetverbindung zu OSM. Angegebene Verzeichnisse existieren.\\
-	      & Data.txt und Rules.xml befinden sich an angegebener Stelle. \\
+        & Data.txt und Rules.xml befinden sich an angegebener Stelle. \\
  \hline
  Garantien & Sind OSM-Daten unvollständig, wird ein kreisförmiger Geltungsbereich angegeben.\\
-	  & Sind SURs unbekannt, gibt es dennoch eine Ausgabe.\\
+    & Sind SURs unbekannt, gibt es dennoch eine Ausgabe.\\
  \hline
  Erfolgsfall & Es wird eine kml-Datei mit dem berechneten Lösungspolygon im\\
-	    & angegebenen Verzeichnis erstellt.\\
+      & angegebenen Verzeichnis erstellt.\\
  \hline
  Auslöser & Der Befehl wird abgeschickt.\\
  \hline
  Beschreibung & Folgender Befehl wird abgeschickt.\\
-	    & \verb|java Start --path <path>|\\
-	    & Daten werden von OSM herunter geladen.\\
-	    & Regeln werden angewendet.\\
-	    & Lösungen werden im KML-Format gespeichert.\\
+      & \verb|java Start --path <path>|\\
+      & Daten werden von OSM herunter geladen.\\
+      & Regeln werden angewendet.\\
+      & Lösungen werden im KML-Format gespeichert.\\
  \hline
  Erweiterungen & -\\
  \hline
@@ -174,11 +126,9 @@
 
 
 
-
-
 \begin{tabular}{| l | l |}
  \hline
- \textbf{Use Case Nr. 1.4} & Fehlervisualisierung\\
+ \textbf{Use Case Nr. 2} & Regelüberprüfung \\
  \hline
  Umfeld & Komandozeile\\
  \hline
@@ -188,43 +138,40 @@
  \hline
  Hauptakteur & Benutzer\\
  \hline
- Stakeholder u. Interesse & Benutzer will einen Datensatz berechnen lassen und unzureichende Ergebnisse\\
-			  & visualisieren.\\
+ Stakeholder u. Interesse & Benutzer will die bisherigen Regeln anhand von Grundwahrheiten überprüfen.\\
  \hline
  Voraussetzung & Internetverbindung zu OSM. Angegebene Verzeichnisse existieren.\\
-	      & Data.txt, Rules.xml und der Bilderordner befinden sich an angegebener Stelle. \\
+	      & Data.txt und Rules.xml befinden sich an angegebener Stelle. \\
+	      & Es befinden sich $ID$.truth.kml Dateien im gleichen Verzeichnig wie Data.txt \\
  \hline
  Garantien & Sind OSM-Daten unvollständig, wird ein kreisförmiger Geltungsbereich angegeben.\\
 	  & Sind SURs unbekannt, gibt es dennoch eine Ausgabe.\\
-	  & TODO was, wenn es den Bilderordner nicht gibt?\\
  \hline
  Erfolgsfall & Es wird eine kml-Datei mit dem berechneten Lösungspolygon im\\
 	    & angegebenen Verzeichnis erstellt.\\
-	    & Bilder werden im angegebenen Ordner erstellt.\\
+	    & Für jedes Polygon, keine Überlappung von mindestens 95\% mit dem \\
+	    & Lösungspolygon aufweist werden 2 Bilder erstellt, welche den Fehler visualisieren.\\
  \hline
  Auslöser & Der Befehl wird abgeschickt.\\
  \hline
  Beschreibung & Folgender Befehl wird abgeschickt.\\
 	    & \verb|java Start --data <file> --rules <file>|\\
-	    & \hspace{24pt} \verb|--ouputDir <path> --image <path>|\\
+	    & \hspace{24pt} \verb|--ouputDir <path>|\\
 	    & Daten werden von OSM herunter geladen.\\
 	    & Regeln werden angewendet.\\
-	    & Bilder der unzureichenden Lösungen werden erstellt.\\
+	    & Bilder zu den unzureichenden Lösungen werden gespeichert.\\
 	    & Lösungen werden im KML-Format gespeichert.\\
  \hline
- Erweiterungen & -\\
+ Erweiterungen & siehe 2.1\\
  \hline
  Technologie & -\\
  \hline
 \end{tabular}
 
 
-
-
-%\\[12pt]
 \begin{tabular}{| l | l |}
  \hline
- \textbf{Use Case Nr. 1.5} & Benutzerdefinierte Fehlervisualisierung\\
+ \textbf{Use Case Nr. 2.1} & Regelüberprüfung mit varierender Genauigkeit.\\
  \hline
  Umfeld & Komandozeile\\
  \hline
@@ -234,29 +181,30 @@
  \hline
  Hauptakteur & Benutzer\\
  \hline
- Stakeholder u. Interesse & Benutzer will einen Datensatz berechnen lassen und unzureichende Ergebnisse\\
-			  & in bestimmter Größe visualisieren.\\
+ Stakeholder u. Interesse & Benutzer will die bisherigen Regeln anhand von Grundwahrheiten überprüfen.\\
  \hline
  Voraussetzung & Internetverbindung zu OSM. Angegebene Verzeichnisse existieren.\\
-	      & Data.txt, Rules.xml und der Bilderordner befinden sich an angegebener Stelle. \\
+        & Data.txt, Rules.xml und overlap.txt befinden sich an angegebener Stelle. \\
+        & Es befinden sich $ID$.truth.kml Dateien im gleichen Verzeichnig wie Data.txt \\
  \hline
  Garantien & Sind OSM-Daten unvollständig, wird ein kreisförmiger Geltungsbereich angegeben.\\
-	  & Sind SURs unbekannt, gibt es dennoch eine Ausgabe.\\
-	  & TODO was, wenn es den Bilderordner nicht gibt?\\
+    & Sind SURs unbekannt, gibt es dennoch eine Ausgabe.\\
  \hline
  Erfolgsfall & Es wird eine kml-Datei mit dem berechneten Lösungspolygon im\\
-	    & angegebenen Verzeichnis erstellt.\\
-	    & Bilder werden im angegebenen Ordner erstellt.\\
+      & angegebenen Verzeichnis erstellt.\\
+      & Für jedes Polygon, keine Überlappung von mindestens 95\% oder in overlap.txt \\
+      & angegebenem Wert mit dem Lösungspolygon aufweist werden 2 Bilder erstellt,\\
+      & welche den Fehler visualisieren.\\
  \hline
  Auslöser & Der Befehl wird abgeschickt.\\
  \hline
  Beschreibung & Folgender Befehl wird abgeschickt.\\
-	    & \verb|java Start --data <file> --rules <file> --ouputDir <path>|\\
-	    & \hspace{24pt} \verb|--image <path> --width <int> --height <int>|\\
-	    & Daten werden von OSM herunter geladen.\\
-	    & Regeln werden angewendet.\\
-	    & Bilder der unzureichenden Lösungen werden erstellt.\\
-	    & Lösungen werden im KML-Format gespeichert.\\
+      & \verb|java Start --data <file> --rules <file>|\\
+      & \hspace{24pt} \verb|--ouputDir <path>|\\
+      & Daten werden von OSM herunter geladen.\\
+      & Regeln werden angewendet.\\
+      & Bilder zu den unzureichenden Lösungen werden gespeichert.\\
+      & Lösungen werden im KML-Format gespeichert.\\
  \hline
  Erweiterungen & -\\
  \hline
@@ -265,10 +213,9 @@
 \end{tabular}
 
 
-
 \begin{tabular}{| l | l |}
  \hline
- \textbf{Use Case Nr. 1.6} & Hilfetext\\
+ \textbf{Use Case Nr. 3} & Hilfetext\\
  \hline
  Umfeld & Kommandozeile\\
  \hline
