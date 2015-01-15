@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.1">
+<Document>
+<Style id="Poly1">
+<LineStyle>
+<color>7f00ff00</color>
+<width>2</width>
+</LineStyle>
+<PolyStyle>
+<color>7f00ff00</color>
+</PolyStyle>
+</Style>
+<Placemark>
+<name>InMa04</name>
+<description></description>
+<styleUrl>#Poly1</styleUrl>
+<Polygon>
+<altitudeMode>clampToGround</altitudeMode>
+<extrude>1</extrude>
+<tessellate>1</tessellate>
+<outerBoundaryIs>
+<LinearRing>
+<coordinates>
+9.667506217956543,52.348236083984375 
+9.668747901916504,52.34833526611328 
+9.668736457824707,52.348388671875 
+9.66938304901123,52.34843826293945 
+9.669392585754395,52.348392486572266 
+9.669450759887695,52.34839630126953 
+9.669489860534668,52.348209381103516 
+9.669427871704102,52.348201751708984 
+9.66943645477295,52.34815979003906 
+9.668438911437988,52.34808349609375 
+9.668429374694824,52.3481330871582 
+9.667542457580566,52.34806442260742 
+9.667506217956543,52.348236083984375 
+</coordinates>
+</LinearRing>
+</outerBoundaryIs>
+</Polygon>
+</Placemark>
+</Document>
+</kml>
