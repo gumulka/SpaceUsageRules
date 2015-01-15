@@ -1,0 +1,4978 @@
+0001 benutzt Regelset: [access:dog="no"] -> {amenity=0.9, building=0.8}
+----------
+<tag k="name" v="European long distance path E2 - part Belgium" />
+<tag k="name:be" v="Europese wandelroute E2, België" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Belgien" />
+<tag k="name:en" v="European long distance path E2 - part Belgium" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Belgique" />
+<tag k="name:nl" v="Europese wandelroute E2, België" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="operator:be" v="Grote Routepaden" />
+<tag k="operator:fr" v="Fédération Française de la Randonnée Pédestre" />
+<tag k="operator:lux" v="Département Du Tourisme" />
+<tag k="operator:nl" v="Stichting Wandelplatform" />
+<tag k="operator:uk" v="Long Distance Walkers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="superroute" />
+<tag k="website" v="http://www.era-ewv-ferp.com/index.php?topmenu_id=29&amp;id=29&amp;page_id=100&amp;module=text" />
+<tag k="wikipedia" v="de:Europäischer Fernwanderweg E2" />
+----------
+<tag k="colour" v="white-red" />
+<tag k="name" v="GR 5" />
+<tag k="name:fr" v="Mer du Nord - Riviera" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Fédération française de la randonnée pédestre" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+<tag k="wikipedia" v="en:GR 5" />
+----------
+<tag k="name" v="European long distance path E2, Vlaanderen" />
+<tag k="name:be" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Flandern" />
+<tag k="name:en" v="European long distance path E2, Fanders" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Flandre" />
+<tag k="name:nl" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="GR 5 Belgie, Vlaanderen" />
+<tag k="name:be" v="GR 5 België, Vlaanderen" />
+<tag k="name:de" v="GR 5 Belgien, Flandern" />
+<tag k="name:en" v="GR 5 Belgium, Fanders" />
+<tag k="name:fr" v="GR 5 Belgique, Flandre" />
+<tag k="name:nl" v="GR 5 België, Vlaanderen" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Grote Routepaden" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+0002 benutzt Regelset: [access:dog="no"] -> {amenity=0.9, building=0.8}
+0003 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="colour" v="#995511" />
+<tag k="name" v="Genk - Lutselus - Diepenbeek Universiteit - Hasselt" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="ref:De_Lijn" v="4036" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+0004 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maastricht Station perron M" />
+<tag k="name" v="De Lijn 45 Maastricht Station perron M - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Alken Kerk" />
+<tag k="name" v="De Lijn H2 Alken Kerk - Kiewit Kinderboerderij" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Kinderboerderij" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Café Ter Heide" />
+<tag k="name" v="De Lijn H2 Kiewit Café Ter Heide - Alken Kerk" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Alken Kerk" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Kiewit Rietstraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Rietstraat" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Kiewit Nobellaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Nobellaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Café Ter Heide" />
+<tag k="name" v="De Lijn H2 Kiewit Café Ter Heide - Alken Terkoest" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Alken Terkoest" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Kiewit Nobellaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Nobellaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn H3 Hasselt Handelsschool - Kiewit Rietstraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Rietstraat" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="evening" />
+<tag k="from" v="Hasselt Station perron 2" />
+<tag k="name" v="De Lijn H6 Avondlijn" />
+<tag k="opening_hours" v="mo-su 19:45-23:02" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H6" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 2" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 20" />
+<tag k="name" v="De Lijn H5 Singellijn Zuid" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H5" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 20" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Stokrooie Beuzestraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Stokrooie Beuzestraat" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 19" />
+<tag k="name" v="De Lijn BP Boulevardpendel" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="BP" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 19" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maastricht Station perron L" />
+<tag k="name" v="De Lijn 20a Maastricht Station perron L - Hasselt Station perron 10" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 10" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station perron 10 - Maastricht Station perron L" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron L" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#BB0022" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="ref:De_Lijn" v="4001" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maastricht Station perron M" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron M" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#995511" />
+<tag k="name" v="Genk - Lutselus - Diepenbeek Universiteit - Hasselt" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="ref:De_Lijn" v="4036" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="name" v="Hasselt Station - Hasselt Dussartplein" />
+<tag k="route" v="segment" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station - Bilzen Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Bilzen Station perron 1" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station - Hoeselt Grot" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hoeselt Grot" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Beringen Oude Lummenseweg" />
+<tag k="name" v="De Lijn 29 Beringen Oude Lummenseweg - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="29" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 29 Hasselt Station - Beringen Oude Lummenseweg" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="29" />
+<tag k="route" v="bus" />
+<tag k="to" v="Beringen Oude Lummenseweg" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="Hasselt - Leopoldsburg" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="29" />
+<tag k="ref:De_Lijn" v="4029" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#EE8822" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="ref:De_Lijn" v="4002" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Beringen Busstation perron 3" />
+<tag k="name" v="De Lijn 2 Beringen Busstation - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#DD0077" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="ref:De_Lijn" v="4003" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Kiewit Nieuwe-Heidestraat KIDS" />
+<tag k="name" v="De Lijn 1 Kiewit Nieuwe-Heidestraat KIDS - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 11" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#FF88AA" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="ref:De_Lijn" v="4016" />
+<tag k="route_master" v="bus" />
+<tag k="text_colour" v="#000000" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 11" />
+<tag k="name" v="De Lijn 1 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 11" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#BBDD00" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="5" />
+<tag k="ref:De_Lijn" v="4005" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 5 Hasselt Handelsschool - Sint-Truiden Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="5" />
+<tag k="route" v="bus" />
+<tag k="to" v="Sint-Truiden Station perron 1" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 3 Hasselt Handelsschool - Kortessem Weg naar Wellen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kortessem Weg naar Wellen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 3 Hasselt Handelsschool - Heers Weg naar Waremme" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Heers Weg naar Waremme" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Wellen Gemeentehuis" />
+<tag k="name" v="De Lijn 3 Wellen Gemeentehuis - Hasselt Handelsschool" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Handelsschool" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 16 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#1199DD" />
+<tag k="name" v="Boulevardpendel" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="BP" />
+<tag k="ref:De_Lijn" v="4513" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#1199DD" />
+<tag k="name" v="Genk - Overpelt" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="8" />
+<tag k="ref:De_Lijn" v="4008" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#1199DD" />
+<tag k="name" v="Hasselt - Stevoort - Sint-Truiden" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="105" />
+<tag k="ref:De_Lijn" v="4105" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 105 Hasselt Handelsschool - Sint-Truiden Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="105" />
+<tag k="route" v="bus" />
+<tag k="to" v="Sint-Truiden Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#005555" />
+<tag k="name" v="Hasselt - Diest / Tessenderlo" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="35c" />
+<tag k="ref:De_Lijn" v="4353" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Maastricht Station perron M" />
+<tag k="name" v="De Lijn 45 Maastricht Station perron M - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="colour" v="#005555" />
+<tag k="name" v="Hasselt - Genk - Maaseik sneldienst" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="ref:De_Lijn" v="4111" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maastricht Station perron M" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron M" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#C5AA77" />
+<tag k="name" v="Genk - As - Neeroeteren - Maaseik" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="ref:De_Lijn" v="4011" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#AACCEE" />
+<tag k="name" v="Kiewit Domein - Hasselt Station - Sint-Lambrechts-Herk - Alken / Terkoest" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="ref:De_Lijn" v="4502" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#77CCAA" />
+<tag k="name" v="Godsheide - Hasselt - Stokrooie / Kiewit" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="ref:De_Lijn" v="4503" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#FF88AA" />
+<tag k="name" v="Singellijn Zuid" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H5" />
+<tag k="ref:De_Lijn" v="4505" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#0044BB" />
+<tag k="name" v="Avondlijn" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H6" />
+<tag k="ref:De_Lijn" v="4506" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#991199" />
+<tag k="name" v="Rapertingen Langveldstraat - Hasselt Wolske - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H9" />
+<tag k="ref:De_Lijn" v="4509" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#DD0077" />
+<tag k="name" v="Hasselt - Diepenbeek Universiteit - Genk - Maaseik / Maastricht" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="ref:De_Lijn" v="4045" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 16 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Hasselt Station perron 14" />
+<tag k="name" v="De Lijn 11 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 3 Hasselt Handelsschool - Kortessem Weg naar Wellen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kortessem Weg naar Wellen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 35c Hasselt Handelsschool - Diest Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="35c" />
+<tag k="route" v="bus" />
+<tag k="to" v="Diest Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Sint-Truiden Station perron 7" />
+<tag k="name" v="De Lijn 105 Sint-Truiden Station - Hasselt Dusartplein" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="105" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Dusartplein" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maastricht Station perron M" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron M" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Nobellaan" />
+<tag k="name" v="De Lijn H3 Kiewit Nobellaan - Godsheide Kapelveld" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Godsheide Kapelveld" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Nobellaan" />
+<tag k="name" v="De Lijn H3 Kiewit Nobellaan - Godsheide Kapelveld" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Godsheide Kapelveld" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Zwartberg Omlooplaan" />
+<tag k="name" v="De Lijn 1 Zwartberg Omlooplaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="public_transport:version" v="2" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 11" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 2" />
+<tag k="name" v="De Lijn H9 Hasselt Station - Hasselt Langveldstraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H9" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Langveldstraat" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Stokrooie Beuzestraat" />
+<tag k="name" v="De Lijn H3 Stokrooie Beuzestraat - Godsheide Kapelveld" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Godsheide Kapelveld" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maastricht Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron M" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maastricht Station perron M" />
+<tag k="name" v="De Lijn 45 Maastricht Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 14" />
+<tag k="name" v="De Lijn 8 Hasselt Station - Overpelt Kiosk" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="8" />
+<tag k="route" v="bus" />
+<tag k="to" v="Overpelt Kiosk" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station - Maastricht Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron L" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station - Rekem Daelwezeth" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Rekem Daelwezeth" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Rekem Daelwezeth" />
+<tag k="name" v="De Lijn 20a Rekem Daelwezeth - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 10" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Waterleliestraat" />
+<tag k="name" v="De Lijn H3 Kiewit Waterleliestraat - Godsheide Kapelveld" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Godsheide Kapelveld" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 11" />
+<tag k="name" v="De Lijn 1 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 11" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 11" />
+<tag k="name" v="De Lijn 1 Hasselt Station - Kiewit Nieuwe-Heidestraat KIDS" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Nieuwe-Heidestraat KIDS" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Alken Terkoest" />
+<tag k="name" v="De Lijn H2 Alken Terkoest - Kiewit Café Ter Heide" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Café Ter Heide" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 16 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 16 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Heusden Kerk" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Heusden Kerk" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+0005 benutzt Regelset: [food="no"] -> {building - yes=0.5}
+----------
+<tag k="name" v="European long distance path E2 - part Belgium" />
+<tag k="name:be" v="Europese wandelroute E2, België" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Belgien" />
+<tag k="name:en" v="European long distance path E2 - part Belgium" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Belgique" />
+<tag k="name:nl" v="Europese wandelroute E2, België" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="operator:be" v="Grote Routepaden" />
+<tag k="operator:fr" v="Fédération Française de la Randonnée Pédestre" />
+<tag k="operator:lux" v="Département Du Tourisme" />
+<tag k="operator:nl" v="Stichting Wandelplatform" />
+<tag k="operator:uk" v="Long Distance Walkers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="superroute" />
+<tag k="website" v="http://www.era-ewv-ferp.com/index.php?topmenu_id=29&amp;id=29&amp;page_id=100&amp;module=text" />
+<tag k="wikipedia" v="de:Europäischer Fernwanderweg E2" />
+----------
+<tag k="colour" v="white-red" />
+<tag k="name" v="GR 5" />
+<tag k="name:fr" v="Mer du Nord - Riviera" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Fédération française de la randonnée pédestre" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+<tag k="wikipedia" v="en:GR 5" />
+----------
+<tag k="name" v="European long distance path E2, Vlaanderen" />
+<tag k="name:be" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Flandern" />
+<tag k="name:en" v="European long distance path E2, Fanders" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Flandre" />
+<tag k="name:nl" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="GR 5 Belgie, Vlaanderen" />
+<tag k="name:be" v="GR 5 België, Vlaanderen" />
+<tag k="name:de" v="GR 5 Belgien, Flandern" />
+<tag k="name:en" v="GR 5 Belgium, Fanders" />
+<tag k="name:fr" v="GR 5 Belgique, Flandre" />
+<tag k="name:nl" v="GR 5 België, Vlaanderen" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Grote Routepaden" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+0006 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maastricht Station perron M" />
+<tag k="name" v="De Lijn 45 Maastricht Station perron M - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Alken Kerk" />
+<tag k="name" v="De Lijn H2 Alken Kerk - Kiewit Kinderboerderij" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Kinderboerderij" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Café Ter Heide" />
+<tag k="name" v="De Lijn H2 Kiewit Café Ter Heide - Alken Kerk" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Alken Kerk" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Kiewit Rietstraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Rietstraat" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Kiewit Nobellaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Nobellaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Café Ter Heide" />
+<tag k="name" v="De Lijn H2 Kiewit Café Ter Heide - Alken Terkoest" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Alken Terkoest" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Kiewit Nobellaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Nobellaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn H3 Hasselt Handelsschool - Kiewit Rietstraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Rietstraat" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="evening" />
+<tag k="from" v="Hasselt Station perron 2" />
+<tag k="name" v="De Lijn H6 Avondlijn" />
+<tag k="opening_hours" v="mo-su 19:45-23:02" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H6" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 2" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 20" />
+<tag k="name" v="De Lijn H5 Singellijn Zuid" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H5" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 20" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Stokrooie Beuzestraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Stokrooie Beuzestraat" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 19" />
+<tag k="name" v="De Lijn BP Boulevardpendel" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="BP" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 19" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maastricht Station perron L" />
+<tag k="name" v="De Lijn 20a Maastricht Station perron L - Hasselt Station perron 10" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 10" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station perron 10 - Maastricht Station perron L" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron L" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#BB0022" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="ref:De_Lijn" v="4001" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maastricht Station perron M" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron M" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#995511" />
+<tag k="name" v="Genk - Lutselus - Diepenbeek Universiteit - Hasselt" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="ref:De_Lijn" v="4036" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="name" v="Hasselt Station - Hasselt Dussartplein" />
+<tag k="route" v="segment" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station - Bilzen Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Bilzen Station perron 1" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station - Hoeselt Grot" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hoeselt Grot" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Beringen Oude Lummenseweg" />
+<tag k="name" v="De Lijn 29 Beringen Oude Lummenseweg - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="29" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 29 Hasselt Station - Beringen Oude Lummenseweg" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="29" />
+<tag k="route" v="bus" />
+<tag k="to" v="Beringen Oude Lummenseweg" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="Hasselt - Leopoldsburg" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="29" />
+<tag k="ref:De_Lijn" v="4029" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#EE8822" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="ref:De_Lijn" v="4002" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Beringen Busstation perron 3" />
+<tag k="name" v="De Lijn 2 Beringen Busstation - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#DD0077" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="ref:De_Lijn" v="4003" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Kiewit Nieuwe-Heidestraat KIDS" />
+<tag k="name" v="De Lijn 1 Kiewit Nieuwe-Heidestraat KIDS - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 11" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#FF88AA" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="ref:De_Lijn" v="4016" />
+<tag k="route_master" v="bus" />
+<tag k="text_colour" v="#000000" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 11" />
+<tag k="name" v="De Lijn 1 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 11" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#BBDD00" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="5" />
+<tag k="ref:De_Lijn" v="4005" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 5 Hasselt Handelsschool - Sint-Truiden Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="5" />
+<tag k="route" v="bus" />
+<tag k="to" v="Sint-Truiden Station perron 1" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 3 Hasselt Handelsschool - Kortessem Weg naar Wellen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kortessem Weg naar Wellen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 3 Hasselt Handelsschool - Heers Weg naar Waremme" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Heers Weg naar Waremme" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Wellen Gemeentehuis" />
+<tag k="name" v="De Lijn 3 Wellen Gemeentehuis - Hasselt Handelsschool" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Handelsschool" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 16 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#1199DD" />
+<tag k="name" v="Boulevardpendel" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="BP" />
+<tag k="ref:De_Lijn" v="4513" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#1199DD" />
+<tag k="name" v="Genk - Overpelt" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="8" />
+<tag k="ref:De_Lijn" v="4008" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#1199DD" />
+<tag k="name" v="Hasselt - Stevoort - Sint-Truiden" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="105" />
+<tag k="ref:De_Lijn" v="4105" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 105 Hasselt Handelsschool - Sint-Truiden Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="105" />
+<tag k="route" v="bus" />
+<tag k="to" v="Sint-Truiden Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#005555" />
+<tag k="name" v="Hasselt - Diest / Tessenderlo" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="35c" />
+<tag k="ref:De_Lijn" v="4353" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Maastricht Station perron M" />
+<tag k="name" v="De Lijn 45 Maastricht Station perron M - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="colour" v="#005555" />
+<tag k="name" v="Hasselt - Genk - Maaseik sneldienst" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="ref:De_Lijn" v="4111" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maastricht Station perron M" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron M" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#C5AA77" />
+<tag k="name" v="Genk - As - Neeroeteren - Maaseik" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="ref:De_Lijn" v="4011" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#AACCEE" />
+<tag k="name" v="Kiewit Domein - Hasselt Station - Sint-Lambrechts-Herk - Alken / Terkoest" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="ref:De_Lijn" v="4502" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#77CCAA" />
+<tag k="name" v="Godsheide - Hasselt - Stokrooie / Kiewit" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="ref:De_Lijn" v="4503" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#FF88AA" />
+<tag k="name" v="Singellijn Zuid" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H5" />
+<tag k="ref:De_Lijn" v="4505" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#0044BB" />
+<tag k="name" v="Avondlijn" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H6" />
+<tag k="ref:De_Lijn" v="4506" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#991199" />
+<tag k="name" v="Rapertingen Langveldstraat - Hasselt Wolske - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H9" />
+<tag k="ref:De_Lijn" v="4509" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#DD0077" />
+<tag k="name" v="Hasselt - Diepenbeek Universiteit - Genk - Maaseik / Maastricht" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="ref:De_Lijn" v="4045" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 16 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Hasselt Station perron 14" />
+<tag k="name" v="De Lijn 11 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 3 Hasselt Handelsschool - Kortessem Weg naar Wellen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kortessem Weg naar Wellen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 35c Hasselt Handelsschool - Diest Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="35c" />
+<tag k="route" v="bus" />
+<tag k="to" v="Diest Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Sint-Truiden Station perron 7" />
+<tag k="name" v="De Lijn 105 Sint-Truiden Station - Hasselt Dusartplein" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="105" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Dusartplein" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maastricht Station perron M" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron M" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Nobellaan" />
+<tag k="name" v="De Lijn H3 Kiewit Nobellaan - Godsheide Kapelveld" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Godsheide Kapelveld" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Nobellaan" />
+<tag k="name" v="De Lijn H3 Kiewit Nobellaan - Godsheide Kapelveld" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Godsheide Kapelveld" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Zwartberg Omlooplaan" />
+<tag k="name" v="De Lijn 1 Zwartberg Omlooplaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="public_transport:version" v="2" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 11" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 2" />
+<tag k="name" v="De Lijn H9 Hasselt Station - Hasselt Langveldstraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H9" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Langveldstraat" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Stokrooie Beuzestraat" />
+<tag k="name" v="De Lijn H3 Stokrooie Beuzestraat - Godsheide Kapelveld" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Godsheide Kapelveld" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maastricht Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron M" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maastricht Station perron M" />
+<tag k="name" v="De Lijn 45 Maastricht Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 14" />
+<tag k="name" v="De Lijn 8 Hasselt Station - Overpelt Kiosk" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="8" />
+<tag k="route" v="bus" />
+<tag k="to" v="Overpelt Kiosk" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station - Maastricht Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron L" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station - Rekem Daelwezeth" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Rekem Daelwezeth" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Rekem Daelwezeth" />
+<tag k="name" v="De Lijn 20a Rekem Daelwezeth - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 10" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Waterleliestraat" />
+<tag k="name" v="De Lijn H3 Kiewit Waterleliestraat - Godsheide Kapelveld" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Godsheide Kapelveld" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 11" />
+<tag k="name" v="De Lijn 1 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 11" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 11" />
+<tag k="name" v="De Lijn 1 Hasselt Station - Kiewit Nieuwe-Heidestraat KIDS" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Nieuwe-Heidestraat KIDS" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Alken Terkoest" />
+<tag k="name" v="De Lijn H2 Alken Terkoest - Kiewit Café Ter Heide" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Café Ter Heide" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 16 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 16 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Heusden Kerk" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Heusden Kerk" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+0007 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="name" v="De Lijn 20a" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maastricht Station perron L" />
+<tag k="name" v="De Lijn 20a Maastricht Station perron L - Hasselt Station perron 10" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 10" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station perron 10 - Maastricht Station perron L" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron L" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#995511" />
+<tag k="name" v="Genk - Lutselus - Diepenbeek Universiteit - Hasselt" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="ref:De_Lijn" v="4036" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station - Maastricht Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron L" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="Hasselt - Bilzen - Maastricht/Lanaken - Rekem" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="ref:De_Lijn" v="4201" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+0008 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="from" v="Hasselt Alverberg" />
+<tag k="name" v="De Lijn H8 Hasselt Alverberg - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H8" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 2" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 19" />
+<tag k="name" v="De Lijn CP Hasselt Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="CP" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 19" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#995511" />
+<tag k="name" v="Runkst - Grote Markt - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H7" />
+<tag k="ref:De_Lijn" v="4507" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Runkst Veldstraat" />
+<tag k="name" v="De Lijn H7 Runkst Veldstraat - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H7" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 2" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#C5AA77" />
+<tag k="name" v="Heilig Hartwijk - Grote Markt - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H8" />
+<tag k="ref:De_Lijn" v="4508" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#FFCC11" />
+<tag k="name" v="Centrumpendel" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="CP" />
+<tag k="ref:De_Lijn" v="4510" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="name" v="European long distance path E2 - part Belgium" />
+<tag k="name:be" v="Europese wandelroute E2, België" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Belgien" />
+<tag k="name:en" v="European long distance path E2 - part Belgium" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Belgique" />
+<tag k="name:nl" v="Europese wandelroute E2, België" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="operator:be" v="Grote Routepaden" />
+<tag k="operator:fr" v="Fédération Française de la Randonnée Pédestre" />
+<tag k="operator:lux" v="Département Du Tourisme" />
+<tag k="operator:nl" v="Stichting Wandelplatform" />
+<tag k="operator:uk" v="Long Distance Walkers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="superroute" />
+<tag k="website" v="http://www.era-ewv-ferp.com/index.php?topmenu_id=29&amp;id=29&amp;page_id=100&amp;module=text" />
+<tag k="wikipedia" v="de:Europäischer Fernwanderweg E2" />
+----------
+<tag k="colour" v="white-red" />
+<tag k="name" v="GR 5" />
+<tag k="name:fr" v="Mer du Nord - Riviera" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Fédération française de la randonnée pédestre" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+<tag k="wikipedia" v="en:GR 5" />
+----------
+<tag k="name" v="European long distance path E2, Vlaanderen" />
+<tag k="name:be" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Flandern" />
+<tag k="name:en" v="European long distance path E2, Fanders" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Flandre" />
+<tag k="name:nl" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="GR 5 Belgie, Vlaanderen" />
+<tag k="name:be" v="GR 5 België, Vlaanderen" />
+<tag k="name:de" v="GR 5 Belgien, Flandern" />
+<tag k="name:en" v="GR 5 Belgium, Fanders" />
+<tag k="name:fr" v="GR 5 Belgique, Flandre" />
+<tag k="name:nl" v="GR 5 België, Vlaanderen" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Grote Routepaden" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+0009 benutzt Regelset: [access:dog="no"] -> {amenity=0.9, building=0.8}
+0010 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="from" v="Spalbeek Oudestraat" />
+<tag k="name" v="De Lijn H1 Spalbeek Oudestraat - Rapertingen Henegauwlaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Rapertingen Henegauwlaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Rapertingen Henegauwlaan" />
+<tag k="name" v="De Lijn H1 Rapertingen Henegauwlaan - Spalbeek Oudestraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Spalbeek Oudestraat" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#EE8822" />
+<tag k="name" v="Henegouwberg - Ziekenhuizen - Hasselt Station - Kermt - Spalbeek" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H1" />
+<tag k="ref:De_Lijn" v="4501" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+0011 benutzt Regelset: [dog_waste="no", littering="no", noise="no"] -> {landuse - recreation_ground=0.8}
+0012 benutzt Regelset: [dog_waste="no", littering="no", noise="no"] -> {landuse - recreation_ground=0.8}
+0013 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="type" v="multipolygon" />
+0014 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="name" v="European long distance path E2 - part Belgium" />
+<tag k="name:be" v="Europese wandelroute E2, België" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Belgien" />
+<tag k="name:en" v="European long distance path E2 - part Belgium" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Belgique" />
+<tag k="name:nl" v="Europese wandelroute E2, België" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="operator:be" v="Grote Routepaden" />
+<tag k="operator:fr" v="Fédération Française de la Randonnée Pédestre" />
+<tag k="operator:lux" v="Département Du Tourisme" />
+<tag k="operator:nl" v="Stichting Wandelplatform" />
+<tag k="operator:uk" v="Long Distance Walkers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="superroute" />
+<tag k="website" v="http://www.era-ewv-ferp.com/index.php?topmenu_id=29&amp;id=29&amp;page_id=100&amp;module=text" />
+<tag k="wikipedia" v="de:Europäischer Fernwanderweg E2" />
+----------
+<tag k="colour" v="white-red" />
+<tag k="name" v="GR 5" />
+<tag k="name:fr" v="Mer du Nord - Riviera" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Fédération française de la randonnée pédestre" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+<tag k="wikipedia" v="en:GR 5" />
+----------
+<tag k="name" v="European long distance path E2, Vlaanderen" />
+<tag k="name:be" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Flandern" />
+<tag k="name:en" v="European long distance path E2, Fanders" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Flandre" />
+<tag k="name:nl" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="GR 5 Belgie, Vlaanderen" />
+<tag k="name:be" v="GR 5 België, Vlaanderen" />
+<tag k="name:de" v="GR 5 Belgien, Flandern" />
+<tag k="name:en" v="GR 5 Belgium, Fanders" />
+<tag k="name:fr" v="GR 5 Belgique, Flandre" />
+<tag k="name:nl" v="GR 5 België, Vlaanderen" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Grote Routepaden" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+0015 benutzt Regelset: [food="no"] -> {building - yes=0.5}
+----------
+<tag k="from" v="Hasselt Alverberg" />
+<tag k="name" v="De Lijn H8 Hasselt Alverberg - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H8" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 2" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 19" />
+<tag k="name" v="De Lijn CP Hasselt Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="CP" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 19" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#995511" />
+<tag k="name" v="Runkst - Grote Markt - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H7" />
+<tag k="ref:De_Lijn" v="4507" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Runkst Veldstraat" />
+<tag k="name" v="De Lijn H7 Runkst Veldstraat - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H7" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 2" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#C5AA77" />
+<tag k="name" v="Heilig Hartwijk - Grote Markt - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H8" />
+<tag k="ref:De_Lijn" v="4508" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#FFCC11" />
+<tag k="name" v="Centrumpendel" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="CP" />
+<tag k="ref:De_Lijn" v="4510" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="name" v="European long distance path E2 - part Belgium" />
+<tag k="name:be" v="Europese wandelroute E2, België" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Belgien" />
+<tag k="name:en" v="European long distance path E2 - part Belgium" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Belgique" />
+<tag k="name:nl" v="Europese wandelroute E2, België" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="operator:be" v="Grote Routepaden" />
+<tag k="operator:fr" v="Fédération Française de la Randonnée Pédestre" />
+<tag k="operator:lux" v="Département Du Tourisme" />
+<tag k="operator:nl" v="Stichting Wandelplatform" />
+<tag k="operator:uk" v="Long Distance Walkers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="superroute" />
+<tag k="website" v="http://www.era-ewv-ferp.com/index.php?topmenu_id=29&amp;id=29&amp;page_id=100&amp;module=text" />
+<tag k="wikipedia" v="de:Europäischer Fernwanderweg E2" />
+----------
+<tag k="colour" v="white-red" />
+<tag k="name" v="GR 5" />
+<tag k="name:fr" v="Mer du Nord - Riviera" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Fédération française de la randonnée pédestre" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+<tag k="wikipedia" v="en:GR 5" />
+----------
+<tag k="name" v="European long distance path E2, Vlaanderen" />
+<tag k="name:be" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Flandern" />
+<tag k="name:en" v="European long distance path E2, Fanders" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Flandre" />
+<tag k="name:nl" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="GR 5 Belgie, Vlaanderen" />
+<tag k="name:be" v="GR 5 België, Vlaanderen" />
+<tag k="name:de" v="GR 5 Belgien, Flandern" />
+<tag k="name:en" v="GR 5 Belgium, Fanders" />
+<tag k="name:fr" v="GR 5 Belgique, Flandre" />
+<tag k="name:nl" v="GR 5 België, Vlaanderen" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Grote Routepaden" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+0016 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="type" v="multipolygon" />
+----------
+<tag k="name" v="De Lijn 20a" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maastricht Station perron L" />
+<tag k="name" v="De Lijn 20a Maastricht Station perron L - Hasselt Station perron 10" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 10" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station perron 10 - Maastricht Station perron L" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron L" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#995511" />
+<tag k="name" v="Genk - Lutselus - Diepenbeek Universiteit - Hasselt" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="ref:De_Lijn" v="4036" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station - Maastricht Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron L" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="Hasselt - Bilzen - Maastricht/Lanaken - Rekem" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="ref:De_Lijn" v="4201" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+0017 benutzt Regelset: [swimming="no"] -> {natural - water=0.5, water - pond=0.5}
+----------
+<tag k="landuse" v="grass" />
+<tag k="type" v="multipolygon" />
+----------
+<tag k="distance" v="164Km" />
+<tag k="name" v="GR564 Kempen - Condroz" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="SGR asbl" />
+<tag k="osmc:symbol" v="red:white:red_lower:564:black" />
+<tag k="ref" v="GR 564" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+<tag k="website" v="http://www.grsentiers.org/cgi-bin/topog/gr564.php" />
+0018 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="type" v="multipolygon" />
+0019 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="type" v="multipolygon" />
+0020 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="network" v="rcn" />
+<tag k="note" v="96-97" />
+<tag k="route" v="bicycle" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maastricht Station perron M" />
+<tag k="name" v="De Lijn 45 Maastricht Station perron M - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Café Ter Heide" />
+<tag k="name" v="De Lijn H2 Kiewit Café Ter Heide - Alken Kerk" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Alken Kerk" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Kiewit Rietstraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Rietstraat" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Kiewit Nobellaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Nobellaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Café Ter Heide" />
+<tag k="name" v="De Lijn H2 Kiewit Café Ter Heide - Alken Terkoest" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Alken Terkoest" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Kiewit Nobellaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Nobellaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn H3 Hasselt Handelsschool - Kiewit Rietstraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Rietstraat" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="evening" />
+<tag k="from" v="Hasselt Station perron 2" />
+<tag k="name" v="De Lijn H6 Avondlijn" />
+<tag k="opening_hours" v="mo-su 19:45-23:02" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H6" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 2" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Stokrooie Beuzestraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Stokrooie Beuzestraat" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 19" />
+<tag k="name" v="De Lijn BP Boulevardpendel" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="BP" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 19" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maastricht Station perron L" />
+<tag k="name" v="De Lijn 20a Maastricht Station perron L - Hasselt Station perron 10" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 10" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#BB0022" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="ref:De_Lijn" v="4001" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#995511" />
+<tag k="name" v="Genk - Lutselus - Diepenbeek Universiteit - Hasselt" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="ref:De_Lijn" v="4036" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Beringen Oude Lummenseweg" />
+<tag k="name" v="De Lijn 29 Beringen Oude Lummenseweg - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="29" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="Hasselt - Leopoldsburg" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="29" />
+<tag k="ref:De_Lijn" v="4029" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#EE8822" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="ref:De_Lijn" v="4002" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Beringen Busstation perron 3" />
+<tag k="name" v="De Lijn 2 Beringen Busstation - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#DD0077" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="ref:De_Lijn" v="4003" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Kiewit Nieuwe-Heidestraat KIDS" />
+<tag k="name" v="De Lijn 1 Kiewit Nieuwe-Heidestraat KIDS - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 11" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#FF88AA" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="ref:De_Lijn" v="4016" />
+<tag k="route_master" v="bus" />
+<tag k="text_colour" v="#000000" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#BBDD00" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="5" />
+<tag k="ref:De_Lijn" v="4005" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 5 Hasselt Handelsschool - Sint-Truiden Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="5" />
+<tag k="route" v="bus" />
+<tag k="to" v="Sint-Truiden Station perron 1" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 3 Hasselt Handelsschool - Kortessem Weg naar Wellen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kortessem Weg naar Wellen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 3 Hasselt Handelsschool - Heers Weg naar Waremme" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Heers Weg naar Waremme" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#1199DD" />
+<tag k="name" v="Boulevardpendel" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="BP" />
+<tag k="ref:De_Lijn" v="4513" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#1199DD" />
+<tag k="name" v="Genk - Overpelt" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="8" />
+<tag k="ref:De_Lijn" v="4008" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#1199DD" />
+<tag k="name" v="Hasselt - Stevoort - Sint-Truiden" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="105" />
+<tag k="ref:De_Lijn" v="4105" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 105 Hasselt Handelsschool - Sint-Truiden Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="105" />
+<tag k="route" v="bus" />
+<tag k="to" v="Sint-Truiden Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#005555" />
+<tag k="name" v="Hasselt - Diest / Tessenderlo" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="35c" />
+<tag k="ref:De_Lijn" v="4353" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Maastricht Station perron M" />
+<tag k="name" v="De Lijn 45 Maastricht Station perron M - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="colour" v="#005555" />
+<tag k="name" v="Hasselt - Genk - Maaseik sneldienst" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="ref:De_Lijn" v="4111" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#C5AA77" />
+<tag k="name" v="Genk - As - Neeroeteren - Maaseik" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="ref:De_Lijn" v="4011" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#AACCEE" />
+<tag k="name" v="Kiewit Domein - Hasselt Station - Sint-Lambrechts-Herk - Alken / Terkoest" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="ref:De_Lijn" v="4502" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#77CCAA" />
+<tag k="name" v="Godsheide - Hasselt - Stokrooie / Kiewit" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="ref:De_Lijn" v="4503" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#0044BB" />
+<tag k="name" v="Avondlijn" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H6" />
+<tag k="ref:De_Lijn" v="4506" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#DD0077" />
+<tag k="name" v="Hasselt - Diepenbeek Universiteit - Genk - Maaseik / Maastricht" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="ref:De_Lijn" v="4045" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 3 Hasselt Handelsschool - Kortessem Weg naar Wellen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kortessem Weg naar Wellen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 35c Hasselt Handelsschool - Diest Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="35c" />
+<tag k="route" v="bus" />
+<tag k="to" v="Diest Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Zwartberg Omlooplaan" />
+<tag k="name" v="De Lijn 1 Zwartberg Omlooplaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="public_transport:version" v="2" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 11" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maastricht Station perron M" />
+<tag k="name" v="De Lijn 45 Maastricht Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 11" />
+<tag k="name" v="De Lijn 1 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 11" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 16 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Gruitrode Centrum" />
+<tag k="name" v="De Lijn 8 Gruitrode Centrum - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="8" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 14" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Louwel Weg naar Dorne" />
+<tag k="name" v="De Lijn 8 Louwel Weg naar Dorne - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="8" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 14" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kaulille Kerk" />
+<tag k="name" v="De Lijn 8 Kaulille Kerk - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="8" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 14" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Overpelt Kiosk" />
+<tag k="name" v="De Lijn 8 Overpelt Kiosk - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="8" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 14" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 16 Maaseik - Kinrooi - Meeuwen-Gruitrode - Hasselt" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Heppen Kerk" />
+<tag k="name" v="De Lijn 29 Heppen Kerk - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="29" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Lommel WICO Campus St.-Jozef" />
+<tag k="name" v="De Lijn 29 Lommel WICO Campus St.-Jozef - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="29" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="Hasselt - Bilzen - Maastricht/Lanaken - Rekem" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="ref:De_Lijn" v="4201" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 11 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 14" />
+<tag k="type" v="route" />
+----------
+<tag k="addr:country" v="BE" />
+<tag k="addr:province" v="Limburg" />
+<tag k="name" v="Fietsroutenetwerk B Limburg" />
+<tag k="network" v="rcn" />
+<tag k="network:name" v="Limburg" />
+<tag k="operator" v="Toerisme Limburg" />
+<tag k="ref" v="Lim" />
+<tag k="route" v="bicycle" />
+<tag k="type" v="network" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 11 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 14" />
+<tag k="type" v="route" />
+0021 benutzt Regelset: [access:dog="no"] -> {amenity=0.9, building=0.8}
+0022 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="type" v="multipolygon" />
+0023 benutzt Regelset: [access:dog="no"] -> {amenity=0.9, building=0.8}
+----------
+<tag k="name" v="European long distance path E2 - part Belgium" />
+<tag k="name:be" v="Europese wandelroute E2, België" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Belgien" />
+<tag k="name:en" v="European long distance path E2 - part Belgium" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Belgique" />
+<tag k="name:nl" v="Europese wandelroute E2, België" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="operator:be" v="Grote Routepaden" />
+<tag k="operator:fr" v="Fédération Française de la Randonnée Pédestre" />
+<tag k="operator:lux" v="Département Du Tourisme" />
+<tag k="operator:nl" v="Stichting Wandelplatform" />
+<tag k="operator:uk" v="Long Distance Walkers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="superroute" />
+<tag k="website" v="http://www.era-ewv-ferp.com/index.php?topmenu_id=29&amp;id=29&amp;page_id=100&amp;module=text" />
+<tag k="wikipedia" v="de:Europäischer Fernwanderweg E2" />
+----------
+<tag k="colour" v="white-red" />
+<tag k="name" v="GR 5" />
+<tag k="name:fr" v="Mer du Nord - Riviera" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Fédération française de la randonnée pédestre" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+<tag k="wikipedia" v="en:GR 5" />
+----------
+<tag k="name" v="European long distance path E2, Vlaanderen" />
+<tag k="name:be" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Flandern" />
+<tag k="name:en" v="European long distance path E2, Fanders" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Flandre" />
+<tag k="name:nl" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="GR 5 Belgie, Vlaanderen" />
+<tag k="name:be" v="GR 5 België, Vlaanderen" />
+<tag k="name:de" v="GR 5 Belgien, Flandern" />
+<tag k="name:en" v="GR 5 Belgium, Fanders" />
+<tag k="name:fr" v="GR 5 Belgique, Flandre" />
+<tag k="name:nl" v="GR 5 België, Vlaanderen" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Grote Routepaden" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+0025 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+0026 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="type" v="multipolygon" />
+0027 benutzt Regelset: [parking="no"] -> {name=0.5}
+0029 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+0030 benutzt Regelset: [access:dog="no"] -> {amenity=0.9, building=0.8}
+0032 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="name" v="European long distance path E2 - part Belgium" />
+<tag k="name:be" v="Europese wandelroute E2, België" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Belgien" />
+<tag k="name:en" v="European long distance path E2 - part Belgium" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Belgique" />
+<tag k="name:nl" v="Europese wandelroute E2, België" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="operator:be" v="Grote Routepaden" />
+<tag k="operator:fr" v="Fédération Française de la Randonnée Pédestre" />
+<tag k="operator:lux" v="Département Du Tourisme" />
+<tag k="operator:nl" v="Stichting Wandelplatform" />
+<tag k="operator:uk" v="Long Distance Walkers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="superroute" />
+<tag k="website" v="http://www.era-ewv-ferp.com/index.php?topmenu_id=29&amp;id=29&amp;page_id=100&amp;module=text" />
+<tag k="wikipedia" v="de:Europäischer Fernwanderweg E2" />
+----------
+<tag k="colour" v="white-red" />
+<tag k="name" v="GR 5" />
+<tag k="name:fr" v="Mer du Nord - Riviera" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Fédération française de la randonnée pédestre" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+<tag k="wikipedia" v="en:GR 5" />
+----------
+<tag k="name" v="European long distance path E2, Vlaanderen" />
+<tag k="name:be" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Flandern" />
+<tag k="name:en" v="European long distance path E2, Fanders" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Flandre" />
+<tag k="name:nl" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="GR 5 Belgie, Vlaanderen" />
+<tag k="name:be" v="GR 5 België, Vlaanderen" />
+<tag k="name:de" v="GR 5 Belgien, Flandern" />
+<tag k="name:en" v="GR 5 Belgium, Fanders" />
+<tag k="name:fr" v="GR 5 Belgique, Flandre" />
+<tag k="name:nl" v="GR 5 België, Vlaanderen" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Grote Routepaden" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+----------
+<tag k="admin_level" v="4" />
+<tag k="boundary" v="administrative" />
+<tag k="ISO3166-2" v="BE-VLG" />
+<tag k="name" v="Vlaanderen" />
+<tag k="name:de" v="Flandern" />
+<tag k="name:el" v="Φλάνδρα" />
+<tag k="name:en" v="Flanders" />
+<tag k="name:es" v="Flandes" />
+<tag k="name:et" v="Flandria" />
+<tag k="name:fr" v="Flandre" />
+<tag k="name:ja" v="フランデレン地域" />
+<tag k="name:ka" v="ფლანდრია" />
+<tag k="name:ko" v="플라망 지역" />
+<tag k="name:lb" v="Flandern" />
+<tag k="name:li" v="Vlaandere" />
+<tag k="name:lt" v="Flandrija" />
+<tag k="name:nl" v="Vlaanderen" />
+<tag k="name:th" v="เขตฟลามส์" />
+<tag k="name:vls" v="Vloandern" />
+<tag k="name:wa" v="Flande" />
+<tag k="name:zh" v="弗拉芒大區" />
+<tag k="nat_name" v="Vlaams Gewest" />
+<tag k="nat_name:ar" v="الإقليم الفلامندي" />
+<tag k="nat_name:be" v="Фламандскі рэгіён" />
+<tag k="nat_name:bg" v="Фламандски регион" />
+<tag k="nat_name:de" v="Flämische Region" />
+<tag k="nat_name:el" v="Φλαμανδική Περιοχή" />
+<tag k="nat_name:en" v="Flemish Region" />
+<tag k="nat_name:eo" v="Flandra Regiono" />
+<tag k="nat_name:fr" v="Région flamande" />
+<tag k="nat_name:lb" v="Flämesch Regioun" />
+<tag k="nat_name:li" v="Vlaandere Gewes" />
+<tag k="nat_name:mk" v="Фламански регион" />
+<tag k="nat_name:nl" v="Vlaams Gewest" />
+<tag k="nat_name:os" v="Фламандийы регион" />
+<tag k="nat_name:pl" v="Region Flamandzki" />
+<tag k="nat_name:ru" v="Фламандский регион" />
+<tag k="nat_name:sk" v="Flámsky región" />
+<tag k="nat_name:tr" v="Flaman Bölgesi" />
+<tag k="nat_name:vls" v="Vlams Gewest" />
+<tag k="nat_name:wa" v="Redjon flaminde" />
+<tag k="ref:INS" v="02000" />
+<tag k="type" v="boundary" />
+<tag k="website" v="http://www.vlaanderen.be" />
+<tag k="wikipedia" v="nl:Vlaams Gewest" />
+----------
+<tag k="admin_level" v="7" />
+<tag k="boundary" v="administrative" />
+<tag k="name" v="Hasselt" />
+<tag k="official_name" v="Arrondissement Hasselt" />
+<tag k="official_name:nl" v="Arrondissement Hasselt" />
+<tag k="ref:INS" v="71000" />
+<tag k="type" v="boundary" />
+<tag k="wikipedia" v="nl:Arrondissement Hasselt" />
+<tag k="wikipedia:fr" v="Arrondissement administratif d'Hasselt" />
+----------
+<tag k="addr:postcode" v="3500;3501;3510;3511;3512" />
+<tag k="admin_level" v="8" />
+<tag k="boundary" v="administrative" />
+<tag k="FIXME" v="missing sections: Hasselt (3500), Herck-Saint-Lambert (3500), Kermt (3510), Kuringen (3511), Wimmertingen (3501), Spalbeek (3510), Stokrooie (3511), Stevoort (3512)" />
+<tag k="name" v="Hasselt" />
+<tag k="population" v="74694" />
+<tag k="population:date" v="2012" />
+<tag k="ref:INS" v="71022" />
+<tag k="type" v="boundary" />
+<tag k="website" v="http://www.hasselt.be/" />
+<tag k="wikidata" v="Q58780" />
+<tag k="wikipedia" v="nl:Hasselt (België)" />
+<tag k="wikipedia:fr" v="Hasselt" />
+----------
+<tag k="admin_level" v="6" />
+<tag k="alt_name" v="Belgisch Limburg" />
+<tag k="alt_name:de" v="Belgisch Limburg" />
+<tag k="alt_name:fr" v="Limbourg belge" />
+<tag k="alt_name:nl" v="Belgisch Limburg" />
+<tag k="boundary" v="administrative" />
+<tag k="ISO3166-2" v="BE-VLI" />
+<tag k="name" v="Limburg" />
+<tag k="name:de" v="Limburg" />
+<tag k="name:en" v="Limburg" />
+<tag k="name:fr" v="Limbourg" />
+<tag k="name:nl" v="Limburg" />
+<tag k="official_name" v="Provincie Limburg" />
+<tag k="official_name:nl" v="Provincie Limburg" />
+<tag k="ref:INS" v="70000" />
+<tag k="type" v="boundary" />
+<tag k="wikipedia" v="nl:Limburg (Belgische provincie)" />
+<tag k="wikipedia:de" v="Limburg (Belgien)" />
+<tag k="wikipedia:fr" v="Province de Limbourg (Belgique)" />
+0035 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="name" v="European long distance path E2 - part Belgium" />
+<tag k="name:be" v="Europese wandelroute E2, België" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Belgien" />
+<tag k="name:en" v="European long distance path E2 - part Belgium" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Belgique" />
+<tag k="name:nl" v="Europese wandelroute E2, België" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="operator:be" v="Grote Routepaden" />
+<tag k="operator:fr" v="Fédération Française de la Randonnée Pédestre" />
+<tag k="operator:lux" v="Département Du Tourisme" />
+<tag k="operator:nl" v="Stichting Wandelplatform" />
+<tag k="operator:uk" v="Long Distance Walkers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="superroute" />
+<tag k="website" v="http://www.era-ewv-ferp.com/index.php?topmenu_id=29&amp;id=29&amp;page_id=100&amp;module=text" />
+<tag k="wikipedia" v="de:Europäischer Fernwanderweg E2" />
+----------
+<tag k="colour" v="white-red" />
+<tag k="name" v="GR 5" />
+<tag k="name:fr" v="Mer du Nord - Riviera" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Fédération française de la randonnée pédestre" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+<tag k="wikipedia" v="en:GR 5" />
+----------
+<tag k="name" v="European long distance path E2, Vlaanderen" />
+<tag k="name:be" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Flandern" />
+<tag k="name:en" v="European long distance path E2, Fanders" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Flandre" />
+<tag k="name:nl" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="GR 5 Belgie, Vlaanderen" />
+<tag k="name:be" v="GR 5 België, Vlaanderen" />
+<tag k="name:de" v="GR 5 Belgien, Flandern" />
+<tag k="name:en" v="GR 5 Belgium, Fanders" />
+<tag k="name:fr" v="GR 5 Belgique, Flandre" />
+<tag k="name:nl" v="GR 5 België, Vlaanderen" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Grote Routepaden" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+0037 benutzt Regelset: [access:dog="no"] -> {amenity=0.9, building=0.8}
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maastricht Station perron M" />
+<tag k="name" v="De Lijn 45 Maastricht Station perron M - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Alken Kerk" />
+<tag k="name" v="De Lijn H2 Alken Kerk - Kiewit Kinderboerderij" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Kinderboerderij" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Café Ter Heide" />
+<tag k="name" v="De Lijn H2 Kiewit Café Ter Heide - Alken Kerk" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Alken Kerk" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Kiewit Rietstraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Rietstraat" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Kiewit Nobellaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Nobellaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Café Ter Heide" />
+<tag k="name" v="De Lijn H2 Kiewit Café Ter Heide - Alken Terkoest" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Alken Terkoest" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Kiewit Nobellaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Nobellaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn H3 Hasselt Handelsschool - Kiewit Rietstraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Rietstraat" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="evening" />
+<tag k="from" v="Hasselt Station perron 2" />
+<tag k="name" v="De Lijn H6 Avondlijn" />
+<tag k="opening_hours" v="mo-su 19:45-23:02" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H6" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 2" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 20" />
+<tag k="name" v="De Lijn H5 Singellijn Zuid" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H5" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 20" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Godsheide Kapelveld" />
+<tag k="name" v="De Lijn H3 Godsheide Kapelveld - Stokrooie Beuzestraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Stokrooie Beuzestraat" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 19" />
+<tag k="name" v="De Lijn BP Boulevardpendel" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="BP" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 19" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maastricht Station perron L" />
+<tag k="name" v="De Lijn 20a Maastricht Station perron L - Hasselt Station perron 10" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 10" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station perron 10 - Maastricht Station perron L" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron L" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#BB0022" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="ref:De_Lijn" v="4001" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maastricht Station perron M" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron M" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#995511" />
+<tag k="name" v="Genk - Lutselus - Diepenbeek Universiteit - Hasselt" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="ref:De_Lijn" v="4036" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="name" v="Hasselt Station - Hasselt Dussartplein" />
+<tag k="route" v="segment" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station - Bilzen Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Bilzen Station perron 1" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station - Hoeselt Grot" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hoeselt Grot" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Beringen Oude Lummenseweg" />
+<tag k="name" v="De Lijn 29 Beringen Oude Lummenseweg - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="29" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 29 Hasselt Station - Beringen Oude Lummenseweg" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="29" />
+<tag k="route" v="bus" />
+<tag k="to" v="Beringen Oude Lummenseweg" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="Hasselt - Leopoldsburg" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="29" />
+<tag k="ref:De_Lijn" v="4029" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#EE8822" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="ref:De_Lijn" v="4002" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Beringen Busstation perron 3" />
+<tag k="name" v="De Lijn 2 Beringen Busstation - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#DD0077" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="ref:De_Lijn" v="4003" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Kiewit Nieuwe-Heidestraat KIDS" />
+<tag k="name" v="De Lijn 1 Kiewit Nieuwe-Heidestraat KIDS - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 11" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#FF88AA" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="ref:De_Lijn" v="4016" />
+<tag k="route_master" v="bus" />
+<tag k="text_colour" v="#000000" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 11" />
+<tag k="name" v="De Lijn 1 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 11" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#BBDD00" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="5" />
+<tag k="ref:De_Lijn" v="4005" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 5 Hasselt Handelsschool - Sint-Truiden Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="5" />
+<tag k="route" v="bus" />
+<tag k="to" v="Sint-Truiden Station perron 1" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 3 Hasselt Handelsschool - Kortessem Weg naar Wellen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kortessem Weg naar Wellen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 3 Hasselt Handelsschool - Heers Weg naar Waremme" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Heers Weg naar Waremme" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Wellen Gemeentehuis" />
+<tag k="name" v="De Lijn 3 Wellen Gemeentehuis - Hasselt Handelsschool" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Handelsschool" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 16 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#1199DD" />
+<tag k="name" v="Boulevardpendel" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="BP" />
+<tag k="ref:De_Lijn" v="4513" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#1199DD" />
+<tag k="name" v="Genk - Overpelt" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="8" />
+<tag k="ref:De_Lijn" v="4008" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#1199DD" />
+<tag k="name" v="Hasselt - Stevoort - Sint-Truiden" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="105" />
+<tag k="ref:De_Lijn" v="4105" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 105 Hasselt Handelsschool - Sint-Truiden Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="105" />
+<tag k="route" v="bus" />
+<tag k="to" v="Sint-Truiden Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#005555" />
+<tag k="name" v="Hasselt - Diest / Tessenderlo" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="35c" />
+<tag k="ref:De_Lijn" v="4353" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Maastricht Station perron M" />
+<tag k="name" v="De Lijn 45 Maastricht Station perron M - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="colour" v="#005555" />
+<tag k="name" v="Hasselt - Genk - Maaseik sneldienst" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="ref:De_Lijn" v="4111" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maastricht Station perron M" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron M" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#C5AA77" />
+<tag k="name" v="Genk - As - Neeroeteren - Maaseik" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="ref:De_Lijn" v="4011" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#AACCEE" />
+<tag k="name" v="Kiewit Domein - Hasselt Station - Sint-Lambrechts-Herk - Alken / Terkoest" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="ref:De_Lijn" v="4502" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#77CCAA" />
+<tag k="name" v="Godsheide - Hasselt - Stokrooie / Kiewit" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="ref:De_Lijn" v="4503" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#FF88AA" />
+<tag k="name" v="Singellijn Zuid" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H5" />
+<tag k="ref:De_Lijn" v="4505" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#0044BB" />
+<tag k="name" v="Avondlijn" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H6" />
+<tag k="ref:De_Lijn" v="4506" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#991199" />
+<tag k="name" v="Rapertingen Langveldstraat - Hasselt Wolske - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H9" />
+<tag k="ref:De_Lijn" v="4509" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#DD0077" />
+<tag k="name" v="Hasselt - Diepenbeek Universiteit - Genk - Maaseik / Maastricht" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="ref:De_Lijn" v="4045" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 16 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Hasselt Station perron 14" />
+<tag k="name" v="De Lijn 11 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 3 Hasselt Handelsschool - Kortessem Weg naar Wellen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kortessem Weg naar Wellen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Handelsschool" />
+<tag k="name" v="De Lijn 35c Hasselt Handelsschool - Diest Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="35c" />
+<tag k="route" v="bus" />
+<tag k="to" v="Diest Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Sint-Truiden Station perron 7" />
+<tag k="name" v="De Lijn 105 Sint-Truiden Station - Hasselt Dusartplein" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="105" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Dusartplein" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maastricht Station perron M" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron M" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Nobellaan" />
+<tag k="name" v="De Lijn H3 Kiewit Nobellaan - Godsheide Kapelveld" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Godsheide Kapelveld" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Nobellaan" />
+<tag k="name" v="De Lijn H3 Kiewit Nobellaan - Godsheide Kapelveld" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Godsheide Kapelveld" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Zwartberg Omlooplaan" />
+<tag k="name" v="De Lijn 1 Zwartberg Omlooplaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="public_transport:version" v="2" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 11" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 2" />
+<tag k="name" v="De Lijn H9 Hasselt Station - Hasselt Langveldstraat" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H9" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Langveldstraat" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Stokrooie Beuzestraat" />
+<tag k="name" v="De Lijn H3 Stokrooie Beuzestraat - Godsheide Kapelveld" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Godsheide Kapelveld" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maastricht Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron M" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maastricht Station perron M" />
+<tag k="name" v="De Lijn 45 Maastricht Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 14" />
+<tag k="name" v="De Lijn 8 Hasselt Station - Overpelt Kiosk" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="8" />
+<tag k="route" v="bus" />
+<tag k="to" v="Overpelt Kiosk" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station - Maastricht Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron L" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station - Rekem Daelwezeth" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Rekem Daelwezeth" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Rekem Daelwezeth" />
+<tag k="name" v="De Lijn 20a Rekem Daelwezeth - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 10" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Waterleliestraat" />
+<tag k="name" v="De Lijn H3 Kiewit Waterleliestraat - Godsheide Kapelveld" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H3" />
+<tag k="route" v="bus" />
+<tag k="to" v="Godsheide Kapelveld" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 11" />
+<tag k="name" v="De Lijn 1 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 11" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 11" />
+<tag k="name" v="De Lijn 1 Hasselt Station - Kiewit Nieuwe-Heidestraat KIDS" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="1" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Nieuwe-Heidestraat KIDS" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Alken Terkoest" />
+<tag k="name" v="De Lijn H2 Alken Terkoest - Kiewit Café Ter Heide" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kiewit Café Ter Heide" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 16 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 16 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Heusden Kerk" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Heusden Kerk" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Koersel Beringen Mijnen" />
+<tag k="name" v="De Lijn 2 Koersel Beringen Mijnen - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 2 Hasselt Station - Koersel Beringen Mijnen" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="2" />
+<tag k="route" v="bus" />
+<tag k="to" v="Koersel Beringen Mijnen" />
+<tag k="type" v="route" />
+----------
+0042 benutzt Regelset: [food="no"] -> {building - yes=0.5}
+0046 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="colour" v="#995511" />
+<tag k="name" v="Genk - Lutselus - Diepenbeek Universiteit - Hasselt" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="ref:De_Lijn" v="4036" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+0047 benutzt Regelset: [food="no"] -> {building - yes=0.5}
+0048 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+0052 benutzt Regelset: [access:dog="no"] -> {amenity=0.9, building=0.8}
+----------
+<tag k="name" v="European long distance path E2 - part Belgium" />
+<tag k="name:be" v="Europese wandelroute E2, België" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Belgien" />
+<tag k="name:en" v="European long distance path E2 - part Belgium" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Belgique" />
+<tag k="name:nl" v="Europese wandelroute E2, België" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="operator:be" v="Grote Routepaden" />
+<tag k="operator:fr" v="Fédération Française de la Randonnée Pédestre" />
+<tag k="operator:lux" v="Département Du Tourisme" />
+<tag k="operator:nl" v="Stichting Wandelplatform" />
+<tag k="operator:uk" v="Long Distance Walkers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="superroute" />
+<tag k="website" v="http://www.era-ewv-ferp.com/index.php?topmenu_id=29&amp;id=29&amp;page_id=100&amp;module=text" />
+<tag k="wikipedia" v="de:Europäischer Fernwanderweg E2" />
+----------
+<tag k="colour" v="white-red" />
+<tag k="name" v="GR 5" />
+<tag k="name:fr" v="Mer du Nord - Riviera" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Fédération française de la randonnée pédestre" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+<tag k="wikipedia" v="en:GR 5" />
+----------
+<tag k="name" v="European long distance path E2, Vlaanderen" />
+<tag k="name:be" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Flandern" />
+<tag k="name:en" v="European long distance path E2, Fanders" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Flandre" />
+<tag k="name:nl" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="GR 5 Belgie, Vlaanderen" />
+<tag k="name:be" v="GR 5 België, Vlaanderen" />
+<tag k="name:de" v="GR 5 Belgien, Flandern" />
+<tag k="name:en" v="GR 5 Belgium, Fanders" />
+<tag k="name:fr" v="GR 5 Belgique, Flandre" />
+<tag k="name:nl" v="GR 5 België, Vlaanderen" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Grote Routepaden" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+0054 benutzt Regelset: [access:dog="no"] -> {amenity=0.9, building=0.8}
+0063 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="type" v="multipolygon" />
+0064 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="type" v="multipolygon" />
+0065 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="type" v="multipolygon" />
+----------
+<tag k="name" v="De Lijn 20a" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maastricht Station perron L" />
+<tag k="name" v="De Lijn 20a Maastricht Station perron L - Hasselt Station perron 10" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 10" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station perron 10 - Maastricht Station perron L" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron L" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#995511" />
+<tag k="name" v="Genk - Lutselus - Diepenbeek Universiteit - Hasselt" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="ref:De_Lijn" v="4036" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 36 Hasselt Station - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 4" />
+<tag k="name" v="De Lijn 36 Genk Station - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="36" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 10" />
+<tag k="name" v="De Lijn 20a Hasselt Station - Maastricht Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maastricht Station perron L" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="Hasselt - Bilzen - Maastricht/Lanaken - Rekem" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="20a" />
+<tag k="ref:De_Lijn" v="4201" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+0066 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="type" v="multipolygon" />
+0067 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+0068 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+0069 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+0070 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+0071 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="type" v="multipolygon" />
+0072 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="type" v="multipolygon" />
+0073 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="type" v="multipolygon" />
+0074 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="distance" v="164Km" />
+<tag k="name" v="GR564 Kempen - Condroz" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="SGR asbl" />
+<tag k="osmc:symbol" v="red:white:red_lower:564:black" />
+<tag k="ref" v="GR 564" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+<tag k="website" v="http://www.grsentiers.org/cgi-bin/topog/gr564.php" />
+0075 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="type" v="multipolygon" />
+----------
+<tag k="landuse" v="forest" />
+<tag k="type" v="multipolygon" />
+0076 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+0077 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+0078 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+0079 benutzt Regelset: [swimming="no"] -> {natural - water=0.5, water - pond=0.5}
+----------
+<tag k="network" v="rcn" />
+<tag k="note" v="11-36" />
+<tag k="route" v="bicycle" />
+<tag k="type" v="route" />
+----------
+<tag k="addr:country" v="BE" />
+<tag k="addr:province" v="Limburg" />
+<tag k="name" v="Fietsroutenetwerk B Limburg" />
+<tag k="network" v="rcn" />
+<tag k="network:name" v="Limburg" />
+<tag k="operator" v="Toerisme Limburg" />
+<tag k="ref" v="Lim" />
+<tag k="route" v="bicycle" />
+<tag k="type" v="network" />
+0080 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+0081 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+0082 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="from" v="Hasselt Langveldstraat" />
+<tag k="name" v="De Lijn H9 Hasselt Langveldstraat - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H9" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 2" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#991199" />
+<tag k="name" v="Rapertingen Langveldstraat - Hasselt Wolske - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="H9" />
+<tag k="ref:De_Lijn" v="4509" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+0083 benutzt Regelset: [access:dog="no"] -> {amenity=0.9, building=0.8}
+0084 benutzt Regelset: [] -> {}
+0086 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+----------
+<tag k="name" v="European long distance path E2 - part Belgium" />
+<tag k="name:be" v="Europese wandelroute E2, België" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Belgien" />
+<tag k="name:en" v="European long distance path E2 - part Belgium" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Belgique" />
+<tag k="name:nl" v="Europese wandelroute E2, België" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="operator:be" v="Grote Routepaden" />
+<tag k="operator:fr" v="Fédération Française de la Randonnée Pédestre" />
+<tag k="operator:lux" v="Département Du Tourisme" />
+<tag k="operator:nl" v="Stichting Wandelplatform" />
+<tag k="operator:uk" v="Long Distance Walkers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="superroute" />
+<tag k="website" v="http://www.era-ewv-ferp.com/index.php?topmenu_id=29&amp;id=29&amp;page_id=100&amp;module=text" />
+<tag k="wikipedia" v="de:Europäischer Fernwanderweg E2" />
+----------
+<tag k="colour" v="white-red" />
+<tag k="name" v="GR 5" />
+<tag k="name:fr" v="Mer du Nord - Riviera" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Fédération française de la randonnée pédestre" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+<tag k="wikipedia" v="en:GR 5" />
+----------
+<tag k="name" v="European long distance path E2, Vlaanderen" />
+<tag k="name:be" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="name:de" v="Europäischer Fernwanderweg E2, Flandern" />
+<tag k="name:en" v="European long distance path E2, Fanders" />
+<tag k="name:fr" v="Chemin de randonnée Européen E2, Flandre" />
+<tag k="name:nl" v="Europese wandelroute E2, Vlaanderen" />
+<tag k="network" v="iwn" />
+<tag k="operator" v="European Ramblers Association" />
+<tag k="ref" v="E2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="GR 5 Belgie, Vlaanderen" />
+<tag k="name:be" v="GR 5 België, Vlaanderen" />
+<tag k="name:de" v="GR 5 Belgien, Flandern" />
+<tag k="name:en" v="GR 5 Belgium, Fanders" />
+<tag k="name:fr" v="GR 5 Belgique, Flandre" />
+<tag k="name:nl" v="GR 5 België, Vlaanderen" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="Grote Routepaden" />
+<tag k="osmc:ref" v="GR 5" />
+<tag k="osmc:symbol" v="red:white:red_lower:5:black" />
+<tag k="ref" v="GR 5" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+0087 benutzt Regelset: [] -> {}
+0088 benutzt Regelset: [access:dog="no"] -> {amenity=0.9, building=0.8}
+0089 benutzt Regelset: [] -> {}
+0091 benutzt Regelset: [] -> {}
+0092 benutzt Regelset: [dog_waste="no", littering="no", noise="no"] -> {landuse - recreation_ground=0.8}
+0093 benutzt Regelset: [] -> {}
+0094 benutzt Regelset: [smoking="no"] -> {amenity - bank=0.8, amenity - college=1.3, building=0.95, building - dormitory=0.8, building - yes=0.8, leisure=0.8, name=0.95, shop=0.8}
+0095 benutzt Regelset: [littering="no"] -> {amenity - grave_yard=0.8}
+----------
+<tag k="network" v="rcn" />
+<tag k="note" v="21-22" />
+<tag k="route" v="bicycle" />
+<tag k="type" v="route" />
+----------
+<tag k="name" v="Pelgrimspad 2h" />
+<tag k="network" v="nwn" />
+<tag k="note" v="Thorn-Grevenbicht" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="white-red" />
+<tag k="distance" v="250" />
+<tag k="name" v="Pelgrimspad 2" />
+<tag k="network" v="nwn" />
+<tag k="operator" v="LAW" />
+<tag k="osmc:symbol" v="red:white:red_lower:Pe:black" />
+<tag k="ref" v="LAW7-2" />
+<tag k="route" v="hiking" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="purple" />
+<tag k="name" v="Kessenich en de Drie Eigen paars" />
+<tag k="network" v="lwn" />
+<tag k="operator" v="Regionaal Landschap Kempen en Maasland" />
+<tag k="osmc:symbol" v="purple:white:white:B:purple" />
+<tag k="route" v="foot" />
+<tag k="symbol" v="boat" />
+<tag k="type" v="route" />
+----------
+<tag k="addr:country" v="BE" />
+<tag k="addr:province" v="Limburg" />
+<tag k="name" v="Fietsroutenetwerk B Limburg" />
+<tag k="network" v="rcn" />
+<tag k="network:name" v="Limburg" />
+<tag k="operator" v="Toerisme Limburg" />
+<tag k="ref" v="Lim" />
+<tag k="route" v="bicycle" />
+<tag k="type" v="network" />
+0096 benutzt Regelset: [] -> {}
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 61 Maaseik Van Eycklaan - Maaseik Bewel" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="61" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Bewel" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#991199" />
+<tag k="name" v="Maaseik - Vroenhoven - Tongeren" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="61" />
+<tag k="ref:De_Lijn" v="4061" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Stokkem Kerk" />
+<tag k="name" v="De Lijn 61 Stokkem Kerk - Maaseik Campus H en R" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="61" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Campus H en R" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Campus H en R" />
+<tag k="name" v="De Lijn 302 Maaseik Campus H en R - Geel Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="302" />
+<tag k="ref:De_Lijn" v="4302" />
+<tag k="route" v="bus" />
+<tag k="to" v="Geel Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Campus H en R" />
+<tag k="name" v="De Lijn 302 Maaseik Campus H en R - Geel Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="302" />
+<tag k="ref:De_Lijn" v="4302" />
+<tag k="route" v="bus" />
+<tag k="to" v="Geel Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Geel Station perron 4" />
+<tag k="name" v="De Lijn 302 Geel Station - Leopoldsburg - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="302" />
+<tag k="ref:De_Lijn" v="4302" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+<tag k="via" v="Leopoldsburg" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 16 Maaseik Van Eycklaan - Helchteren Technische School" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Helchteren Technische School" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Helchteren Technische School" />
+<tag k="name" v="De Lijn 16 Helchteren Technische School - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#FF88AA" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="ref:De_Lijn" v="4016" />
+<tag k="route_master" v="bus" />
+<tag k="text_colour" v="#000000" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 16 Maaseik Van Eycklaan - Kinrooi H. Grafinstituut" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Kinrooi H. Grafinstituut" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Evere Bordet" />
+<tag k="name" v="De Lijn 178 Evere Bordet - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="public_transport:version" v="2" />
+<tag k="ref" v="178" />
+<tag k="ref:De_Lijn" v="4178" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 16 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="colour" v="#005555" />
+<tag k="name" v="Hasselt - Genk - Maaseik sneldienst" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="ref:De_Lijn" v="4111" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#C5AA77" />
+<tag k="name" v="Genk - As - Neeroeteren - Maaseik" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="ref:De_Lijn" v="4011" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 11 Maaseik Van Eycklaan - As Bilzerweg" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="As Bilzerweg" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Sint-Lodewijkstraat" />
+<tag k="name" v="De Lijn 11 Genk Sint-Lodewijkstraat - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Sint-Lodewijkstraat" />
+<tag k="name" v="De Lijn 11 Genk Sint-Lodewijkstraat - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="name" v="Brussel - Leuven - Houthalen- Maaseik" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="178" />
+<tag k="ref:De_Lijn" v="4178" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="colour" v="#DD0077" />
+<tag k="name" v="Hasselt - Diepenbeek Universiteit - Genk - Maaseik / Maastricht" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="ref:De_Lijn" v="4045" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 16 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="colour" v="#995511" />
+<tag k="name" v="Maaseik - Leopoldsburg - Geel" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="302" />
+<tag k="ref:De_Lijn" v="4302" />
+<tag k="route_master" v="bus" />
+<tag k="type" v="route_master" />
+----------
+<tag k="from" v="Geel Station perron 4" />
+<tag k="name" v="De Lijn 302 Geel Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="302" />
+<tag k="ref:De_Lijn" v="4302" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Geel Station perron 4" />
+<tag k="name" v="De Lijn 302 Geel Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="302" />
+<tag k="ref:De_Lijn" v="4302" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Campus H en R" />
+<tag k="name" v="De Lijn 11 Maaseik Campus H en R - Opglabbeek Dorpsplein" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Opglabbeek Dorpsplein" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Opglabbeek Dorpsplein" />
+<tag k="name" v="De Lijn 11 Opglabbeek Dorpsplein - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 11 Maaseik Van Eycklaan - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 8" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Elsene VUB Gebouw M inrit 11" />
+<tag k="name" v="De Lijn 178 Elsene VUB Gebouw M inrit 11 - Leuven - Lummen - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="public_transport:version" v="2" />
+<tag k="ref" v="178" />
+<tag k="ref:De_Lijn" v="4178" />
+<tag k="route" v="bus" />
+<tag k="text_colour" v="#FFFFFF" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+<tag k="via" v="Leuven Station - Lummen - Houthalen" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Elsene VUB Gebouw M inrit 11" />
+<tag k="name" v="De Lijn 178 Elsene VUB Gebouw M inrit 11 - Lummen - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="public_transport:version" v="2" />
+<tag k="ref" v="178" />
+<tag k="ref:De_Lijn" v="4178" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+<tag k="via" v="Lummen" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Hasselt Station perron 14" />
+<tag k="name" v="De Lijn 11 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Schaarbeek VRT" />
+<tag k="name" v="De Lijn 178 Schaarbeek VRT - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="178" />
+<tag k="ref:De_Lijn" v="4178" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 178 Maaseik Van Eycklaan - Evere Navo" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="178" />
+<tag k="ref:De_Lijn" v="4178" />
+<tag k="route" v="bus" />
+<tag k="to" v="Evere Navo" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Campus H en R" />
+<tag k="name" v="De Lijn 61 Maaseik Campus H en R - Riemst Busstation" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="61" />
+<tag k="route" v="bus" />
+<tag k="to" v="Riemst Busstation perron 1" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 61 Maaseik Van Eycklaan - Lanaken Cultureel Centrum" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="61" />
+<tag k="route" v="bus" />
+<tag k="to" v="Lanaken Cultureel Centrum" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 61 Maaseik Van Eycklaan - Riemst Busstation" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="61" />
+<tag k="route" v="bus" />
+<tag k="to" v="Riemst Busstation perron 1" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Vroenhoven Busstation perron 1" />
+<tag k="name" v="De Lijn 61 Vroenhoven Busstation - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="61" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Bewel" />
+<tag k="name" v="De Lijn 302 Maaseik Bewel - Geel Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="302" />
+<tag k="ref:De_Lijn" v="4302" />
+<tag k="route" v="bus" />
+<tag k="to" v="Geel Station perron 4" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 302 Maaseik Van Eycklaan - Hechtel - Geel Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="302" />
+<tag k="ref:De_Lijn" v="4302" />
+<tag k="route" v="bus" />
+<tag k="to" v="Geel Station perron 4" />
+<tag k="type" v="route" />
+<tag k="via" v="Hechtel Don Bosco" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 302 Maaseik Van Eycklaan - Leopoldsburg - Geel Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="302" />
+<tag k="ref:De_Lijn" v="4302" />
+<tag k="route" v="bus" />
+<tag k="to" v="Geel Station perron 4" />
+<tag k="type" v="route" />
+<tag k="via" v="Leopoldsburg" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Elsene VUB Gebouw M inrit 11" />
+<tag k="name" v="De Lijn 178 Elsene VUB Gebouw M inrit 11 - Lanaken Cultureel Centrum" />
+<tag k="operator" v="De Lijn" />
+<tag k="public_transport:version" v="2" />
+<tag k="ref" v="178" />
+<tag k="ref:De_Lijn" v="4178" />
+<tag k="route" v="bus" />
+<tag k="to" v="Lanaken Cultureel Centrum" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 45 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 6" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Tongeren Station" />
+<tag k="name" v="De Lijn 61 Tongeren Station - Maaseik Campus H en R" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="61" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Campus H en R" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 7" />
+<tag k="name" v="De Lijn 16 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 16 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Evere Navo" />
+<tag k="name" v="De Lijn 178 Evere Navo - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="public_transport:version" v="2" />
+<tag k="ref" v="178" />
+<tag k="ref:De_Lijn" v="4178" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 178 Maaseik Van Eycklaan - Schaarbeek VRT" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="178" />
+<tag k="ref:De_Lijn" v="4178" />
+<tag k="route" v="bus" />
+<tag k="to" v="Schaarbeek VRT" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 6" />
+<tag k="name" v="De Lijn 45 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="45" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 61 Maaseik Van Eycklaan - Tongeren Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="61" />
+<tag k="route" v="bus" />
+<tag k="to" v="Tongeren Station" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Opgrimbie Kruispunt" />
+<tag k="name" v="De Lijn 61 Opgrimbie Kruispunt - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="61" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Vroenhoven Busstation perron 1" />
+<tag k="name" v="De Lijn 61 Vroenhoven Busstation - Maaseik Campus H en R" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="61" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Campus H en R" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Vroenhoven Busstation perron 1" />
+<tag k="name" v="De Lijn 61 Vroenhoven Busstation - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="61" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Helchteren Technische School" />
+<tag k="name" v="De Lijn 16 Helchteren Technische School - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 16 Maaseik Van Eycklaan - Helchteren Technische School" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Helchteren Technische School" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Helchteren Technische School" />
+<tag k="name" v="De Lijn 16 Helchteren Technische School - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 8" />
+<tag k="name" v="De Lijn 11 Genk Station - Maaseik Campus H en R" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Campus H en R" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 8" />
+<tag k="name" v="De Lijn 11 Genk Station - Maaseik Campus H en R" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Campus H en R" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Kiewit Station" />
+<tag k="name" v="De Lijn 11 Kiewit Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 11 Maaseik Van Eycklaan - Genk Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Genk Station perron 8" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 11 Maaseik Van Eycklaan - Sledderlo Ford" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Sledderlo Ford" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 16 Maaseik - Kinrooi - Meeuwen-Gruitrode - Hasselt" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 7" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 16 Maaseik Van Eycklaan - Helchteren Technische School" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="16" />
+<tag k="route" v="bus" />
+<tag k="to" v="Helchteren Technische School" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Geel Station perron 4" />
+<tag k="name" v="De Lijn 302 Geel Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="302" />
+<tag k="ref:De_Lijn" v="4302" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 61 Maaseik Van Eycklaan - Tongeren Sint-Truiderpoort" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="61" />
+<tag k="route" v="bus" />
+<tag k="to" v="Tongeren Sint-Truiderpoort" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 178 Maaseik Van Eycklaan - Elsene VUB Gebouw M inrit 11" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="178" />
+<tag k="ref:De_Lijn" v="4178" />
+<tag k="route" v="bus" />
+<tag k="to" v="Elsene VUB Gebouw M inrit 11" />
+<tag k="type" v="route" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 178 Maaseik Van Eycklaan - Elsene VUB Gebouw M inrit 11" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="178" />
+<tag k="ref:De_Lijn" v="4178" />
+<tag k="route" v="bus" />
+<tag k="text_colour" v="#FFFFFF" />
+<tag k="to" v="Elsene VUB Gebouw M inrit 11" />
+<tag k="type" v="route" />
+<tag k="via" v="Leuven Station - Houthalen" />
+----------
+<tag k="bus" v="express" />
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 11 Maaseik Van Eycklaan - Hasselt Station" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Hasselt Station perron 14" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Van Eycklaan" />
+<tag k="name" v="De Lijn 11 Maaseik Van Eycklaan - Sledderlo Ford" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Sledderlo Ford" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Sledderlo Ford" />
+<tag k="name" v="De Lijn 11 Sledderlo Ford - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Maaseik Campus H en R" />
+<tag k="name" v="De Lijn 61 Maaseik Campus H en R - Stokkem Molenveld" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="61" />
+<tag k="route" v="bus" />
+<tag k="to" v="Stokkem Molenveld" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="As Bilzerweg" />
+<tag k="name" v="De Lijn 11 As Bilzerweg - Maaseik Campus H en R" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Campus H en R" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Genk Station perron 8" />
+<tag k="name" v="De Lijn 11 Genk Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 14" />
+<tag k="name" v="De Lijn 11 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
+<tag k="from" v="Hasselt Station perron 14" />
+<tag k="name" v="De Lijn 11 Hasselt Station - Maaseik Van Eycklaan" />
+<tag k="operator" v="De Lijn" />
+<tag k="ref" v="11" />
+<tag k="route" v="bus" />
+<tag k="to" v="Maaseik Van Eycklaan" />
+<tag k="type" v="route" />
+----------
