@@ -14,7 +14,11 @@ import org.jsoup.nodes.Element;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.Polygon;
 
 /**
  * A class to read in and write out KML-data from files.
@@ -117,29 +121,44 @@ public class KML {
      * @return String containing valid kml
      */
     public static String writeKML(Geometry p, String name) {
-    	//if there is only one Geometry, it has to be the outline
-    	if(p.getNumGeometries()==1){
-	        return first + name + second + writeBoundaryKML(p,"outer") + third;
-    	}
-    	//if there are more than one Geometries, then one is the outer border 
-    	//and the others are the inner borders
-    	else{
-    		String output = first+name+second;
-    		//first write the outer border
-    		Geometry outline = p.getBoundary();
-    		output += writeBoundaryKML(outline, "outer");
+    	// In the Java Topology Suit a Geometry is always extended by one of four classes:
+    	// Polygon, LineString, GeometryCollection and Point
+    	// Although only Polygons should come up here, all four cases are handled.
+    	
+    	//convert a Polygon 
+    	if(p instanceof Polygon){
+    		String output = first + name + second;
+    		Polygon polygon = (Polygon) p;
+    		//first exterior border
+    		output += writeBoundaryKML(polygon.getExteriorRing(), "outer");
     		
-    		//then write the holes
-    		for(int i=0;i<p.getNumGeometries();i++){
-    			if(p.getGeometryN(i) == outline) continue;
-    			
-    			output += writeBoundaryKML(p.getGeometryN(i), "inner");
-    			
+    		//then interior borders if they exist
+    		for(int i=0;i<polygon.getNumInteriorRing();i++){
+    			output += writeBoundaryKML(polygon.getInteriorRingN(i), "inner");
     		}
     		
     		output += third;
     		return output;
     	}
+    	// a path and a single point are essentially the same
+    	if(p instanceof LineString || p instanceof Point){
+    		String output = first + name + second.replaceAll("Polygon", "LineString");
+    		output += "<coordinates>\n";
+    		for(Coordinate c : p.getCoordinates()){
+    			output += c.x + "," + c.y +" \n"; 
+    		}
+    		output += "</coordinates>\n";
+    		output += third.replaceAll("Polygon", "LineString");
+    		return output;
+    	}
+    	if(p instanceof GeometryCollection){
+    		return writeKML(p.getGeometryN(0), name);
+    	}
+    	
+    	//if none of the above is recognized, it is handled as if it were a polygon without holes.
+    	String output = first + name + second + writeBoundaryKML(p, "outer") + third;
+    	System.err.println("KML.writeKML(Geometry,String): Unkown Geometry object was written: "+name);
+    	return output;
     }
     
     /**
