@@ -3,12 +3,12 @@ Eine Manpage lässt sich mit \verb|man -l inma.1| aufrufen.
 \section{Eingabedaten}
 Die Data.txt enthält die wichtigsten Eingabedaten. Sie ist genauso aufgebaut wie die im Testdatensatz zum Wettbewerb bereitgestellte Datei.
 In der ersten Zeile steht die Anzahl der folgenden Zeilen. Jede Zeile enthält am Ende eine Flächennutzungsregel. Am Beginn der Zeile steht
-die Nummer des Testdatensatzes, zu dem die Regel gehört. Gefolgt wird diese Nummer von einem Koordinatenpaar, das den Standort der 
+die Nummer des Testdatensatzes, zu dem die Regel gehört. Gefolgt wird diese Nummer von einem Koordinatenpaar, das den Standort der
 entsprechneden Verbotsschilder beschreibt.\\
 Die Rules.xml enthält die Bewertungsregeln, die das Programm benötigt. (Für deren Aufbau siehe unten.)
 \section{Ausführung}
 Die Standardausführung sieht folgendermaßen aus:\\
-\verb|java Start --data Data.txt --rules Rules.xml|
+\verb|java -jar InMa.jar --data Data.txt --rules Rules.xml|
 \section{Optionen}
 \manoption{-h, --help}{Shows the help text.}
 \manoption{-d, --data FILE}{Specifies  the  file  containing  the space usage rules and their locations.}

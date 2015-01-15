@@ -64,7 +64,7 @@ public class Start extends DatasetEntry {
 	private static String outputDir = null;
 
 	/** The base path, where the input-data is located.	 */
-	public static String path = null;
+	public static File path = null;
 	
 	/**
 	 * creates an entry in the dataset and tries to read in the coordinates from the image belonging to it.
@@ -77,7 +77,7 @@ public class Start extends DatasetEntry {
 		try {
 			GeometryFactory gf = new GeometryFactory();
 			// try to get better coordinates from the image, because the Data.txt is rounded
-			Point im = gf.createPoint(Image.readCoordinates(new File(path + id + ".jpg")));
+			Point im = gf.createPoint(Image.readCoordinates(new File(path, id + ".jpg")));
 			if(im.distance(backup)>0.0001)
 				System.out.println("ignoring image metadata, because distance to high. " + im.distance(backup));
 			else
@@ -100,19 +100,19 @@ public class Start extends DatasetEntry {
 	 * the worker method, which handels the IO and calculations for this datasetEntry 
 	 */
 	public void run() {
-		File f = new File(imagePath + getID() + ".png");
+		File f = new File(imagePath, getID() + ".png");
 		if(f.exists() && !f.delete())
 			System.err.println("Konnte das Bild zu " + getID() + " nicht löschen.");
-		f = new File(imagePath + getID() + ".big.png");
+		f = new File(imagePath, getID() + ".big.png");
 		if(f.exists() && !f.delete())
 			System.err.println("Konnte das Bild zu " + getID() + " nicht löschen.");
 		
 		super.run();
 
 		if(outputDir==null)
-			f = new File(path + getID() + ".computed.kml");
+			f = new File(path, getID() + ".computed.kml");
 		else
-			f = new File(outputDir + getID() + ".computed.kml");
+			f = new File(outputDir, getID() + ".computed.kml");
 		try {
 			KML.writeKML(getGuess().getGeometry(), getID(), f);
 		} catch (IOException e) {
@@ -121,7 +121,7 @@ public class Start extends DatasetEntry {
 
 		if(!images) //if no images are wanted, we can stop here.
 			return;
-		File t = new File(path + getID() + ".truth.kml");
+		File t = new File(path, getID() + ".truth.kml");
 		if(!t.exists() ||!t.canRead()) {
 			System.err.println("Fehler beim einlesen der truth datei.\n" + t.getAbsolutePath());
 			return;
@@ -147,7 +147,7 @@ public class Start extends DatasetEntry {
 		drawer.drawWay(getGuess(),Color.red);
 		drawer.drawWay(truth,Color.green);
 		try {
-			drawer.saveImage(imagePath + getID() + ".png");
+			drawer.saveImage(new File(imagePath, getID() + ".png").toString());
 		} catch (IOException e) {
 			System.err.println("Konnte das Bild zu " + getID() + " nicht speichern.\n" + imagePath + getID() + ".png");
 		}
@@ -254,7 +254,7 @@ public class Start extends DatasetEntry {
 				 rules = g.getOptarg();
 				 break;
 			 case 'p': // --path
-				 path = g.getOptarg();
+				 path = new File(g.getOptarg());
 				 break;
 			 case 't': // --threads
 				 maxRunning = Integer.parseInt(g.getOptarg());
@@ -277,12 +277,12 @@ public class Start extends DatasetEntry {
 				printhelp();
 				return;
 			}
-			path = new File(data).getParentFile().getAbsolutePath();
+			path = new File(data).getParentFile().getAbsoluteFile();
 		}
 		
 		File f;
 		if(data==null)
-			f = new File(path + "Data.txt");
+			f = new File(path,"Data.txt");
 		else
 			f = new File(data);
 		if(!f.exists()) {
@@ -317,7 +317,7 @@ public class Start extends DatasetEntry {
 		
 		// read the ruleset from file and parse from XML format
 		if(rules==null)
-			f = new File(path + "Rules.xml");
+			f = new File(path, "Rules.xml");
 		else
 			f= new File(rules);
 		if(!f.exists()) {
@@ -329,7 +329,7 @@ public class Start extends DatasetEntry {
 		
 		
 		if(overlap==null)
-			f = new File(path + "Overlap.txt");
+			f = new File(path , "Overlap.txt");
 		else
 			f= new File(overlap);
 		if(f.exists() && f.canRead()) {

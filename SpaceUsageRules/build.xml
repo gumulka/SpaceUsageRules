@@ -24,7 +24,7 @@
         </jar>
     </target>
     <target name="create_run_jar">
-        <jar destfile="bins/Run.jar">
+        <jar destfile="bins/InMa.jar">
             <manifest>
                 <attribute name="Main-Class" value="de.uni_hannover.spaceusagerules.algorithm.Start"/>
                 <attribute name="Class-Path" value=". ../libs/jsoup-1.8.1.jar ../libs/metadata-extractor-2.6.4.jar ../libs/scribe-1.3.0.jar ../libs/commons-codec-1.9.jar ../libs/xmpcore.jar ../libs/java-getopt-1.0.14.jar ../libs/jts-1.13.jar"/>
