@@ -1,0 +1,24 @@
+Man braucht folgende Daten: Data.txt, rules.xml. Außerdem ist eine Internetverbindung zu openstreetmap.org nötig.\\
+Eine Manpage lässt sich mit \verb|man -l inma.1| aufrufen.
+\section{Eingabedaten}
+Die Data.txt enthält die wichtigsten Eingabedaten. Sie ist genauso aufgebaut wie die im Testdatensatz zum Wettbewerb bereitgestellte Datei.
+In der ersten Zeile steht die Anzahl der folgenden Zeilen. Jede Zeile enthält am Ende eine Flächennutzungsregel. Am Beginn der Zeile steht
+die Nummer des Testdatensatzes, zu dem die Regel gehört. Gefolgt wird diese Nummer von einem Koordinatenpaar, das den Standort der 
+entsprechneden Verbotsschilder beschreibt.\\
+Die Rules.xml enthält die Bewertungsregeln, die das Programm benötigt. (Für deren Aufbau siehe unten.)
+\section{Ausführung}
+Die Standardausführung sieht folgendermaßen aus:\\
+\verb|java Start --data Data.txt --rules Rules.xml|
+\section{Optionen}
+\manoption{-h, --help}{Shows the help text.}
+\manoption{-d, --data FILE}{Specifies  the  file  containing  the space usage rules and their locations.}
+\manoption{-r, --rules FILE}{Specifies the file  containing  rules  for  evaluating  the environment of the location.}
+\manoption{-t, --threads NUMBER}{Specifies the number of threads.}
+\manoption{-u, --overlap FILE}{Specifies  the  file containing overlap values, that should be reached to be successfull.}
+\manoption{-o, --outputDir PATH}{Specifies the folder where output files will be stored. Can be overwritten for the images by -i.}
+\manoption{-p, --path PATH}{Specifies   the  folder  where  the  following  files  are: Data.txt, Rules.xml and optional Overlap.txt.  -d,  -r  and -u are not needed and can overwrite -p.}
+\manoption{-i, --image [PATH]}{Images are created to visualise the processed data. An output directory is optional.}
+\manoption{-l, --height NUMBER}{Specifies the height of the images.}
+\manoption{-w, --width NUMBER}{Specifies the width of the images.}
+\section{Ausgabe}
+Als Ausgabe erhält man kml-Dateien, die die errechneten Gebiete enthalten. Sie können mit Google-Earth betrachtet werden.
