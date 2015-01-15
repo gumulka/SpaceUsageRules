@@ -8,7 +8,6 @@ verschiedenen Anwendungen als Bibliothek nutzen zu lassen.
 
 \subsection{Eingabeformat}
 \subsubsection{Regeln}
-Wird derzeit auf XML umgestellt.\\
 \label{sec:Eingabedaten_Wir}
 Die benutzten Regeln liegen in einer Datei im XML-Format vor. Darin werden vier von uns definierte Tags benutzt: 'ruleset', 'rule',
 'restriction' und 'OSMTag'. Gewicht, Schwellwert und Radius sind Attribute des Tags 'OSMTag'.\\
@@ -62,9 +61,3 @@ sind durch Kommas und optionale Leerzeichen getrennt.
 Um die Qualität hoch zu halten werden für alle wichtigen Klassen und Methoden JUnit Tests
 entworfen. Dabei ist das jeweils andere Teammitglied angehalten anhand der Dokumentation Blackbox-Test zu
 schreiben um bei den Test unvoreingenommen zu sein und engagiert möglichst viele Fehler zu finden.
-
-\subsection{Probleme}
-Da die Berechnung der Schnittpolygone sehr aufwändig ist und wir nur eine Näherung benötigen,
-wird die Berechnung der Schnittpolygone und deren Flächen vereinfacht durch Erstellen von Bounding Boxes.
-Es wird also nicht das wirkliche Schnittpolygon berechnet, sondern die Schnitt Bounding Box, sowie die Fläche der Bounding Box.
-\\Immer noch? Oder wurde das durch den Einbau von JTS geändert?

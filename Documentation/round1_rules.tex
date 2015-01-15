@@ -1,6 +1,6 @@
 \section{Regeln}
 \label{sec:Regeln}
-Um ``Space Usage Rules'' und ``Gewichtungsregeln'' nicht zu verwechseln, benutzen wir den Begriff ``Verbot'', wenn wir von 
+Um ``Space Usage Rules'' und ``Gewichtungsregeln'' nicht zu verwechseln, benutzen wir den Begriff ``Verbot'', wenn wir von
 Space Usage Rules reden, und den Begriff ``Regel'', wenn wir Gewichtungsregeln meinen.
 \subsection{Regelbeschreibung}
 Da in fast allen Fällen ein sehr nah gelegenes Polygon gemeint ist, wird zunächst auf den Abstand aller vorhandenen Polygone etwas aufaddiert,
@@ -31,8 +31,8 @@ Sei $\Gew$ die Gewichtungsfunktion für ein Polygon $X$ aus dem Testdatensatz $I
 \begin{equation}
 \Gew(ID,X) := (D_{X,ID} + o) * \prod_{r \in s(V_{ID})} \prod_{t \in Z_{ID}} r(t).
 \end{equation}
-$\Guess$ sei die Funktion, die aus einem Testdatensatz $ID$ das Polygon $X$ mit der kleinsten gewichteten Ditanz und dem 
-kleinsten Flächeninhalt als Lösungspolygon auswählt. 
+$\Guess$ sei die Funktion, die aus einem Testdatensatz $ID$ das Polygon $X$ mit der kleinsten gewichteten Ditanz und dem
+kleinsten Flächeninhalt als Lösungspolygon auswählt.
 \begin{align}
 \Guess(ID) := X \text{ wobei } X \in O_{ID} \text{ mit } & \Gew(ID,X) < \Gew(ID,Y)\\
 & \lor \Big(\Gew(ID,X)=\Gew(ID,Y) \land A_X < A_Y\Big) \forall Y \in O_{ID} \notag
@@ -61,7 +61,7 @@ $\Guess(ID) = A$
 Um die Güte der verschiedenen Regeln zu überprüfen wird ein Programm geschrieben, welche für jede Regel die Schnittpolygone von unseren Lösungspolygonen mit
 den Musterlösungen bildet und anschließend jeweils durch die Fläche unseres Polygons, sowie die des Musterlösungspolygons teilt.
 Von beiden Zahlen wird das Minimun genommen und als Indikator der Lösungsgüte angesehen. Die folgende Funktion $f$ berechnet diese Güte.
-Dabei sind $R$ ein Regelsatz, $v$ ein Verbot (oder eine Verbotsmenge?), $S_v$ die Menge der Datensätze, in denen $v$ gilt, 
+Dabei sind $R$ ein Regelsatz, $v$ ein Verbot (oder eine Verbotsmenge?), $S_v$ die Menge der Datensätze, in denen $v$ gilt,
 $q\in S_v$ ein Datensatz, $P_q$ die Musterlösung des Datensatzes $q$, $I$ ? und $G(q,R):=\Guess(q)$ abhängig vom Regelsatz $R$.\\
 \begin{equation}
 f(v,R) := \sum_{q\in S_v} \min \left(\frac{I(P_q,G(q,R))}{P_q},\frac{I(P_q,G(q,R))}{G(q,R)}\right)
@@ -144,9 +144,21 @@ Hier kann man nicht mehr viel machen und wird wahrscheinlich immer das falsche P
 
 
 \subsection{Erweiterung}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.8\textwidth]{Achteck.png}
+ \caption{Ausgabe mit Achteck Erweiterung.}
+ \label{fig:DataEight}
+\end{figure}
 Um den Fall abzudecken, in welchem in OpenStreetMap keine ausreichenden Daten vorhanden sind, wird um den Punkt $C_{ID}$ ein
 Achteck\footnote{Relativ geringer Rechenaufwand bei gleichzeitig bester Annäherung an einen Kreis.} mit Radius $b$ gelegt
 und dieses mit der gewichtet nächsten Großfläche geschnitten.
 Eine Großfläche $X$ definiert sich dadurch, dass ihre Fläche $A_X$ einen Schwellwert $u$ überschreitet.
-Es ist zu prüfen, ob es sinnvoll ist, dieses generell zu tun oder für bestimmte Regeln außer Kraft zu setzen, wie
-z.B. ein Verbot nach offenem Feuer, welches in einem ganzen Parkgebiet gelten wird.
+
+Da z.B. ein Verbot für offenem Feuer in einem ganzen Parkgebiet gelten wird, in OpenStreetMap
+jedoch oftmals einzelne Häuser fehlen, für welche einzelne Regeln gelten ist dieses nicht generell anzuwenden,
+sondern an Verbote und Eigenschaften der Großfläche zu binden.
+
+Eine beispielhafte Ausgabe der Erweiterung ist is \fref{fig:DataEight} zu sehen.
+Hier wurde es sinnvoll genutzt um ein Industriegebiet zu schneiden und so auf die ungefähre
+Fläche der gewünschten Lösung zu kommen.

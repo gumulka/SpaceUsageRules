@@ -1,11 +1,12 @@
-\documentclass[twoside]{report}
+\documentclass[oneside]{report}
 
 % Page & text layout
-\usepackage[twoside]{geometry}
+%\usepackage[twoside]{geometry}
+\usepackage{geometry}
 \geometry{%
   a4paper,%
-  top=30mm,%
-  bottom=30mm,%
+  top=25mm,%
+  bottom=25mm,%
   left=25mm,%
   right=25mm%
 }
@@ -138,7 +139,7 @@
 \newcommand{\methodname}[1]{\texttt{#1}}
 
 \newcommand{\manoption}[2]{\textsl{#1}\\ \hspace*{24pt} #2 \\}
-  
+
 \newsavebox\mybox
 \newenvironment{aquote}[1]
   {\savebox\mybox{#1}\begin{quote}}

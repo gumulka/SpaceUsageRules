@@ -77,7 +77,11 @@ public class Start extends DatasetEntry {
 		try {
 			GeometryFactory gf = new GeometryFactory();
 			// try to get better coordinates from the image, because the Data.txt is rounded
-			setLocation(gf.createPoint(Image.readCoordinates(new File(path + id + ".jpg"))));
+			Point im = gf.createPoint(Image.readCoordinates(new File(path + id + ".jpg")));
+			if(im.distance(backup)>0.0001)
+				System.out.println("ignoring image metadata, because distance to high. " + im.distance(backup));
+			else
+				setLocation(im);
 		} catch (Exception e) {
 		}
 	}
@@ -316,6 +320,10 @@ public class Start extends DatasetEntry {
 			f = new File(path + "Rules.xml");
 		else
 			f= new File(rules);
+		if(!f.exists()) {
+			System.err.println("Rules file does not exist!");
+			return;
+		}	
 		//reading and parsing is done in RulesetIO
 		allRules = new HashSet<Rules>(RulesetIO.readRules(f));
 		
@@ -339,9 +347,9 @@ public class Start extends DatasetEntry {
 		ThreadScheduler.schedule(instances.values(), maxRunning);
 		
 		
-		List<Double> bla = OSM.size;
-		Collections.sort(bla);
-		buckets(10, bla.get(0), bla.get(bla.size()*6/10), bla);
+//		List<Double> bla = OSM.size;
+//		Collections.sort(bla);
+//		buckets(10, bla.get(0), bla.get(bla.size()*6/10), bla);
 		// */
 	}
 	
