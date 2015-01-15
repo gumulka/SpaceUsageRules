@@ -2,10 +2,10 @@
 \section{Ziel des Projekts}
 \subsection{Erläuterung des zu lösenden Problems}
 Die Software wird zur Teilnahme am Wettbewerb ``Informaticup 2015'', der von der Gesellschaft für Informatik ausgreichtet wird, hergestellt.\\
-Die Hauptaufgabe der Software ist es, für eine Position, an der sich ein Informationsschild befindet, einen Geltungsbereich zu berechnen. 
+Die Hauptaufgabe der Software ist es, für eine Position, an der sich ein Informationsschild befindet, einen Geltungsbereich zu berechnen.
 Hierzu können die öffentlich zugänglichen Daten aus Open Street Map benutzt werden.
 \subsection{Wünsche und Prioritäten des Kunden}
-Die Veranstalter des Wettbewerbs legen Wert auf eine gute Nachvollziehbarkeit und Dokumentation der Software. 
+Die Veranstalter des Wettbewerbs legen Wert auf eine gute Nachvollziehbarkeit und Dokumentation der Software.
 Das abgegebene Programm muss funktionieren, d.h. nicht abstürzen. Es muss aber nicht zwingend eine Erfolgsquote von hundert Prozent einfahren.
 Die Dokumentation der Software und des Entstehungsprozesses sind von höherer Priorität.
 \subsection{Domänenbeschreibung}
@@ -13,13 +13,13 @@ Da es sich bei diesem Projekt um eine Teilnahme an einem Wettbewerb handelt, kan
 Insofern kommt das Programm hauptsächlich bei der Bewertung durch die Jury zum Einsatz.\\
 Ein denkbares Szenario für den Einsatz ist das Kartieren von Flächennutzungsregeln. So muss zum Beispiel ein Nutzer nicht per Hand
 den Geltungsbereich eines Rauchverbots in die Karte eintragen. Das Programm errechnet automatisch aus der einer Position einen Bereich, den
-der Nutzer bestätigen oder verbessern kann. 
+der Nutzer bestätigen oder verbessern kann.
 \subsection{Maßnahmen zur Anforderungsanalyse}
-Unser erster Schritt, um uns mit dem Problem vertraut zu machen, war es den bereitgestellten Testdatensatz zu betrachten. 
+Unser erster Schritt, um uns mit dem Problem vertraut zu machen, war es den bereitgestellten Testdatensatz zu betrachten.
 (Genaueres siehe unten.)
 \section{Rahmenbedingungen und Umfeld}
 \subsection{Einschränkungen und Vorgaben}
-Bei Eingabedaten ist das selbstdefinierte Format der GI zu übernehmen. Bei Ausgabedaten ist das KML-Format vorgeschrieben. 
+Bei Eingabedaten ist das selbstdefinierte Format der GI zu übernehmen. Bei Ausgabedaten ist das KML-Format vorgeschrieben.
 Nutzung von Open Street Map als Kartenmaterial und Java als primäre Programmiersprache.
 \subsection{Anwender}
 Die Jury ist nach derzeitigem Stand die einzige Anwendergruppe. Darüber hinaus könnte das Programm auf mobilen Geräten Anwendung finden.
@@ -31,7 +31,8 @@ Zum Beispiel, um die darin beschriebenen Regeln automatisch zu erzeugen.
 \input{pflichtenheft_usecases} %use case diagramm und beschreibung der use cases
 \subsection{Technische Anforderungen}
 Besondere technische Anforderungen gibt es nicht.\\
-TODO besser formulieren.
+
+
 \section{Qualitätsanforderungen}
 \subsection{Qualitätsziele des Projekts}
 \subsubsection{Funktionalität}
@@ -47,18 +48,18 @@ verschiedene Einstellmöglichkeiten bieten.\\
 Durch selbsterklärende Ausgaben und Hilfetexte soll das Programm leicht benutzbar sein.
 
 \subsubsection{Effizienz}
-Daten, welche von Open Street Map herunter geladen werden, können lokal zwischengespeichert werden, um so die Belastung der Server und 
+Daten, welche von Open Street Map herunter geladen werden, können lokal zwischengespeichert werden, um so die Belastung der Server und
 das Datenvolumen zu reduzieren.\\
 Die Laufzeit kann durch mehrere Threads reduziert werden.
 
 \subsubsection{Wartbarkeit}
-Designentscheidungen sollen dokumentiert, APIs zur Verfügung gestellt werden. 
+Designentscheidungen sollen dokumentiert, APIs zur Verfügung gestellt werden.
 
 \subsubsection{Portabilität}
 Das Programm sollte auf verschiedenen Plattformen laufen, aber es ist nicht erforderlich, dass dies außergewöhnliche Plattformen einschließt.
 
 \subsubsection{Robustheit}
-Neue oder unerwartete Space Usage Rules führen nicht zum Absturz, da es einen Fallbackalgorithmus gibt. Wenn Kombinationen von 
+Neue oder unerwartete Space Usage Rules führen nicht zum Absturz, da es einen Fallbackalgorithmus gibt. Wenn Kombinationen von
 SURs nicht explizit behandelt werden, so wird die größtmögliche Teilmenge abgedeckt.
 
 \subsection{Qualitäts-Prioritäten des Kunden}

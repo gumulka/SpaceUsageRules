@@ -50,4 +50,14 @@
     <restriction>littering="no"</restriction>
     <OSMTag weight="0.8">amenity - grave_yard</OSMTag>
   </rule>
+
+	<!-- Added for own Dataset -->
+  <rule>
+    <restriction>dog_waste="no"</restriction>
+    <OSMTag threshold="1e-8" radius="0.00023">landuse - residential</OSMTag>
+  </rule>
+  <rule>
+    <restriction>access:age="21+"</restriction>
+    <OSMTag weight="0.7" >building</OSMTag>
+  </rule>
 </ruleset>

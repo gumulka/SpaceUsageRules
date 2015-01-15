@@ -1,80 +1,74 @@
-Fitness: 165314, Laufzeit: 0:02:46 Pop: 100, Wi: 100, Mu: 2, Me: 1
-Fitness: 165955, Laufzeit: 0:04:59 Pop: 100, Wi: 100, Mu: 2, Me: 3
-Fitness: 166070, Laufzeit: 0:04:15 Pop: 100, Wi: 100, Mu: 2, Me: 5
-Fitness: 165589, Laufzeit: 0:03:29 Pop: 100, Wi: 100, Mu: 4, Me: 1
-Fitness: 166044, Laufzeit: 0:05:51 Pop: 100, Wi: 100, Mu: 4, Me: 3
-Fitness: 165901, Laufzeit: 0:04:25 Pop: 100, Wi: 100, Mu: 4, Me: 5
-Fitness: 165668, Laufzeit: 0:03:57 Pop: 100, Wi: 100, Mu: 6, Me: 1
-Fitness: 165899, Laufzeit: 0:09:23 Pop: 100, Wi: 100, Mu: 6, Me: 3
-Fitness: 166048, Laufzeit: 0:04:59 Pop: 100, Wi: 100, Mu: 6, Me: 5
-Fitness: 165591, Laufzeit: 0:03:30 Pop: 100, Wi: 200, Mu: 2, Me: 1
-Fitness: 166049, Laufzeit: 0:08:12 Pop: 100, Wi: 200, Mu: 2, Me: 3
-Fitness: 165988, Laufzeit: 0:05:03 Pop: 100, Wi: 200, Mu: 2, Me: 5
-Fitness: 165505, Laufzeit: 0:03:36 Pop: 100, Wi: 200, Mu: 4, Me: 1
-Fitness: 166117, Laufzeit: 0:08:28 Pop: 100, Wi: 200, Mu: 4, Me: 3
-Fitness: 166075, Laufzeit: 0:06:27 Pop: 100, Wi: 200, Mu: 4, Me: 5
-Fitness: 166047, Laufzeit: 0:13:33 Pop: 100, Wi: 200, Mu: 6, Me: 1
-Fitness: 166134, Laufzeit: 0:07:29 Pop: 100, Wi: 200, Mu: 6, Me: 3
-Fitness: 165899, Laufzeit: 0:08:06 Pop: 100, Wi: 200, Mu: 6, Me: 5
-Fitness: 166044, Laufzeit: 0:26:03 Pop: 100, Wi: 500, Mu: 2, Me: 1
-Fitness: 166070, Laufzeit: 0:08:54 Pop: 100, Wi: 500, Mu: 2, Me: 3
-Fitness: 166150, Laufzeit: 0:12:30 Pop: 100, Wi: 500, Mu: 2, Me: 5
-Fitness: 165709, Laufzeit: 0:06:10 Pop: 100, Wi: 500, Mu: 4, Me: 1
-Fitness: 166053, Laufzeit: 0:11:15 Pop: 100, Wi: 500, Mu: 4, Me: 3
-Fitness: 166172, Laufzeit: 0:13:21 Pop: 100, Wi: 500, Mu: 4, Me: 5
-Fitness: 165709, Laufzeit: 0:19:10 Pop: 100, Wi: 500, Mu: 6, Me: 1
-Fitness: 166048, Laufzeit: 0:13:54 Pop: 100, Wi: 500, Mu: 6, Me: 3
-Fitness: 165899, Laufzeit: 0:10:13 Pop: 100, Wi: 500, Mu: 6, Me: 5
-Fitness: 166125, Laufzeit: 0:10:04 Pop: 200, Wi: 100, Mu: 2, Me: 1
-Fitness: 165901, Laufzeit: 0:06:39 Pop: 200, Wi: 100, Mu: 2, Me: 3
-Fitness: 166165, Laufzeit: 0:03:49 Pop: 200, Wi: 100, Mu: 2, Me: 5
-Fitness: 165683, Laufzeit: 0:03:22 Pop: 200, Wi: 100, Mu: 4, Me: 1
-Fitness: 165901, Laufzeit: 0:09:04 Pop: 200, Wi: 100, Mu: 4, Me: 3
-Fitness: 166162, Laufzeit: 0:02:49 Pop: 200, Wi: 100, Mu: 4, Me: 5
-Fitness: 165738, Laufzeit: 0:07:44 Pop: 200, Wi: 100, Mu: 6, Me: 1
-Fitness: 166143, Laufzeit: 0:10:19 Pop: 200, Wi: 100, Mu: 6, Me: 3
-Fitness: 166172, Laufzeit: 0:04:43 Pop: 200, Wi: 100, Mu: 6, Me: 5
-Fitness: 165892, Laufzeit: 0:19:29 Pop: 200, Wi: 200, Mu: 2, Me: 1
-Fitness: 166112, Laufzeit: 0:10:08 Pop: 200, Wi: 200, Mu: 2, Me: 3
-Fitness: 166165, Laufzeit: 0:06:09 Pop: 200, Wi: 200, Mu: 2, Me: 5
-Fitness: 165860, Laufzeit: 0:13:20 Pop: 200, Wi: 200, Mu: 4, Me: 1
-Fitness: 166143, Laufzeit: 0:14:01 Pop: 200, Wi: 200, Mu: 4, Me: 3
-Fitness: 166061, Laufzeit: 0:07:54 Pop: 200, Wi: 200, Mu: 4, Me: 5
-Fitness: 166016, Laufzeit: 0:27:27 Pop: 200, Wi: 200, Mu: 6, Me: 1
-Fitness: 165899, Laufzeit: 0:10:53 Pop: 200, Wi: 200, Mu: 6, Me: 3
-Fitness: 166070, Laufzeit: 0:12:39 Pop: 200, Wi: 200, Mu: 6, Me: 5
-Fitness: 166048, Laufzeit: 0:27:38 Pop: 200, Wi: 500, Mu: 2, Me: 1
-Fitness: 166135, Laufzeit: 0:34:45 Pop: 200, Wi: 500, Mu: 2, Me: 3
-Fitness: 165984, Laufzeit: 0:08:44 Pop: 200, Wi: 500, Mu: 2, Me: 5
-Fitness: 166025, Laufzeit: 0:40:03 Pop: 200, Wi: 500, Mu: 4, Me: 1
-Fitness: 166137, Laufzeit: 0:26:15 Pop: 200, Wi: 500, Mu: 4, Me: 3
-Fitness: 166076, Laufzeit: 0:09:23 Pop: 200, Wi: 500, Mu: 4, Me: 5
-Fitness: 166054, Laufzeit: 0:32:48 Pop: 200, Wi: 500, Mu: 6, Me: 1
-Fitness: 165901, Laufzeit: 0:14:26 Pop: 200, Wi: 500, Mu: 6, Me: 3
-Fitness: 166172, Laufzeit: 0:14:07 Pop: 200, Wi: 500, Mu: 6, Me: 5
-Fitness: 165983, Laufzeit: 0:22:02 Pop: 500, Wi: 100, Mu: 2, Me: 1
-Fitness: 166071, Laufzeit: 0:05:39 Pop: 500, Wi: 100, Mu: 2, Me: 3
-Fitness: 166166, Laufzeit: 0:05:38 Pop: 500, Wi: 100, Mu: 2, Me: 5
-Fitness: 166049, Laufzeit: 0:26:31 Pop: 500, Wi: 100, Mu: 4, Me: 1
-Fitness: 166001, Laufzeit: 0:05:42 Pop: 500, Wi: 100, Mu: 4, Me: 3
-Fitness: 166003, Laufzeit: 0:05:44 Pop: 500, Wi: 100, Mu: 4, Me: 5
-Fitness: 166131, Laufzeit: 0:26:00 Pop: 500, Wi: 100, Mu: 6, Me: 1
-Fitness: 165995, Laufzeit: 0:05:43 Pop: 500, Wi: 100, Mu: 6, Me: 3
-Fitness: 166135, Laufzeit: 0:05:36 Pop: 500, Wi: 100, Mu: 6, Me: 5
-Fitness: 166048, Laufzeit: 0:29:30 Pop: 500, Wi: 200, Mu: 2, Me: 1
-Fitness: 166164, Laufzeit: 0:12:08 Pop: 500, Wi: 200, Mu: 2, Me: 3
-Fitness: 165841, Laufzeit: 0:09:10 Pop: 500, Wi: 200, Mu: 2, Me: 5
-Fitness: 166031, Laufzeit: 0:26:18 Pop: 500, Wi: 200, Mu: 4, Me: 1
-Fitness: 166162, Laufzeit: 0:09:20 Pop: 500, Wi: 200, Mu: 4, Me: 3
-Fitness: 166157, Laufzeit: 0:09:04 Pop: 500, Wi: 200, Mu: 4, Me: 5
-Fitness: 165886, Laufzeit: 0:29:10 Pop: 500, Wi: 200, Mu: 6, Me: 1
-Fitness: 165971, Laufzeit: 0:10:27 Pop: 500, Wi: 200, Mu: 6, Me: 3
-Fitness: 165901, Laufzeit: 0:09:50 Pop: 500, Wi: 200, Mu: 6, Me: 5
-Fitness: 166048, Laufzeit: 0:50:58 Pop: 500, Wi: 500, Mu: 2, Me: 1
-Fitness: 165878, Laufzeit: 0:19:34 Pop: 500, Wi: 500, Mu: 2, Me: 3
-Fitness: 166162, Laufzeit: 0:19:40 Pop: 500, Wi: 500, Mu: 2, Me: 5
-Fitness: 166037, Laufzeit: 0:49:49 Pop: 500, Wi: 500, Mu: 4, Me: 1
-Fitness: 165995, Laufzeit: 0:20:05 Pop: 500, Wi: 500, Mu: 4, Me: 3
-Fitness: 165900, Laufzeit: 0:19:00 Pop: 500, Wi: 500, Mu: 4, Me: 5
-Fitness: 165887, Laufzeit: 0:32:41 Pop: 500, Wi: 500, Mu: 6, Me: 1
-Fitness: 166165, Laufzeit: 0:22:22 Pop: 500, Wi: 500, Mu: 6, Me: 3
+Fitness: 190693, Laufzeit: 0:13:29 Pop: 100, Wi: 100, Mu: 5, Me: 1
+Fitness: 193075, Laufzeit: 0:20:37 Pop: 100, Wi: 100, Mu: 5, Me: 5
+Fitness: 192789, Laufzeit: 0:39:20 Pop: 100, Wi: 100, Mu: 5, Me: 3
+Fitness: 191285, Laufzeit: 0:19:28 Pop: 100, Wi: 100, Mu: 3, Me: 1
+Fitness: 191478, Laufzeit: 0:50:48 Pop: 100, Wi: 100, Mu: 3, Me: 3
+Fitness: 192237, Laufzeit: 0:37:04 Pop: 100, Wi: 100, Mu: 3, Me: 5
+Fitness: 193468, Laufzeit: 0:45:25 Pop: 100, Wi: 350, Mu: 5, Me: 3
+Fitness: 192269, Laufzeit: 0:45:54 Pop: 100, Wi: 350, Mu: 5, Me: 5
+Fitness: 193245, Laufzeit: 1:33:41 Pop: 100, Wi: 350, Mu: 5, Me: 1
+Fitness: 192233, Laufzeit: 0:37:37 Pop: 100, Wi: 350, Mu: 3, Me: 3
+Fitness: 193567, Laufzeit: 0:26:30 Pop: 100, Wi: 350, Mu: 3, Me: 5
+Fitness: 193598, Laufzeit: 1:54:00 Pop: 100, Wi: 350, Mu: 3, Me: 1
+Fitness: 193253, Laufzeit: 0:52:26 Pop: 100, Wi: 500, Mu: 5, Me: 3
+Fitness: 193873, Laufzeit: 1:40:50 Pop: 100, Wi: 500, Mu: 5, Me: 1
+Fitness: 193019, Laufzeit: 0:47:02 Pop: 100, Wi: 500, Mu: 5, Me: 5
+Fitness: 193864, Laufzeit: 1:50:15 Pop: 100, Wi: 500, Mu: 3, Me: 1
+Fitness: 193177, Laufzeit: 1:19:26 Pop: 100, Wi: 500, Mu: 3, Me: 3
+Fitness: 193279, Laufzeit: 0:40:46 Pop: 100, Wi: 500, Mu: 3, Me: 5
+Fitness: 191884, Laufzeit: 0:33:39 Pop: 350, Wi: 100, Mu: 5, Me: 1
+Fitness: 192483, Laufzeit: 0:50:20 Pop: 350, Wi: 100, Mu: 5, Me: 3
+Fitness: 193324, Laufzeit: 1:03:02 Pop: 350, Wi: 100, Mu: 5, Me: 5
+Fitness: 191755, Laufzeit: 0:46:24 Pop: 350, Wi: 100, Mu: 3, Me: 1
+Fitness: 192765, Laufzeit: 0:46:17 Pop: 350, Wi: 100, Mu: 3, Me: 3
+Fitness: 192050, Laufzeit: 1:06:29 Pop: 350, Wi: 100, Mu: 3, Me: 5
+Fitness: 192755, Laufzeit: 2:07:30 Pop: 350, Wi: 350, Mu: 5, Me: 1
+Fitness: 193738, Laufzeit: 2:33:05 Pop: 350, Wi: 350, Mu: 5, Me: 3
+Fitness: 193405, Laufzeit: 2:54:58 Pop: 350, Wi: 350, Mu: 5, Me: 5
+
+
+10
+rauschgeschmissen: 1364/1631 möglichen Regeln
+25 verschiedene Tags.
+Fitness: 191242, Laufzeit: 0:22:35 Pop: 100, Wi: 100, Mu: 1, Me: 5, Gen: 4
+Fitness: 190321, Laufzeit: 0:29:06 Pop: 100, Wi: 100, Mu: 1, Me: 3, Gen: 4
+Fitness: 191436, Laufzeit: 0:31:37 Pop: 100, Wi: 100, Mu: 1, Me: 1, Gen: 4
+Fitness: 190551, Laufzeit: 0:21:14 Pop: 100, Wi: 100, Mu: 3, Me: 1, Gen: 4
+Fitness: 190970, Laufzeit: 0:28:18 Pop: 100, Wi: 100, Mu: 3, Me: 3, Gen: 4
+Fitness: 191230, Laufzeit: 0:27:17 Pop: 100, Wi: 100, Mu: 3, Me: 5, Gen: 4
+Fitness: 188833, Laufzeit: 0:19:43 Pop: 100, Wi: 100, Mu: 5, Me: 1, Gen: 4
+Fitness: 189812, Laufzeit: 0:25:17 Pop: 100, Wi: 100, Mu: 5, Me: 3, Gen: 4
+Fitness: 190244, Laufzeit: 0:19:34 Pop: 100, Wi: 100, Mu: 5, Me: 5, Gen: 4
+Fitness: 192053, Laufzeit: 0:43:39 Pop: 100, Wi: 350, Mu: 1, Me: 3, Gen: 4
+Fitness: 190864, Laufzeit: 1:08:25 Pop: 100, Wi: 350, Mu: 1, Me: 1, Gen: 4
+Fitness: 191135, Laufzeit: 0:36:26 Pop: 100, Wi: 350, Mu: 1, Me: 5, Gen: 4
+Fitness: 191146, Laufzeit: 0:46:07 Pop: 100, Wi: 350, Mu: 3, Me: 3, Gen: 4
+Fitness: 189254, Laufzeit: 1:13:36 Pop: 100, Wi: 350, Mu: 3, Me: 1, Gen: 4
+Fitness: 190606, Laufzeit: 0:44:25 Pop: 100, Wi: 350, Mu: 3, Me: 5, Gen: 4
+Fitness: 190700, Laufzeit: 0:52:50 Pop: 100, Wi: 350, Mu: 5, Me: 3, Gen: 4
+Fitness: 189054, Laufzeit: 1:26:31 Pop: 100, Wi: 350, Mu: 5, Me: 1, Gen: 4
+Fitness: 190238, Laufzeit: 0:48:26 Pop: 100, Wi: 350, Mu: 5, Me: 5, Gen: 4
+Fitness: 191740, Laufzeit: 1:13:47 Pop: 100, Wi: 500, Mu: 1, Me: 3, Gen: 4
+Fitness: 191453, Laufzeit: 1:39:22 Pop: 100, Wi: 500, Mu: 1, Me: 1, Gen: 4
+Fitness: 191308, Laufzeit: 0:52:58 Pop: 100, Wi: 500, Mu: 1, Me: 5, Gen: 4
+Fitness: 189995, Laufzeit: 1:22:37 Pop: 100, Wi: 500, Mu: 3, Me: 1, Gen: 4
+Fitness: 191967, Laufzeit: 1:31:36 Pop: 100, Wi: 500, Mu: 3, Me: 3, Gen: 4
+Fitness: 191205, Laufzeit: 1:11:09 Pop: 100, Wi: 500, Mu: 3, Me: 5, Gen: 4
+Fitness: 190124, Laufzeit: 1:13:13 Pop: 100, Wi: 500, Mu: 5, Me: 1, Gen: 4
+Fitness: 191614, Laufzeit: 1:02:55 Pop: 100, Wi: 500, Mu: 5, Me: 3, Gen: 4
+Fitness: 190580, Laufzeit: 0:56:52 Pop: 100, Wi: 500, Mu: 5, Me: 5, Gen: 4
+Fitness: 191546, Laufzeit: 0:57:29 Pop: 350, Wi: 100, Mu: 1, Me: 1, Gen: 4
+Fitness: 192517, Laufzeit: 0:46:32 Pop: 350, Wi: 100, Mu: 1, Me: 3, Gen: 4
+Fitness: 191192, Laufzeit: 0:44:35 Pop: 350, Wi: 100, Mu: 3, Me: 1, Gen: 4
+Fitness: 191872, Laufzeit: 1:28:07 Pop: 350, Wi: 100, Mu: 1, Me: 5, Gen: 4
+Fitness: 192299, Laufzeit: 0:55:04 Pop: 350, Wi: 100, Mu: 3, Me: 3, Gen: 4
+Fitness: 191645, Laufzeit: 0:53:31 Pop: 350, Wi: 100, Mu: 3, Me: 5, Gen: 4
+Fitness: 191376, Laufzeit: 0:49:02 Pop: 350, Wi: 100, Mu: 5, Me: 1, Gen: 4
+Fitness: 191195, Laufzeit: 0:44:24 Pop: 350, Wi: 100, Mu: 5, Me: 3, Gen: 4
+Fitness: 191618, Laufzeit: 1:13:59 Pop: 350, Wi: 100, Mu: 5, Me: 5, Gen: 4
+Fitness: 192490, Laufzeit: 3:30:33 Pop: 350, Wi: 350, Mu: 1, Me: 1, Gen: 4
+Fitness: 191939, Laufzeit: 4:17:51 Pop: 350, Wi: 350, Mu: 1, Me: 3, Gen: 4
+Fitness: 191892, Laufzeit: 4:52:51 Pop: 350, Wi: 350, Mu: 1, Me: 5, Gen: 4
+Fitness: 192367, Laufzeit: 6:54:13 Pop: 350, Wi: 350, Mu: 3, Me: 1, Gen: 4
+Fitness: 192503, Laufzeit: 5:41:25 Pop: 350, Wi: 350, Mu: 3, Me: 3, Gen: 4
+Fitness: 191900, Laufzeit: 4:39:23 Pop: 350, Wi: 350, Mu: 3, Me: 5, Gen: 4
