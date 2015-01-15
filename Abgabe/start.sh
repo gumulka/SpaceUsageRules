@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Testdatensatz
-java -jar InMa.jar -d ../Testdatensatz/Data.txt -r Rules.xml -o computed -i images -u ../Testdatensatz/Overlap.txt
+java -jar InMa.jar --data ../Testdatensatz/Data.txt --rules Rules.xml --outputDir computed --image images --overlap ../Testdatensatz/Overlap.txt
 
 # Eigene Daten
-java -jar InMa.jar -d ../Round2/Data.txt -r Rules.xml -o computed -i images
+java -jar InMa.jar --data ../Round2/Data.txt --rules Rules.xml --outputDir computed --image images
