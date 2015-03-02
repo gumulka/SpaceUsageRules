@@ -3,14 +3,18 @@
 \usepackage[utf8]{inputenc}
 \usepackage{default}
 
+%\usetheme{InMa} 
 \usetheme{Warsaw}
 \usecolortheme{wolverine}
 % Vorschläge für alternative themes
-% Szeged-dolphin
+% Szeged-dolphin 
 % Rochester-sidebartab
 % Montpellier-whale
 % Ilmenau-orchid
 % etwas eigenes
+
+% sorgt dafür, dass LaTeX in images nach den Bildern sucht und der Ordner "etwas" aufgeräumter ist.
+\graphicspath{ {./images/} }
 
 \title[Wettbewerbsbeitrag] % (optional, only for long titles)
 {Wettbewerbsbeitrag zum InformatiCup}
@@ -36,55 +40,27 @@
 
 \frame{\titlepage}
 
-\begin{frame}
-    \frametitle{Datensatz untersuchen}
-    %Content goes here
-\end{frame}
+% nur für die Über uns sachen
+\input{aboutUs}
+
+% die Anfänglichen Sachen bis einschließlich visulalisierung
+\input{start}
+
+% Wie es zu unserem algorithmus gekommen ist
+\input{algorithmus}
+
+% Was wir danach noch gemacht haben mit GA und Android
+\input{GA}
 
 \begin{frame}
-    \frametitle{Fehlerbereinigung}
+    \frametitle{Ende}
     %Content goes here
+    \begin{center}
+		\huge{Fragen?}
+    \end{center}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Idee zur Android-App}
-    %Content goes here
-\end{frame}
-
-\begin{frame}
-    \frametitle{Darstellung des Datensatzes}
-    %Content goes here
-\end{frame}
-
-\begin{frame}
-    \frametitle{banaler Algorithmus}
-    %Content goes here
-\end{frame}
-
-\begin{frame}
-    \frametitle{Entfernung gewichten durch Tags}
-    %Content goes here
-\end{frame}
-
-\begin{frame}
-    \frametitle{Umgebungspolygon schneiden}
-    %Content goes here
-\end{frame}
-
-\begin{frame}
-    \frametitle{rules.xml Format}
-    %Content goes here
-\end{frame}
-
-\begin{frame}
-    \frametitle{Training mit vorhandenen Daten}
-    %Content goes here
-\end{frame}
-
-\begin{frame}
-    \frametitle{App um mehr Daten zu bekommen}
-    %Content goes here
-\end{frame}
-
+% alles was wir nach dem ende noch an Extrafolien haben wollen.
+\input{aftercare}
 
 \end{document}
