@@ -1,0 +1,20 @@
+ - Datensatz untersuchen
+ - Fehlerbereinigung
+ - Idee zur Android-App
+ - Darstellung des Datensatzes
+	 - Google Earth
+	 - xml anschauen
+	 - eigene Klasse
+ - banaler Algorithmus (nur Entfernung)
+ - Entfernung gewichten durch Tags
+ - Umgebungspolygon schneiden
+ - rules.xml Format
+ - Training mit vorhandenen Daten
+ - App um mehr Daten zu bekommen bis zum Alphastadium
+ - Ende
+
+ - Extrafolien für antizipierte Fragen + Extramaterial falls wir zu schnell fertig sind
+	 - Performance untersuchung
+	 - JTS
+	 - Werkzeuge (Git, Bibliotheken, eclipse, doxygen)
+	 - Dokumentation
