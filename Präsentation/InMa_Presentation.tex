@@ -3,11 +3,11 @@
 \usepackage[utf8]{inputenc}
 \usepackage{default}
 
-%\usetheme{InMa} 
+%\usetheme{InMa}
 \usetheme{Warsaw}
 \usecolortheme{wolverine}
 % Vorschläge für alternative themes
-% Szeged-dolphin 
+% Szeged-dolphin
 % Rochester-sidebartab
 % Montpellier-whale
 % Ilmenau-orchid
@@ -35,6 +35,15 @@
 {Informatiktage, 2015}
 \subject{Informatik}
 
+
+
+\newcommand\Wider[2][5em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
 
 \begin{document}
 
