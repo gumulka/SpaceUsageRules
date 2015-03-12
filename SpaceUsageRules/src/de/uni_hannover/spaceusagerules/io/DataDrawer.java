@@ -264,21 +264,24 @@ public class DataDrawer {
 		//draw reference point p in a special manner
 		int[] ref = transformToInt(location);
 		gr.setColor(Color.DARK_GRAY);
-		gr.drawOval(ref[0]-6, ref[1]-6, 12, 12);
-		gr.fillOval(ref[0]-5, ref[1]-5, 10, 10);
+		gr.drawOval(ref[0]-11, ref[1]-11, 22, 22);
+		gr.fillOval(ref[0]-10, ref[1]-10, 20, 20);
 		
 		//if wanted draw direction in which the photo was taken
 		if(Start.includeOrientation){
 			gr.setColor(new Color(0,100,0));
 			if(direction == Double.NaN){
 				//a dark green circle shows, that there is no direction, that can be drawn
-				gr.drawOval(ref[0]-7, ref[1]-7, 14, 14);
+				gr.drawOval(ref[0]-12, ref[1]-12, 24, 24);
 			}
 			else{
-				int toX = ref[0] + (int)(20.*Math.cos(direction));
-				int toY = ref[1] + (int)(20.*Math.sin(direction));
+				int toX = ref[0] + (int)(30.*Math.cos(direction));
+				int toY = ref[1] + (int)(30.*Math.sin(direction));
 				
-				gr.drawLine(ref[0], ref[1], toX, toY);
+				//make a thick line
+				for(int i=-1;i<2;i++)
+					for(int j=-1;j<2;j++)
+						gr.drawLine(ref[0]+i, ref[1]+j, toX+i, toY+j);
 				//XXX make it look more like an arrow
 			}
 		}

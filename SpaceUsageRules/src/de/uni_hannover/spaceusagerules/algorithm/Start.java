@@ -66,7 +66,7 @@ public class Start extends DatasetEntry {
 	public static File path = null;
 	
 	/** Should the GPS direction of the taken photo be included into the computation. */ 
-	public static boolean includeOrientation = false;
+	public static boolean includeOrientation = true;
 	
 	/** Direction in which the photo was taken. */ 
 	private double orientation;
@@ -143,10 +143,15 @@ public class Start extends DatasetEntry {
 		this.truth = new Way(KML.loadKML(t));
 		double overlapArea = getGuess().getGeometry().intersection(truth.getGeometry()).getArea();
 		overlapArea = Math.min(overlapArea/truth.getArea(), overlapArea/getGuess().getArea());
-		if(overlapArea>minOverlap)
-			return;
+		
+		if(overlapArea>minOverlap){
+//			return; //XXX unkommentieren, um nur Bilder von gescheiterten anzufertigen.
+		} else
+		{
+			
+			System.err.println("Anforderungen an " + getID() + " nicht geschafft.");
+		}
 		getGuess().addOriginalTag("InMa_Overlap", "" + overlapArea);
-		System.err.println("Anforderungen an " + getID() + " nicht geschafft.");
 		generateImage();
 	}
 	

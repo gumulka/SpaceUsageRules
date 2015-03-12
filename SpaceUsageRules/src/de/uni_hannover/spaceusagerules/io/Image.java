@@ -99,6 +99,8 @@ public class Image {
 				
 				//the orientation is smuggled with the z-value
 				output.z = orientation;
+				
+				System.out.println(f.getName()+" has GPS Img Direction");
 			}
 			else
 				output.z = Double.NaN;
