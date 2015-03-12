@@ -20,6 +20,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
 
+import de.uni_hannover.spaceusagerules.algorithm.Start;
 import de.uni_hannover.spaceusagerules.core.Way;
 
 /**
@@ -48,17 +49,21 @@ public class DataDrawer {
 	
 	double scale;
 	
+	/** Direction which the photographer was facing */
+	double direction;
+	
 	/**
 	 * Creates a DataDrawer for a specific location.
 	 * @param width width of the picture
 	 * @param height height of the picture
 	 * @param middle center of the area to be rendered
 	 */
-	public DataDrawer(int width, int height, Coordinate middle, double scale){
+	public DataDrawer(int width, int height, Coordinate middle, double scale, double direction){
 		this.width = width;
 		this.height = height;
 		this.location = middle;
 		this.scale = scale;
+		this.direction = direction;
 		
 		//create image
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -256,11 +261,27 @@ public class DataDrawer {
 				drawWay(w);
 		}
 		
-		//draw reference point p in special manner
+		//draw reference point p in a special manner
 		int[] ref = transformToInt(location);
 		gr.setColor(Color.DARK_GRAY);
 		gr.drawOval(ref[0]-6, ref[1]-6, 12, 12);
 		gr.fillOval(ref[0]-5, ref[1]-5, 10, 10);
+		
+		//if wanted draw direction in which the photo was taken
+		if(Start.includeOrientation){
+			gr.setColor(new Color(0,100,0));
+			if(direction == Double.NaN){
+				//a dark green circle shows, that there is no direction, that can be drawn
+				gr.drawOval(ref[0]-7, ref[1]-7, 14, 14);
+			}
+			else{
+				int toX = ref[0] + (int)(20.*Math.cos(direction));
+				int toY = ref[1] + (int)(20.*Math.sin(direction));
+				
+				gr.drawLine(ref[0], ref[1], toX, toY);
+				//XXX make it look more like an arrow
+			}
+		}
 		
 	}
 	

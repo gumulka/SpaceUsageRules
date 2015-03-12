@@ -14,6 +14,8 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 import com.vividsolutions.jts.geom.Coordinate;
 
+import de.uni_hannover.spaceusagerules.algorithm.Start;
+
 
 /**
  * Class to read in image-metadata and give the geocoordination, where the image was made.
@@ -48,6 +50,8 @@ public class Image {
 		Metadata meta = ImageMetadataReader.readMetadata(bis, false);
 		double lat = 0, lon=0;
 		double lat_dir = 1, lon_dir= 1;
+		double orientation = Double.NaN;
+		
 		for (Directory d : meta.getDirectories()) {
 			for (Tag t : d.getTags()) {
 				if (t.getTagName().equalsIgnoreCase("GPS Latitude")) {
@@ -74,9 +78,32 @@ public class Image {
 					else if(d.getString(t.getTagType()).equalsIgnoreCase("S"))
 						lon_dir = -1;
 				}
+				
+				//if wanted extract the direction in which the photo was taken
+				if(Start.includeOrientation && t.getTagName().equals("GPS Img Direction")){
+					Rational value = d.getRational(t.getTagType());
+
+					//convert degrees to rads. 
+					orientation = value.doubleValue() / -180. * Math.PI + 1.75*Math.PI;
+				}
+				
 			}
 		}
 		
-		return new Coordinate(lon*lon_dir,lat*lat_dir);
+		Coordinate output = new Coordinate(lon*lon_dir,lat*lat_dir); 
+		
+		if(Start.includeOrientation){
+			if(orientation != Double.NaN){
+				//TODO den Punkt um 1,5 Meter in die heraus gefilterte Richtung verschieben
+				//Fuck! Das ist so untrivial.
+				
+				//the orientation is smuggled with the z-value
+				output.z = orientation;
+			}
+			else
+				output.z = Double.NaN;
+		}
+		
+		return output;
 	}
 }

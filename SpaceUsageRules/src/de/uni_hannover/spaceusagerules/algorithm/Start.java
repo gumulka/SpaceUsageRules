@@ -11,7 +11,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +65,13 @@ public class Start extends DatasetEntry {
 	/** The base path, where the input-data is located.	 */
 	public static File path = null;
 	
+	/** Should the GPS direction of the taken photo be included into the computation. */ 
+	public static boolean includeOrientation = false;
+	
+	/** Direction in which the photo was taken. */ 
+	private double orientation;
+	
+	
 	/**
 	 * creates an entry in the dataset and tries to read in the coordinates from the image belonging to it.
 	 * @param backup a backup coordinate if it is not possible to read metadata from the image.
@@ -78,6 +84,14 @@ public class Start extends DatasetEntry {
 			GeometryFactory gf = new GeometryFactory();
 			// try to get better coordinates from the image, because the Data.txt is rounded
 			Point im = gf.createPoint(Image.readCoordinates(new File(path, id + ".jpg")));
+			
+			//if wanted, read the direction
+			if(includeOrientation){
+				orientation = im.getCoordinate().z;
+			}
+			//make the z-value 0 anyway to ensure the reference point lies in the plane
+			im.getCoordinate().z = 0;
+			
 			if(im.distance(backup)>0.0001)
 				System.out.println("ignoring image metadata, because distance to high. " + im.distance(backup));
 			else
@@ -97,7 +111,7 @@ public class Start extends DatasetEntry {
 	
 	
 	/**
-	 * the worker method, which handels the IO and calculations for this datasetEntry 
+	 * the worker method, which handles the IO and calculations for this datasetEntry 
 	 */
 	public void run() {
 		File f = new File(imagePath, getID() + ".png");
@@ -141,7 +155,7 @@ public class Start extends DatasetEntry {
 	 * one is zoomed in, the other one shows a wider perspective
 	 */
 	public void generateImage() {
-		DataDrawer drawer = new DataDrawer(imageWidth,imageHeight,getLocation().getCoordinate(),0.002);
+		DataDrawer drawer = new DataDrawer(imageWidth,imageHeight,getLocation().getCoordinate(),0.002,orientation);
 		drawer.render(getWays());
 		drawer.drawRules(getID() + " enthält " + getRestrictions()  + " und benutzt: " + getUsedRules());
 		drawer.drawWay(getGuess(),Color.red);
@@ -151,7 +165,7 @@ public class Start extends DatasetEntry {
 		} catch (IOException e) {
 			System.err.println("Konnte das Bild zu " + getID() + " nicht speichern.\n" + imagePath + getID() + ".png");
 		}
-		drawer = new DataDrawer(imageWidth,imageHeight,getLocation().getCoordinate(),0.006);
+		drawer = new DataDrawer(imageWidth,imageHeight,getLocation().getCoordinate(),0.006,orientation);
 		drawer.render(getWays());
 		drawer.drawRules(getID() + " enthält " + getRestrictions()  + " und benutzt: " + getUsedRules());
 		drawer.drawWay(truth,Color.green);
@@ -209,6 +223,7 @@ public class Start extends DatasetEntry {
 		longopts[7] = new LongOpt("threads", LongOpt.REQUIRED_ARGUMENT,null,'t');
 		longopts[8] = new LongOpt("width", LongOpt.REQUIRED_ARGUMENT,null,'w');
 		longopts[9] = new LongOpt("height", LongOpt.REQUIRED_ARGUMENT,null,'l');
+		//XXX option für includeOrientation einbauen
 
 		Getopt g = new Getopt("testprog", args, "hi:d:r:u:o:p:t:w:l:", longopts);
 		g.setOpterr(false); // We'll do our own error handling
