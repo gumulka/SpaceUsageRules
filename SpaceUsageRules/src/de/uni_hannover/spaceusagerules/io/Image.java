@@ -25,6 +25,9 @@ import de.uni_hannover.spaceusagerules.algorithm.Start;
  */
 public class Image {
 	
+	/** the estimated distance from smart phone to sign */
+	public static double DISTANCE_TO_SIGN = 0.05/60./60.;
+	
 	
 	/**
 	 * reads in the file and extracts the geocoordination if possible.
@@ -94,8 +97,10 @@ public class Image {
 		
 		if(Start.includeOrientation){
 			if(orientation != Double.NaN){
-				//TODO den Punkt um 1,5 Meter in die heraus gefilterte Richtung verschieben
-				//Fuck! Das ist so untrivial.
+				
+				//1.5 meters are roughly 0.05 arc seconds
+				//within Germany this differs only about a few centimeters.
+				output = move(output,orientation,DISTANCE_TO_SIGN);
 				
 				//the orientation is smuggled with the z-value
 				output.z = orientation;
@@ -108,4 +113,20 @@ public class Image {
 		
 		return output;
 	}
+	
+	/**
+	 * Moves a location in a specified direction.
+	 * @param input location to move
+	 * @param direction direction to move in, measured in rad
+	 * @param distance given in degrees. Tricky!
+	 * @return moved location
+	 */
+	public static Coordinate move(Coordinate input, double direction, double distance){
+		
+		double newX = input.x + Math.cos(direction)*distance;
+		double newY = input.y + Math.sin(direction)*distance;
+		
+		return new Coordinate(newX,newY);
+	}
+	
 }
