@@ -261,6 +261,20 @@ public class DataDrawer {
 				drawWay(w);
 		}
 		
+		
+		//draw unmoved reference point
+		if(Start.includeOrientation && direction!=Double.NaN){
+			gr.setColor(new Color(0,100,0));
+			
+			//move the reference point back to it's original position
+			int[] oldref = transformToInt(Image.move(location, -direction, Image.DISTANCE_TO_SIGN));
+			
+			gr.drawOval(oldref[0]-11, oldref[1]-11, 22, 22);
+			gr.fillOval(oldref[0]-10, oldref[1]-10, 20, 20);
+
+		}
+		
+		
 		//draw reference point p in a special manner
 		int[] ref = transformToInt(location);
 		gr.setColor(Color.DARK_GRAY);
