@@ -5,13 +5,37 @@
 
 \begin{frame}
   \frametitle{Visualisierung}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  % Hier ein Bild von unserer Visualisierungsklasse
-  % danach ein Frame mit Bild, bei dem die Tags von einem Teil vergrößert sind (Picture in Picture)
-  % danach ein Frame mit Bild, bei dem zusätzlich noch die richtige Lösung und unser Tipp farbig eingezeichnet sind
-  % vielleicht hier dann erst mal unsere Idee darstellen.
-  % danach ein Frame mit Bild, bei dem gezeigt wird, dass die Tags jetzt noch zusätlich "entfernung" und "gewichtete Entfernung"
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \Wider{\includegraphics[width=\textwidth]{OSM_feature}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Visualisierung}
+  \Wider{\includegraphics[width=\textwidth]{DataDrawer_raw}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Visualisierung}
+  \Wider{\includegraphics[width=\textwidth]{DataDrawer_raw_selected}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Visualisierung}
+  \Wider{\includegraphics[width=\textwidth]{DataDrawer_truth_selected}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Visualisierung}
+  \Wider{\includegraphics[width=\textwidth]{DataDrawer_dist_selected}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Visualisierung}
+  \Wider{\includegraphics[width=\textwidth]{DataDrawer_rules_selected}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Visualisierung}
+  \Wider{\includegraphics[width=\textwidth]{DataDrawer_area_selected}}
 \end{frame}
 
 \begin{frame}
@@ -33,24 +57,18 @@
 
 \begin{frame}
   \frametitle{Naiver Ansatz}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Coverage Wert für den Naiven Ansatz Einfügen
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \begin{center}
-  \huge{Coverage = ...}
+  \huge{Coverage = 49,6 \%}
   \end{center}
 \end{frame}
 
 \begin{frame}
   \frametitle{Gewichteter Ansatz}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Coverage Wert für den Naiven und ersten Ansatz Einfügen
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \begin{center}
-  \huge{Coverage = ...}
+  \huge{Coverage = 69,8 \%}
   \end{center}
   \begin{center}
-  Naive Coverage = ...
+  Naive Coverage = 49,6 \%
   \end{center}
 \end{frame}
 
@@ -77,14 +95,11 @@
 
 \begin{frame}
   \frametitle{Vollständiger Ansatz}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Coverage Wert für den vollständigen und ersten Ansatz Einfügen
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \begin{center}
-  \huge{Coverage = ...}
+  \huge{Coverage = 73,9 \%}
   \end{center}
   \begin{center}
-  Vorheriger Coverage = ...
+  Vorheriger Coverage =  69,8 \%
   \end{center}
 \end{frame}
 
@@ -94,6 +109,7 @@
     \item Partielle Gebäude zu einem zusammen gefügt
     \item OSM-Daten zwischengespeichert
     \item GPS-Daten aus Bildern auslesen.
+    \item GPS-Direction betrachtet (unnütz)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Weitere Verbesserungen die wir gemacht haben, aber nicht groß erklären wollen.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -103,5 +119,5 @@
 
 \begin{frame}
     \frametitle{rules.xml Format}
-    %Content goes here
+    \Wider{\includegraphics[width=\textwidth]{Rules_xml}}
 \end{frame}
