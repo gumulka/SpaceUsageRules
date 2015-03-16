@@ -1,6 +1,7 @@
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Visualisierung}
-  \Wider{\includegraphics[width=\textwidth]{XML}}
+  \lstset{language=XML,basicstyle=\tiny}
+  \lstinputlisting{OSM.xml}
 \end{frame}
 
 \begin{frame}
@@ -72,26 +73,36 @@
   \end{center}
 \end{frame}
 
+
 \begin{frame}
-  \frametitle{Unvollständige Daten}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Bild von unserer Image-Klasse mit einem unvollständigen Datensatz (am besten wieder 38)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \frametitle{Unvollständige Datensätze \hfill Nr. 38}
+  \Wider{\includegraphics[width=\textwidth]{unvollstaendig}}
 \end{frame}
+
+
+\begin{frame}
+  \frametitle{Unvollständige Datensätze \hfill Nr. 38}
+  \Wider{\includegraphics[width=\textwidth]{unvoll_ours}}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Unvollständige Datensätze \hfill Nr. 38}
+  \Wider{\includegraphics[width=\textwidth]{unvoll_naive}}
+\end{frame}
+
 
 \begin{frame}
   \frametitle{Umgebungspolygon}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Erklärung zu dem Umkreispolygon und dem anschließenden schneiden.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \Wider{\includegraphics[width=\textwidth]{unvoll_full}}
 \end{frame}
 
+
 \begin{frame}
-  \frametitle{Umgebungspolygon}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Bild von unserer Image-Klasse mit einem unvollständigen Datensatz und dem geschnittenen Ansatz (am besten wieder 38)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \frametitle{Unvollständige Datensätze \hfill Nr. 38}
+  \Wider{\includegraphics[width=\textwidth]{unvoll_result}}
 \end{frame}
+
 
 \begin{frame}
   \frametitle{Vollständiger Ansatz}
@@ -108,7 +119,7 @@
   \begin{itemize}
     \item Partielle Gebäude zu einem zusammen gefügt
     \item OSM-Daten zwischengespeichert
-    \item GPS-Daten aus Bildern auslesen.
+    \item GPS-Daten aus Bildern auslesen
     \item GPS-Direction betrachtet (unnütz)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Weitere Verbesserungen die wir gemacht haben, aber nicht groß erklären wollen.
@@ -117,7 +128,8 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}
-    \frametitle{rules.xml Format}
-    \Wider{\includegraphics[width=\textwidth]{Rules_xml}}
+\begin{frame}[fragile]
+  \frametitle{rules.xml Format}
+  \lstset{language=XML,basicstyle=\scriptsize}
+  \lstinputlisting{Rules.xml}
 \end{frame}

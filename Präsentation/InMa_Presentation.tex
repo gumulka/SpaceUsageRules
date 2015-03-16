@@ -13,6 +13,19 @@
 % Ilmenau-orchid
 % etwas eigenes
 
+
+\defbeamertemplate*{footline}{shadow theme}
+{%
+  \leavevmode%
+  \hbox{\begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm plus1fil,rightskip=.3cm]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\hfill\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle\hfill\insertframenumber\,/\,\inserttotalframenumber%
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
 % sorgt dafür, dass LaTeX in images nach den Bildern sucht und der Ordner "etwas" aufgeräumter ist.
 \graphicspath{ {./images/} }
 
@@ -36,6 +49,32 @@
 \subject{Informatik}
 
 
+\usepackage{listings}
+\usepackage{color}
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
+\lstset{
+basicstyle=\ttfamily,
+columns=fullflexible,
+showstringspaces=false,
+commentstyle=\color{gray}\upshape
+}
+
+\lstdefinelanguage{XML}
+{
+  morestring=[b]",
+  morestring=[s]{>}{<},
+  morecomment=[s]{<?}{?>},
+  stringstyle=\color{black},
+ identifierstyle=\color{darkblue},
+ keywordstyle=\color{cyan},
+ morekeywords={xmlns,version,type}% list your attributes here
+ }
+
+ 
+\beamertemplatenavigationsymbolsempty
 
 \newcommand\Wider[2][5em]{%
 \makebox[\linewidth][c]{%

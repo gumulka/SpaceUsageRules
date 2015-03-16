@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ruleset>
+  <rule> <!--- the rules to use if none are applicable -->
+    <OSMTag  threshold="1e-6" radius="0.0015">landuse - commercial</OSMTag>
+    <OSMTag  threshold="1e-7" radius="0.00023">landuse - residential</OSMTag>
+    <OSMTag  threshold="1e-5" radius="0.0025">landuse - industrial</OSMTag>
+  </rule>
+  <rule>
+    <restriction>access:dog="no"</restriction>
+    <OSMTag weight="0.9" >amenity</OSMTag>
+    <OSMTag weight="0.8" >building</OSMTag>
+    <OSMTag  threshold="1e-8" radius="0.00023">landuse - residential</OSMTag>
+  </rule>
+  <rule>
+    <restriction>dog_waste="no"</restriction>
+    <restriction>littering="no"</restriction>
+    <restriction>noise="no"</restriction>
+    <OSMTag weight="0.8" >landuse - recreation_ground</OSMTag>
+    <OSMTag  threshold="1e-8" radius="0.00023" weight="1.1">
+      landuse - residential
+    </OSMTag>
+  </rule>
+</ruleset>

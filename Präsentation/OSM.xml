@@ -1,0 +1,32 @@
+ ...
+ <node id="2387628719" visible="true" version="1" changeset="16989096" timestamp="2013-07-17T16:11:37Z" user="lodde1949" uid="138772" lat="50.9287797" lon="5.3934127"/>
+ <node id="2387628722" visible="true" version="1" changeset="16989096" timestamp="2013-07-17T16:11:37Z" user="lodde1949" uid="138772" lat="50.9289717" lon="5.3936002"/>
+ <node id="2387628733" visible="true" version="1" changeset="16989096" timestamp="2013-07-17T16:11:38Z" user="lodde1949" uid="138772" lat="50.9293540" lon="5.3938631"/>
+ <node id="2387628746" visible="true" version="1" changeset="16989096" timestamp="2013-07-17T16:11:38Z" user="lodde1949" uid="138772" lat="50.9297165" lon="5.3940245"/>
+ <node id="2387628750" visible="true" version="1" changeset="16989096" timestamp="2013-07-17T16:11:38Z" user="lodde1949" uid="138772" lat="50.9302087" lon="5.3941442"/>
+ <node id="2387628752" visible="true" version="1" changeset="16989096" timestamp="2013-07-17T16:11:38Z" user="lodde1949" uid="138772" lat="50.9302728" lon="5.3946308"/>
+ <node id="2387628753" visible="true" version="1" changeset="16989096" timestamp="2013-07-17T16:11:38Z" user="lodde1949" uid="138772" lat="50.9304515" lon="5.3947302"/>
+ <node id="2387628754" visible="true" version="1" changeset="16989096" timestamp="2013-07-17T16:11:38Z" user="lodde1949" uid="138772" lat="50.9305746" lon="5.3942119"/>
+ <node id="2387628755" visible="true" version="1" changeset="16989096" timestamp="2013-07-17T16:11:38Z" user="lodde1949" uid="138772" lat="50.9307042" lon="5.3942535"/>
+ <node id="2387628756" visible="true" version="1" changeset="16989096" timestamp="2013-07-17T16:11:38Z" user="lodde1949" uid="138772" lat="50.9307960" lon="5.3943290"/>
+ <node id="2387628758" visible="true" version="1" changeset="16989096" timestamp="2013-07-17T16:11:38Z" user="lodde1949" uid="138772" lat="50.9308223" lon="5.3943681"/>
+ <node id="2387628760" visible="true" version="1" changeset="16989096" timestamp="2013-07-17T16:11:38Z" user="lodde1949" uid="138772" lat="50.9308387" lon="5.3946518"/>
+ <node id="1080691346" visible="true" version="2" changeset="16989096" timestamp="2013-07-17T16:11:55Z" user="lodde1949" uid="138772" lat="50.9271731" lon="5.3924292"/>
+ <way id="24521375" visible="true" version="5" changeset="6851890" timestamp="2011-01-03T17:07:39Z" user="CyFo" uid="22138">
+  <nd ref="178836252"/>
+  <nd ref="178835787"/>
+  <tag k="highway" v="service"/>
+  <tag k="service" v="parking_aisle"/>
+ </way>
+ <way id="38591050" visible="true" version="6" changeset="25433071" timestamp="2014-09-14T14:11:00Z" user="CyFo" uid="22138">
+  <nd ref="457142029"/>
+  <nd ref="457142034"/>
+  <nd ref="243792374"/>
+  <nd ref="243792373"/>
+  <nd ref="457142029"/>
+  <tag k="amenity" v="bicycle_parking"/>
+  <tag k="building" v="yes"/>
+  <tag k="covered" v="yes"/>
+  <tag k="roof:shape" v="flat"/>
+ </way>
+....
