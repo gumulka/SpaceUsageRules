@@ -1,4 +1,5 @@
 \documentclass{beamer}
+%\documentclass[aspectratio=169]{beamer}
 
 \usepackage[utf8]{inputenc}
 \usepackage{default}
@@ -73,7 +74,7 @@ commentstyle=\color{gray}\upshape
  morekeywords={xmlns,version,type}% list your attributes here
  }
 
- 
+
 \beamertemplatenavigationsymbolsempty
 
 \newcommand\Wider[2][5em]{%
@@ -83,6 +84,14 @@ commentstyle=\color{gray}\upshape
   \end{minipage}%
   }%
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% when using the 16:9 aspect ratio
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \renewcommand\Wider[2][5em]{#2}
+
+
+
 
 \begin{document}
 
@@ -101,9 +110,19 @@ commentstyle=\color{gray}\upshape
 \input{GA}
 
 \begin{frame}
+    \frametitle{Bibliotheken}
+    \begin{itemize}
+      \item jts (http://www.vividsolutions.com/jts/JTSHome.htm)
+      \item jsoup (http://jsoup.org/)
+      \item LaTeX
+      \item Git / GitHub
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
     \frametitle{Ende}
     \begin{center}
-		\huge{Fragen?}
+    \huge{Fragen?}
     \end{center}
 \end{frame}
 
