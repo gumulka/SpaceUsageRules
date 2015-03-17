@@ -129,6 +129,25 @@
 \end{frame}
 
 \begin{frame}[fragile]
+ \frametitle{Aufbau des Regelsatzes}
+ \[
+  \begin{array}{c}
+  \text{Rule} \\[6pt]
+  \overbrace{\hspace{284pt}}\\[4pt]
+    \{ \text{restrictions} \}
+    \hspace{50pt}
+    \{ \text{tag} \to (\text{weight}~[,\text{threshold},\text{radius}]) \} \\[6pt]
+    \begin{array}{l r}
+      \overbrace{ \hspace{80pt} } \hspace{10pt} & \overbrace{ \hspace{200pt} }\\
+      \text{dog\_waste=``no''} & \text{landuse-recreation\_ground} \mapsto (1.8) \\
+      \text{littering=``no''} & \text{landuse-residential} \mapsto (1.1,10^{-8},2.3\cdot 10^{-4}) \\
+      \text{noise=``no''} & 
+    \end{array}
+  \end{array}
+ \]
+\end{frame}
+
+\begin{frame}[fragile]
   \frametitle{rules.xml Format}
   \lstset{language=XML,basicstyle=\scriptsize}
   \lstinputlisting{Rules.xml}
