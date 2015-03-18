@@ -38,11 +38,14 @@
   \frametitle{Formel}
   \begin{Large}
   \begin{equation*}
-    dist_{new} = (offset + dist_{old}) \prod z
+    dist_{new} = (offset + dist_{old}) \prod_{P \in U} \prod_{t\in P} w_{(P,t)}
   \end{equation*}
   \qquad \\
 \begin{equation*}
-z = \{ (x,y) | x \in \text{Tags der Fl\"ache}, y \in \mathbb{R}_+\}
+\begin{array}{r l}
+ U & \text{Menge der Fl\"achen $P$ in der Umgebung},\\
+ t & \text{Tag der Fl\"ache }P.
+\end{array}
 \end{equation*}
 \end{Large}
 \end{frame}
