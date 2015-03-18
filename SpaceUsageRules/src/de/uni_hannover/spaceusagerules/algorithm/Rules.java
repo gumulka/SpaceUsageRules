@@ -70,7 +70,7 @@ public class Rules{
 	 */
 	public double calcDist(Point c, Way w) {
 		double distance = w.distanceTo(c);
-		w.addOriginalTag("InMa_preDistance", "" + distance);
+//		w.addOriginalTag("InMa_preDistance", "" + distance);
 		distance += OFFSET;
 		String combine;
 		// iterate over all Tags in the OSM object
@@ -89,6 +89,7 @@ public class Rules{
 			}
 			
 		}
+//		w.addOriginalTag("InMa_calcDistance", "" + distance);
 		return distance;
 	}
 

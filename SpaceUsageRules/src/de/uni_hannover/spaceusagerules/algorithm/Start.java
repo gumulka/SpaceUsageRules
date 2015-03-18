@@ -45,7 +45,7 @@ public class Start extends DatasetEntry {
 	private static final double GLOBALMINOVERLAP = 0.95;
 	
 	/** number of maximal running Threads in parallel */
-	private static int maxRunning = 1;
+	private static int maxRunning = 4 ;
 	
 	/** the truth polygon */
 	private Way truth;
@@ -66,7 +66,7 @@ public class Start extends DatasetEntry {
 	public static File path = null;
 	
 	/** Should the GPS direction of the taken photo be included into the computation. */ 
-	public static boolean includeOrientation = true;
+	public static boolean includeOrientation = false;
 	
 	/** Direction in which the photo was taken. */ 
 	private double orientation;
@@ -86,11 +86,11 @@ public class Start extends DatasetEntry {
 			Point im = gf.createPoint(Image.readCoordinates(new File(path, id + ".jpg")));
 			
 			//if wanted, read the direction
-			if(includeOrientation){
-				orientation = im.getCoordinate().z;
-			}
+//			if(includeOrientation){
+//				orientation = im.getCoordinate().z;
+//			}
 			//make the z-value 0 anyway to ensure the reference point lies in the plane
-			im.getCoordinate().z = 0;
+//			im.getCoordinate().z = 0;
 			
 			if(im.distance(backup)>0.0001)
 				System.out.println("ignoring image metadata, because distance to high. " + im.distance(backup));
@@ -141,20 +141,21 @@ public class Start extends DatasetEntry {
 			return;
 		}
 		this.truth = new Way(KML.loadKML(t));
-		double overlapArea = getGuess().getGeometry().intersection(truth.getGeometry()).getArea();
+		overlapArea = getGuess().getGeometry().intersection(truth.getGeometry()).getArea();
 		overlapArea = Math.min(overlapArea/truth.getArea(), overlapArea/getGuess().getArea());
 		
 		if(overlapArea>minOverlap){
-//			return; //XXX unkommentieren, um nur Bilder von gescheiterten anzufertigen.
+			return; //XXX unkommentieren, um nur Bilder von gescheiterten anzufertigen.
 		} else
 		{
 			
-			System.err.println("Anforderungen an " + getID() + " nicht geschafft.");
+			System.err.println("Anforderungen an " + getID() + " nicht geschafft. " + overlapArea);
 		}
-		getGuess().addOriginalTag("InMa_Overlap", "" + overlapArea);
+		/// FIXME!!!
+	//	getGuess().addOriginalTag("InMa_Overlap", "" + overlapArea);
 		generateImage();
 	}
-	
+	public double overlapArea;
 	/**
 	 * generates two images for this entry with colored lines for the truth and guess polygon.
 	 * one is zoomed in, the other one shows a wider perspective
@@ -162,9 +163,10 @@ public class Start extends DatasetEntry {
 	public void generateImage() {
 		DataDrawer drawer = new DataDrawer(imageWidth,imageHeight,getLocation().getCoordinate(),0.002,orientation);
 		drawer.render(getWays());
-		drawer.drawRules(getID() + " enthält " + getRestrictions()  + " und benutzt: " + getUsedRules());
-		drawer.drawWay(getGuess(),Color.red);
+//		drawer.drawRules(getID() + " enthält " + getRestrictions()  + " und benutzt: " + getUsedRules());
+		drawer.drawWay(getGuess(),Color.RED);
 		drawer.drawWay(truth,Color.green);
+//		drawer.drawgeometry(Rules.createNgon(8, 0.00023, getLocation()), Color.red);
 		try {
 			drawer.saveImage(new File(imagePath, getID() + ".png").toString());
 		} catch (IOException e) {
@@ -179,7 +181,7 @@ public class Start extends DatasetEntry {
 			drawer.saveImage(imagePath + getID() + ".big.png");
 		} catch (IOException e) {
 			System.err.println("Konnte das Bild zu " + getID() + " nicht speichern.\n" + imagePath + getID() + ".big.png");
-		}
+		} // */
 	}
 
 	/**
@@ -366,6 +368,11 @@ public class Start extends DatasetEntry {
 		
 		ThreadScheduler.schedule(instances.values(), maxRunning);
 		
+		double overlaping = 0;
+		for(Start s : instances.values()) {
+			overlaping += s.overlapArea;
+		}
+		System.out.println("Overlap Area: " + overlaping/instances.size());
 		
 //		List<Double> bla = OSM.size;
 //		Collections.sort(bla);

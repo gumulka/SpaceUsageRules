@@ -31,8 +31,8 @@ import de.uni_hannover.spaceusagerules.io.OSM;
  */
 public class Main extends Thread implements Comparable<Main>{
 
-	public static final int MAXTHREADS = 1;
-	public static int DISSMISSED = 5;
+	public static final int MAXTHREADS = 4;
+	public static int DISSMISSED = 1;
 	public static final int CPUCORES = 4;
 	public static final double AUSLASTUNG = 1.0 - (1.0/(CPUCORES-MAXTHREADS));
 	

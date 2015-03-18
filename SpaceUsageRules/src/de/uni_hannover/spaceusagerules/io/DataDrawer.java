@@ -1,8 +1,10 @@
 package de.uni_hannover.spaceusagerules.io;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
@@ -17,6 +19,7 @@ import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
 
@@ -68,6 +71,8 @@ public class DataDrawer {
 		//create image
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		gr = image.getGraphics();
+
+		((Graphics2D) gr).setStroke(new BasicStroke(4));
 		
 		//adjust font size
 		Font font = gr.getFont();
@@ -92,7 +97,7 @@ public class DataDrawer {
 	 * @param w the Way to be drawn
 	 */
 	public void drawWay(Way w){
-		drawWay(w, Color.black);
+		drawWay(w, Color.DARK_GRAY);
 	}
 	
 	/**
@@ -100,6 +105,7 @@ public class DataDrawer {
 	 * @param rules
 	 */
 	public void drawRules(String rules) {
+		gr.setColor(Color.black);
 		int startoffset = 0;
 		Font f = gr.getFont();
 		Font big = f.deriveFont((float) f.getSize()+20);
@@ -135,6 +141,18 @@ public class DataDrawer {
 			
 		//draw polygon outline
 		gr.drawPolygon(polygon);
+	}
+	
+	public void drawgeometry(Geometry w, Color color) {
+		gr.setColor(color);
+
+		if(w instanceof com.vividsolutions.jts.geom.Polygon) {
+			com.vividsolutions.jts.geom.Polygon pol = (com.vividsolutions.jts.geom.Polygon) w;
+			drawRing(pol.getExteriorRing());
+			// XXX vielleicht noch eine gestrichelte Linie hinzufügen um zu zeigen, dass wir eine inner Linie sind.
+			for(int i = 0; i<pol.getNumInteriorRing();i++)
+				drawRing(pol.getInteriorRingN(i));
+		}
 	}
 	
 	/**

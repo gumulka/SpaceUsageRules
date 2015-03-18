@@ -134,7 +134,7 @@ public class DatasetEntry extends Thread{
 		ways = OSM.getObjectList(location.getCoordinate());
 		guess = usedRules.calculateBest(ways, location);
 		ways.remove(guess);
-		guess.addOriginalTag("area", "" + guess.getArea());
+//		guess.addOriginalTag("InMa_area", "" + guess.getArea());
 
 		
 	}

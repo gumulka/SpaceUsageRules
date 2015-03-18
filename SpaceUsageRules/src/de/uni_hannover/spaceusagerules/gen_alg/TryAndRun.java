@@ -22,11 +22,11 @@ public class TryAndRun {
 	public static void main(String[] args) throws Exception, IOException {
 		OSM.useBuffer(true);
 		Start.images = true;
-		Start.path = "../Testdatensatz/";
+		Start.path = new File("../Testdatensatz/");
 		Start.imagePath = "images/";
 
 		File f;
-		f = new File(Start.path + "Data.txt");
+		f = new File(Start.path, "Data.txt");
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		Map<String, Start> instances = new TreeMap<String, Start>();
 		String line;
@@ -53,7 +53,7 @@ public class TryAndRun {
 		br.close();
 
 
-		f = new File(Start.path + "Overlap.txt");
+		f = new File(Start.path, "Overlap.txt");
 		if(f.exists() && f.canRead()) {
 			br = new BufferedReader(new FileReader(f));
 			while((line = br.readLine()) != null) {
@@ -66,7 +66,7 @@ public class TryAndRun {
 		}
 
 		Population.GENERATOR = 16;
-		Main test = new Main(200, 100, 5, 3, 10);
+		Main test = new Main(500, 200, 6, 3, 64);
 		Main.prepare();
 		test.run();
 		test.writeout();
@@ -77,8 +77,13 @@ public class TryAndRun {
 				r.addRestriction(s.trim());
 			DatasetEntry.allRules.add(g.getBest());
 		}
-		ThreadScheduler.schedule(instances.values(), 1);
+		ThreadScheduler.schedule(instances.values(), 4);
 
+		double overlaping = 0;
+		for(Start s : instances.values()) {
+			overlaping += s.overlapArea;
+		}
+		System.out.println("Overlap Area: " + overlaping/instances.size());
 	}
 	
 }
