@@ -35,6 +35,19 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{Formel}
+  \begin{Large}
+  \begin{equation*}
+    dist_{new} = (offset + dist_{old}) \prod z
+  \end{equation*}
+  \qquad \\
+\begin{equation*}
+z = \{ (x,y) | x \in \text{Tags der Fl\"ache}, y \in \mathbb{R}_+\}
+\end{equation*}
+\end{Large}
+\end{frame}
+
+\begin{frame}
   \frametitle{Visualisierung}
   \Wider{\includegraphics[width=\textwidth]{DataDrawer_dist_selected}}
 \end{frame}
@@ -152,7 +165,7 @@
       \overbrace{ \hspace{80pt} } \hspace{10pt} & \overbrace{ \hspace{200pt} }\\
       \text{dog\_waste=``no''} & \text{landuse-recreation\_ground} \mapsto (1.8) \\
       \text{littering=``no''} & \text{landuse-residential} \mapsto (1.1,10^{-8},2.3\cdot 10^{-4}) \\
-      \text{noise=``no''} & 
+      \text{noise=``no''} &
     \end{array}
   \end{array}
  \]
