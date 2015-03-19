@@ -1,12 +1,12 @@
+\begin{frame}
+  \frametitle{Visualisierung}
+  \Wider{\includegraphics[width=\textwidth]{OSM_feature}}
+\end{frame}
+
 \begin{frame}[fragile]
   \frametitle{Visualisierung}
   \lstset{language=XML,basicstyle=\tiny}
   \lstinputlisting{OSM.xml}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Visualisierung}
-  \Wider{\includegraphics[width=\textwidth]{OSM_feature}}
 \end{frame}
 
 \begin{frame}
@@ -38,13 +38,14 @@
   \frametitle{Formel}
   \begin{Large}
   \begin{equation*}
-    dist_{new} = (offset + dist_{old}) \prod_{P \in U} \prod_{t\in P} w_{(P,t)}
+    dist_{new} = (offset + dist_{old}) \prod_{t\in P} w_{t}
   \end{equation*}
   \qquad \\
 \begin{equation*}
 \begin{array}{r l}
- U & \text{Menge der Fl\"achen $P$ in der Umgebung},\\
- t & \text{Tag der Fl\"ache }P.
+ P & \text{eine Fl\"ache in OSM},\\
+ t & \text{Tag der Fl\"ache }P,\\
+ w_t & \text{Gewicht des Tags $t$}.
 \end{array}
 \end{equation*}
 \end{Large}
@@ -60,10 +61,10 @@
   \Wider{\includegraphics[width=\textwidth]{DataDrawer_rules_selected}}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Visualisierung}
-  \Wider{\includegraphics[width=\textwidth]{DataDrawer_area_selected}}
-\end{frame}
+%%\begin{frame}
+%  \frametitle{Visualisierung}
+%  \Wider{\includegraphics[width=\textwidth]{DataDrawer_area_selected}}
+%\end{frame}
 
 \begin{frame}
   \frametitle{Coverage}
@@ -130,7 +131,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Unvollständige Datensätze \hfill Nr. 38}
+  \frametitle{Nicht implementiert \hfill Nr. 38}
   \Wider{\includegraphics[width=\textwidth]{unvoll_parallel}}
 \end{frame}
 
@@ -148,11 +149,12 @@
 \begin{frame}
   \frametitle{Sonstige Verbesserungen}
   \begin{itemize}
-    \item<0-> Partielle Gebäude zu einem zusammen gefügt
-    \item<1-> OSM-Daten zwischengespeichert
-    \item<2-> GPS-Daten aus Bildern auslesen
-    \item<3-> GPS-Direction betrachtet (unnütz)
-    \item<4-> Polygone erben Tags ihrer enthaltenen Punkte
+    \item<1-> Partielle Gebäude zu einem zusammen gefügt
+    \item<2-> OSM-Daten zwischengespeichert
+    \item<3-> GPS-Daten aus Bildern auslesen
+    \item<4-> GPS-Direction betrachtet (unnütz)
+    \item<5-> Polygone erben Tags ihrer enthaltenen Punkte
+    \item<6-> Multithreading
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Weitere Verbesserungen die wir gemacht haben, aber nicht groß erklären wollen.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -171,8 +173,8 @@
     \{ \text{tag} \to (\text{weight}~[,\text{threshold},\text{radius}]) \} \\[6pt]
     \begin{array}{l r}
       \overbrace{ \hspace{80pt} } \hspace{10pt} & \overbrace{ \hspace{200pt} }\\
-      \text{dog\_waste=``no''} & \text{landuse-recreation\_ground} \mapsto (1.8) \\
-      \text{littering=``no''} & \text{landuse-residential} \mapsto (1.1,10^{-8},2.3\cdot 10^{-4}) \\
+      \text{dog\_waste=``no''} & \text{landuse-recreation\_ground} \mapsto (0.7) \\
+      \text{littering=``no''} & \text{landuse-residential} \mapsto (0.9,10^{-8},2.3\cdot 10^{-4}) \\
       \text{noise=``no''} &
     \end{array}
   \end{array}

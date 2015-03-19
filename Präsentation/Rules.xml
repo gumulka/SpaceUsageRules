@@ -15,8 +15,8 @@
     <restriction>dog_waste="no"</restriction>
     <restriction>littering="no"</restriction>
     <restriction>noise="no"</restriction>
-    <OSMTag weight="0.8" >landuse - recreation_ground</OSMTag>
-    <OSMTag  threshold="1e-8" radius="0.00023" weight="1.1">
+    <OSMTag weight="0.7" >landuse - recreation_ground</OSMTag>
+    <OSMTag  threshold="1e-8" radius="0.00023" weight="0.9">
       landuse - residential
     </OSMTag>
   </rule>
